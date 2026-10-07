@@ -367,6 +367,12 @@ input::placeholder { color: color-mix(in srgb, var(--muted) 70%, transparent); }
 .seg input:checked + span { background: var(--amber); color: var(--on-amber); }
 .seg input:focus-visible + span { outline: 2px solid var(--amber); outline-offset: -2px; }
 .quote-card .field small { font-size: 12px; }
+.pay-note { font-size: 13px; line-height: 1.45; padding: 10px 12px; border-radius: 10px; background: var(--amber-soft); border-left: 3px solid var(--amber); }
+.pay-tag {
+  display: inline-block; margin-left: 8px; padding: 1px 9px; border-radius: 999px; vertical-align: 2px;
+  font-size: 11.5px; font-weight: 600; border: 1px solid var(--border); color: var(--muted);
+}
+.pay-tag.pay-loan, .pay-tag.pay-lease { border-color: var(--amber); color: var(--amber-text); }
 
 
 .form-error { color: var(--danger); font-size: 14px; grid-column: 1 / -1; }

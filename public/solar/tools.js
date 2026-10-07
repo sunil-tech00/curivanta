@@ -145,6 +145,10 @@ const LINKS = {
   const quotesEl = $("#quotes");
   const addBtn = $("#add-quote");
   const payLabel = { cash: "Cash", loan: "Loan", lease: "Lease / PPA" };
+  const PAY_NOTES = {
+    loan: "Enter the cash price, not the loan amount. Financed prices often hide 20–30% in dealer fees.",
+    lease: "Leases are quoted per month. Ask what the system would cost to buy outright and enter that as the cash price."
+  };
 
   const qField = (n, key, label, attrs, hint) => `
     <div class="field">
@@ -171,8 +175,14 @@ const LINKS = {
           <label><input type="radio" name="q${n}-pay" value="loan" /><span>Loan</span></label>
           <label><input type="radio" name="q${n}-pay" value="lease" /><span>Lease / PPA</span></label>
         </div>
-      </div>`;
-    $$('input[type="radio"]', el).forEach((r) => r.addEventListener("change", () => { el.dataset.pay = r.value; }));
+      </div>
+      <p class="pay-note" hidden></p>`;
+    const note = $(".pay-note", el);
+    $$('input[type="radio"]', el).forEach((r) => r.addEventListener("change", () => {
+      el.dataset.pay = r.value;
+      note.textContent = PAY_NOTES[r.value] || "";
+      note.hidden = !PAY_NOTES[r.value];
+    }));
     const rm = $(".remove", el);
     if (rm) rm.addEventListener("click", () => { el.remove(); syncQuotes(); renderComparison(); });
     return el;
@@ -209,15 +219,14 @@ const LINKS = {
       const details = [
         q.kw > 0 ? fmt(q.kw, 2) + " kW" : "",
         q.cash > 0 ? money(q.cash) + " cash" : "",
-        q.prod > 0 ? fmt(q.prod) + " kWh/yr quoted" : "",
-        payLabel[q.pay]
+        q.prod > 0 ? fmt(q.prod) + " kWh/yr quoted" : ""
       ].filter(Boolean).join(" · ");
       const top = rank === 1 && multi;
       const diff = rank > 1 ? `<span class="rank-diff">+$${fmt(q.ppw - best, 2)}/W vs #1</span>` : "";
       return `
         <li class="rank-row${top ? " top" : ""}">
           <span class="rank-num">${rank ? "#" + rank : "—"}</span>
-          <span class="rank-name">${esc(q.name || q.label)}${top ? '<span class="badge-best">Cheapest per watt</span>' : ""}<small>${details}</small></span>
+          <span class="rank-name">${esc(q.name || q.label)}<span class="pay-tag pay-${q.pay}">${payLabel[q.pay]}</span>${top ? '<span class="badge-best">Cheapest per watt</span>' : ""}<small>${details}</small></span>
           <span class="rank-ppw">${rank ? "$" + fmt(q.ppw, 2) + "<small>/W</small>" : `<small>Need ${q.kw > 0 ? "cash price" : "system size"}</small>`}${diff}</span>
         </li>`;
     };
