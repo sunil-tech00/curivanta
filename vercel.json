@@ -3,8 +3,8 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
-    { "source": "/book", "destination": "https://api.leadconnectorhq.com/widget/bookings/solar-consulting-calendar", "permanent": false },
-    { "source": "/widget/:path*", "destination": "https://api.leadconnectorhq.com/widget/:path*", "permanent": false }
+    { "source": "/book", "destination": "https://link.curivanta.com/widget/bookings/solar-consulting-calendar", "permanent": false },
+    { "source": "/widget/:path*", "destination": "https://link.curivanta.com/widget/:path*", "permanent": false }
   ],
   "rewrites": [
     { "source": "/solar", "destination": "/solar/index.html" },
