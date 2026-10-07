@@ -219,19 +219,11 @@
         <!-- Sizer -->
         <div class="tool" id="panel-sizer" role="tabpanel" aria-labelledby="tab-sizer">
           <form class="tool-form" id="sizer-form" novalidate>
-            <p class="group-label">Your usage</p>
-            <div class="field">
+            <div class="field span-2">
               <label for="sz-kwh">Monthly electricity use (kWh)</label>
               <input id="sz-kwh" type="number" min="0" step="1" inputmode="decimal" value="900" />
-              <small>From your utility bill — kWh, not dollars</small>
+              <small>From your utility bill — kWh, not dollars. If you have 12 months, average them.</small>
             </div>
-            <div class="field">
-              <label for="sz-rate">Utility rate ($/kWh)</label>
-              <input id="sz-rate" type="number" min="0" step="0.01" inputmode="decimal" value="0.22" />
-              <small>Your per-kWh rate on the bill</small>
-            </div>
-
-            <p class="group-label">Location</p>
             <div class="field">
               <label for="sz-state">State</label>
               <select id="sz-state"></select>
@@ -241,74 +233,11 @@
               <input id="sz-sun" type="number" min="0.5" max="10" step="0.1" inputmode="decimal" />
               <small>Auto-fills by state — overwrite with your <a href="https://pvwatts.nrel.gov" target="_blank" rel="noopener">PVWatts</a> value</small>
             </div>
-
-            <p class="group-label">System design</p>
-            <div class="field">
+            <div class="field span-2">
               <label for="sz-offset">Goal: % of bill to offset</label>
               <input id="sz-offset" type="number" min="10" max="200" step="5" value="100" />
               <small>100% = wipe out the bill; 80–90% is common</small>
             </div>
-            <div class="field">
-              <label for="sz-panel">Panel wattage (W)</label>
-              <select id="sz-panel">
-                <option>350</option>
-                <option selected>400</option>
-                <option>410</option>
-                <option>450</option>
-              </select>
-            </div>
-            <div class="field span-2">
-              <label for="sz-type">System type</label>
-              <select id="sz-type">
-                <option>Grid-tied (no battery)</option>
-                <option>Hybrid (solar + backup battery)</option>
-                <option>Off-grid</option>
-              </select>
-            </div>
-
-            <div class="battery-fields span-2" id="sz-battery" hidden>
-              <div class="field">
-                <label for="sz-chem">Battery chemistry</label>
-                <select id="sz-chem">
-                  <option>LiFePO4 (lithium)</option>
-                  <option>Lead-acid (AGM/gel)</option>
-                </select>
-                <small>Lithium costs more but lasts far longer</small>
-              </div>
-              <div class="field">
-                <label for="sz-days">Days of battery backup</label>
-                <input id="sz-days" type="number" min="0.5" max="7" step="0.5" value="1" />
-                <small>Cloudy days to ride through</small>
-              </div>
-              <div class="field">
-                <label for="sz-volt">Battery bank voltage (V)</label>
-                <select id="sz-volt">
-                  <option>12</option>
-                  <option>24</option>
-                  <option selected>48</option>
-                </select>
-                <small>48V is standard for whole-home</small>
-              </div>
-            </div>
-
-            <details class="advanced span-2">
-              <summary>Advanced: losses &amp; cost assumptions</summary>
-              <div class="advanced-grid">
-                <div class="field">
-                  <label for="sz-derate">System derate factor</label>
-                  <input id="sz-derate" type="number" min="0.5" max="1" step="0.01" value="0.8" />
-                  <small>Inverter, wiring, dust &amp; heat losses</small>
-                </div>
-                <div class="field">
-                  <label for="sz-costlo">Installed cost, low ($/W)</label>
-                  <input id="sz-costlo" type="number" min="0" step="0.05" value="2.5" />
-                </div>
-                <div class="field">
-                  <label for="sz-costhi">Installed cost, high ($/W)</label>
-                  <input id="sz-costhi" type="number" min="0" step="0.05" value="3.5" />
-                </div>
-              </div>
-            </details>
           </form>
 
           <div class="tool-result" id="sizer-result" aria-live="polite"></div>
@@ -326,36 +255,17 @@
               </div>
             </div>
           </div>
-          <p class="fine tool-note">Planning estimates only. Verify your roof's real sun hours at pvwatts.nrel.gov, get 3+ installer quotes, and confirm NEM/net-billing rules with your utility — export credits vary widely (e.g. California NEM 3.0). Battery sizing here is simplified; critical loads and surge currents need a pro review.</p>
+          <p class="fine tool-note">Planning estimates only. Verify your roof's real sun hours at pvwatts.nrel.gov, get 3+ installer quotes, and confirm NEM/net-billing rules with your utility — export credits vary widely (e.g. California NEM 3.0).</p>
         </div>
 
         <!-- Comparator -->
         <div class="tool" id="panel-compare" role="tabpanel" aria-labelledby="tab-compare" hidden>
-          <p class="tool-intro">Enter up to 3 quotes. Always get the <strong>cash price</strong> — even if you plan to finance or lease.</p>
+          <p class="tool-intro">Enter up to 3 quotes to see which is cheapest per watt. Always get the <strong>cash price</strong> — even if you plan to finance or lease.</p>
           <form id="compare-form" novalidate>
             <div class="quotes" id="quotes"></div>
             <div class="compare-actions">
               <button class="btn btn-outline" type="button" id="add-quote">+ Add a third quote</button>
             </div>
-
-            <fieldset class="assumptions">
-              <legend>Assumptions <span>(apply to every quote)</span></legend>
-              <div class="field">
-                <label for="cq-sun">Peak sun hours / day</label>
-                <input id="cq-sun" type="number" min="0.5" max="10" step="0.1" value="5.5" />
-                <small>Your location — see the System Sizer</small>
-              </div>
-              <div class="field">
-                <label for="cq-derate">System derate factor</label>
-                <input id="cq-derate" type="number" min="0.5" max="1" step="0.01" value="0.8" />
-                <small>Losses: inverter, wiring, heat, dust</small>
-              </div>
-              <div class="field">
-                <label for="cq-degr">Annual panel degradation (%)</label>
-                <input id="cq-degr" type="number" min="0" max="5" step="0.1" value="0.5" />
-                <small>Panels lose ~0.5%/yr</small>
-              </div>
-            </fieldset>
           </form>
 
           <div class="scorecard" id="scorecard" aria-live="polite"></div>
@@ -374,7 +284,7 @@
             </div>
           </div>
 
-          <p class="fine tool-note">Planning estimates only, not financial advice. $/W benchmarks: ~$2.50–$3.50/W cash is typical US residential. A financed price more than ~15% above cash usually means dealer fees baked into the loan. Production estimates more than ~10% above the expected number deserve a hard question. For TPO/lease: the 25-year total is the number that matters — a 2.9% escalator nearly doubles your payment by year 25.</p>
+          <p class="fine tool-note">Planning estimates only, not financial advice. ~$2.50–$3.50/W cash is typical US residential.</p>
         </div>
 
         
