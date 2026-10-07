@@ -46,6 +46,19 @@ const HairSalonBot = () => {
   const [started, setStarted] = useState(false);
   const [invalidTracked, setInvalidTracked] = useState(false);
 
+  // Opens the GHL chat widget (bottom-right bubble). If it hasn't loaded or is blocked,
+  // the link falls through to the contact form with "Not sure / need a demo" picked.
+  const openChatDemo = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const chat = (window as Window & { leadConnector?: { chatWidget?: { openWidget?: () => void } } }).leadConnector?.chatWidget;
+    if (chat?.openWidget) {
+      e.preventDefault();
+      chat.openWidget();
+      track('salon_chat_opened');
+    } else {
+      setSelectedPlan('notsure');
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -149,7 +162,7 @@ const HairSalonBot = () => {
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Never miss a call, text or<br /><em>appointment</em> again.</h1>
             <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Stop losing appointments to unanswered calls and manual processes. An AI-powered front desk that answers your phone and text/whatsapp messages, lets customers self-select appointment from available slots and books appointments in Salon Ultimate - so you can focus on managing the salon, not managing phones.</p>
             <div className="cta-row reveal is-visible">
-              <a className="btn solid" href="#contact" onClick={() => setSelectedPlan('notsure')} data-umami-event="salon_cta" data-umami-event-where="hero_demo">Try Demo in Chat</a>
+              <a className="btn solid" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hero_demo">Try Demo in Chat</a>
               <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
             </div>
           </div>
