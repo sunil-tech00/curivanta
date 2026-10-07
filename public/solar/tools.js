@@ -34,7 +34,7 @@ const LINKS = {
 
   $$("[data-link]").forEach((a) => {
     const url = LINKS[a.dataset.link];
-    if (!url) { a.closest(".next-card").hidden = true; return; }
+    if (!url) { const card = a.closest(".next-card"); if (card) card.hidden = true; return; }
     a.href = url;
     if (!url.startsWith("#")) { a.target = "_blank"; a.rel = "noopener"; }
   });
