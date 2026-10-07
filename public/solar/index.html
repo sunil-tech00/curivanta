@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Solar Advisor — Independent Solar Consulting</title>
+  <meta name="description" content="Independent, vendor-neutral solar consulting for California homeowners. Avoid hidden fees and get advice that works for you, not the installer." />
+  <meta name="author" content="Your Solar Advisor by Curivanta" />
+  <link rel="icon" type="image/svg+xml" href="/solar/favicon.svg" />
+
+  <meta property="og:title" content="Your Solar Advisor — Independent Solar Consulting" />
+  <meta property="og:description" content="Independent, vendor-neutral solar consulting for California homeowners. Avoid hidden fees and get advice that works for you, not the installer." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://curivanta.com/solar/og.jpg" />
+  <meta property="og:url" content="https://curivanta.com/solar" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Your Solar Advisor — Independent Solar Consulting" />
+  <meta name="twitter:description" content="Independent, vendor-neutral solar consulting for California homeowners. Avoid hidden fees and get advice that works for you, not the installer." />
+  <meta name="twitter:image" content="https://curivanta.com/solar/og.jpg" />
+
+  <!-- Apply saved theme before paint to avoid a flash -->
+  <script>
+    try {
+      var t = localStorage.getItem("ysa-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/solar/styles.css" />
+</head>
+<body>
+
+  <!-- Nav -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Your Solar Advisor home">
+        <svg class="brand-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><g stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
+        <span class="brand-text">Your Solar Advisor</span>
+      </a>
+      <a class="by-curivanta" href="/">by Curivanta</a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#why-independent">Why Independent</a>
+        <a href="#knowledge-hub">Knowledge Hub</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#tools">Free Tools</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Toggle light and dark theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <a class="btn btn-primary btn-sm" href="#upload-bill">Upload Bill</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <img src="/solar/hero.jpg" alt="" />
+      </div>
+      <div class="wrap hero-inner">
+        <p class="pill">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          California's Vendor-Neutral Solar Experts
+        </p>
+        <h1>Solar advice that works for <em>you</em>, not the installer.</h1>
+        <p class="lead">Independent, vendor-neutral, and commission-free consulting for California homeowners. Get the truth before you sign.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary btn-lg" href="#upload-bill">Get Free Consultation</a>
+          <a class="btn btn-outline btn-lg" href="#upload-bill">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+            Upload Your Bill
+          </a>
+        </div>
+        <ul class="trust">
+          <li>10+ Years in Solar</li>
+          <li>$0 to Start</li>
+          <li>100% Vendor-Neutral</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Independent Advantage -->
+    <section id="why-independent" class="section alt">
+      <div class="wrap narrow">
+        <header class="section-head">
+          <h2>The Independent Advantage</h2>
+          <p>See the difference between working with an independent consultant versus a traditional commissioned sales rep.</p>
+        </header>
+
+        <table class="compare">
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">Topic</span></th>
+              <th scope="col" class="col-rep">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+                Installer Sales Rep
+              </th>
+              <th scope="col" class="col-ind">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+                Independent Consultant
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Bias</th>
+              <td data-label="Installer Sales Rep">Works for the installer. Goal is to maximize profit margin on your project.</td>
+              <td data-label="Independent Consultant">Works exclusively for you. Vendor-neutral with fiduciary-like responsibility.</td>
+            </tr>
+            <tr>
+              <th scope="row">Equipment</th>
+              <td data-label="Installer Sales Rep">Pushes whatever inventory their company has in stock, regardless of your specific needs.</td>
+              <td data-label="Independent Consultant">Recommends the best panels and inverters for your specific roof and energy goals.</td>
+            </tr>
+            <tr>
+              <th scope="row">Financing</th>
+              <td data-label="Installer Sales Rep">Often hides massive dealer fees (20-30%) inside the loan principal.</td>
+              <td data-label="Independent Consultant">Complete transparency. We help you find credit unions or loans with zero hidden fees.</td>
+            </tr>
+            <tr>
+              <th scope="row">Commissions</th>
+              <td data-label="Installer Sales Rep">Takes thousands in hidden commissions based on how high they can price your system.</td>
+              <td data-label="Independent Consultant">Zero commissions. Flat fee structure so our advice is never compromised.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Knowledge Hub -->
+    <section id="knowledge-hub" class="section">
+      <div class="wrap">
+        <header class="section-head">
+          <h2>Knowledge is Power</h2>
+          <p>The solar industry relies on information asymmetry. We're here to level the playing field.</p>
+        </header>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Hidden Dealer Fees</h3>
+            <p>Solar loans often include 20-30% in hidden 'dealer fees' added to the principal. We show you how to spot and avoid them.</p>
+          </article>
+          <article class="card">
+            <h3>NEM 3.0 Impact</h3>
+            <p>California's new net metering rules change everything. Batteries are now essential for ROI. We analyze your exact usage.</p>
+          </article>
+          <article class="card">
+            <h3>System Oversizing</h3>
+            <p>Sales reps often oversize systems to inflate commissions. We right-size your system based on actual data.</p>
+          </article>
+          <article class="card card-alert">
+            <span class="tag">Expired Dec 31, 2025</span>
+            <h3>The 30% ITC</h3>
+            <p>The 30% federal tax credit for homeowner-owned systems (Section 25D) ended for systems installed after December 31, 2025. Some sales pitches still count it in their savings math. We make sure your numbers don't include a credit you can't claim.</p>
+          </article>
+          <article class="card">
+            <h3>Panel Degradation</h3>
+            <p>Not all panels are created equal. We compare degradation rates to ensure long-term production.</p>
+          </article>
+          <article class="card">
+            <h3>Lease Escalators</h3>
+            <p>Beware of 2.9% annual escalators in solar leases. We break down the math on why ownership usually wins.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="section alt">
+      <div class="wrap narrow">
+        <header class="section-head">
+          <h2>How It Works</h2>
+          <p>A simple, transparent process to get you the best solar system at the right price.</p>
+        </header>
+        <ol class="steps">
+          <li>
+            <span class="step-num">01</span>
+            <h3>Free Discovery</h3>
+            <p>A 15-minute call to understand your goals and see if solar makes sense for your home.</p>
+          </li>
+          <li>
+            <span class="step-num">02</span>
+            <h3>Proposal Review</h3>
+            <p>Upload your utility bill and any existing quotes. We analyze the math objectively.</p>
+          </li>
+          <li>
+            <span class="step-num">03</span>
+            <h3>Custom Roadmap</h3>
+            <p>We design an optimal system and source bids from vetted, high-quality local installers.</p>
+          </li>
+          <li>
+            <span class="step-num">04</span>
+            <h3>Ongoing Support</h3>
+            <p>We review contracts with you and stay involved until your system is turned on.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Free Tools -->
+    <section id="tools" class="section">
+      <div class="wrap">
+        <header class="section-head">
+          <h2>Free Solar Tools</h2>
+          <p>Run the numbers yourself before anyone runs them for you.</p>
+        </header>
+
+        <div class="tool-tabs" role="tablist" aria-label="Free tools">
+          <button role="tab" id="tab-sizer" aria-controls="panel-sizer" aria-selected="true">Solar System Sizer</button>
+          <button role="tab" id="tab-compare" aria-controls="panel-compare" aria-selected="false" tabindex="-1">Solar Quote Comparator</button>
+        </div>
+
+        <!-- Sizer -->
+        <div class="tool" id="panel-sizer" role="tabpanel" aria-labelledby="tab-sizer">
+          <form class="tool-form" id="sizer-form" novalidate>
+            <div class="field">
+              <label for="sz-bill">Average monthly electric bill ($)</label>
+              <input id="sz-bill" type="number" min="0" step="1" inputmode="decimal" placeholder="250" />
+            </div>
+            <div class="field">
+              <label for="sz-kwh">Or average monthly usage (kWh)</label>
+              <input id="sz-kwh" type="number" min="0" step="1" inputmode="decimal" placeholder="Optional — overrides the bill" />
+            </div>
+            <div class="field">
+              <label for="sz-utility">Utility</label>
+              <select id="sz-utility">
+                <option value="0.40">PG&amp;E</option>
+                <option value="0.33">SCE</option>
+                <option value="0.45">SDG&amp;E</option>
+                <option value="0.25">LADWP / municipal</option>
+                <option value="custom">Custom rate…</option>
+              </select>
+            </div>
+            <div class="field" id="sz-rate-field" hidden>
+              <label for="sz-rate">Your rate ($/kWh)</label>
+              <input id="sz-rate" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.38" />
+            </div>
+            <div class="field">
+              <label for="sz-offset">Target offset (%)</label>
+              <input id="sz-offset" type="number" min="10" max="120" step="5" value="90" />
+            </div>
+            <div class="field">
+              <label for="sz-panel">Panel wattage (W)</label>
+              <input id="sz-panel" type="number" min="250" max="600" step="5" value="400" />
+            </div>
+            <button class="btn btn-primary full" type="submit">Size My System</button>
+          </form>
+
+          <div class="tool-result" id="sizer-result" aria-live="polite">
+            <p class="empty">Enter your bill or usage to see a right-sized system estimate.</p>
+          </div>
+        </div>
+
+        <!-- Comparator -->
+        <div class="tool" id="panel-compare" role="tabpanel" aria-labelledby="tab-compare" hidden>
+          <form id="compare-form" novalidate>
+            <div class="quotes" id="quotes"></div>
+            <div class="compare-actions">
+              <button class="btn btn-outline" type="button" id="add-quote">+ Add a third quote</button>
+              <button class="btn btn-primary" type="submit">Compare Quotes</button>
+            </div>
+          </form>
+          <div class="scorecard" id="scorecard" aria-live="polite"></div>
+        </div>
+
+        <p class="fine">Estimates only, for comparison. Real sizing depends on your roof, shading, and rate plan — we'll check all of it in your free analysis.</p>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section alt">
+      <div class="wrap">
+        <header class="section-head">
+          <h2>Homeowners We've Protected</h2>
+          <p class="illustrative">Illustrative examples — these represent typical scenarios, not reviews from specific clients.</p>
+        </header>
+        <div class="card-grid three">
+          <figure class="card quote">
+            <div class="stars" aria-label="5 out of 5">★★★★★</div>
+            <blockquote>"I had three quotes that all seemed high. The advisor found $12k in hidden loan fees and connected me with a local installer who did a better job for way less."</blockquote>
+            <figcaption>
+              <span><strong>Sarah M.</strong><small>San Diego, CA</small></span>
+              <span class="saved">Saved $12,400</span>
+            </figcaption>
+          </figure>
+          <figure class="card quote">
+            <div class="stars" aria-label="5 out of 5">★★★★★</div>
+            <blockquote>"Under NEM 3.0, the math was confusing. They explained exactly why I needed a battery and stopped me from buying an oversized system I didn't need."</blockquote>
+            <figcaption>
+              <span><strong>David T.</strong><small>San Jose, CA</small></span>
+              <span class="saved">Saved $8,500</span>
+            </figcaption>
+          </figure>
+          <figure class="card quote">
+            <div class="stars" aria-label="5 out of 5">★★★★★</div>
+            <blockquote>"The peace of mind is incredible. Knowing someone was looking out for MY interests, not their commission check, made all the difference."</blockquote>
+            <figcaption>
+              <span><strong>Elena R.</strong><small>Los Angeles, CA</small></span>
+              <span class="saved">Saved $15,200</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lead capture -->
+    <section id="upload-bill" class="section lead-section">
+      <div class="wrap narrow-sm">
+        <header class="section-head">
+          <h2>Get Your Free Analysis</h2>
+          <p>Upload your utility bill securely. We'll run the numbers and tell you exactly what you should be paying.</p>
+        </header>
+        <form class="lead-form js-formspree" enctype="multipart/form-data">
+          <input type="hidden" name="_subject" value="New solar analysis request — Your Solar Advisor" />
+          <input type="hidden" name="form" value="Upload bill" />
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <div class="row-2">
+            <div class="field">
+              <label for="lf-name">Full Name</label>
+              <input id="lf-name" name="name" required placeholder="John Doe" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="lf-phone">Phone Number</label>
+              <input id="lf-phone" name="phone" type="tel" required placeholder="(555) 123-4567" autocomplete="tel" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="lf-email">Email Address</label>
+            <input id="lf-email" name="email" type="email" required placeholder="john@example.com" autocomplete="email" />
+          </div>
+          <div class="field">
+            <span class="label">Utility Bill (PDF or Image)</span>
+            <label class="dropzone" for="lf-file">
+              <input id="lf-file" name="bill" type="file" accept=".pdf,image/*" />
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+              <span class="dz-title">Click to upload your bill</span>
+              <span class="dz-sub">Supports PDF, JPG, PNG up to 10MB</span>
+            </label>
+          </div>
+          <button class="btn btn-primary btn-lg full" type="submit">Get My Free Analysis</button>
+          <p class="form-status" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="brand footer-brand">
+            <svg class="brand-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><g stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
+            <span class="brand-text">Your Solar Advisor</span>
+          </div>
+          <p class="muted">Protecting California homeowners from predatory solar sales tactics. Independent, objective, and on your side.</p>
+          <p class="muted small">A <a href="/">Curivanta</a> service.</p>
+        </div>
+        <div class="footer-cta">
+          <h3>Start with a free conversation.</h3>
+          <p class="muted">No sales pitch. Just honest answers to your solar questions.</p>
+          <form class="inline-form js-formspree">
+            <input type="hidden" name="_subject" value="New contact request — Your Solar Advisor" />
+            <input type="hidden" name="form" value="Footer contact" />
+            <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <label class="sr-only" for="ff-email">Email</label>
+            <input id="ff-email" name="email" type="email" placeholder="Enter your email" required autocomplete="email" />
+            <button class="btn btn-primary" type="submit">Contact Me</button>
+            <p class="form-status" role="status"></p>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="year">2026</span> Your Solar Advisor by <a href="/">Curivanta</a>. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/solar/tools.js" defer></script>
+  <script src="https://beta.leadconnectorhq.com/loader.js" data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a309f31b48bf7b6a3192ad2" async></script>
+</body>
+</html>
