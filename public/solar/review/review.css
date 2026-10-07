@@ -96,6 +96,12 @@
 .v-reneg { border-color: var(--amber); } .v-reneg .verdict-word { color: var(--amber-text); }
 .v-walk { border-color: var(--danger); } .v-walk .verdict-word { color: var(--danger); }
 
+.saved-link {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px; border-radius: 14px; border: 1px solid var(--good); font-size: 14.5px;
+  background: color-mix(in srgb, var(--good) 10%, var(--surface));
+}
+.saved-link a { color: var(--amber-text); word-break: break-all; }
 .usage-box { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
 .usage-box > div { padding: 16px 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
 .usage-box span { display: block; font-size: 12.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }

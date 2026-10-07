@@ -386,10 +386,11 @@
     const tick = ticker(progress, "Analyzing your quotes and writing your report…");
     try {
       const body = { ...req, quotes: req.quotes.map(({ _pay, ...q }) => q) };
-      const { metrics, report, runsLeft } = await api("report", state.paid ? { ...body, sessionId: state.paid } : { ...body, bypass: true });
+      const { metrics, report, runsLeft, reportUrl, test } = await api("report", state.paid ? { ...body, sessionId: state.paid } : { ...body, bypass: true });
       if (state.paid) store.set("ysa-runs-left", runsLeft);
       store.set("ysa-pending", { extracted: state.extracted, req });
-      renderReport(metrics, report);
+      renderReport(metrics, report, { url: reportUrl, test, createdAt: new Date().toISOString() });
+      history.replaceState(null, "", new URL(reportUrl).pathname);
       syncUnlockButton();
       show("report");
     } catch (err) {
@@ -401,7 +402,7 @@
   }
 
   // ── Report ──────────────────────────────────────────────────────────────
-  function renderReport(m, r) {
+  function renderReport(m, r, saved = null) {
     const v = VERDICT[r.verdict] || VERDICT.renegotiate;
     const byLabel = Object.fromEntries((r.quotes || []).map((q) => [q.label, q]));
     const qs = m.quotes;
@@ -420,8 +421,16 @@
       <article class="report">
         <div class="print-only print-head">
           <strong>Your Solar Advisor — Quote Review</strong>
-          <span>${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · curivanta.com/solar</span>
+          <span>${new Date(saved?.createdAt || Date.now()).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · curivanta.com/solar</span>
         </div>
+        ${saved ? `
+        <div class="saved-link no-print">
+          <div>
+            <strong>Your report is saved.</strong> Bookmark this link to come back to it any time${saved.test ? " (test run)" : ""}:
+            <a href="${esc(saved.url)}">${esc(saved.url.replace(/^https?:\/\//, ""))}</a>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm copy-link" data-url="${esc(saved.url)}">Copy link</button>
+        </div>` : ""}
         <header class="verdict ${v.cls}">
           <span class="verdict-label">Our verdict</span>
           <strong class="verdict-word">${v.label}</strong>
@@ -489,15 +498,38 @@
   }
 
   $("#print-btn").addEventListener("click", () => window.print());
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".copy-link");
+    if (!btn) return;
+    try { await navigator.clipboard.writeText(btn.dataset.url); btn.textContent = "Copied ✓"; }
+    catch (err) { window.prompt("Copy your report link:", btn.dataset.url); }
+  });
   $("#restart-btn").addEventListener("click", () => {
     store.del("ysa-pending");
+    if (location.pathname !== "/solar/review") history.replaceState(null, "", "/solar/review" + (bypass ? "?bypass" : ""));
     $$(".slot-clear").forEach((b) => b.click());
     state.extracted = null;
     show("upload");
   });
 
   // ── Start ───────────────────────────────────────────────────────────────
+  async function showSaved(query) {
+    const res = await fetch("/api/review/saved?" + query, { cache: "no-store" });
+    const doc = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(doc.error || "Couldn't load the report.");
+    renderReport(doc.metrics, doc.report, { url: doc.url, test: doc.test, createdAt: doc.createdAt });
+    history.replaceState(null, "", new URL(doc.url).pathname);
+    show("report");
+  }
+
   (async function start() {
+    // A saved report link works for anyone holding it — no passcode or payment check.
+    const savedId = location.pathname.match(/^\/solar\/report\/([A-Za-z0-9_-]{24})\/?$/)?.[1];
+    if (savedId) {
+      try { await showSaved("id=" + savedId); }
+      catch (err) { show("upload"); showError(err.message); }
+      return;
+    }
     try { state.passcode = sessionStorage.getItem("ysa-review-pass") || ""; } catch (e) {}
     state.paid = store.get("ysa-paid") || "";
     syncReadButton();
@@ -536,7 +568,11 @@
       }
       return;
     }
-    if (paidId) showError("Payment received. Upload your documents again to generate your report.");
+    if (paidId) {
+      // Tab closed or opened elsewhere: recover the latest report for this payment if there is one.
+      try { return await showSaved("session=" + encodeURIComponent(paidId)); }
+      catch (err) { showError("Payment received. Upload your documents to generate your report."); }
+    }
     show("upload");
   })();
 })();

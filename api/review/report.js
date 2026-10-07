@@ -1,7 +1,9 @@
-import { allowPost, hasPasscode, sendError } from "../_lib/http.js";
+import { allowPost, hasPasscode, sendError, siteOrigin } from "../_lib/http.js";
 import { analyze } from "../_lib/solar.js";
 import { writeReport } from "../_lib/claude.js";
 import { checkPaid, recordRun, MAX_RUNS } from "../_lib/payments.js";
+import { saveReport, reportUrl } from "../_lib/reports.js";
+import { notifyGhl } from "../_lib/ghl.js";
 
 export const config = { maxDuration: 300 };
 
@@ -31,8 +33,22 @@ export default async function handler(req, res) {
   try {
     const payment = testRun ? null : await checkPaid(sessionId);
     const report = await writeReport(metrics);
+    const id = await saveReport({ metrics, report, test: testRun, sessionId: payment ? sessionId : null });
+    const url = reportUrl(siteOrigin(req), id);
     const runsLeft = payment ? await recordRun(payment) : MAX_RUNS;
-    res.status(200).json({ metrics, report, runsLeft, test: testRun });
+    if (payment) {
+      await notifyGhl({
+        email: payment.email,
+        report_url: url,
+        verdict: report.verdict,
+        headline: report.headline,
+        quotes_reviewed: metrics.quotes.length,
+        state: metrics.assumptions.state,
+        report_number: payment.runsUsed + 1,
+        source: "ai_quote_review"
+      });
+    }
+    res.status(200).json({ metrics, report, runsLeft, test: testRun, reportId: id, reportUrl: url });
   } catch (err) {
     sendError(res, err);
   }

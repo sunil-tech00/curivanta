@@ -3,12 +3,33 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
-    { "source": "/book", "destination": "https://link.curivanta.com/widget/bookings/solar-consulting-calendar", "permanent": false },
-    { "source": "/widget/:path*", "destination": "https://link.curivanta.com/widget/:path*", "permanent": false }
+    {
+      "source": "/book",
+      "destination": "https://link.curivanta.com/widget/bookings/solar-consulting-calendar",
+      "permanent": false
+    },
+    {
+      "source": "/widget/:path*",
+      "destination": "https://link.curivanta.com/widget/:path*",
+      "permanent": false
+    }
   ],
   "rewrites": [
-    { "source": "/solar", "destination": "/solar/index.html" },
-    { "source": "/solar/review", "destination": "/solar/review/index.html" },
-    { "source": "/((?!solar/|api/).*)", "destination": "/index.html" }
+    {
+      "source": "/solar",
+      "destination": "/solar/index.html"
+    },
+    {
+      "source": "/solar/review",
+      "destination": "/solar/review/index.html"
+    },
+    {
+      "source": "/solar/report/:id",
+      "destination": "/solar/review/index.html"
+    },
+    {
+      "source": "/((?!solar/|api/).*)",
+      "destination": "/index.html"
+    }
   ]
 }
