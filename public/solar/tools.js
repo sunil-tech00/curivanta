@@ -5,7 +5,8 @@
 const LINKS = {
   etsySizer: "https://www.etsy.com/listing/4589854852/solar-panel-calculator-spreadsheet-diy",   // Etsy listing: Solar Sizing Calculator ($19)
   etsyCompare: "https://www.etsy.com/listing/4590108397/solar-quote-comparison-spreadsheet", // Etsy listing: Solar Quote Toolkit ($29)
-  booking: "#book"          // discovery-call calendar, embedded in the #book section
+  aiReview: "/solar/review", // $49 AI quote review
+  fullReview: ""            // Stripe Payment Link for the $249 Full Solar Review (button hidden until set)
 };
 
 (function () {
@@ -32,7 +33,7 @@ const LINKS = {
 
   $$("[data-link]").forEach((a) => {
     const url = LINKS[a.dataset.link];
-    if (!url) { const card = a.closest(".next-card"); if (card) card.hidden = true; return; }
+    if (!url) { (a.closest(".next-card") || a).hidden = true; return; }
     a.href = url;
     if (!url.startsWith("#")) { a.target = "_blank"; a.rel = "noopener"; }
   });

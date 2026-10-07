@@ -272,6 +272,12 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2
   background: var(--amber); color: var(--on-amber);
 }
 .review-cta { text-align: center; margin-top: 36px; }
+.review-alt { margin-top: 14px; font-size: 14px; color: var(--muted); }
+.review-alt a { color: var(--amber-text); }
+.lead-list { max-width: 680px; }
+.lead-section .included li::before { background: var(--on-amber); color: var(--amber); }
+.cta-dark { background: var(--on-amber); color: #fff; }
+.cta-dark:hover { background: #163757; }
 @media (max-width: 520px) {
   .review-card { padding: 36px 20px; }
   .review-cta .btn { width: 100%; white-space: normal; }

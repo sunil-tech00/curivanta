@@ -28,6 +28,10 @@
       "destination": "/solar/review/index.html"
     },
     {
+      "source": "/solar/full-review/thanks",
+      "destination": "/solar/full-review/thanks/index.html"
+    },
+    {
       "source": "/((?!solar/|api/).*)",
       "destination": "/index.html"
     }

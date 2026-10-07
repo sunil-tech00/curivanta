@@ -15,7 +15,7 @@
   const MAX_PDF = 3 * 1024 * 1024;
   // Report CTA: the paid Full Solar Review. Swap in its booking/checkout link when it exists.
   const FULL_REVIEW_URL = "/solar#full-review";
-  const FREE_CALL_URL = "/solar#book";
+  const FREE_CALL_URL = "/book"; // 15-min call, offered to AI-review buyers only
   const VERDICT = {
     sign: { label: "Sign", cls: "v-sign" },
     renegotiate: { label: "Renegotiate", cls: "v-reneg" },
@@ -490,7 +490,7 @@
           <div>
             <p class="upsell-title"><strong>Want an expert to take it from here?</strong></p>
             <p>The <strong>Full Solar Review — $249 flat</strong>: we go through your actual quotes and bills line by line, vet the installers, and walk you through a written report and negotiation playbook — then review the contract before you sign, with 14 days of email support.</p>
-            <p class="upsell-alt">Not sure yet? <a href="${FREE_CALL_URL}">Book a free 15-minute call</a> first.</p>
+            <p class="upsell-alt">Questions about your report first? <a href="${FREE_CALL_URL}">Book a 15-minute call</a>.</p>
           </div>
           <a class="btn btn-primary" href="${FULL_REVIEW_URL}">Get the Full Solar Review →</a>
         </div>

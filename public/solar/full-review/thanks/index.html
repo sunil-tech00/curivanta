@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Thank You — Full Solar Review</title>
+  <link rel="icon" type="image/svg+xml" href="/solar/favicon.svg" />
+  <script>
+    try {
+      var t = localStorage.getItem("ysa-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/solar/styles.css" />
+  <style>
+    .thanks { max-width: 760px; }
+    .thanks h1 { font-size: clamp(36px, 5vw, 52px); margin-bottom: 12px; }
+    .thanks .lead { margin: 0 0 36px; text-align: left; max-width: none; }
+    .next-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; counter-reset: step; }
+    .next-list > li { position: relative; padding: 22px 24px 22px 76px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+    .next-list > li::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; left: 22px; top: 20px; width: 36px; height: 36px; border-radius: 50%;
+      display: grid; place-items: center; background: var(--amber); color: var(--on-amber); font-weight: 700;
+    }
+    .next-list h2 { font-size: 24px; margin-bottom: 6px; }
+    .next-list p { color: var(--muted); }
+    .next-list ul { margin: 10px 0 0; padding-left: 20px; color: var(--muted); }
+    .next-list .btn { margin-top: 14px; }
+    .fine-print { margin-top: 28px; color: var(--muted); font-size: 14px; }
+    .fine-print a { color: var(--amber-text); }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/solar" aria-label="Your Solar Advisor home">
+        <svg class="brand-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><g stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
+        <span class="brand-text">Your Solar Advisor</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="wrap thanks">
+      <p class="pill">Payment received</p>
+      <h1>Thank you — your Full Solar Review is booked.</h1>
+      <p class="lead">Here's what happens next. Your receipt from Stripe is on its way to your inbox.</p>
+
+      <ol class="next-list">
+        <li>
+          <h2>Send us your documents</h2>
+          <p>Email everything you have to <strong>hello@curivanta.com</strong>, from the email you paid with:</p>
+          <ul>
+            <li>Every solar quote or proposal you've received (PDFs or clear photos)</li>
+            <li>Your last 12 months of utility bills, or a usage summary from your utility account</li>
+            <li>Any loan, lease, or PPA paperwork the installer sent</li>
+          </ul>
+          <a class="btn btn-primary" href="mailto:hello@curivanta.com?subject=Full%20Solar%20Review%20%E2%80%94%20my%20documents">Email my documents →</a>
+        </li>
+        <li>
+          <h2>We do the full review — within 72 hours</h2>
+          <p>Dealer fees, production validation, financing teardown on your actual numbers, installer vetting, and whether a battery makes sense for you.</p>
+        </li>
+        <li>
+          <h2>Walkthrough call + written report</h2>
+          <p>We'll email you a link to book a 30-minute call. We go through the findings and your negotiation playbook, and you get the written report with a clear verdict: sign, renegotiate, or walk away.</p>
+        </li>
+        <li>
+          <h2>Support through signing</h2>
+          <p>Send us the contract before you commit and we'll review it, plus 14 days of email Q&amp;A while you negotiate.</p>
+        </li>
+      </ol>
+
+      <p class="fine-print">Questions? Email <a href="mailto:hello@curivanta.com">hello@curivanta.com</a>. <a href="/solar">Back to Your Solar Advisor</a></p>
+    </div>
+  </main>
+</body>
+</html>
