@@ -34,6 +34,10 @@ const PrivacyPolicy = () => {
             <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>How Do We Use Your Personal Information?</h3>
             <p>We use the Order Information that we collect generally to fulfill any orders placed through the Site (including processing your payment information, arranging for shipping, and providing you with invoices and/or order confirmations).</p>
             
+            <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>AI Solar Quote Review</h3>
+            <p>When you use the AI Solar Quote Review at curivanta.com/solar/review, the documents you upload (solar quotes and utility bills) are sent to our AI provider, Anthropic, to read the numbers, and are then discarded — we do not store your uploaded files. We ask the AI not to extract names, street addresses, account numbers, or phone numbers.</p>
+            <p>Your finished report — the numbers you confirmed and the written review — is stored privately and is viewable by anyone who has its unique link. Reports are automatically deleted 12 months after they are created. Payments are processed by Stripe; we never see or store your card details. When you buy a review, we share your email address, report link, and verdict with our customer-management system (GoHighLevel) so we can email you your report. To have a report deleted sooner, email us.</p>
+
             <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>Contact Us</h3>
             <p>For more information about our privacy practices, if you have questions, or if you would like to make a complaint, please contact us by e-mail at <a href="mailto:hello@curivanta.com" style={{ color: 'var(--brass)' }}>hello@curivanta.com</a>.</p>
           </div>

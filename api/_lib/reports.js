@@ -1,5 +1,5 @@
 import { randomBytes } from "node:crypto";
-import { put, get } from "@vercel/blob";
+import { put, get, list, del } from "@vercel/blob";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -7,6 +7,7 @@ import path from "node:path";
 // goes to our page, which reads the blob server-side. Uploaded documents are never stored.
 // REPORTS_LOCAL_DIR swaps in plain files for local testing.
 const ID_RE = /^[A-Za-z0-9_-]{24}$/;
+export const RETENTION_DAYS = 365;
 const SESSION_RE = /^cs_[A-Za-z0-9_]+$/;
 
 async function write(name, data) {
@@ -50,4 +51,23 @@ export async function latestForSession(sessionId) {
   if (!SESSION_RE.test(String(sessionId))) return null;
   const pointer = await read(`sessions/${sessionId}.json`);
   return pointer?.latest ?? null;
+}
+
+// Deletes saved reports and session pointers older than RETENTION_DAYS. Run daily by Vercel Cron.
+export async function deleteExpired(now = Date.now()) {
+  const cutoff = now - RETENTION_DAYS * 24 * 60 * 60 * 1000;
+  let deleted = 0;
+  for (const prefix of ["reports/", "sessions/"]) {
+    let cursor;
+    do {
+      const page = await list({ prefix, cursor, limit: 1000 });
+      const old = page.blobs.filter((b) => new Date(b.uploadedAt).getTime() < cutoff).map((b) => b.url);
+      if (old.length) {
+        await del(old);
+        deleted += old.length;
+      }
+      cursor = page.hasMore ? page.cursor : undefined;
+    } while (cursor);
+  }
+  return deleted;
 }

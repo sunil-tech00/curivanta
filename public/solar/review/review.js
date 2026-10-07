@@ -426,7 +426,7 @@
         ${saved ? `
         <div class="saved-link no-print">
           <div>
-            <strong>Your report is saved.</strong> Bookmark this link to come back to it any time${saved.test ? " (test run)" : ""}:
+            <strong>Your report is saved.</strong> Bookmark this private link — it's kept for 12 months${saved.test ? " (test run)" : ""}:
             <a href="${esc(saved.url)}">${esc(saved.url.replace(/^https?:\/\//, ""))}</a>
           </div>
           <button type="button" class="btn btn-outline btn-sm copy-link" data-url="${esc(saved.url)}">Copy link</button>
