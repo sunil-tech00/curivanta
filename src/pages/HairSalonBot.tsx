@@ -29,8 +29,53 @@ const faqs = [
   }
 ];
 
+const PLAN_OPTIONS = [
+  { id: 'starter', name: 'Starter', desc: 'AI Voice' },
+  { id: 'autopilot', name: 'Autopilot', desc: 'Fully Automated' },
+  { id: 'notsure', name: 'Not Sure', desc: 'Need a demo' }
+];
+
+// Analytics (see public/analytics.js). Clicks on elements with data-umami-event are tracked by Umami itself.
+const track = (name: string, data?: Record<string, string | number | boolean>) =>
+  (window as Window & { cvTrack?: (name: string, data?: Record<string, string | number | boolean>) => void }).cvTrack?.(name, data);
+
 const HairSalonBot = () => {
   const [selectedPlan, setSelectedPlan] = useState('autopilot');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [error, setError] = useState('');
+  const [started, setStarted] = useState(false);
+  const [invalidTracked, setInvalidTracked] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    setStatus('sending');
+    setError('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          form: 'salon',
+          plan: selectedPlan,
+          name: data.get('name'),
+          business: data.get('business'),
+          phone: data.get('phone'),
+          email: data.get('email'),
+          website: data.get('website'),
+          smsConsent: data.get('smsConsent') === 'on'
+        })
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || 'Something went wrong. Please email hello@curivanta.com.');
+      setStatus('sent');
+      track('salon_form_submitted', { plan: selectedPlan });
+    } catch (err) {
+      track('salon_form_error');
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please email hello@curivanta.com.');
+      setStatus('idle');
+    }
+  };
 
   useEffect(() => {
     const revealEls = document.querySelectorAll('.reveal:not(.is-visible)');
@@ -72,7 +117,7 @@ const HairSalonBot = () => {
           </div>
           <nav className="links">
             <Link className="navlink" to="/hair-salon-bot">Hair Salon Bot</Link>
-            <a className="btn ghost desktop-only" href="#contact">Book a free audit</a>
+            <a className="btn ghost desktop-only" href="#contact" data-umami-event="salon_cta" data-umami-event-where="nav">Book a free audit</a>
             <ThemeToggle />
             
             <div className="mobile-menu-trigger">
@@ -104,8 +149,8 @@ const HairSalonBot = () => {
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Never miss a call, text or<br /><em>appointment</em> again.</h1>
             <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Stop losing appointments to unanswered calls and manual processes. An AI-powered front desk that answers your phone and text/whatsapp messages, lets customers self-select appointment from available slots and books appointments in Salon Ultimate - so you can focus on managing the salon, not managing phones.</p>
             <div className="cta-row reveal is-visible">
-              <a className="btn solid" href="#contact">Try Demo in Chat</a>
-              <a className="btn ghost" href="#contact">Get Started</a>
+              <a className="btn solid" href="#contact" onClick={() => setSelectedPlan('notsure')} data-umami-event="salon_cta" data-umami-event-where="hero_demo">Try Demo in Chat</a>
+              <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
             </div>
           </div>
           
@@ -207,7 +252,7 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Clean booking notification sent to your team
                 </li>
               </ul>
-              <a className="btn ghost" href="#contact" style={{ width: '100%', justifyContent: 'center' }}>Choose Starter</a>
+              <a className="btn ghost" href="#contact" onClick={() => setSelectedPlan('starter')} data-umami-event="salon_cta" data-umami-event-where="pricing_starter" style={{ width: '100%', justifyContent: 'center' }}>Choose Starter</a>
             </div>
 
             {/* Autopilot Plan */}
@@ -245,7 +290,7 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Usage overage billed at cost — no markup
                 </li>
               </ul>
-              <a className="btn solid" href="#contact" style={{ width: '100%', justifyContent: 'center' }}>Choose Autopilot</a>
+              <a className="btn solid" href="#contact" onClick={() => setSelectedPlan('autopilot')} data-umami-event="salon_cta" data-umami-event-where="pricing_autopilot" style={{ width: '100%', justifyContent: 'center' }}>Choose Autopilot</a>
             </div>
           </div>
 
@@ -276,7 +321,7 @@ const HairSalonBot = () => {
                 <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>$49</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
               </div>
-              <a className="btn ghost" href="#contact" style={{ width: '100%', justifyContent: 'center' }}>Add WhatsApp</a>
+              <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="pricing_whatsapp" style={{ width: '100%', justifyContent: 'center' }}>Add WhatsApp</a>
             </div>
 
             {/* SMS Add-On */}
@@ -306,7 +351,7 @@ const HairSalonBot = () => {
                 <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>$49</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
               </div>
-              <a className="btn ghost" href="#contact" style={{ width: '100%', justifyContent: 'center' }}>Add SMS</a>
+              <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="pricing_sms" style={{ width: '100%', justifyContent: 'center' }}>Add SMS</a>
             </div>
           </div>
 
@@ -362,33 +407,56 @@ const HairSalonBot = () => {
           <h2 className="reveal">Ready to get started?</h2>
           <p className="sub reveal d1" style={{ color: 'var(--bone-dim)', marginBottom: '40px' }}>Leave your details below and our team will reach out to get your Hair Salon Bot configured and running.</p>
           
-          <form className="reveal d2" style={{ display: 'flex', flexDirection: 'column', gap: '16px', background: 'var(--ink)', padding: '40px', borderRadius: '12px', border: '1px solid var(--line)' }}>
-            <input type="text" placeholder="Your name" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '16px', borderRadius: '8px', color: 'var(--bone)', width: '100%', boxSizing: 'border-box' }} />
-            <input type="text" placeholder="Business name & location" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '16px', borderRadius: '8px', color: 'var(--bone)', width: '100%', boxSizing: 'border-box' }} />
-            <input type="tel" placeholder="Mobile number" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '16px', borderRadius: '8px', color: 'var(--bone)', width: '100%', boxSizing: 'border-box' }} />
-            <input type="email" placeholder="Email" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '16px', borderRadius: '8px', color: 'var(--bone)', width: '100%', boxSizing: 'border-box' }} />
-            
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginTop: '16px' }}>
-              <div onClick={() => setSelectedPlan('starter')} style={{ border: selectedPlan === 'starter' ? '1px solid var(--brass)' : '1px solid var(--line)', background: selectedPlan === 'starter' ? 'rgba(77,107,246,0.1)' : 'transparent', padding: '12px', borderRadius: '8px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s ease' }}>
-                <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>Starter</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--bone-dim)' }}>AI Voice</div>
-              </div>
-              <div onClick={() => setSelectedPlan('autopilot')} style={{ border: selectedPlan === 'autopilot' ? '1px solid var(--brass)' : '1px solid var(--line)', background: selectedPlan === 'autopilot' ? 'rgba(77,107,246,0.1)' : 'transparent', padding: '12px', borderRadius: '8px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s ease' }}>
-                <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>Autopilot</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--bone-dim)' }}>Fully Automated</div>
-              </div>
-              <div onClick={() => setSelectedPlan('notsure')} style={{ border: selectedPlan === 'notsure' ? '1px solid var(--brass)' : '1px solid var(--line)', background: selectedPlan === 'notsure' ? 'rgba(77,107,246,0.1)' : 'transparent', padding: '12px', borderRadius: '8px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s ease' }}>
-                <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>Not Sure</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--bone-dim)' }}>Need a demo</div>
-              </div>
+          {status === 'sent' ? (
+            <div className="reveal d2 is-visible form-success" role="status" style={{ background: 'var(--ink)', padding: '40px', borderRadius: '12px', border: '1px solid var(--line)' }}>
+              <h3>Thanks — we've got it.</h3>
+              <p>We'll reach out within one business day to get your Hair Salon Bot set up.</p>
             </div>
-            
-            <p style={{ fontSize: '0.75rem', color: 'var(--bone-dimmer)', marginTop: '16px', lineHeight: 1.5 }}>
-              By checking this box, I agree to receive SMS text messages regarding my inquiry and service updates. Message and data rates may apply.
-            </p>
-            
-            <button type="button" className="btn solid full-width">Get Started</button>
+          ) : (
+          <form
+            className="reveal d2"
+            onSubmit={handleSubmit}
+            onFocus={() => { if (!started) { setStarted(true); track('salon_form_started'); } }}
+            onInvalidCapture={(e) => {
+              if (invalidTracked) return;
+              setInvalidTracked(true);
+              track('salon_form_invalid', { field: (e.target as HTMLInputElement).name || 'unknown' });
+            }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '16px', background: 'var(--ink)', padding: '40px', borderRadius: '12px', border: '1px solid var(--line)', textAlign: 'left' }}
+          >
+            <input type="text" name="name" placeholder="Your name" autoComplete="name" required style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '16px', borderRadius: '8px', color: 'var(--bone)', width: '100%', boxSizing: 'border-box' }} />
+            <input type="text" name="business" placeholder="Business name & location" autoComplete="organization" required style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '16px', borderRadius: '8px', color: 'var(--bone)', width: '100%', boxSizing: 'border-box' }} />
+            <input type="tel" name="phone" placeholder="Mobile number" autoComplete="tel" required style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '16px', borderRadius: '8px', color: 'var(--bone)', width: '100%', boxSizing: 'border-box' }} />
+            <input type="email" name="email" placeholder="Email" autoComplete="email" required style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '16px', borderRadius: '8px', color: 'var(--bone)', width: '100%', boxSizing: 'border-box' }} />
+            <input type="text" name="website" className="form-hp" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+
+            <div role="radiogroup" aria-label="Plan" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginTop: '16px' }}>
+              {PLAN_OPTIONS.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  role="radio"
+                  aria-checked={selectedPlan === p.id}
+                  onClick={() => setSelectedPlan(p.id)}
+                  style={{ border: selectedPlan === p.id ? '1px solid var(--brass)' : '1px solid var(--line)', background: selectedPlan === p.id ? 'rgba(77,107,246,0.1)' : 'transparent', padding: '12px', borderRadius: '8px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.2s ease', color: 'inherit', font: 'inherit' }}
+                >
+                  <div style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>{p.name}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--bone-dim)' }}>{p.desc}</div>
+                </button>
+              ))}
+            </div>
+
+            <label className="consent-checkbox">
+              <input type="checkbox" name="smsConsent" required />
+              <span>By checking this box, I agree to receive SMS text messages regarding my inquiry and service updates. Message and data rates may apply.</span>
+            </label>
+
+            {error && <p className="form-error" role="alert">{error}</p>}
+            <button type="submit" className="btn solid full-width" disabled={status === 'sending'}>
+              {status === 'sending' ? 'Sending…' : 'Get Started'}
+            </button>
           </form>
+          )}
         </div>
       </section>
 

@@ -1,10 +1,23 @@
 import { allowPost, tooMany } from "./_lib/http.js";
 import { allow } from "./_lib/limit.js";
 
-// Homepage "Book a free automation audit" form → GHL inbound webhook (workflow creates the
-// contact and follows up). Proxied here so the webhook URL isn't exposed to scrapers.
-const WEBHOOK_URL = process.env.CONTACT_WEBHOOK_URL ||
-  "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/CsP3zaWSLWOlpf14hrEj";
+// Curivanta lead forms → GHL inbound webhooks (each GHL workflow creates the contact and sends
+// its own follow-up). Proxied here so the webhook URLs aren't exposed to scrapers.
+const FORMS = {
+  audit: {
+    url: process.env.CONTACT_WEBHOOK_URL ||
+      "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/CsP3zaWSLWOlpf14hrEj",
+    source: "curivanta_audit_form",
+    page: "https://curivanta.com/#contact"
+  },
+  salon: {
+    url: process.env.SALON_WEBHOOK_URL ||
+      "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/438SYRCvHCyb9HEuHQ4a",
+    source: "hair_salon_bot_form",
+    page: "https://curivanta.com/hair-salon-bot#contact"
+  }
+};
+const PLANS = { starter: "Starter", autopilot: "Autopilot", notsure: "Not sure" };
 
 const SMS_CONSENT_TEXT = "By checking this box, I agree to receive SMS text messages regarding my inquiry and service updates. Message and data rates may apply.";
 
@@ -13,6 +26,7 @@ const clean = (v, max) => String(v ?? "").replace(/\s+/g, " ").trim().slice(0, m
 export default async function handler(req, res) {
   if (!allowPost(req, res)) return;
   const body = req.body && typeof req.body === "object" ? req.body : {};
+  const form = FORMS[body.form] || FORMS.audit;
 
   // Honeypot: real visitors never fill the hidden field; pretend success for bots.
   if (clean(body.website, 200)) return res.status(200).json({ ok: true });
@@ -40,12 +54,13 @@ export default async function handler(req, res) {
     sms_consent: true,
     sms_consent_text: SMS_CONSENT_TEXT,
     consent_at: new Date().toISOString(),
-    source: "curivanta_audit_form",
-    page: "https://curivanta.com/#contact"
+    source: form.source,
+    page: form.page,
+    ...(form === FORMS.salon ? { plan: PLANS[body.plan] || PLANS.notsure } : {})
   };
 
   try {
-    const r = await fetch(WEBHOOK_URL, {
+    const r = await fetch(form.url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
