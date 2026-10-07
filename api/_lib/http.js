@@ -1,19 +1,35 @@
 import { timingSafeEqual } from "node:crypto";
 
-// Prototype gate: every review endpoint requires REVIEW_PASSCODE.
-export function checkPasscode(req, res) {
+// Before launch the review is private: everything needs REVIEW_PASSCODE.
+// Set REVIEW_PUBLIC=1 to open uploads to everyone (reports still require payment).
+export const isPublic = () => process.env.REVIEW_PUBLIC === "1";
+
+export function hasPasscode(req) {
   const expected = process.env.REVIEW_PASSCODE;
-  if (!expected) {
-    res.status(503).json({ error: "Review isn't configured yet (REVIEW_PASSCODE missing)." });
-    return false;
-  }
+  if (!expected) return false;
   const given = Buffer.from(String(req.body?.passcode ?? ""));
   const want = Buffer.from(expected);
-  if (given.length !== want.length || !timingSafeEqual(given, want)) {
+  return given.length === want.length && timingSafeEqual(given, want);
+}
+
+// Access to the free steps (reading documents, starting checkout).
+export function checkAccess(req, res) {
+  if (isPublic() || hasPasscode(req)) return true;
+  if (!process.env.REVIEW_PASSCODE) {
+    res.status(503).json({ error: "Review isn't configured yet (REVIEW_PASSCODE missing)." });
+  } else {
     res.status(401).json({ error: "Wrong passcode." });
-    return false;
   }
-  return true;
+  return false;
+}
+
+// Kept for the passcode screen.
+export const checkPasscode = checkAccess;
+
+export function siteOrigin(req) {
+  const host = req.headers["x-forwarded-host"] || req.headers.host;
+  const proto = req.headers["x-forwarded-proto"] || (String(host).startsWith("localhost") ? "http" : "https");
+  return `${proto}://${host}`;
 }
 
 export function allowPost(req, res) {

@@ -22,7 +22,13 @@
     walk_away: { label: "Walk away", cls: "v-walk" }
   };
 
-  const state = { passcode: "", files: { quote: [null, null, null], bill: [null] }, extracted: null };
+  const state = { passcode: "", files: { quote: [null, null, null], bill: [null] }, extracted: null, config: null, paid: "" };
+  const bypass = new URLSearchParams(location.search).has("bypass"); // owner test runs: passcode + ?bypass
+  const store = {
+    get(k) { try { return JSON.parse(sessionStorage.getItem(k)); } catch (e) { return null; } },
+    set(k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+    del(k) { try { sessionStorage.removeItem(k); } catch (e) {} }
+  };
 
   // ── Theme (shared with /solar) ──────────────────────────────────────────
   const root = document.documentElement;
@@ -181,6 +187,7 @@
         bill: results.find((r) => r.kind === "bill")?.fields || null
       };
       renderConfirm();
+      syncUnlockButton();
       show("confirm");
     } catch (err) {
       showError(err.message);
@@ -281,9 +288,7 @@
 
   $("#back-upload").addEventListener("click", () => show("upload"));
 
-  $("#confirm-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    showError("");
+  function readForm() {
     const quotes = $$("#confirm-quotes .confirm-card").map((card) => {
       const i = card.dataset.i;
       const v = (f) => $(`#q${i}-${f}`).value;
@@ -309,25 +314,83 @@
         ppa_rate_per_kwh: pay === "lease" ? numOrNull(v("ppa_rate_per_kwh")) : null,
         lease_escalator_pct: pay === "lease" ? numOrNull(v("lease_escalator_pct")) : null,
         mentions_federal_tax_credit: pay !== "lease" && $(`#q${i}-tax`).checked,
-        notes: extracted.notes || []
+        notes: extracted.notes || [],
+        _pay: pay
       };
     });
-    const missing = quotes.findIndex((q) => !(q.system_size_kw > 0));
-    if (missing >= 0) return showError(`Quote ${"ABC"[missing]} needs a system size.`);
-    const st = $("#b-state").value;
-    if (!st) return showError("Select your state so we can estimate production.");
+    return {
+      quotes,
+      state: $("#b-state").value,
+      bill: { monthly_kwh: numOrNull($("#b-monthly").value), avg_rate_per_kwh: numOrNull($("#b-rate").value) }
+    };
+  }
 
+  // Puts saved answers back into the Confirm form (after returning from checkout).
+  function applyForm(req) {
+    req.quotes.forEach((q, i) => {
+      const card = $(`#confirm-quotes .confirm-card[data-i="${i}"]`);
+      if (!card) return;
+      for (const [k, val] of Object.entries(q)) {
+        const el = $(`#q${i}-${k}`);
+        if (el && el.type !== "checkbox") el.value = val ?? "";
+      }
+      const radio = $(`input[name="q${i}-pay"][value="${q._pay}"]`, card);
+      if (radio) { radio.checked = true; card.dataset.pay = q._pay; }
+      const tax = $(`#q${i}-tax`);
+      if (tax) tax.checked = !!q.mentions_federal_tax_credit;
+    });
+    $("#b-state").value = req.state || "";
+    $("#b-monthly").value = req.bill?.monthly_kwh ?? "";
+    $("#b-rate").value = req.bill?.avg_rate_per_kwh ?? "";
+  }
+
+  function syncUnlockButton() {
+    const btn = $("#report-btn");
+    const price = "$" + ((state.config?.priceCents ?? 4900) / 100).toFixed(0);
+    btn.textContent = state.paid || bypass ? "Generate my report" : `Unlock my report — ${price}`;
+    const left = store.get("ysa-runs-left");
+    $("#unlock-note").textContent = state.paid
+      ? (left !== null ? `${left} report run${left === 1 ? "" : "s"} left with your purchase.` : "")
+      : bypass ? "Test mode: no payment." : `One-time payment, secure checkout by Stripe. Includes up to ${state.config?.maxRuns ?? 3} report runs if you need to correct a number.`;
+  }
+
+  $("#confirm-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    showError("");
+    const req = readForm();
+    const missing = req.quotes.findIndex((q) => !(q.system_size_kw > 0));
+    if (missing >= 0) return showError(`Quote ${"ABC"[missing]} needs a system size.`);
+    if (!req.state) return showError("Select your state so we can estimate production.");
+
+    if (state.paid || bypass) return generate(req);
+
+    // Not paid yet: keep the confirmed numbers, then hand off to Stripe Checkout.
+    const btn = $("#report-btn");
+    btn.disabled = true;
+    const tick = ticker($("#report-progress"), "Opening secure checkout…");
+    try {
+      store.set("ysa-pending", { extracted: state.extracted, req });
+      const { url } = await api("checkout", {});
+      location.href = url;
+    } catch (err) {
+      showError(err.message);
+      btn.disabled = false;
+      tick.stop();
+    }
+  });
+
+  async function generate(req) {
     const btn = $("#report-btn");
     const progress = $("#report-progress");
     btn.disabled = true;
     const tick = ticker(progress, "Analyzing your quotes and writing your report…");
     try {
-      const { metrics, report } = await api("report", {
-        quotes,
-        state: st,
-        bill: { monthly_kwh: numOrNull($("#b-monthly").value), avg_rate_per_kwh: numOrNull($("#b-rate").value) }
-      });
+      const body = { ...req, quotes: req.quotes.map(({ _pay, ...q }) => q) };
+      const { metrics, report, runsLeft } = await api("report", state.paid ? { ...body, sessionId: state.paid } : { ...body, bypass: true });
+      if (state.paid) store.set("ysa-runs-left", runsLeft);
+      store.set("ysa-pending", { extracted: state.extracted, req });
       renderReport(metrics, report);
+      syncUnlockButton();
       show("report");
     } catch (err) {
       showError(err.message);
@@ -335,7 +398,7 @@
       btn.disabled = false;
       tick.stop();
     }
-  });
+  }
 
   // ── Report ──────────────────────────────────────────────────────────────
   function renderReport(m, r) {
@@ -427,13 +490,53 @@
 
   $("#print-btn").addEventListener("click", () => window.print());
   $("#restart-btn").addEventListener("click", () => {
+    store.del("ysa-pending");
     $$(".slot-clear").forEach((b) => b.click());
     state.extracted = null;
     show("upload");
   });
 
   // ── Start ───────────────────────────────────────────────────────────────
-  try { state.passcode = sessionStorage.getItem("ysa-review-pass") || ""; } catch (e) {}
-  syncReadButton();
-  show(state.passcode ? "upload" : "pass");
+  (async function start() {
+    try { state.passcode = sessionStorage.getItem("ysa-review-pass") || ""; } catch (e) {}
+    state.paid = store.get("ysa-paid") || "";
+    syncReadButton();
+    try {
+      state.config = await (await fetch("/api/review/config", { cache: "no-store" })).json();
+    } catch (e) {
+      state.config = { public: false };
+    }
+
+    const params = new URLSearchParams(location.search);
+    const paidId = params.get("paid");
+    const canceled = params.has("canceled");
+    if (paidId || canceled) {
+      history.replaceState(null, "", location.pathname + (bypass ? "?bypass" : ""));
+      if (paidId) {
+        state.paid = paidId;
+        store.set("ysa-paid", paidId);
+        store.del("ysa-runs-left");
+      }
+    }
+
+    if (!state.config.public && !state.passcode) return show("pass");
+
+    const pending = store.get("ysa-pending");
+    if ((paidId || canceled) && pending?.extracted) {
+      state.extracted = pending.extracted;
+      renderConfirm();
+      applyForm(pending.req);
+      syncUnlockButton();
+      show("confirm");
+      if (paidId) {
+        $("#unlock-note").textContent = "Payment received — writing your report now.";
+        generate(pending.req);
+      } else {
+        showError("Checkout was canceled — your numbers are still here when you're ready.");
+      }
+      return;
+    }
+    if (paidId) showError("Payment received. Upload your documents again to generate your report.");
+    show("upload");
+  })();
 })();
