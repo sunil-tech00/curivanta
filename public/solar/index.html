@@ -312,21 +312,77 @@
           </form>
 
           <div class="tool-result" id="sizer-result" aria-live="polite"></div>
+          <p class="fine tool-note">Planning estimates only. Verify your roof's real sun hours at pvwatts.nrel.gov, get 3+ installer quotes, and confirm NEM/net-billing rules with your utility — export credits vary widely (e.g. California NEM 3.0). Battery sizing here is simplified; critical loads and surge currents need a pro review.</p>
         </div>
 
         <!-- Comparator -->
         <div class="tool" id="panel-compare" role="tabpanel" aria-labelledby="tab-compare" hidden>
+          <p class="tool-intro">Enter up to 3 quotes. Always get the <strong>cash price</strong> — even if you plan to finance or lease.</p>
           <form id="compare-form" novalidate>
             <div class="quotes" id="quotes"></div>
             <div class="compare-actions">
               <button class="btn btn-outline" type="button" id="add-quote">+ Add a third quote</button>
-              <button class="btn btn-primary" type="submit">Compare Quotes</button>
             </div>
+
+            <fieldset class="assumptions">
+              <legend>Assumptions <span>(apply to every quote)</span></legend>
+              <div class="field">
+                <label for="cq-sun">Peak sun hours / day</label>
+                <input id="cq-sun" type="number" min="0.5" max="10" step="0.1" value="5.5" />
+                <small>Your location — see the System Sizer</small>
+              </div>
+              <div class="field">
+                <label for="cq-derate">System derate factor</label>
+                <input id="cq-derate" type="number" min="0.5" max="1" step="0.01" value="0.8" />
+                <small>Losses: inverter, wiring, heat, dust</small>
+              </div>
+              <div class="field">
+                <label for="cq-degr">Annual panel degradation (%)</label>
+                <input id="cq-degr" type="number" min="0" max="5" step="0.1" value="0.5" />
+                <small>Panels lose ~0.5%/yr</small>
+              </div>
+            </fieldset>
           </form>
+
           <div class="scorecard" id="scorecard" aria-live="polite"></div>
+
+          <details class="checklist">
+            <summary>Red flags &amp; questions to ask every installer</summary>
+            <div class="checklist-cols">
+              <div>
+                <h4>Red flags — walk away or demand answers</h4>
+                <ul>
+                  <li>No cash price disclosed — only a monthly payment is quoted</li>
+                  <li>Financed price is 15%+ above the cash price (hidden dealer fees)</li>
+                  <li>Production estimate is 10%+ above what the math says your roof can do</li>
+                  <li>No production guarantee in writing</li>
+                  <li>Lease/PPA escalator above ~2.9% per year</li>
+                  <li>Rep can't name the exact panel and inverter models</li>
+                  <li>“Sign today” pressure or expiring discounts</li>
+                  <li>No contractor license number, or it doesn't verify on your state board</li>
+                  <li>No roof-penetration / workmanship warranty in the contract</li>
+                  <li>Vague timeline for permits, install, and utility interconnection</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Questions to ask every installer</h4>
+                <ul>
+                  <li>What is the cash price AND the financed price, in writing?</li>
+                  <li>What are the dealer fees, exactly, in dollars?</li>
+                  <li>What panel and inverter models are you installing — exact model numbers?</li>
+                  <li>How did you calculate the production estimate? Is it guaranteed?</li>
+                  <li>Who handles permits, HOA approval, and utility interconnection?</li>
+                  <li>What is the roof-penetration warranty, and for how long?</li>
+                  <li>If I sell the house, does the loan/lease transfer? What does that cost?</li>
+                  <li>Is system monitoring included? Who watches it?</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+          <p class="fine tool-note">Planning estimates only, not financial advice. $/W benchmarks: ~$2.50–$3.50/W cash is typical US residential. A financed price more than ~15% above cash usually means dealer fees baked into the loan. Production estimates more than ~10% above the expected number deserve a hard question. For TPO/lease: the 25-year total is the number that matters — a 2.9% escalator nearly doubles your payment by year 25.</p>
         </div>
 
-        <p class="fine">Planning estimates only. Verify your roof's real sun hours at pvwatts.nrel.gov, get 3+ installer quotes, and confirm NEM/net-billing rules with your utility — export credits vary widely (e.g. California NEM 3.0). Battery sizing here is simplified; critical loads and surge currents need a pro review.</p>
+        
       </div>
     </section>
 

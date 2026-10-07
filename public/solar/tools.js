@@ -179,34 +179,55 @@ const FORMSPREE_ENDPOINT = "";
   renderSizer();
 
   // ── Solar Quote Comparator ──────────────────────────────────────────────
-  const BATTERY_COST_PER_KWH = 1000; // rough installed cost used to back batteries out of $/W
+  // Direct port of solar-quote-toolkit-v1.xlsx (1-Quotes → 2-Comparison).
   const MAX_QUOTES = 3;
+  const DEALER_FEE_LIMIT = 0.15;   // financed > 15% over cash
+  const PRODUCTION_LIMIT = 1.10;   // quoted > 110% of expected
+  const ESCALATOR_LIMIT = 0.029;   // lease/PPA escalator above 2.9%/yr
   const quotesEl = $("#quotes");
   const addBtn = $("#add-quote");
+  const DASH = "—";
+
+  const qField = (n, key, label, attrs, hint) => `
+    <div class="field" data-for="${key}">
+      <label for="q${n}-${key}">${label}</label>
+      <input id="q${n}-${key}" data-k="${key}" ${attrs} />
+      ${hint ? `<small>${hint}</small>` : ""}
+    </div>`;
 
   function quoteCard(n) {
-    const id = (f) => `q${n}-${f}`;
+    const letter = String.fromCharCode(64 + n);
     const el = document.createElement("fieldset");
     el.className = "quote-card";
+    el.dataset.pay = "cash";
     el.innerHTML = `
-      <h3><span>Quote ${String.fromCharCode(64 + n)}</span>${n === 3 ? '<button type="button" class="remove">Remove</button>' : ""}</h3>
-      <div class="field"><label for="${id("name")}">Installer</label><input id="${id("name")}" data-k="name" placeholder="Company name" /></div>
-      <div class="field"><label for="${id("kw")}">System size (kW)</label><input id="${id("kw")}" data-k="kw" type="number" min="0" step="0.1" inputmode="decimal" placeholder="7.2" /></div>
-      <div class="field"><label for="${id("price")}">Total price before incentives ($)</label><input id="${id("price")}" data-k="price" type="number" min="0" step="100" inputmode="decimal" placeholder="24000" /></div>
-      <div class="field"><label for="${id("prod")}">Year-1 production (kWh)</label><input id="${id("prod")}" data-k="prod" type="number" min="0" step="100" inputmode="decimal" placeholder="11000" /></div>
-      <div class="field"><label for="${id("batt")}">Battery (kWh, 0 if none)</label><input id="${id("batt")}" data-k="batt" type="number" min="0" step="0.5" inputmode="decimal" value="0" /></div>
-      <div class="field"><label for="${id("warranty")}">Workmanship warranty (years)</label><input id="${id("warranty")}" data-k="warranty" type="number" min="0" step="1" inputmode="numeric" placeholder="10" /></div>
-      <div class="field"><label for="${id("fin")}">Payment type</label>
-        <select id="${id("fin")}" data-k="fin">
-          <option value="cash">Cash</option>
-          <option value="loan">Loan</option>
-          <option value="lease">Lease</option>
-          <option value="ppa">PPA</option>
-        </select>
+      <h3><span>Quote ${letter}</span>${n === 3 ? '<button type="button" class="remove">Remove</button>' : ""}</h3>
+      ${qField(n, "name", "Installer name", 'placeholder="Company on the quote"')}
+      ${qField(n, "kw", "System size (kW DC)", 'type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 7.2"')}
+      ${qField(n, "panel", "Panel brand &amp; model", 'placeholder="e.g. REC Alpha Pure 410W"')}
+      ${qField(n, "inverter", "Inverter brand &amp; type", 'placeholder="e.g. Enphase IQ8+ micros"')}
+      ${qField(n, "prod", "Quoted annual production (kWh/yr)", 'type="number" min="0" step="1" inputmode="decimal" placeholder="e.g. 11000"', "The installer's estimate")}
+      ${qField(n, "cash", "Cash price ($)", 'type="number" min="0" step="1" inputmode="decimal" placeholder="e.g. 21000"', "Always ask for this number!")}
+      <div class="field">
+        <span class="label">How is it paid for?</span>
+        <div class="seg" role="radiogroup" aria-label="Quote ${letter} payment type">
+          <label><input type="radio" name="q${n}-pay" value="cash" checked /><span>Cash</span></label>
+          <label><input type="radio" name="q${n}-pay" value="loan" /><span>Loan</span></label>
+          <label><input type="radio" name="q${n}-pay" value="lease" /><span>Lease / PPA</span></label>
+        </div>
       </div>
-      <div class="field"><label for="${id("fee")}">Dealer fee or annual escalator (%)</label><input id="${id("fee")}" data-k="fee" type="number" min="0" step="0.1" inputmode="decimal" value="0" /></div>`;
+      <div class="pay-group" data-group="loan">
+        ${qField(n, "financed", "Financed price ($)", 'type="number" min="0" step="1" inputmode="decimal" placeholder="e.g. 27000"', "Loan price")}
+        ${qField(n, "apr", "Loan APR (%)", 'type="number" min="0" step="0.01" inputmode="decimal" placeholder="e.g. 5.99"')}
+        ${qField(n, "term", "Loan term (years)", 'type="number" min="1" step="1" inputmode="numeric" placeholder="e.g. 25"')}
+      </div>
+      <div class="pay-group" data-group="lease">
+        ${qField(n, "lease", "Monthly lease/PPA payment ($)", 'type="number" min="0" step="1" inputmode="decimal" placeholder="e.g. 150"', "First-year monthly payment")}
+        ${qField(n, "esc", "Annual escalator (%)", 'type="number" min="0" step="0.1" inputmode="decimal" placeholder="e.g. 2.9"', "Over a 25-year term")}
+      </div>`;
+    $$('input[type="radio"]', el).forEach((r) => r.addEventListener("change", () => { el.dataset.pay = r.value; }));
     const rm = $(".remove", el);
-    if (rm) rm.addEventListener("click", () => { el.remove(); syncQuotes(); });
+    if (rm) rm.addEventListener("click", () => { el.remove(); syncQuotes(); renderComparison(); });
     return el;
   }
 
@@ -216,97 +237,134 @@ const FORMSPREE_ENDPOINT = "";
     addBtn.hidden = count >= MAX_QUOTES;
   }
 
+  // Excel PMT(rate, nper, pv) sign-flipped: the monthly payment on a loan of pv.
+  function payment(rate, nper, pv) {
+    return rate === 0 ? pv / nper : (pv * rate) / (1 - Math.pow(1 + rate, -nper));
+  }
+
+  function readQuote(card, i) {
+    const q = { label: "Quote " + String.fromCharCode(65 + i), pay: card.dataset.pay };
+    $$("[data-k]", card).forEach((inp) => {
+      const k = inp.dataset.k;
+      q[k] = k === "name" || k === "panel" || k === "inverter" ? inp.value.trim() : num(inp.value);
+    });
+    // Only the selected payment section counts — same as filling the loan OR lease rows in the sheet.
+    if (q.pay !== "loan") q.financed = q.apr = q.term = NaN;
+    if (q.pay !== "lease") q.lease = q.esc = NaN;
+    return q;
+  }
+
+  function analyzeQuote(q, a) {
+    const has = (v) => Number.isFinite(v) && v !== 0;
+    const watts = q.kw * 1000;
+    const r = { ...q };
+    r.ppwCash = has(q.cash) ? q.cash / watts : NaN;                                   // B10
+    r.ppwFinanced = has(q.financed) ? q.financed / watts : NaN;                       // B11
+    r.markup = has(q.cash) && has(q.financed) ? (q.financed - q.cash) / q.cash : NaN; // B12
+    r.expected = q.kw * a.sun * 365 * a.derate;                                       // B14
+    r.quotedVsExpected = has(q.prod) ? q.prod / r.expected : NaN;                     // B15
+    r.prod25 = a.degr > 0                                                             // B17
+      ? (r.expected * (1 - Math.pow(1 - a.degr, 25))) / a.degr
+      : r.expected * 25;
+
+    // B18: lease/PPA → escalating payments; loan → total of payments; otherwise cash price.
+    const esc = Number.isFinite(q.esc) ? q.esc / 100 : 0;
+    if (q.lease > 0) {
+      r.cost25 = esc === 0 ? q.lease * 12 * 25 : (q.lease * 12 * (Math.pow(1 + esc, 25) - 1)) / esc;
+      r.costBasis = "25 yrs of lease payments";
+    } else if (q.financed > 0 && q.term > 0) {
+      const apr = Number.isFinite(q.apr) ? q.apr / 100 : 0;
+      r.cost25 = payment(apr / 12, q.term * 12, q.financed) * q.term * 12;
+      r.costBasis = "Total loan payments";
+    } else if (q.cash > 0) {
+      r.cost25 = q.cash;
+      r.costBasis = "Cash price";
+    } else {
+      r.cost25 = NaN;
+    }
+    r.costPerKwh = r.prod25 > 0 ? r.cost25 / r.prod25 : NaN;                          // B19
+
+    r.flagDealer = Number.isFinite(r.markup) ? r.markup > DEALER_FEE_LIMIT : null;    // B21
+    r.flagProd = Number.isFinite(r.quotedVsExpected) ? r.quotedVsExpected > PRODUCTION_LIMIT : null; // B22
+    r.flagEsc = q.lease > 0 ? esc > ESCALATOR_LIMIT : null;                           // B23
+    return r;
+  }
+
+  function renderComparison() {
+    const out = $("#scorecard");
+    const a = {
+      sun: num($("#cq-sun").value),
+      derate: num($("#cq-derate").value),
+      degr: (num($("#cq-degr").value) || 0) / 100
+    };
+    const rows = $$(".quote-card", quotesEl)
+      .map(readQuote)
+      .filter((q) => q.kw > 0)
+      .map((q) => analyzeQuote(q, a));
+
+    if (!(a.sun > 0 && a.derate > 0)) {
+      out.innerHTML = '<p class="empty">Enter peak sun hours and a derate factor to compare.</p>';
+      return;
+    }
+    if (!rows.length) {
+      out.innerHTML = '<p class="empty">Add a system size (kW) and price to each quote to see the side-by-side comparison.</p>';
+      return;
+    }
+
+    const multi = rows.length > 1;
+    const lowest = (k) => { const v = rows.map((r) => r[k]).filter(Number.isFinite); return v.length ? Math.min(...v) : NaN; };
+    const bestCash = lowest("ppwCash");
+    const bestKwh = lowest("costPerKwh");
+    const winner = multi && Number.isFinite(bestKwh) ? rows.find((r) => r.costPerKwh === bestKwh) : null;
+
+    const pct = (v) => (Number.isFinite(v) ? fmt(v * 100, 1) + "%" : DASH);
+    const usd2 = (v) => (Number.isFinite(v) ? "$" + fmt(v, 2) : DASH);
+    const flag = (v, bad) => (v === null ? DASH : v ? `<span class="flag-bad">⚠ ${bad}</span>` : '<span class="flag-ok">✓ OK</span>');
+    const cells = (fn, bestFn) => rows.map((r) => `<td class="${multi && bestFn && bestFn(r) ? "best" : ""}">${fn(r)}</td>`).join("");
+    const section = (title) => `<tr class="sec"><th colspan="${rows.length + 1}" scope="colgroup">${title}</th></tr>`;
+    const payLabel = { cash: "Cash", loan: "Loan", lease: "Lease / PPA" };
+
+    const head = rows.map((r) => `
+      <th scope="col">
+        ${esc(r.name || r.label)}${r === winner ? '<span class="badge-best">Best value</span>' : ""}
+        <small>${fmt(r.kw, 2)} kW · ${payLabel[r.pay]}${r.panel ? " · " + esc(r.panel) : ""}${r.inverter ? " · " + esc(r.inverter) : ""}</small>
+      </th>`).join("");
+
+    out.innerHTML = `
+      <table class="score-table">
+        <thead><tr><th scope="col"><span class="sr-only">Metric</span></th>${head}</tr></thead>
+        <tbody>
+          ${section("Price normalized")}
+          <tr><th scope="row">$/Watt (cash)<small>~$2.50–$3.50 typical · lower wins</small></th>${cells((r) => usd2(r.ppwCash), (r) => r.ppwCash === bestCash)}</tr>
+          <tr><th scope="row">$/Watt (financed)</th>${cells((r) => usd2(r.ppwFinanced))}</tr>
+          <tr><th scope="row">Dealer-fee markup<small>(Loan − cash) ÷ cash</small></th>${cells((r) => pct(r.markup))}</tr>
+          ${section("Production reality check")}
+          <tr><th scope="row">Expected annual production<small>What your roof should produce</small></th>${cells((r) => fmt(r.expected) + " kWh")}</tr>
+          <tr><th scope="row">Quoted vs expected<small>100% = honest estimate</small></th>${cells((r) => pct(r.quotedVsExpected))}</tr>
+          ${section("25-year true cost")}
+          <tr><th scope="row">25-yr production<small>With panel degradation</small></th>${cells((r) => fmt(r.prod25) + " kWh")}</tr>
+          <tr><th scope="row">25-yr total cost</th>${cells((r) => Number.isFinite(r.cost25) ? `${money(r.cost25)}<small>${r.costBasis}</small>` : DASH)}</tr>
+          <tr class="key"><th scope="row">True cost per kWh<small>The single best compare number</small></th>${cells((r) => Number.isFinite(r.costPerKwh) ? fmt(r.costPerKwh * 100, 1) + "¢" : DASH, (r) => r.costPerKwh === bestKwh)}</tr>
+          ${section("Automatic flags")}
+          <tr><th scope="row">Dealer fees</th>${cells((r) => flag(r.flagDealer, "HIGH — likely dealer fees"))}</tr>
+          <tr><th scope="row">Production estimate</th>${cells((r) => flag(r.flagProd, "HIGH — inflated estimate"))}</tr>
+          <tr><th scope="row">Escalator</th>${cells((r) => flag(r.flagEsc, "HIGH escalator"))}</tr>
+        </tbody>
+      </table>
+      <p class="fine left">Want a second opinion on these quotes? <a href="#upload-bill">Send them to us.</a></p>`;
+  }
+
   quotesEl.append(quoteCard(1), quoteCard(2));
   syncQuotes();
   addBtn.addEventListener("click", () => {
     if ($$(".quote-card", quotesEl).length < MAX_QUOTES) quotesEl.append(quoteCard(3));
     syncQuotes();
   });
-
-  function analyzeQuote(q) {
-    const watts = q.kw * 1000;
-    const ppw = q.price / watts;
-    const pvPrice = Math.max(q.price - q.batt * BATTERY_COST_PER_KWH, 0);
-    const ppwExBatt = pvPrice / watts;
-    const ratio = q.prod / q.kw;
-    // Cap optimistic production so an inflated estimate can't buy a better score.
-    const realisticProd = Math.min(q.prod, q.kw * 1700);
-    let lifetime = 0;
-    for (let y = 0; y < 25; y++) lifetime += realisticProd * Math.pow(0.995, y);
-    const centsPerKwh = (q.price / lifetime) * 100;
-
-    const flags = [];
-    if (ppwExBatt > 4) flags.push(`High price: ${"$" + fmt(ppwExBatt, 2)}/W for the panels (CA fair range is roughly $2.75–$3.75/W).`);
-    if (ratio > 1750) flags.push(`Production estimate looks optimistic (${fmt(ratio)} kWh per kW — most CA roofs make 1,350–1,700).`);
-    if (ratio < 1200) flags.push(`Low production for the size (${fmt(ratio)} kWh per kW) — check shading and roof direction.`);
-    if (q.fin === "loan" && q.fee > 0) flags.push(`Dealer fee of ${fmt(q.fee, 1)}% — about ${money(q.price * q.fee / 100)} of the price is financing cost.`);
-    if ((q.fin === "lease" || q.fin === "ppa") && q.fee > 0) {
-      const lift = (Math.pow(1 + q.fee / 100, 24) - 1) * 100;
-      flags.push(`${fmt(q.fee, 1)}% escalator — payments will be ~${fmt(lift)}% higher by year 25.`);
-    }
-    if (q.fin === "lease" || q.fin === "ppa") flags.push("You won't own the system — it can complicate selling your home.");
-    if (q.warranty > 0 && q.warranty < 10) flags.push(`Short workmanship warranty (${q.warranty} yrs) — 10+ years is standard.`);
-    return { ...q, ppw, ppwExBatt, ratio, centsPerKwh, flags };
-  }
-
-  const finLabel = { cash: "Cash", loan: "Loan", lease: "Lease", ppa: "PPA" };
-
-  $("#compare-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const out = $("#scorecard");
-    const quotes = $$(".quote-card", quotesEl).map((card, i) => {
-      const q = { label: "Quote " + String.fromCharCode(65 + i) };
-      $$("[data-k]", card).forEach((inp) => {
-        const k = inp.dataset.k;
-        q[k] = k === "name" || k === "fin" ? inp.value.trim() : num(inp.value);
-      });
-      q.batt = q.batt > 0 ? q.batt : 0;
-      q.fee = q.fee > 0 ? q.fee : 0;
-      return q;
-    });
-
-    const incomplete = quotes.filter((q) => !(q.kw > 0 && q.price > 0 && q.prod > 0));
-    if (incomplete.length) {
-      out.innerHTML = `<p class="form-error">Fill in system size, price, and year-1 production for ${incomplete.map((q) => q.label).join(" and ")}.</p>`;
-      return;
-    }
-
-    const rows = quotes.map(analyzeQuote);
-    const minOf = (k) => Math.min(...rows.map((r) => r[k]));
-    const maxOf = (k) => Math.max(...rows.map((r) => r[k]));
-    const best = {
-      ppwExBatt: minOf("ppwExBatt"),
-      centsPerKwh: minOf("centsPerKwh"),
-      warranty: maxOf("warranty"),
-      flags: Math.min(...rows.map((r) => r.flags.length))
-    };
-    // Best value: lowest lifetime cost per kWh among the quotes with the fewest red flags.
-    const contenders = rows.filter((r) => r.flags.length === best.flags);
-    const winner = contenders.reduce((a, b) => (b.centsPerKwh < a.centsPerKwh ? b : a));
-
-    const cell = (r, val, isBest) => `<td class="${rows.length > 1 && isBest ? "best" : ""}">${val}</td>`;
-    const head = rows.map((r) => `<th scope="col">${esc(r.name || r.label)}${r === winner ? '<span class="badge-best">Best value</span>' : ""}</th>`).join("");
-
-    out.innerHTML = `
-      <table class="score-table">
-        <thead><tr><th scope="col"><span class="sr-only">Metric</span></th>${head}</tr></thead>
-        <tbody>
-          <tr><th scope="row">System size</th>${rows.map((r) => `<td>${fmt(r.kw, 1)} kW${r.batt ? ` + ${fmt(r.batt, 1)} kWh battery` : ""}</td>`).join("")}</tr>
-          <tr><th scope="row">Total price</th>${rows.map((r) => `<td>${money(r.price)}</td>`).join("")}</tr>
-          <tr><th scope="row">Price per watt</th>${rows.map((r) => `<td>$${fmt(r.ppw, 2)}</td>`).join("")}</tr>
-          <tr><th scope="row">Price per watt, panels only (est.)</th>${rows.map((r) => cell(r, "$" + fmt(r.ppwExBatt, 2), r.ppwExBatt === best.ppwExBatt)).join("")}</tr>
-          <tr><th scope="row">25-yr cost per kWh</th>${rows.map((r) => cell(r, fmt(r.centsPerKwh, 1) + "¢", r.centsPerKwh === best.centsPerKwh)).join("")}</tr>
-          <tr><th scope="row">Production per kW</th>${rows.map((r) => `<td>${fmt(r.ratio)} kWh</td>`).join("")}</tr>
-          <tr><th scope="row">Workmanship warranty</th>${rows.map((r) => cell(r, r.warranty > 0 ? r.warranty + " yrs" : "—", r.warranty > 0 && r.warranty === best.warranty)).join("")}</tr>
-          <tr><th scope="row">Payment type</th>${rows.map((r) => `<td>${finLabel[r.fin]}</td>`).join("")}</tr>
-          <tr class="overall"><th scope="row">Red flags</th>${rows.map((r) => `<td>${r.flags.length
-            ? `<ul class="flags">${r.flags.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>`
-            : '<ul class="flags ok"><li>None found</li></ul>'}</td>`).join("")}</tr>
-        </tbody>
-      </table>
-      <p class="fine">25-yr cost per kWh assumes 0.5%/yr panel degradation and caps production at 1,700 kWh per kW. Want a second opinion? <a href="#upload-bill">Send us your quotes.</a></p>`;
-    out.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  });
+  const compareForm = $("#compare-form");
+  compareForm.addEventListener("input", renderComparison);
+  compareForm.addEventListener("change", renderComparison);
+  compareForm.addEventListener("submit", (e) => e.preventDefault());
+  renderComparison();
 
   // ── Formspree forms ─────────────────────────────────────────────────────
   const fileInput = $("#lf-file");
