@@ -50,6 +50,6 @@ export default async function handler(req, res) {
     }
     res.status(200).json({ metrics, report, runsLeft, test: testRun, reportId: id, reportUrl: url });
   } catch (err) {
-    sendError(res, err);
+    sendError(res, err, req);
   }
 }

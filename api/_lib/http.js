@@ -1,8 +1,9 @@
 import { timingSafeEqual } from "node:crypto";
 
-// Before launch the review is private: everything needs REVIEW_PASSCODE.
-// Set REVIEW_PUBLIC=1 to open uploads to everyone (reports still require payment).
-export const isPublic = () => process.env.REVIEW_PUBLIC === "1";
+// The review is public: anyone can upload and preview; reports require payment.
+// REVIEW_PASSCODE is only the owner's key for free ?bypass test runs and error details.
+// REVIEW_PRIVATE=1 puts the whole flow back behind the passcode (e.g. during maintenance).
+export const isPublic = () => process.env.REVIEW_PRIVATE !== "1";
 
 export function hasPasscode(req) {
   const expected = process.env.REVIEW_PASSCODE;
@@ -40,12 +41,16 @@ export function allowPost(req, res) {
 }
 
 // Only errors we raise ourselves (expose: true) reach the customer; API/SDK errors are logged.
-export function sendError(res, err) {
+// The owner (passcode) also gets the underlying detail to diagnose failures.
+export function sendError(res, err, req) {
   console.error(err);
   if (err.expose) return res.status(err.status).json({ error: err.message });
   res.status(502).json({
     error: "Something went wrong reading your documents. Please try again in a minute.",
-    // Prototype only: callers already passed the passcode. Remove before public launch.
-    detail: `${err.status ?? ""} ${err.error?.error?.message ?? err.message ?? err}`.trim()
+    ...(req && hasPasscode(req) ? { detail: `${err.status ?? ""} ${err.error?.error?.message ?? err.message ?? err}`.trim() } : {})
   });
+}
+
+export function tooMany(res) {
+  res.status(429).json({ error: "Too many requests from your connection. Please wait a few minutes and try again." });
 }

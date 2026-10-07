@@ -1,4 +1,5 @@
-import { allowPost, checkAccess, sendError } from "../_lib/http.js";
+import { allowPost, checkAccess, sendError, tooMany, hasPasscode } from "../_lib/http.js";
+import { allow } from "../_lib/limit.js";
 import { extractDocument } from "../_lib/claude.js";
 
 const TYPES = new Set(["application/pdf", "image/jpeg", "image/png", "image/webp", "image/gif"]);
@@ -8,6 +9,7 @@ export const config = { maxDuration: 300 };
 
 export default async function handler(req, res) {
   if (!allowPost(req, res) || !checkAccess(req, res)) return;
+  if (!hasPasscode(req) && !allow(req, "extract", 15, 10 * 60 * 1000)) return tooMany(res);
   const { kind, mediaType, data } = req.body ?? {};
   if (kind !== "quote" && kind !== "bill") return res.status(400).json({ error: "Unknown document kind." });
   if (!TYPES.has(mediaType)) return res.status(400).json({ error: "Upload a PDF, JPG, or PNG." });
@@ -17,6 +19,6 @@ export default async function handler(req, res) {
   try {
     res.status(200).json({ fields: await extractDocument({ kind, mediaType, data }) });
   } catch (err) {
-    sendError(res, err);
+    sendError(res, err, req);
   }
 }
