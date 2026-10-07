@@ -382,15 +382,6 @@ input::placeholder { color: color-mix(in srgb, var(--muted) 70%, transparent); }
 .flag-ok { color: var(--good); font-weight: 600; }
 .scorecard .empty { color: var(--muted); text-align: center; padding: 12px; }
 
-/* Checklist */
-.checklist { margin-top: 24px; border: 1px solid var(--border); border-radius: 14px; padding: 0 18px; }
-.checklist summary { cursor: pointer; padding: 16px 0; font-weight: 600; }
-.checklist-cols { display: grid; gap: 24px; grid-template-columns: 1fr; padding-bottom: 18px; }
-@media (min-width: 760px) { .checklist-cols { grid-template-columns: 1fr 1fr; } }
-.checklist h4 { margin: 0 0 10px; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--amber-text); }
-.checklist ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-.checklist li { position: relative; padding-left: 26px; color: var(--muted); font-size: 14.5px; }
-.checklist li::before { content: "☐"; position: absolute; left: 0; color: var(--amber-text); }
 .form-error { color: var(--danger); font-size: 14px; grid-column: 1 / -1; }
 
 /* Testimonials */
