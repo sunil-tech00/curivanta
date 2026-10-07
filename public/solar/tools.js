@@ -99,8 +99,8 @@ const LINKS = {
 
   const sz = (id) => $("#sz-" + id);
   const stateSel = sz("state");
-  stateSel.innerHTML = Object.keys(SUN_HOURS).map((st) => `<option${st === "California" ? " selected" : ""}>${st}</option>`).join("");
-  sz("sun").value = SUN_HOURS.California;
+  stateSel.innerHTML = '<option value="" selected disabled>Select your state</option>' +
+    Object.keys(SUN_HOURS).map((st) => `<option>${st}</option>`).join("");
   stateSel.addEventListener("change", () => { sz("sun").value = SUN_HOURS[stateSel.value]; });
 
   function renderSizer() {
@@ -112,11 +112,11 @@ const LINKS = {
     };
     const missing = [
       [i.monthlyKwh > 0, "monthly kWh use"],
-      [i.sunHours > 0, "peak sun hours"],
+      [i.sunHours > 0, "your state (or peak sun hours)"],
       [i.offset > 0, "offset goal"]
     ].filter(([ok]) => !ok).map(([, label]) => label);
     if (missing.length) {
-      out.innerHTML = `<p class="empty">Enter ${missing.join(", ")} to see your system size.</p>`;
+      out.innerHTML = `<p class="empty">${i.sunHours > 0 ? "Enter" : "Choose"} ${missing.join(", ")} to see your system size.</p>`;
       return;
     }
 
