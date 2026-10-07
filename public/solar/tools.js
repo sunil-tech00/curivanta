@@ -50,74 +50,133 @@ const FORMSPREE_ENDPOINT = "";
   });
 
   // ── Solar System Sizer ──────────────────────────────────────────────────
-  // PLACEHOLDER MATH — to be replaced with the formulas from the sizing spreadsheet.
-  // Keep the same inputs/outputs shape so the UI below doesn't need to change.
-  const SIZER = {
-    sunHours: 5.5,          // CA average peak sun hours/day
-    derate: 0.80,           // system losses (inverter, wiring, soiling, temp)
-    sqftPerPanel: 19,       // roof area per panel incl. spacing
-    costPerWatt: [3.0, 3.75] // CA installed cost range, before any incentives
-  };
+  // Direct port of Solar-Sizing-Calculator.xlsx (1-Inputs → 2-Results).
+  // Cell references are noted so the two can be kept in sync.
 
-  function sizeSystem({ monthlyBill, monthlyKwh, rate, offsetPct, panelW }) {
-    const monthly = monthlyKwh > 0 ? monthlyKwh : monthlyBill / rate;
-    const annualUse = monthly * 12;
-    const target = annualUse * (offsetPct / 100);
-    const kwhPerKw = SIZER.sunHours * 365 * SIZER.derate;
-    const panels = Math.max(1, Math.ceil((target / kwhPerKw) * 1000 / panelW));
-    const kw = (panels * panelW) / 1000;
-    const production = kw * kwhPerKw;
+  // 'Sun Hours' tab: average peak sun hours/day by state (NREL PVWatts, approximate).
+  const SUN_HOURS = {
+    "Alabama": 4.5, "Alaska": 2.5, "Arizona": 6.5, "Arkansas": 4.7, "California": 5.5,
+    "Colorado": 5.4, "Connecticut": 4.0, "Delaware": 4.3, "District of Columbia": 4.2, "Florida": 5.2,
+    "Georgia": 4.6, "Hawaii": 5.5, "Idaho": 4.8, "Illinois": 4.0, "Indiana": 4.1,
+    "Iowa": 4.3, "Kansas": 5.0, "Kentucky": 4.3, "Louisiana": 4.7, "Maine": 3.8,
+    "Maryland": 4.2, "Massachusetts": 3.9, "Michigan": 3.8, "Minnesota": 4.0, "Mississippi": 4.6,
+    "Missouri": 4.6, "Montana": 4.6, "Nebraska": 4.9, "Nevada": 6.0, "New Hampshire": 3.9,
+    "New Jersey": 4.1, "New Mexico": 6.2, "New York": 3.8, "North Carolina": 4.5, "North Dakota": 4.4,
+    "Ohio": 3.9, "Oklahoma": 5.1, "Oregon": 3.8, "Pennsylvania": 3.8, "Rhode Island": 4.0,
+    "South Carolina": 4.6, "South Dakota": 4.6, "Tennessee": 4.4, "Texas": 5.3, "Utah": 5.5,
+    "Vermont": 3.8, "Virginia": 4.2, "Washington": 3.5, "West Virginia": 3.9, "Wisconsin": 3.9,
+    "Wyoming": 5.2
+  };
+  const GRID_TIED = "Grid-tied (no battery)";
+  const LITHIUM = "LiFePO4 (lithium)";
+
+  // Excel ROUNDUP(x, 0), tolerant of float noise like 18.000000000004.
+  const roundUp = (x) => Math.ceil(x - 1e-9);
+
+  function sizeSystem(i) {
+    const dailyUse = i.monthlyKwh / 30;                                   // B5
+    const targetDaily = dailyUse * i.offset;                               // B6
+    const recommendedKw = targetDaily / (i.sunHours * i.derate);           // B7
+    const panels = roundUp((recommendedKw * 1000) / i.panelW);             // B8
+    const actualKw = (panels * i.panelW) / 1000;                           // B9
+    const annualProduction = actualKw * i.sunHours * 365 * i.derate;       // B12
+    const annualUsage = i.monthlyKwh * 12;                                 // B13
+    const coverage = annualProduction / annualUsage;                       // B14
+    const dod = i.chemistry === LITHIUM ? 0.85 : 0.5;                      // 1-Inputs B18
+    const hasBattery = i.systemType !== GRID_TIED;
+    const batteryKwh = hasBattery ? (dailyUse * i.backupDays) / dod : 0;   // B17
+    const batteryAh = hasBattery ? (batteryKwh * 1000) / i.bankVoltage : 0; // B18
+    const inverterKw = Math.round(actualKw * 1.1 * 10) / 10;               // B19
+    const costLow = actualKw * 1000 * i.costLow;                           // B22
+    const costHigh = actualKw * 1000 * i.costHigh;                         // C22
+    const annualSavings = Math.min(annualProduction, annualUsage) * i.rate; // B24
+    const payback = annualSavings > 0 ? (costLow + costHigh) / 2 / annualSavings : NaN; // B25
     return {
-      annualUse,
-      kw,
-      panels,
-      production,
-      offset: (production / annualUse) * 100,
-      roofSqft: panels * SIZER.sqftPerPanel,
-      costLow: kw * 1000 * SIZER.costPerWatt[0],
-      costHigh: kw * 1000 * SIZER.costPerWatt[1]
+      dailyUse, targetDaily, recommendedKw, panels, actualKw, annualProduction, annualUsage,
+      coverage, dod, hasBattery, batteryKwh, batteryAh, inverterKw, costLow, costHigh,
+      annualSavings, payback
     };
   }
 
-  const utilitySel = $("#sz-utility");
-  utilitySel.addEventListener("change", () => {
-    $("#sz-rate-field").hidden = utilitySel.value !== "custom";
-  });
+  const sz = (id) => $("#sz-" + id);
+  const stateSel = sz("state");
+  stateSel.innerHTML = Object.keys(SUN_HOURS).map((st) => `<option${st === "California" ? " selected" : ""}>${st}</option>`).join("");
+  sz("sun").value = SUN_HOURS.California;
+  stateSel.addEventListener("change", () => { sz("sun").value = SUN_HOURS[stateSel.value]; });
 
-  $("#sizer-form").addEventListener("submit", (e) => {
-    e.preventDefault();
+  function renderSizer() {
     const out = $("#sizer-result");
-    const monthlyBill = num($("#sz-bill").value);
-    const monthlyKwh = num($("#sz-kwh").value);
-    const rate = utilitySel.value === "custom" ? num($("#sz-rate").value) : num(utilitySel.value);
-    const offsetPct = num($("#sz-offset").value) || 90;
-    const panelW = num($("#sz-panel").value) || 400;
+    const systemType = sz("type").value;
+    $("#sz-battery").hidden = systemType === GRID_TIED;
 
-    if (!(monthlyKwh > 0) && !(monthlyBill > 0)) {
-      out.innerHTML = '<p class="form-error">Enter your average monthly bill or kWh usage.</p>';
+    const i = {
+      monthlyKwh: num(sz("kwh").value),
+      rate: num(sz("rate").value),
+      sunHours: num(sz("sun").value),
+      offset: num(sz("offset").value) / 100,
+      derate: num(sz("derate").value),
+      panelW: num(sz("panel").value),
+      systemType,
+      chemistry: sz("chem").value,
+      backupDays: num(sz("days").value),
+      bankVoltage: num(sz("volt").value),
+      costLow: num(sz("costlo").value),
+      costHigh: num(sz("costhi").value)
+    };
+    i.rate = i.rate >= 0 ? i.rate : 0;
+    i.costLow = i.costLow >= 0 ? i.costLow : 0;
+    i.costHigh = i.costHigh >= 0 ? i.costHigh : 0;
+    i.backupDays = i.backupDays > 0 ? i.backupDays : 0;
+
+    const missing = [
+      [i.monthlyKwh > 0, "monthly kWh use"],
+      [i.sunHours > 0, "peak sun hours"],
+      [i.offset > 0, "offset goal"],
+      [i.derate > 0 && i.derate <= 1, "a derate factor between 0 and 1"]
+    ].filter(([ok]) => !ok).map(([, label]) => label);
+    if (missing.length) {
+      out.innerHTML = `<p class="empty">Enter ${missing.join(", ")} to see your system size.</p>`;
       return;
     }
-    if (!(monthlyKwh > 0) && !(rate > 0)) {
-      out.innerHTML = '<p class="form-error">Enter your electricity rate in $/kWh.</p>';
-      return;
-    }
 
-    const r = sizeSystem({ monthlyBill, monthlyKwh, rate, offsetPct, panelW });
+    const r = sizeSystem(i);
+    const row = (label, value, hint) => `<div class="stat"><dt>${label}</dt><dd>${value}</dd>${hint ? `<span class="hint">${hint}</span>` : ""}</div>`;
     out.innerHTML = `
       <div class="result-hero">
-        <div class="big">${fmt(r.kw, 1)} kW</div>
-        <div class="unit">recommended system size</div>
+        <div class="big">${fmt(r.actualKw, 1)} kW</div>
+        <div class="unit">${r.panels} panels × ${i.panelW} W · minimum needed ${fmt(r.recommendedKw, 2)} kW</div>
       </div>
+      <p class="result-group">System size</p>
       <dl class="stats">
-        <div class="stat"><dt>Panels</dt><dd>${r.panels} × ${panelW} W</dd></div>
-        <div class="stat"><dt>Roof space</dt><dd>~${fmt(r.roofSqft)} sq ft</dd></div>
-        <div class="stat"><dt>Your annual use</dt><dd>${fmt(r.annualUse)} kWh</dd></div>
-        <div class="stat"><dt>Est. production</dt><dd>${fmt(r.production)} kWh/yr</dd></div>
-        <div class="stat"><dt>Usage offset</dt><dd>${fmt(r.offset)}%</dd></div>
-        <div class="stat"><dt>Fair price range</dt><dd>${money(r.costLow)}–${money(r.costHigh)}</dd></div>
+        ${row("Daily energy use", fmt(r.dailyUse, 1) + " kWh")}
+        ${row("Target daily production", fmt(r.targetDaily, 1) + " kWh")}
+        ${row("Suggested inverter", fmt(r.inverterKw, 1) + " kW", "Size up for AC, EV charger")}
+        ${row("Panels", String(r.panels), "Rounded up")}
       </dl>
-      <p class="note">Under NEM 3.0, exported power earns far less than it costs to buy. A battery or a slightly smaller system often pays back faster. If a quote is much bigger than this, ask why.</p>`;
-  });
+      <p class="result-group">Production</p>
+      <dl class="stats">
+        ${row("Est. annual production", fmt(r.annualProduction) + " kWh")}
+        ${row("Your annual usage", fmt(r.annualUsage) + " kWh")}
+        ${row("Bill coverage", fmt(r.coverage * 100) + "%", r.coverage > 1 ? "Surplus to sell or store" : "")}
+      </dl>
+      ${r.hasBattery ? `
+      <p class="result-group">Battery</p>
+      <dl class="stats">
+        ${row("Battery bank (nominal)", fmt(r.batteryKwh, 1) + " kWh", `${Math.round(r.dod * 100)}% usable depth of discharge`)}
+        ${row("Amp-hours", fmt(r.batteryAh) + " Ah", `At ${i.bankVoltage}V`)}
+      </dl>` : ""}
+      <p class="result-group">Cost &amp; payback</p>
+      <dl class="stats">
+        ${row("Est. installed cost", `${money(r.costLow)}–${money(r.costHigh)}`)}
+        ${row("Est. annual bill savings", money(r.annualSavings))}
+        ${row("Simple payback", Number.isFinite(r.payback) ? fmt(r.payback, 1) + " years" : "—", "On mid-range cost")}
+      </dl>`;
+  }
+
+  $("#sizer-form").addEventListener("input", renderSizer);
+  $("#sizer-form").addEventListener("change", renderSizer);
+  $("#sizer-form").addEventListener("submit", (e) => e.preventDefault());
+  renderSizer();
 
   // ── Solar Quote Comparator ──────────────────────────────────────────────
   const BATTERY_COST_PER_KWH = 1000; // rough installed cost used to back batteries out of $/W

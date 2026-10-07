@@ -219,42 +219,99 @@
         <!-- Sizer -->
         <div class="tool" id="panel-sizer" role="tabpanel" aria-labelledby="tab-sizer">
           <form class="tool-form" id="sizer-form" novalidate>
+            <p class="group-label">Your usage</p>
             <div class="field">
-              <label for="sz-bill">Average monthly electric bill ($)</label>
-              <input id="sz-bill" type="number" min="0" step="1" inputmode="decimal" placeholder="250" />
+              <label for="sz-kwh">Monthly electricity use (kWh)</label>
+              <input id="sz-kwh" type="number" min="0" step="1" inputmode="decimal" value="900" />
+              <small>From your utility bill — kWh, not dollars</small>
             </div>
             <div class="field">
-              <label for="sz-kwh">Or average monthly usage (kWh)</label>
-              <input id="sz-kwh" type="number" min="0" step="1" inputmode="decimal" placeholder="Optional — overrides the bill" />
+              <label for="sz-rate">Utility rate ($/kWh)</label>
+              <input id="sz-rate" type="number" min="0" step="0.01" inputmode="decimal" value="0.22" />
+              <small>Your per-kWh rate on the bill</small>
+            </div>
+
+            <p class="group-label">Location</p>
+            <div class="field">
+              <label for="sz-state">State</label>
+              <select id="sz-state"></select>
             </div>
             <div class="field">
-              <label for="sz-utility">Utility</label>
-              <select id="sz-utility">
-                <option value="0.40">PG&amp;E</option>
-                <option value="0.33">SCE</option>
-                <option value="0.45">SDG&amp;E</option>
-                <option value="0.25">LADWP / municipal</option>
-                <option value="custom">Custom rate…</option>
-              </select>
+              <label for="sz-sun">Peak sun hours / day</label>
+              <input id="sz-sun" type="number" min="0.5" max="10" step="0.1" inputmode="decimal" />
+              <small>Auto-fills by state — overwrite with your <a href="https://pvwatts.nrel.gov" target="_blank" rel="noopener">PVWatts</a> value</small>
             </div>
-            <div class="field" id="sz-rate-field" hidden>
-              <label for="sz-rate">Your rate ($/kWh)</label>
-              <input id="sz-rate" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.38" />
-            </div>
+
+            <p class="group-label">System design</p>
             <div class="field">
-              <label for="sz-offset">Target offset (%)</label>
-              <input id="sz-offset" type="number" min="10" max="120" step="5" value="90" />
+              <label for="sz-offset">Goal: % of bill to offset</label>
+              <input id="sz-offset" type="number" min="10" max="200" step="5" value="100" />
+              <small>100% = wipe out the bill; 80–90% is common</small>
             </div>
             <div class="field">
               <label for="sz-panel">Panel wattage (W)</label>
-              <input id="sz-panel" type="number" min="250" max="600" step="5" value="400" />
+              <select id="sz-panel">
+                <option>350</option>
+                <option selected>400</option>
+                <option>410</option>
+                <option>450</option>
+              </select>
             </div>
-            <button class="btn btn-primary full" type="submit">Size My System</button>
+            <div class="field span-2">
+              <label for="sz-type">System type</label>
+              <select id="sz-type">
+                <option>Grid-tied (no battery)</option>
+                <option>Hybrid (solar + backup battery)</option>
+                <option>Off-grid</option>
+              </select>
+            </div>
+
+            <div class="battery-fields span-2" id="sz-battery" hidden>
+              <div class="field">
+                <label for="sz-chem">Battery chemistry</label>
+                <select id="sz-chem">
+                  <option>LiFePO4 (lithium)</option>
+                  <option>Lead-acid (AGM/gel)</option>
+                </select>
+                <small>Lithium costs more but lasts far longer</small>
+              </div>
+              <div class="field">
+                <label for="sz-days">Days of battery backup</label>
+                <input id="sz-days" type="number" min="0.5" max="7" step="0.5" value="1" />
+                <small>Cloudy days to ride through</small>
+              </div>
+              <div class="field">
+                <label for="sz-volt">Battery bank voltage (V)</label>
+                <select id="sz-volt">
+                  <option>12</option>
+                  <option>24</option>
+                  <option selected>48</option>
+                </select>
+                <small>48V is standard for whole-home</small>
+              </div>
+            </div>
+
+            <details class="advanced span-2">
+              <summary>Advanced: losses &amp; cost assumptions</summary>
+              <div class="advanced-grid">
+                <div class="field">
+                  <label for="sz-derate">System derate factor</label>
+                  <input id="sz-derate" type="number" min="0.5" max="1" step="0.01" value="0.8" />
+                  <small>Inverter, wiring, dust &amp; heat losses</small>
+                </div>
+                <div class="field">
+                  <label for="sz-costlo">Installed cost, low ($/W)</label>
+                  <input id="sz-costlo" type="number" min="0" step="0.05" value="2.5" />
+                </div>
+                <div class="field">
+                  <label for="sz-costhi">Installed cost, high ($/W)</label>
+                  <input id="sz-costhi" type="number" min="0" step="0.05" value="3.5" />
+                </div>
+              </div>
+            </details>
           </form>
 
-          <div class="tool-result" id="sizer-result" aria-live="polite">
-            <p class="empty">Enter your bill or usage to see a right-sized system estimate.</p>
-          </div>
+          <div class="tool-result" id="sizer-result" aria-live="polite"></div>
         </div>
 
         <!-- Comparator -->
@@ -269,7 +326,7 @@
           <div class="scorecard" id="scorecard" aria-live="polite"></div>
         </div>
 
-        <p class="fine">Estimates only, for comparison. Real sizing depends on your roof, shading, and rate plan — we'll check all of it in your free analysis.</p>
+        <p class="fine">Planning estimates only. Verify your roof's real sun hours at pvwatts.nrel.gov, get 3+ installer quotes, and confirm NEM/net-billing rules with your utility — export credits vary widely (e.g. California NEM 3.0). Battery sizing here is simplified; critical loads and surge currents need a pro review.</p>
       </div>
     </section>
 
