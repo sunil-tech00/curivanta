@@ -13,14 +13,18 @@ const getClient = () => (client ??= new Anthropic(
     : {}
 ));
 
-const n = { type: ["number", "null"] };
-const s = { type: ["string", "null"] };
-const obj = (properties) => ({
-  type: "object",
-  properties,
-  required: Object.keys(properties),
-  additionalProperties: false
-});
+// Structured outputs allow at most 16 union-typed ("number | null") fields per request,
+// so fields that may be missing are optional (omitted) rather than nullable. Max 24 optional.
+const n = { type: "number" };
+const s = { type: "string" };
+const obj = (properties, optional = []) => {
+  const keys = Object.keys(properties);
+  const opt = Array.isArray(optional) ? optional : keys.filter((k) => !optional.except.includes(k));
+  return { type: "object", properties, required: keys.filter((k) => !opt.includes(k)), additionalProperties: false };
+};
+
+// Every property except the named ones is optional; resolved when obj() builds the schema.
+const OPTIONAL_EXCEPT = (...keep) => ({ except: keep });
 
 const QUOTE_SCHEMA = obj({
   is_solar_quote: { type: "boolean" },
@@ -46,7 +50,7 @@ const QUOTE_SCHEMA = obj({
   customer_annual_usage_kwh: n,
   customer_utility_rate_per_kwh: n,
   notes: { type: "array", items: { type: "string" } }
-});
+}, OPTIONAL_EXCEPT("is_solar_quote", "mentions_federal_tax_credit", "notes"));
 
 const BILL_SCHEMA = obj({
   is_utility_bill: { type: "boolean" },
@@ -58,18 +62,18 @@ const BILL_SCHEMA = obj({
   avg_rate_per_kwh: n,
   bill_total: n,
   notes: { type: "array", items: { type: "string" } }
-});
+}, OPTIONAL_EXCEPT("is_utility_bill", "notes"));
 
 const EXTRACT_SYSTEM = `You read residential solar documents and extract numbers for an independent quote review.
 
 Rules:
-- Extract only what the document states. Use null for anything not shown; never estimate or infer a missing number.
+- Extract only what the document states. Leave out any field the document doesn't show; never estimate or infer a missing number.
 - Money is in US dollars as plain numbers (24999.00, not "$24,999"). Percentages are numbers in percent (5.99 for 5.99%).
 - System size is DC kilowatts. If only panel count and wattage are given, multiply them (e.g. 18 × 400 W = 7.2 kW) — that one calculation is allowed.
-- cash_price is the full price before incentives. If the quote shows only a price "after tax credit" or "net cost", put the pre-incentive price if it is shown anywhere, otherwise null.
+- cash_price is the full price before incentives. If the quote shows only a price "after tax credit" or "net cost", put the pre-incentive price if it is shown anywhere, otherwise leave it out.
 - financed_price is the total loan amount or financed system price, if different from cash.
 - dealer_fee_amount is a dealer fee, financing fee, or rate buy-down fee in dollars, only if the document states it.
-- For a lease, fill lease_monthly_payment (first-year monthly) and lease_escalator_pct; leave loan fields null.
+- For a lease, fill lease_monthly_payment (first-year monthly) and lease_escalator_pct; leave out the loan fields.
 - For a PPA (you pay per kWh produced), fill ppa_rate_per_kwh (first-year $/kWh, e.g. 0.21), lease_escalator_pct (annual rate increase), and lease_monthly_payment only if the quote shows an estimated first-year monthly amount.
 - mentions_federal_tax_credit is true if the quote applies or advertises a federal tax credit / ITC / 30% credit in its pricing or savings.
 - For a utility bill: monthly_kwh is the usage for this bill period; if a 12-month usage history is shown, put the 12-month total in annual_kwh. avg_rate_per_kwh is total charges divided by kWh if not stated.
@@ -77,7 +81,7 @@ Rules:
 - On a quote, customer_annual_usage_kwh and customer_utility_rate_per_kwh are the homeowner's current yearly usage and electricity rate if the quote states them (installers often size the system from these). Don't confuse them with the system's production.
 - Do not extract names, street addresses, account numbers, or phone numbers.
 - notes: short items a homeowner should know that don't fit a field (prepayment penalties, dealer fees mentioned, escalators, production guarantees, unusual terms). Empty array if none.
-- If the document is not the expected type, set is_solar_quote / is_utility_bill to false and leave the rest null.`;
+- If the document is not the expected type, set is_solar_quote / is_utility_bill to false and leave out the other fields.`;
 
 const REPORT_SCHEMA = obj({
   verdict: { type: "string", enum: ["sign", "renegotiate", "walk_away"] },
@@ -95,7 +99,7 @@ const REPORT_SCHEMA = obj({
   },
   questions_to_ask: { type: "array", items: { type: "string" } },
   caveats: { type: "array", items: { type: "string" } }
-});
+}, ["recommended_quote"]);
 
 const REPORT_SYSTEM = `You are an independent solar advisor writing a quote review for a homeowner. You work for the homeowner, not any installer, and you're direct about bad deals.
 
@@ -117,7 +121,7 @@ Writing:
 - talking_points: exact sentences the homeowner can say to the installer, specific to this quote.
 - questions_to_ask: up to 6, most important first.
 - caveats: what this review can't see (roof condition, shading, local rules). Keep it to 2–3.
-- recommended_quote: the label of the best quote, or null if none is worth signing.
+- recommended_quote: the label of the best quote; leave it out if none is worth signing.
 This is an analysis, not financial or legal advice; don't add disclaimers beyond the caveats.`;
 
 async function call({ system, messages, schema, effort }) {
