@@ -2,6 +2,10 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/book", "destination": "https://api.leadconnectorhq.com/widget/bookings/solar-consulting-calendar", "permanent": false },
+    { "source": "/widget/:path*", "destination": "https://api.leadconnectorhq.com/widget/:path*", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/solar", "destination": "/solar/index.html" },
     { "source": "/((?!solar/).*)", "destination": "/index.html" }
