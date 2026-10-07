@@ -404,19 +404,6 @@ input::placeholder { color: color-mix(in srgb, var(--muted) 70%, transparent); }
 
 .form-error { color: var(--danger); font-size: 14px; grid-column: 1 / -1; }
 
-/* Testimonials */
-.illustrative {
-  display: inline-block; margin-top: 4px; padding: 6px 14px; border-radius: 8px;
-  border: 1px dashed var(--border); font-size: 14px !important;
-}
-.quote { margin: 0; display: flex; flex-direction: column; }
-.stars { color: var(--amber-text); letter-spacing: 2px; margin-bottom: 14px; font-size: 18px; }
-.quote blockquote { margin: 0 0 22px; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 22px; line-height: 1.35; flex: 1; }
-.quote figcaption { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; }
-.quote figcaption strong { display: block; }
-.quote figcaption small { color: var(--muted); font-size: 14px; }
-.saved { background: var(--amber-soft); color: var(--amber-text); padding: 4px 12px; border-radius: 999px; font-size: 13.5px; font-weight: 700; white-space: nowrap; }
-
 /* Booking */
 .lead-section { background: var(--amber); color: var(--on-amber); }
 .lead-section .section-head p { color: color-mix(in srgb, var(--on-amber) 80%, transparent); }
