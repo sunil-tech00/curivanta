@@ -27,5 +27,9 @@ export function allowPost(req, res) {
 export function sendError(res, err) {
   console.error(err);
   if (err.expose) return res.status(err.status).json({ error: err.message });
-  res.status(502).json({ error: "Something went wrong reading your documents. Please try again in a minute." });
+  res.status(502).json({
+    error: "Something went wrong reading your documents. Please try again in a minute.",
+    // Prototype only: callers already passed the passcode. Remove before public launch.
+    detail: `${err.status ?? ""} ${err.error?.error?.message ?? err.message ?? err}`.trim()
+  });
 }

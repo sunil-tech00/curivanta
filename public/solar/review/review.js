@@ -72,7 +72,7 @@
       state.passcode = "";
       show("pass");
     }
-    if (!res.ok) throw new Error(data.error || "Request failed (" + res.status + ").");
+    if (!res.ok) throw new Error((data.error || "Request failed (" + res.status + ").") + (data.detail ? ` [${data.detail}]` : ""));
     return data;
   }
 
