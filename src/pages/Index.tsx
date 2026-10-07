@@ -29,11 +29,12 @@ const Index = () => {
       <header className="nav">
         <div className="nav-inner">
           <div className="brand">
-            <img src="https://vibe.filesafe.space/1784767669054912751/attachments/e781e967-e4b0-4582-8920-5961d504ef83.png" alt="Curivanta" className="dark-logo" style={{ height: '32px', width: 'auto' }} />
-            <img src="https://vibe.filesafe.space/1784767669054912751/attachments/2c1b2ecf-7ec9-422b-ba9d-7f6f4fc0ba43.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
+            <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '32px', width: 'auto' }} />
+            <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
           </div>
           <nav className="links">
             <Link className="navlink" to="/hair-salon-bot">Hair Salon Bot</Link>
+            <a className="navlink" href="/solar">Solar</a>
             <a className="btn ghost desktop-only" href="#contact">Book a free audit</a>
             <ThemeToggle />
             
@@ -46,6 +47,7 @@ const Index = () => {
                 </SheetTrigger>
                 <SheetContent side="right" className="flex flex-col gap-6 pt-16 bg-background border-border">
                   <SheetClose asChild><Link className="text-xl font-medium" to="/hair-salon-bot">Hair Salon Bot</Link></SheetClose>
+                  <SheetClose asChild><a className="text-xl font-medium" href="/solar">Solar</a></SheetClose>
                   <SheetClose asChild><a className="btn solid text-center mt-4 justify-center" href="#contact">Book a free audit</a></SheetClose>
                 </SheetContent>
               </Sheet>
@@ -185,8 +187,8 @@ const Index = () => {
       <footer>
         <div className="wrap foot-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, minWidth: '200px' }}>
-            <img src="https://vibe.filesafe.space/1784767669054912751/attachments/e781e967-e4b0-4582-8920-5961d504ef83.png" alt="Curivanta" className="dark-logo" style={{ height: '28px', width: 'auto' }} />
-            <img src="https://vibe.filesafe.space/1784767669054912751/attachments/2c1b2ecf-7ec9-422b-ba9d-7f6f4fc0ba43.png" alt="Curivanta" className="light-logo" style={{ height: '28px', width: 'auto' }} />
+            <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '28px', width: 'auto' }} />
+            <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '28px', width: 'auto' }} />
           </div>
           <div style={{ flex: 1, textAlign: 'center', minWidth: '200px' }}>
             <span className="foot-meta">© 2026 Curivanta. All rights reserved.</span>

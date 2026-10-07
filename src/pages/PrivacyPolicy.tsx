@@ -8,12 +8,13 @@ const PrivacyPolicy = () => {
         <div className="nav-inner">
           <div className="brand">
             <Link to="/">
-              <img src="https://vibe.filesafe.space/1784767669054912751/attachments/e781e967-e4b0-4582-8920-5961d504ef83.png" alt="Curivanta" className="dark-logo" style={{ height: '32px', width: 'auto' }} />
-              <img src="https://vibe.filesafe.space/1784767669054912751/attachments/2c1b2ecf-7ec9-422b-ba9d-7f6f4fc0ba43.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
+              <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '32px', width: 'auto' }} />
+              <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
             </Link>
           </div>
           <nav className="links">
             <Link className="navlink" to="/hair-salon-bot">Hair Salon Bot</Link>
+            <a className="navlink" href="/solar">Solar</a>
             <Link className="btn ghost" to="/#contact">Book a free audit</Link>
             <ThemeToggle />
           </nav>
@@ -43,8 +44,8 @@ const PrivacyPolicy = () => {
         <div className="wrap foot-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, minWidth: '200px' }}>
             <Link to="/">
-              <img src="https://vibe.filesafe.space/1784767669054912751/attachments/e781e967-e4b0-4582-8920-5961d504ef83.png" alt="Curivanta" className="dark-logo" style={{ height: '28px', width: 'auto' }} />
-              <img src="https://vibe.filesafe.space/1784767669054912751/attachments/2c1b2ecf-7ec9-422b-ba9d-7f6f4fc0ba43.png" alt="Curivanta" className="light-logo" style={{ height: '28px', width: 'auto' }} />
+              <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '28px', width: 'auto' }} />
+              <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '28px', width: 'auto' }} />
             </Link>
           </div>
           <div style={{ flex: 1, textAlign: 'center', minWidth: '200px' }}>

@@ -116,7 +116,14 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2
   font-size: 12px; color: var(--muted); text-decoration: none; letter-spacing: .04em;
   border-left: 1px solid var(--border); padding-left: 12px; margin-top: 3px;
 }
+.by-curivanta { display: inline-flex; align-items: center; gap: 6px; }
 .by-curivanta:hover { color: var(--amber-text); }
+.cv-logo { height: 20px; width: auto; }
+.cv-on-light { display: none; }
+:root[data-theme="light"] .cv-on-dark { display: none; }
+:root[data-theme="light"] .cv-on-light { display: block; }
+.footer-by { border-left: 0; padding-left: 0; margin-top: 18px; font-size: 13px; }
+.footer-by .cv-logo { height: 26px; }
 .nav-links { display: none; gap: 26px; margin-left: auto; font-size: 14px; font-weight: 500; }
 .nav-links a { color: var(--muted); text-decoration: none; transition: color .15s; }
 .nav-links a:hover { color: var(--amber-text); }
@@ -135,7 +142,7 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2
 @media (max-width: 520px) {
   .brand-text { font-size: 19px; white-space: nowrap; }
   .nav-actions .btn-sm { padding: 8px 12px; }
-  .by-curivanta { display: none; }
+  .nav .by-curivanta { display: none; }
 }
 
 /* Hero */
@@ -359,8 +366,6 @@ input::placeholder { color: color-mix(in srgb, var(--muted) 70%, transparent); }
 .footer-brand { margin-bottom: 14px; }
 .footer-brand .brand-text { font-size: 28px; }
 .footer .muted { max-width: 440px; }
-.footer .small { margin-top: 10px; }
-.footer .small a { color: var(--amber-text); }
 .footer-cta { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px; }
 .footer-cta h3 { font-size: 28px; margin-bottom: 6px; }
 .footer-cta .muted { margin-bottom: 18px; }
