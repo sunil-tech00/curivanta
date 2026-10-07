@@ -6,7 +6,12 @@ const MODEL = "claude-opus-5-5";
 const FALLBACK = { betas: ["server-side-fallback-2026-07-01"], fallbacks: "default" };
 
 let client;
-const getClient = () => (client ??= new Anthropic());
+// Org-level API keys must name a workspace; workspace-scoped keys don't need this.
+const getClient = () => (client ??= new Anthropic(
+  process.env.ANTHROPIC_WORKSPACE_ID
+    ? { defaultHeaders: { "anthropic-workspace-id": process.env.ANTHROPIC_WORKSPACE_ID } }
+    : {}
+));
 
 const n = { type: ["number", "null"] };
 const s = { type: ["string", "null"] };
@@ -113,10 +118,10 @@ async function call({ system, content, schema, effort }) {
     messages: [{ role: "user", content }]
   });
   if (response.stop_reason === "refusal") {
-    throw Object.assign(new Error("The document couldn't be processed."), { status: 422 });
+    throw Object.assign(new Error("The document couldn't be processed."), { status: 422, expose: true });
   }
   if (response.stop_reason === "max_tokens") {
-    throw Object.assign(new Error("The response was cut off. Please try again."), { status: 502 });
+    throw Object.assign(new Error("The response was cut off. Please try again."), { status: 502, expose: true });
   }
   const text = response.content.filter((b) => b.type === "text").map((b) => b.text).join("");
   return JSON.parse(text);

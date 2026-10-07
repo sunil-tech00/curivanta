@@ -23,8 +23,9 @@ export function allowPost(req, res) {
   return false;
 }
 
+// Only errors we raise ourselves (expose: true) reach the customer; API/SDK errors are logged.
 export function sendError(res, err) {
   console.error(err);
-  res.status(err.status && err.status < 500 ? err.status : 502)
-    .json({ error: err.status && err.status < 500 ? err.message : "Something went wrong talking to the AI. Please try again." });
+  if (err.expose) return res.status(err.status).json({ error: err.message });
+  res.status(502).json({ error: "Something went wrong reading your documents. Please try again in a minute." });
 }
