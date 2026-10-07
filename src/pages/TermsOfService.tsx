@@ -14,7 +14,6 @@ const TermsOfService = () => {
           </div>
           <nav className="links">
             <Link className="navlink" to="/hair-salon-bot">Hair Salon Bot</Link>
-            <a className="navlink" href="/solar">Solar</a>
             <Link className="btn ghost" to="/#contact">Book a free audit</Link>
             <ThemeToggle />
           </nav>
