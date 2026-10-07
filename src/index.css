@@ -383,6 +383,40 @@ footer a.foot-link:hover { color: var(--brass-light); }
     color: var(--bone-dim);
   }
   
+  .form-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .form-error {
+    font-size: 0.85rem;
+    color: #f08a7e;
+    margin: 0;
+  }
+
+  .light .form-error {
+    color: #c0392b;
+  }
+
+  .form-success {
+    text-align: center;
+    padding: 12px 0;
+  }
+
+  .form-success h3 {
+    font-size: 1.3rem;
+    color: var(--bone);
+    margin-bottom: 8px;
+  }
+
+  .form-success p {
+    color: var(--bone-dim);
+    font-size: 0.95rem;
+  }
+
   .consent-checkbox {
     display: flex;
     align-items: flex-start;

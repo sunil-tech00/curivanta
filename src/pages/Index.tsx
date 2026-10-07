@@ -22,6 +22,37 @@ const Index = () => {
     return () => io.disconnect();
   }, []);
 
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    setStatus('sending');
+    setError('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.get('name'),
+          business: data.get('business'),
+          phone: data.get('phone'),
+          email: data.get('email'),
+          website: data.get('website'),
+          smsConsent: data.get('smsConsent') === 'on'
+        })
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || 'Something went wrong. Please email hello@curivanta.com.');
+      setStatus('sent');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please email hello@curivanta.com.');
+      setStatus('idle');
+    }
+  };
+
 
 
   return (
@@ -167,19 +198,30 @@ const Index = () => {
           <h2 className="reveal d1">Let's find the manual work worth automating.</h2>
           <p className="sub reveal d2">A free audit is 20 minutes: a look at your calls, your site, and your follow-ups, and an honest read on what's actually worth automating first.</p>
           <div className="audit-form-container reveal d3">
-            <form className="audit-form" onSubmit={(e) => e.preventDefault()}>
-              <input type="text" placeholder="Your name" className="form-input" required />
-              <input type="text" placeholder="Business name & location" className="form-input" required />
-              <input type="tel" placeholder="Mobile number" className="form-input" required />
-              <input type="email" placeholder="Email" className="form-input" required />
-              
+            {status === 'sent' ? (
+              <div className="form-success" role="status">
+                <h3>Thanks — we've got it.</h3>
+                <p>We'll reach out within one business day to schedule your free audit.</p>
+              </div>
+            ) : (
+            <form className="audit-form" onSubmit={handleSubmit}>
+              <input type="text" name="name" placeholder="Your name" className="form-input" autoComplete="name" required />
+              <input type="text" name="business" placeholder="Business name & location" className="form-input" autoComplete="organization" required />
+              <input type="tel" name="phone" placeholder="Mobile number" className="form-input" autoComplete="tel" required />
+              <input type="email" name="email" placeholder="Email" className="form-input" autoComplete="email" required />
+              <input type="text" name="website" className="form-hp" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+
               <label className="consent-checkbox">
-                <input type="checkbox" required />
+                <input type="checkbox" name="smsConsent" required />
                 <span>By checking this box, I agree to receive SMS text messages regarding my inquiry and service updates. Message and data rates may apply.</span>
               </label>
 
-              <button type="submit" className="btn solid full-width">Book a free automation audit</button>
+              {error && <p className="form-error" role="alert">{error}</p>}
+              <button type="submit" className="btn solid full-width" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending…' : 'Book a free automation audit'}
+              </button>
             </form>
+            )}
           </div>
         </div>
       </section>
