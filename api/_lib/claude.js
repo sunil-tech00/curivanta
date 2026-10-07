@@ -91,7 +91,9 @@ const REPORT_SCHEMA = obj({
 
 const REPORT_SYSTEM = `You are an independent solar advisor writing a quote review for a homeowner. You work for the homeowner, not any installer, and you're direct about bad deals.
 
-You receive computed metrics as JSON. Every number in them is authoritative — quote numbers only from that JSON, never calculate new figures or invent prices, savings, or market data. If a needed number is missing, say what the homeowner should ask for.
+You receive computed metrics as JSON. Every number in them is authoritative. Use only numbers that appear in that JSON — never calculate a new figure yourself (no multiplying, projecting, or estimating bills or payments), and never invent prices, savings, or market data. If a number you'd like isn't there, describe it in words or say what the homeowner should ask for.
+
+Units: write per-kWh costs in cents using the *_cents fields (e.g. "23.8¢/kWh"), money as whole dollars (e.g. "$64,772"), and ratios as percentages.
 
 How to judge:
 - True cost per kWh (25-year cost ÷ 25-year production) is the main comparison across cash, loan, and lease. Lower wins. If vs_utility_rate is near or above 1, solar costs about as much as buying from the utility — a weak deal.
@@ -108,14 +110,14 @@ Writing:
 - recommended_quote: the label of the best quote, or null if none is worth signing.
 This is an analysis, not financial or legal advice; don't add disclaimers beyond the caveats.`;
 
-async function call({ system, content, schema, effort }) {
+async function call({ system, messages, schema, effort }) {
   const response = await getClient().beta.messages.create({
     model: MODEL,
     max_tokens: 16000,
     ...FALLBACK,
     system,
     output_config: { effort, format: { type: "json_schema", schema } },
-    messages: [{ role: "user", content }]
+    messages
   });
   if (response.stop_reason === "refusal") {
     throw Object.assign(new Error("The document couldn't be processed."), { status: 422, expose: true });
@@ -124,7 +126,7 @@ async function call({ system, content, schema, effort }) {
     throw Object.assign(new Error("The response was cut off. Please try again."), { status: 502, expose: true });
   }
   const text = response.content.filter((b) => b.type === "text").map((b) => b.text).join("");
-  return JSON.parse(text);
+  return { data: JSON.parse(text), content: response.content };
 }
 
 export async function extractDocument({ kind, mediaType, data }) {
@@ -134,19 +136,64 @@ export async function extractDocument({ kind, mediaType, data }) {
   const ask = kind === "bill"
     ? "Extract the utility bill fields from this document."
     : "Extract the solar quote fields from this document.";
-  return call({
+  const { data: fields } = await call({
     system: EXTRACT_SYSTEM,
-    content: [block, { type: "text", text: ask }],
+    messages: [{ role: "user", content: [block, { type: "text", text: ask }] }],
     schema: kind === "bill" ? BILL_SCHEMA : QUOTE_SCHEMA,
     effort: "medium"
   });
+  return fields;
 }
 
 export async function writeReport(metrics) {
-  return call({
+  const messages = [{ role: "user", content: `Computed metrics:\n${JSON.stringify(metrics, null, 2)}\n\nWrite the review.` }];
+  const first = await call({ system: REPORT_SYSTEM, messages, schema: REPORT_SCHEMA, effort: "high" });
+  const stray = unsupportedNumbers(first.data, metrics);
+  if (!stray.length) return first.data;
+
+  // One retry: name the figures that don't trace back to the metrics.
+  console.warn("report used numbers not in metrics:", stray);
+  const retry = await call({
     system: REPORT_SYSTEM,
-    content: [{ type: "text", text: `Computed metrics:\n${JSON.stringify(metrics, null, 2)}\n\nWrite the review.` }],
+    messages: [
+      ...messages,
+      { role: "assistant", content: first.content },
+      { role: "user", content: `These figures in your review don't appear in the metrics: ${stray.join(", ")}. Rewrite the review using only numbers from the metrics JSON (round them as you like). Where a figure isn't available, describe it in words instead.` }
+    ],
     schema: REPORT_SCHEMA,
     effort: "high"
   });
+  const still = unsupportedNumbers(retry.data, metrics);
+  if (still.length) console.warn("report still has unsupported numbers after retry:", still);
+  return retry.data;
+}
+
+// Every number the metrics contain (including numbers inside note strings), plus
+// percent/cent forms. A figure in the report must round to one of these.
+function allowedNumbers(metrics) {
+  const out = [];
+  const walk = (v) => {
+    if (typeof v === "number" && Number.isFinite(v)) out.push(v, v * 100);
+    else if (typeof v === "string") for (const m of v.matchAll(NUMBER_RE)) out.push(toNumber(m[0]));
+    else if (Array.isArray(v)) v.forEach(walk);
+    else if (v && typeof v === "object") Object.values(v).forEach(walk);
+  };
+  walk(metrics);
+  return out;
+}
+
+const NUMBER_RE = /\d[\d,]*(?:\.\d+)?/g;
+const toNumber = (s) => parseFloat(s.replace(/,/g, ""));
+
+function unsupportedNumbers(report, metrics) {
+  const allowed = allowedNumbers(metrics);
+  const text = JSON.stringify(report);
+  const bad = new Set();
+  for (const m of text.matchAll(NUMBER_RE)) {
+    const n = toNumber(m[0]);
+    if (n <= 12) continue; // small counts, years, and suggested targets like "0% or 1.9%"
+    const ok = allowed.some((a) => Math.abs(n - a) <= Math.max(Math.abs(a) * 0.01, 0.51));
+    if (!ok) bad.add(m[0]);
+  }
+  return [...bad];
 }

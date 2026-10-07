@@ -75,6 +75,9 @@ export function analyzeQuote(q, a) {
     const m = q.lease_monthly_payment;
     r.cost_25yr = esc === 0 ? m * 12 * a.years : (m * 12 * (Math.pow(1 + esc, a.years) - 1)) / esc;
     r.cost_basis = `${a.years} years of lease/PPA payments`;
+    r.monthly_payment_year1 = m;
+    r.monthly_payment_final_year = m * Math.pow(1 + esc, a.years - 1);
+    r.escalator_pct = esc * 100;
   } else if (type === "loan" && pos(q.loan_term_years) && (financed || pos(q.monthly_loan_payment))) {
     const n = q.loan_term_years * 12;
     const monthly = pos(q.monthly_loan_payment) ??
@@ -90,6 +93,7 @@ export function analyzeQuote(q, a) {
     r.cost_basis = null;
   }
   r.cost_per_kwh = r.cost_25yr && r.production_25yr_kwh ? r.cost_25yr / r.production_25yr_kwh : null; // B19
+  r.cost_per_kwh_cents = r.cost_per_kwh !== null ? Math.round(r.cost_per_kwh * 1000) / 10 : null;
 
   if (r.dealer_fee_markup !== null && r.dealer_fee_markup > LIMITS.dealerFee) {
     r.flags.push({ id: "dealer_fee", severity: "high",
@@ -129,6 +133,12 @@ export function analyzeQuote(q, a) {
   if (a.utilityRate && r.cost_per_kwh !== null) {
     r.vs_utility_rate = r.cost_per_kwh / a.utilityRate;
   }
+  if (a.annualUsageKwh && a.utilityRate) {
+    const bill = (a.annualUsageKwh * a.utilityRate) / 12;
+    const pay = r.monthly_payment_year1 ?? r.monthly_payment ?? null;
+    if (pay) r.year1_payment_vs_current_bill = pay / bill;
+    if (r.monthly_payment_final_year) r.final_year_payment_vs_current_bill = r.monthly_payment_final_year / bill;
+  }
   return r;
 }
 
@@ -160,6 +170,8 @@ export function analyze({ quotes, bill, state, sunHours, derate, degradation }) 
       monthly_kwh: monthly,
       annual_kwh: a.annualUsageKwh,
       utility_rate: a.utilityRate,
+      utility_rate_cents: a.utilityRate ? Math.round(a.utilityRate * 1000) / 10 : null,
+      current_monthly_bill_estimate: a.utilityRate ? (a.annualUsageKwh * a.utilityRate) / 12 : null,
       recommended: recommendedSize(a.annualUsageKwh, sh, a.derate)
     } : null,
     quotes: results,
