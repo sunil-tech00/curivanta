@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>AI Quote Review — Your Solar Advisor</title>
+  <link rel="icon" type="image/svg+xml" href="/solar/favicon.svg" />
+  <script>
+    try {
+      var t = localStorage.getItem("ysa-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/solar/styles.css" />
+  <link rel="stylesheet" href="/solar/review/review.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/solar" aria-label="Your Solar Advisor home">
+        <svg class="brand-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><g stroke-linecap="round"><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg>
+        <span class="brand-text">Your Solar Advisor</span>
+      </a>
+      <span class="proto-tag">AI Quote Review · Prototype</span>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Toggle light and dark theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="section review-main">
+    <div class="wrap narrow">
+
+      <ol class="stepper" aria-label="Progress">
+        <li data-step="upload">1. Upload</li>
+        <li data-step="confirm">2. Confirm numbers</li>
+        <li data-step="report">3. Your report</li>
+      </ol>
+
+      <p class="banner-error" id="error" role="alert" hidden></p>
+
+      <!-- Passcode -->
+      <section class="panel" id="step-pass" hidden>
+        <h1>AI Quote Review</h1>
+        <p class="muted">This prototype is private. Enter the passcode to continue.</p>
+        <form id="pass-form" class="pass-form">
+          <label class="sr-only" for="passcode">Passcode</label>
+          <input id="passcode" type="password" autocomplete="current-password" placeholder="Passcode" required />
+          <button class="btn btn-primary" type="submit">Continue</button>
+        </form>
+      </section>
+
+      <!-- Upload -->
+      <section class="panel" id="step-upload" hidden>
+        <h1>Get an instant review of your solar quotes</h1>
+        <p class="muted">Upload up to 3 quotes and a recent utility bill. We'll read the numbers, you confirm them, and you get a clear verdict: sign, renegotiate, or walk away.</p>
+
+        <div class="upload-grid">
+          <div class="upload-slot" data-kind="quote" data-index="0">
+            <span class="slot-label">Quote A <em>required</em></span>
+          </div>
+          <div class="upload-slot" data-kind="quote" data-index="1">
+            <span class="slot-label">Quote B <em>optional</em></span>
+          </div>
+          <div class="upload-slot" data-kind="quote" data-index="2">
+            <span class="slot-label">Quote C <em>optional</em></span>
+          </div>
+          <div class="upload-slot bill" data-kind="bill" data-index="0">
+            <span class="slot-label">Utility bill <em>recommended</em></span>
+          </div>
+        </div>
+        <p class="fine left">PDF, JPG, or PNG. PDFs up to 3 MB; photos are resized automatically. We don't keep your files — they're read once and discarded.</p>
+
+        <div class="actions">
+          <button class="btn btn-primary btn-lg" id="read-btn" type="button" disabled>Read my documents</button>
+          <span class="progress" id="read-progress" aria-live="polite"></span>
+        </div>
+      </section>
+
+      <!-- Confirm -->
+      <section class="panel" id="step-confirm" hidden>
+        <h1>Check the numbers we found</h1>
+        <p class="muted">Fix anything that's wrong or missing — your report is only as good as these numbers.</p>
+        <form id="confirm-form" novalidate>
+          <div id="confirm-quotes" class="confirm-quotes"></div>
+          <fieldset class="confirm-card" id="confirm-bill">
+            <h3>Your usage &amp; location</h3>
+            <div class="grid-3">
+              <div class="field">
+                <label for="b-state">State</label>
+                <select id="b-state" required></select>
+              </div>
+              <div class="field">
+                <label for="b-monthly">Monthly usage (kWh)</label>
+                <input id="b-monthly" type="number" min="0" step="1" inputmode="decimal" />
+                <small>Average per month</small>
+              </div>
+              <div class="field">
+                <label for="b-rate">Utility rate ($/kWh)</label>
+                <input id="b-rate" type="number" min="0" step="0.01" inputmode="decimal" />
+                <small>Total charges ÷ kWh</small>
+              </div>
+            </div>
+            <p class="fine left" id="bill-note"></p>
+          </fieldset>
+          <div class="actions">
+            <button class="btn btn-outline" type="button" id="back-upload">← Back</button>
+            <button class="btn btn-primary btn-lg" type="submit" id="report-btn">Generate my report</button>
+            <span class="progress" id="report-progress" aria-live="polite"></span>
+          </div>
+        </form>
+      </section>
+
+      <!-- Report -->
+      <section id="step-report" hidden>
+        <div id="report"></div>
+        <div class="actions no-print">
+          <button class="btn btn-outline" type="button" id="print-btn">Save as PDF</button>
+          <button class="btn btn-outline" type="button" id="restart-btn">Review other quotes</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <template id="slot-template">
+    <label class="dropzone small">
+      <input type="file" accept=".pdf,image/*" />
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+      <span class="dz-title">Choose file</span>
+      <span class="dz-sub">PDF or photo</span>
+    </label>
+    <button type="button" class="slot-clear" hidden>Remove</button>
+  </template>
+
+  <script src="/solar/review/review.js" defer></script>
+</body>
+</html>

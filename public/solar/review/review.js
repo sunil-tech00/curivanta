@@ -1,0 +1,395 @@
+/* AI Quote Review (prototype) — upload → confirm → report. Talks to /api/review/*. */
+(function () {
+  "use strict";
+
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const fmt = (n, d = 0) => Number(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const money = (n) => "$" + fmt(Math.round(n));
+  const pct = (x, d = 0) => fmt(x * 100, d) + "%";
+  const has = (v) => typeof v === "number" && Number.isFinite(v);
+  const numOrNull = (v) => { const n = parseFloat(String(v).replace(/[^0-9.\-]/g, "")); return Number.isFinite(n) ? n : null; };
+
+  const STATES = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
+  const MAX_PDF = 3 * 1024 * 1024;
+  const VERDICT = {
+    sign: { label: "Sign", cls: "v-sign" },
+    renegotiate: { label: "Renegotiate", cls: "v-reneg" },
+    walk_away: { label: "Walk away", cls: "v-walk" }
+  };
+
+  const state = { passcode: "", files: { quote: [null, null, null], bill: [null] }, extracted: null };
+
+  // ── Theme (shared with /solar) ──────────────────────────────────────────
+  const root = document.documentElement;
+  if (!root.getAttribute("data-theme")) root.setAttribute("data-theme", "dark");
+  $(".theme-toggle").addEventListener("click", () => {
+    const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("ysa-theme", next); } catch (e) {}
+  });
+
+  // ── Steps & errors ──────────────────────────────────────────────────────
+  function show(step) {
+    ["pass", "upload", "confirm", "report"].forEach((s) => { $("#step-" + s).hidden = s !== step; });
+    $$(".stepper li").forEach((li) => {
+      const order = ["upload", "confirm", "report"];
+      li.classList.toggle("active", li.dataset.step === step);
+      li.classList.toggle("done", order.indexOf(li.dataset.step) < order.indexOf(step));
+    });
+    $(".stepper").hidden = step === "pass";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  function showError(msg) {
+    const el = $("#error");
+    el.textContent = msg || "";
+    el.hidden = !msg;
+    if (msg) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  async function api(path, body) {
+    const res = await fetch("/api/review/" + path, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ passcode: state.passcode, ...body })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 401) {
+      try { sessionStorage.removeItem("ysa-review-pass"); } catch (e) {}
+      state.passcode = "";
+      show("pass");
+    }
+    if (!res.ok) throw new Error(data.error || "Request failed (" + res.status + ").");
+    return data;
+  }
+
+  // ── Passcode ────────────────────────────────────────────────────────────
+  $("#pass-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    showError("");
+    state.passcode = $("#passcode").value.trim();
+    try {
+      await api("auth", {});
+      try { sessionStorage.setItem("ysa-review-pass", state.passcode); } catch (e2) {}
+      show("upload");
+    } catch (err) {
+      showError(err.message);
+    }
+  });
+
+  // ── Uploads ─────────────────────────────────────────────────────────────
+  const tpl = $("#slot-template");
+  $$(".upload-slot").forEach((slot) => {
+    slot.append(tpl.content.cloneNode(true));
+    const input = $("input", slot);
+    const zone = $(".dropzone", slot);
+    const clear = $(".slot-clear", slot);
+    const { kind, index } = slot.dataset;
+
+    input.addEventListener("change", async () => {
+      showError("");
+      const file = input.files[0];
+      if (!file) return;
+      try {
+        state.files[kind][index] = await prepareFile(file);
+        $(".dz-title", zone).textContent = file.name;
+        $(".dz-sub", zone).textContent = "Ready";
+        zone.classList.add("has-file");
+        clear.hidden = false;
+      } catch (err) {
+        input.value = "";
+        showError(err.message);
+      }
+      syncReadButton();
+    });
+    clear.addEventListener("click", () => {
+      state.files[kind][index] = null;
+      input.value = "";
+      $(".dz-title", zone).textContent = "Choose file";
+      $(".dz-sub", zone).textContent = "PDF or photo";
+      zone.classList.remove("has-file");
+      clear.hidden = true;
+      syncReadButton();
+    });
+  });
+
+  function syncReadButton() {
+    $("#read-btn").disabled = !state.files.quote[0];
+  }
+
+  // PDFs are sent as-is; photos are downscaled to keep requests small.
+  async function prepareFile(file) {
+    if (file.type === "application/pdf") {
+      if (file.size > MAX_PDF) throw new Error(`${file.name} is over 3 MB. Try a smaller PDF or a photo of the pricing page.`);
+      return { name: file.name, mediaType: "application/pdf", data: await toBase64(file) };
+    }
+    if (!file.type.startsWith("image/")) throw new Error("Please upload a PDF or an image.");
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, 2000 / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+    return { name: file.name, mediaType: "image/jpeg", data: dataUrl.split(",")[1] };
+  }
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => resolve(String(r.result).split(",")[1]);
+      r.onerror = () => reject(new Error("Couldn't read " + file.name));
+      r.readAsDataURL(file);
+    });
+  }
+
+  $("#read-btn").addEventListener("click", async () => {
+    showError("");
+    const btn = $("#read-btn");
+    const progress = $("#read-progress");
+    const jobs = [];
+    state.files.quote.forEach((f, i) => { if (f) jobs.push({ kind: "quote", i, f, label: "Quote " + "ABC"[i] }); });
+    if (state.files.bill[0]) jobs.push({ kind: "bill", i: 0, f: state.files.bill[0], label: "utility bill" });
+
+    btn.disabled = true;
+    let done = 0;
+    progress.innerHTML = `<span class="spinner"></span> Reading ${jobs.length} document${jobs.length > 1 ? "s" : ""}… this takes about a minute.`;
+    try {
+      const results = await Promise.all(jobs.map(async (j) => {
+        const { fields } = await api("extract", { kind: j.kind, mediaType: j.f.mediaType, data: j.f.data });
+        done++;
+        progress.innerHTML = `<span class="spinner"></span> Read ${done} of ${jobs.length}…`;
+        return { ...j, fields };
+      }).map((p, k) => p.catch((err) => { throw new Error(`${jobs[k].label}: ${err.message}`); })));
+      state.extracted = {
+        quotes: results.filter((r) => r.kind === "quote").sort((a, b) => a.i - b.i).map((r) => r.fields),
+        bill: results.find((r) => r.kind === "bill")?.fields || null
+      };
+      renderConfirm();
+      show("confirm");
+    } catch (err) {
+      showError(err.message);
+    } finally {
+      btn.disabled = false;
+      progress.textContent = "";
+    }
+  });
+
+  // ── Confirm ─────────────────────────────────────────────────────────────
+  const field = (id, label, value, attrs = 'type="number" min="0" step="any" inputmode="decimal"', hint = "") => `
+    <div class="field">
+      <label for="${id}">${label}</label>
+      <input id="${id}" ${attrs} value="${value === null || value === undefined ? "" : esc(value)}" />
+      ${hint ? `<small>${hint}</small>` : ""}
+    </div>`;
+
+  function guessPay(q) {
+    if (q.lease_monthly_payment) return "lease";
+    if (q.financed_price || q.monthly_loan_payment) return "loan";
+    return "cash";
+  }
+
+  function renderConfirm() {
+    const wrap = $("#confirm-quotes");
+    wrap.innerHTML = state.extracted.quotes.map((q, i) => {
+      const L = "ABC"[i];
+      const id = (f) => `q${i}-${f}`;
+      const pay = guessPay(q);
+      const warn = q.is_solar_quote === false
+        ? `<p class="warn">This doesn't look like a solar quote. Check the file, or fill the numbers in by hand.</p>` : "";
+      const notes = (q.notes || []).length
+        ? `<details class="notes"><summary>Notes from the document (${q.notes.length})</summary><ul>${q.notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul></details>` : "";
+      return `
+        <fieldset class="confirm-card" data-i="${i}" data-pay="${pay}">
+          <h3>Quote ${L}</h3>
+          ${warn}
+          <div class="grid-3">
+            ${field(id("installer_name"), "Installer", q.installer_name, 'type="text"')}
+            ${field(id("system_size_kw"), "System size (kW DC)", q.system_size_kw, undefined, "Required")}
+            ${field(id("quoted_annual_production_kwh"), "Quoted production (kWh/yr)", q.quoted_annual_production_kwh)}
+            ${field(id("cash_price"), "Cash price ($)", q.cash_price, undefined, "Before incentives")}
+            ${field(id("panel"), "Panels", q.panel, 'type="text"')}
+            ${field(id("inverter"), "Inverter", q.inverter, 'type="text"')}
+          </div>
+          <div class="field">
+            <span class="label">How is it paid for?</span>
+            <div class="seg" role="radiogroup" aria-label="Quote ${L} payment type">
+              ${["cash", "loan", "lease"].map((v) => `<label><input type="radio" name="${id("pay")}" value="${v}" ${v === pay ? "checked" : ""} /><span>${{ cash: "Cash", loan: "Loan", lease: "Lease / PPA" }[v]}</span></label>`).join("")}
+            </div>
+          </div>
+          <div class="grid-3 pay-fields" data-for="loan">
+            ${field(id("financed_price"), "Financed price ($)", q.financed_price)}
+            ${field(id("loan_apr_pct"), "Loan APR (%)", q.loan_apr_pct)}
+            ${field(id("loan_term_years"), "Loan term (years)", q.loan_term_years)}
+            ${field(id("monthly_loan_payment"), "Monthly payment ($)", q.monthly_loan_payment, undefined, "If shown")}
+          </div>
+          <div class="grid-3 pay-fields" data-for="lease">
+            ${field(id("lease_monthly_payment"), "Monthly payment ($)", q.lease_monthly_payment, undefined, "First year")}
+            ${field(id("lease_escalator_pct"), "Annual escalator (%)", q.lease_escalator_pct)}
+          </div>
+          <label class="check"><input type="checkbox" id="${id("tax")}" ${q.mentions_federal_tax_credit ? "checked" : ""} /> Quote counts a federal tax credit in its pricing or savings</label>
+          ${notes}
+        </fieldset>`;
+    }).join("");
+
+    $$(".confirm-card[data-i]", wrap).forEach((card) => {
+      $$('input[type="radio"]', card).forEach((r) => r.addEventListener("change", () => { card.dataset.pay = r.value; }));
+    });
+
+    const bill = state.extracted.bill;
+    const sel = $("#b-state");
+    sel.innerHTML = '<option value="">Select your state</option>' + STATES.map((s) => `<option${bill?.state === s ? " selected" : ""}>${s}</option>`).join("");
+    const monthly = bill?.annual_kwh ? Math.round(bill.annual_kwh / 12) : bill?.monthly_kwh;
+    $("#b-monthly").value = monthly ?? "";
+    $("#b-rate").value = has(bill?.avg_rate_per_kwh) ? bill.avg_rate_per_kwh.toFixed(3) : "";
+    $("#bill-note").textContent = !bill
+      ? "No bill uploaded — add your monthly usage and rate for sizing and savings checks."
+      : bill.is_utility_bill === false
+        ? "That file didn't look like a utility bill — please fill these in by hand."
+        : bill.annual_kwh ? "Monthly usage is your 12-month average from the bill." : "Usage is from one bill period; a 12-month average is more accurate if you know it.";
+  }
+
+  $("#back-upload").addEventListener("click", () => show("upload"));
+
+  $("#confirm-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    showError("");
+    const quotes = $$("#confirm-quotes .confirm-card").map((card) => {
+      const i = card.dataset.i;
+      const v = (f) => $(`#q${i}-${f}`).value;
+      const pay = card.dataset.pay;
+      const extracted = state.extracted.quotes[i];
+      return {
+        installer_name: v("installer_name").trim() || null,
+        system_size_kw: numOrNull(v("system_size_kw")),
+        quoted_annual_production_kwh: numOrNull(v("quoted_annual_production_kwh")),
+        cash_price: numOrNull(v("cash_price")),
+        panel: v("panel").trim() || null,
+        inverter: v("inverter").trim() || null,
+        battery_kwh: extracted.battery_kwh ?? null,
+        workmanship_warranty_years: extracted.workmanship_warranty_years ?? null,
+        financed_price: pay === "loan" ? numOrNull(v("financed_price")) : null,
+        loan_apr_pct: pay === "loan" ? numOrNull(v("loan_apr_pct")) : null,
+        loan_term_years: pay === "loan" ? numOrNull(v("loan_term_years")) : null,
+        monthly_loan_payment: pay === "loan" ? numOrNull(v("monthly_loan_payment")) : null,
+        lease_monthly_payment: pay === "lease" ? numOrNull(v("lease_monthly_payment")) : null,
+        lease_escalator_pct: pay === "lease" ? numOrNull(v("lease_escalator_pct")) : null,
+        mentions_federal_tax_credit: $(`#q${i}-tax`).checked,
+        notes: extracted.notes || []
+      };
+    });
+    const missing = quotes.findIndex((q) => !(q.system_size_kw > 0));
+    if (missing >= 0) return showError(`Quote ${"ABC"[missing]} needs a system size.`);
+    const st = $("#b-state").value;
+    if (!st) return showError("Select your state so we can estimate production.");
+
+    const btn = $("#report-btn");
+    const progress = $("#report-progress");
+    btn.disabled = true;
+    progress.innerHTML = '<span class="spinner"></span> Analyzing your quotes… about a minute.';
+    try {
+      const { metrics, report } = await api("report", {
+        quotes,
+        state: st,
+        bill: { monthly_kwh: numOrNull($("#b-monthly").value), avg_rate_per_kwh: numOrNull($("#b-rate").value) }
+      });
+      renderReport(metrics, report);
+      show("report");
+    } catch (err) {
+      showError(err.message);
+    } finally {
+      btn.disabled = false;
+      progress.textContent = "";
+    }
+  });
+
+  // ── Report ──────────────────────────────────────────────────────────────
+  function renderReport(m, r) {
+    const v = VERDICT[r.verdict] || VERDICT.renegotiate;
+    const byLabel = Object.fromEntries((r.quotes || []).map((q) => [q.label, q]));
+    const qs = m.quotes;
+    const cell = (fn) => qs.map((q) => `<td>${fn(q)}</td>`).join("");
+    const lowest = m.lowest_cost_per_kwh;
+
+    const usage = m.usage ? `
+      <div class="usage-box">
+        <div><span>Your usage</span><strong>${fmt(m.usage.annual_kwh)} kWh/yr</strong></div>
+        ${has(m.usage.utility_rate) ? `<div><span>Utility rate</span><strong>${fmt(m.usage.utility_rate * 100, 1)}¢/kWh</strong></div>` : ""}
+        <div><span>Right-sized system</span><strong>${fmt(m.usage.recommended.kw, 1)} kW</strong><small>${m.usage.recommended.panels} × 400 W panels at ${m.assumptions.sun_hours} sun hrs</small></div>
+      </div>` : "";
+
+    $("#report").innerHTML = `
+      <article class="report">
+        <header class="verdict ${v.cls}">
+          <span class="verdict-label">Our verdict</span>
+          <strong class="verdict-word">${v.label}</strong>
+          <h1>${esc(r.headline)}</h1>
+          <p>${esc(r.summary)}</p>
+          ${r.recommended_quote ? `<p class="rec">Best option: <strong>${esc(r.recommended_quote)}</strong> (${esc(qs.find((q) => q.label === r.recommended_quote)?.installer || "")})</p>` : ""}
+        </header>
+
+        ${usage}
+
+        <h2>The numbers</h2>
+        <div class="table-wrap">
+          <table class="num-table">
+            <thead><tr><th scope="col"><span class="sr-only">Metric</span></th>${qs.map((q) => `<th scope="col">${esc(q.installer)}<small>${q.label} · ${{ cash: "Cash", loan: "Loan", lease: "Lease / PPA" }[q.payment_type]}</small></th>`).join("")}</tr></thead>
+            <tbody>
+              <tr><th scope="row">System size</th>${cell((q) => has(q.system_size_kw) ? fmt(q.system_size_kw, 2) + " kW" : "—")}</tr>
+              <tr><th scope="row">$/Watt (cash)<small>Typical $2.50–$3.50</small></th>${cell((q) => has(q.ppw_cash) ? "$" + fmt(q.ppw_cash, 2) : "—")}</tr>
+              <tr><th scope="row">Dealer-fee markup<small>Financed vs cash</small></th>${cell((q) => has(q.dealer_fee_markup) ? pct(q.dealer_fee_markup, 1) : "—")}</tr>
+              <tr><th scope="row">Expected production<small>What the roof should make</small></th>${cell((q) => has(q.expected_annual_kwh) ? fmt(q.expected_annual_kwh) + " kWh/yr" : "—")}</tr>
+              <tr><th scope="row">Quoted vs expected<small>Over 110% is a red flag</small></th>${cell((q) => has(q.quoted_vs_expected) ? pct(q.quoted_vs_expected) : "—")}</tr>
+              ${m.usage ? `<tr><th scope="row">Covers your usage</th>${cell((q) => has(q.usage_coverage) ? pct(q.usage_coverage) : "—")}</tr>` : ""}
+              <tr><th scope="row">25-year total cost</th>${cell((q) => has(q.cost_25yr) ? `${money(q.cost_25yr)}<small>${esc(q.cost_basis)}</small>` : "—")}</tr>
+              <tr class="key"><th scope="row">True cost per kWh<small>Lower wins</small></th>${cell((q) => has(q.cost_per_kwh) ? `${fmt(q.cost_per_kwh * 100, 1)}¢${q.label === lowest ? " ✓" : ""}` : "—")}</tr>
+              ${m.usage?.utility_rate ? `<tr><th scope="row">vs. your utility rate</th>${cell((q) => has(q.vs_utility_rate) ? pct(q.vs_utility_rate) + " of utility" : "—")}</tr>` : ""}
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Quote by quote</h2>
+        <div class="quote-reviews">
+          ${qs.map((q) => {
+            const rq = byLabel[q.label] || { findings: [], talking_points: [] };
+            const qv = VERDICT[rq.verdict] || null;
+            return `
+              <section class="quote-review">
+                <header>
+                  <h3>${esc(q.installer)} <small>${q.label}</small></h3>
+                  ${qv ? `<span class="pill-verdict ${qv.cls}">${qv.label}</span>` : ""}
+                </header>
+                ${q.flags.length ? `<ul class="flag-list">${q.flags.map((f) => `<li class="sev-${f.severity}">${esc(f.text)}</li>`).join("")}</ul>` : '<p class="ok">No automatic red flags.</p>'}
+                ${rq.findings?.length ? `<h4>What we found</h4><ul>${rq.findings.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+                ${rq.talking_points?.length ? `<h4>What to say to the installer</h4><ul class="say">${rq.talking_points.map((x) => `<li>“${esc(x.replace(/^["“]|["”]$/g, ""))}”</li>`).join("")}</ul>` : ""}
+              </section>`;
+          }).join("")}
+        </div>
+
+        ${r.questions_to_ask?.length ? `<h2>Questions to ask before you sign</h2><ol class="questions">${r.questions_to_ask.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>` : ""}
+
+        <aside class="caveats">
+          <h4>What this review can't see</h4>
+          <ul>${(r.caveats || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+          <p>Planning analysis based on the documents you provided, not financial or legal advice. Production estimates use ${m.assumptions.sun_hours} peak sun hours (${esc(m.assumptions.state || "your location")}), a ${m.assumptions.derate} derate, and ${m.assumptions.degradation * 100}%/yr panel degradation over ${m.assumptions.years} years.</p>
+        </aside>
+
+        <div class="upsell no-print">
+          <p><strong>Want an expert to double-check?</strong> Book a free 15-minute call and we'll go through this report with you.</p>
+          <a class="btn btn-primary" href="/solar#book">Book free discovery call →</a>
+        </div>
+      </article>`;
+  }
+
+  $("#print-btn").addEventListener("click", () => window.print());
+  $("#restart-btn").addEventListener("click", () => {
+    $$(".slot-clear").forEach((b) => b.click());
+    state.extracted = null;
+    show("upload");
+  });
+
+  // ── Start ───────────────────────────────────────────────────────────────
+  try { state.passcode = sessionStorage.getItem("ysa-review-pass") || ""; } catch (e) {}
+  syncReadButton();
+  show(state.passcode ? "upload" : "pass");
+})();

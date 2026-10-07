@@ -8,6 +8,7 @@
   ],
   "rewrites": [
     { "source": "/solar", "destination": "/solar/index.html" },
-    { "source": "/((?!solar/).*)", "destination": "/index.html" }
+    { "source": "/solar/review", "destination": "/solar/review/index.html" },
+    { "source": "/((?!solar/|api/).*)", "destination": "/index.html" }
   ]
 }
