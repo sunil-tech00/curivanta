@@ -135,7 +135,10 @@
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
   padding: 22px 24px; border-radius: 16px; background: var(--amber-soft); border: 1px solid var(--amber);
 }
-.upsell p { flex: 1 1 280px; }
+.upsell > div { flex: 1 1 320px; display: grid; gap: 6px; }
+.upsell-title { font-size: 16px; }
+.upsell-alt { font-size: 13.5px; color: var(--muted); }
+.upsell-alt a { color: var(--amber-text); }
 
 @media print {
   :root { --bg: #fff; --surface: #fff; --surface-2: #f6f3ec; --text: #0B1F35; --muted: #4E5E72; --border: #ddd; --amber-text: #A86708; --good: #1E7A48; --danger: #B3402F; }

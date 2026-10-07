@@ -13,6 +13,9 @@
 
   const STATES = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
   const MAX_PDF = 3 * 1024 * 1024;
+  // Report CTA: the paid Full Solar Review. Swap in its booking/checkout link when it exists.
+  const FULL_REVIEW_URL = "/solar#full-review";
+  const FREE_CALL_URL = "/solar#book";
   const VERDICT = {
     sign: { label: "Sign", cls: "v-sign" },
     renegotiate: { label: "Renegotiate", cls: "v-reneg" },
@@ -222,6 +225,9 @@
             ${field(id("cash_price"), "Cash price ($)", q.cash_price, undefined, "Before incentives")}
             ${field(id("panel"), "Panels", q.panel, 'type="text"')}
             ${field(id("inverter"), "Inverter", q.inverter, 'type="text"')}
+            ${field(id("battery_kwh"), "Battery (kWh)", q.battery_kwh, undefined, "Leave blank if none")}
+            ${field(id("battery_price"), "Battery price ($)", q.battery_price, undefined, "Only if listed separately")}
+            ${field(id("battery"), "Battery model", q.battery, 'type="text"')}
           </div>
           <div class="field">
             <span class="label">How is it paid for?</span>
@@ -290,7 +296,9 @@
         cash_price: numOrNull(v("cash_price")),
         panel: v("panel").trim() || null,
         inverter: v("inverter").trim() || null,
-        battery_kwh: extracted.battery_kwh ?? null,
+        battery_kwh: numOrNull(v("battery_kwh")),
+        battery_price: numOrNull(v("battery_price")),
+        battery: v("battery").trim() || null,
         workmanship_warranty_years: extracted.workmanship_warranty_years ?? null,
         financed_price: pay === "loan" ? numOrNull(v("financed_price")) : null,
         loan_apr_pct: pay === "loan" ? numOrNull(v("loan_apr_pct")) : null,
@@ -341,6 +349,7 @@
       <div class="usage-box">
         <div><span>Your usage</span><strong>${fmt(m.usage.annual_kwh)} kWh/yr</strong></div>
         ${has(m.usage.utility_rate) ? `<div><span>Utility rate</span><strong>${fmt(m.usage.utility_rate * 100, 1)}¢/kWh</strong></div>` : ""}
+        <div><span>1-day backup battery</span><strong>${fmt(m.usage.battery_for_one_day_backup_kwh, 1)} kWh</strong><small>${fmt(m.usage.daily_kwh, 1)} kWh/day ÷ 85% usable</small></div>
         <div><span>Right-sized system</span><strong>${fmt(m.usage.recommended.kw, 1)} kW</strong><small>${m.usage.recommended.panels} × 400 W panels at ${m.assumptions.sun_hours} sun hrs</small></div>
       </div>` : "";
 
@@ -362,7 +371,8 @@
             <thead><tr><th scope="col"><span class="sr-only">Metric</span></th>${qs.map((q) => `<th scope="col">${esc(q.installer)}<small>${q.label} · ${{ cash: "Cash", loan: "Loan", lease: "Lease", ppa: "PPA" }[q.payment_type]}</small></th>`).join("")}</tr></thead>
             <tbody>
               <tr><th scope="row">System size</th>${cell((q) => has(q.system_size_kw) ? fmt(q.system_size_kw, 2) + " kW" : "—")}</tr>
-              <tr><th scope="row">$/Watt (cash)<small>Typical $2.50–$3.50</small></th>${cell((q) => has(q.ppw_cash) ? "$" + fmt(q.ppw_cash, 2) : "—")}</tr>
+              <tr><th scope="row">Battery</th>${cell((q) => has(q.battery_kwh) ? `${fmt(q.battery_kwh, 1)} kWh${has(q.battery_vs_daily_use) ? `<small>${pct(q.battery_vs_daily_use)} of a day's use</small>` : ""}` : "None")}</tr>
+              <tr><th scope="row">$/Watt (cash)<small>Typical $2.50–$3.50 for solar</small></th>${cell((q) => has(q.ppw_cash) ? "$" + fmt(q.ppw_cash, 2) + (has(q.ppw_solar_only) ? `<small>$${fmt(q.ppw_solar_only, 2)} solar only</small>` : has(q.battery_kwh) ? "<small>includes battery</small>" : "") : "—")}</tr>
               <tr><th scope="row">Dealer-fee markup<small>Financed vs cash</small></th>${cell((q) => has(q.dealer_fee_markup) ? pct(q.dealer_fee_markup, 1) : "—")}</tr>
               <tr><th scope="row">Expected production<small>What the roof should make</small></th>${cell((q) => has(q.expected_annual_kwh) ? fmt(q.expected_annual_kwh) + " kWh/yr" : "—")}</tr>
               <tr><th scope="row">Quoted vs expected<small>Over 110% is a red flag</small></th>${cell((q) => has(q.quoted_vs_expected) ? pct(q.quoted_vs_expected) : "—")}</tr>
@@ -401,8 +411,12 @@
         </aside>
 
         <div class="upsell no-print">
-          <p><strong>Want an expert to double-check?</strong> Book a free 15-minute call and we'll go through this report with you.</p>
-          <a class="btn btn-primary" href="/solar#book">Book free discovery call →</a>
+          <div>
+            <p class="upsell-title"><strong>Want an expert to take it from here?</strong></p>
+            <p>The <strong>Full Solar Review — $249 flat</strong>: we go through your actual quotes and bills line by line, vet the installers, and walk you through a written report and negotiation playbook — then review the contract before you sign, with 14 days of email support.</p>
+            <p class="upsell-alt">Not sure yet? <a href="${FREE_CALL_URL}">Book a free 15-minute call</a> first.</p>
+          </div>
+          <a class="btn btn-primary" href="${FULL_REVIEW_URL}">Get the Full Solar Review →</a>
         </div>
       </article>`;
   }

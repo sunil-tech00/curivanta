@@ -31,12 +31,12 @@ const pairs = (names, valueType) => ({
 const strings = { type: "array", items: { type: "string" } };
 
 const QUOTE_NUMBERS = [
-  "system_size_kw", "panel_count", "battery_kwh", "quoted_annual_production_kwh",
+  "system_size_kw", "panel_count", "battery_kwh", "battery_price", "quoted_annual_production_kwh",
   "cash_price", "financed_price", "loan_apr_pct", "loan_term_years", "monthly_loan_payment",
   "dealer_fee_amount", "lease_monthly_payment", "ppa_rate_per_kwh", "lease_escalator_pct",
   "workmanship_warranty_years", "customer_annual_usage_kwh", "customer_utility_rate_per_kwh"
 ];
-const QUOTE_TEXT = ["installer_name", "panel", "inverter", "state"];
+const QUOTE_TEXT = ["installer_name", "panel", "inverter", "battery", "state"];
 const BILL_NUMBERS = ["monthly_kwh", "annual_kwh", "avg_rate_per_kwh", "bill_total"];
 const BILL_TEXT = ["utility_name", "state", "rate_plan"];
 
@@ -71,6 +71,7 @@ Rules:
 - System size is DC kilowatts. If only panel count and wattage are given, multiply them (e.g. 18 × 400 W = 7.2 kW) — that one calculation is allowed.
 - cash_price is the full price before incentives. If the quote shows only a price "after tax credit" or "net cost", put the pre-incentive price if it is shown anywhere, otherwise leave it out.
 - financed_price is the total loan amount or financed system price, if different from cash.
+- battery_kwh is the total usable storage capacity quoted (e.g. 13.5 for one Tesla Powerwall 3); battery is the make/model and count (e.g. "1 x Tesla Powerwall 3"). battery_price is the battery's own price in dollars only if the quote lists it separately; cash_price stays the full system price.
 - dealer_fee_amount is a dealer fee, financing fee, or rate buy-down fee in dollars, only if the document states it.
 - For a lease, fill lease_monthly_payment (first-year monthly) and lease_escalator_pct; leave out the loan fields.
 - For a PPA (you pay per kWh produced), fill ppa_rate_per_kwh (first-year $/kWh, e.g. 0.21), lease_escalator_pct (annual rate increase), and lease_monthly_payment only if the quote shows an estimated first-year monthly amount.
@@ -110,6 +111,7 @@ How to judge:
 - True cost per kWh (25-year cost ÷ 25-year production) is the main comparison across cash, loan, and lease. Lower wins. If vs_utility_rate is near or above 1, solar costs about as much as buying from the utility — a weak deal.
 - Treat high-severity flags (dealer fees, inflated production, escalators above 2.9%, counting the expired 25D tax credit) as serious.
 - Leases and PPAs are third-party owned: the installer keeps any tax credits, so don't treat that as a problem. For a PPA, payments follow production at a per-kWh rate; compare ppa_rate_cents_year1 and ppa_rate_cents_final_year with utility_rate_cents, and note that the monthly figures use our production estimate rather than the installer's.
+- Batteries: under California's NEM 3.0, solar sent to the grid earns far less than power costs to buy, so storing midday solar for evening use drives savings. Use the battery metrics (battery_kwh, battery_vs_daily_use, usage.battery_for_one_day_backup_kwh, ppw_solar_only) and battery flags to say whether the quote's battery choice fits this home — including when no battery is quoted. Don't invent battery prices, savings, or backup hours.
 - extra_cost_vs_paying_cash, when present, is the clearest way to show what financing or leasing costs over buying outright.
 - Verdicts: "sign" only when the price is reasonable and there are no high-severity flags; "renegotiate" when the deal is fixable with specific asks; "walk_away" when the economics or terms are fundamentally bad.
 

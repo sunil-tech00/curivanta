@@ -25,6 +25,8 @@ const LIMITS = {
   escalator: 0.029,       // lease/PPA escalator above 2.9%/yr (toolkit B23)
   ppwHigh: 3.5,           // top of typical US residential cash $/W
   oversize: 1.2,          // expected production > 120% of usage
+  batteryLarge: 1.5,      // battery > 1.5 days of average use
+  lithiumDoD: 0.85,       // Sizing Calculator 1-Inputs B18 (LiFePO4)
   undersize: 0.6          // expected production < 60% of usage
 };
 
@@ -50,7 +52,8 @@ export function analyzeQuote(q, a) {
   const type = paymentType(q);
   const r = {
     label: q.label, installer: q.installer_name || q.label, payment_type: type, system_size_kw: kw,
-    panel: q.panel || null, inverter: q.inverter || null, battery_kwh: pos(q.battery_kwh),
+    panel: q.panel || null, inverter: q.inverter || null,
+    battery: q.battery || null, battery_kwh: pos(q.battery_kwh), battery_price: pos(q.battery_price),
     workmanship_warranty_years: pos(q.workmanship_warranty_years),
     document_notes: Array.isArray(q.notes) ? q.notes.slice(0, 10) : [],
     flags: []
@@ -62,6 +65,8 @@ export function analyzeQuote(q, a) {
   const watts = kw * 1000;
 
   r.ppw_cash = cash ? cash / watts : null;                                         // B10
+  // With a separately priced battery, judge the solar on its own $/W.
+  r.ppw_solar_only = cash && r.battery_price && r.battery_price < cash ? (cash - r.battery_price) / watts : null;
   r.ppw_financed = financed ? financed / watts : null;                             // B11
   r.dealer_fee_markup = cash && financed ? (financed - cash) / cash : null;        // B12
   r.expected_annual_kwh = kw * a.sunHours * 365 * a.derate;                        // B14
@@ -132,9 +137,10 @@ export function analyzeQuote(q, a) {
     r.flags.push({ id: "escalator", severity: "high",
       text: `${(esc * 100).toFixed(1)}% annual escalator — ${type === "ppa" ? "your per-kWh rate" : "payments"} compound to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}.` });
   }
-  if (r.ppw_cash !== null && r.ppw_cash > LIMITS.ppwHigh) {
+  const ppwForBenchmark = r.ppw_solar_only ?? (r.battery_kwh ? null : r.ppw_cash);
+  if (ppwForBenchmark !== null && ppwForBenchmark > LIMITS.ppwHigh) {
     r.flags.push({ id: "high_price", severity: "medium",
-      text: `$${r.ppw_cash.toFixed(2)}/W cash is above the typical $2.50–$3.50/W range.` });
+      text: `$${ppwForBenchmark.toFixed(2)}/W ${r.ppw_solar_only ? "for the solar alone" : "cash"} is above the typical $2.50–$3.50/W range.` });
   }
   if (!cash) {
     r.flags.push({ id: "no_cash_price", severity: "medium",
@@ -143,6 +149,24 @@ export function analyzeQuote(q, a) {
   if (q.mentions_federal_tax_credit && !thirdPartyOwned) {
     r.flags.push({ id: "tax_credit", severity: "high",
       text: "Quote counts a federal tax credit — the 30% homeowner credit (Section 25D) ended for systems installed after Dec 31, 2025." });
+  }
+
+  // Batteries
+  if (r.battery_kwh) {
+    if (!r.battery_price && cash) {
+      r.flags.push({ id: "battery_unpriced", severity: "low",
+        text: "Battery isn't priced separately — ask for solar-only and battery prices so you can judge each." });
+    }
+    if (a.annualUsageKwh) {
+      r.battery_vs_daily_use = r.battery_kwh / (a.annualUsageKwh / 12 / 30);
+      if (r.battery_vs_daily_use > LIMITS.batteryLarge) {
+        r.flags.push({ id: "battery_large", severity: "medium",
+          text: `${fmt1(r.battery_kwh)} kWh of storage is ${pct(r.battery_vs_daily_use)} of a typical day's use — more than most homes can fill and empty daily.` });
+      }
+    }
+  } else if (a.state === "California") {
+    r.flags.push({ id: "no_battery_nem3", severity: "medium",
+      text: "No battery: under NEM 3.0, solar you export earns a fraction of what you pay for power, so a battery — or a smaller system — usually matters for savings." });
   }
 
   if (a.annualUsageKwh) {
@@ -184,6 +208,7 @@ export function analyze({ quotes, bill, state, sunHours, derate, degradation }) 
     degradation: num(degradation) ?? DEFAULTS.degradation,
     years: DEFAULTS.years,
     annualUsageKwh: monthly ? monthly * 12 : null,
+    state: state || null,
     utilityRate: pos(bill?.avg_rate_per_kwh)
   };
   const results = quotes.map((q) => analyzeQuote(q, a));
@@ -197,11 +222,17 @@ export function analyze({ quotes, bill, state, sunHours, derate, degradation }) 
       utility_rate: a.utilityRate,
       utility_rate_cents: a.utilityRate ? Math.round(a.utilityRate * 1000) / 10 : null,
       current_monthly_bill_estimate: a.utilityRate ? (a.annualUsageKwh * a.utilityRate) / 12 : null,
-      recommended: recommendedSize(a.annualUsageKwh, sh, a.derate)
+      recommended: recommendedSize(a.annualUsageKwh, sh, a.derate),
+      daily_kwh: monthly / 30,                                                     // Sizing B5
+      battery_for_one_day_backup_kwh: monthly / 30 / LIMITS.lithiumDoD             // Sizing B17, 1 day, LiFePO4
     } : null,
     quotes: results,
     lowest_cost_per_kwh: best ? best.label : null
   };
+}
+
+function fmt1(x) {
+  return (Math.round(x * 10) / 10).toString();
 }
 
 function pct(x) {
