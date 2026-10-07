@@ -4,7 +4,7 @@
    Visit any page with ?notrack to stop counting your own visits in this browser (?track undoes it). */
 (function () {
   "use strict";
-  var WEBSITE_ID = ""; // Umami → Settings → Websites → Edit → Website ID
+  var WEBSITE_ID = "2588718b-ee85-4be3-aaa6-aa687f22f567"; // Umami → Settings → Websites → Edit → Website ID
   var SRC = "https://cloud.umami.is/script.js";
 
   var queue = [];
