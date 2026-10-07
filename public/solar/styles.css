@@ -69,7 +69,7 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2
 ::selection { background: var(--amber); color: var(--on-amber); }
 :focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 
-.sr-only, .hp {
+.sr-only {
   position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
@@ -425,24 +425,13 @@ input::placeholder { color: color-mix(in srgb, var(--muted) 70%, transparent); }
   box-shadow: 0 30px 60px -25px rgba(11, 31, 53, 0.55);
 }
 .calendar-card iframe { display: block; min-height: 620px; border-radius: 14px; }
-.form-status { font-size: 14.5px; min-height: 1em; text-align: center; }
-.form-status.ok { color: var(--good); }
-.form-status.err { color: var(--danger); }
-.form-status:empty { display: none; }
 
 /* Footer */
 .footer { border-top: 1px solid var(--border); padding: 72px 0 32px; }
 .footer-grid { display: grid; gap: 40px; grid-template-columns: 1fr; align-items: center; }
-@media (min-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 56px; } }
 .footer-brand { margin-bottom: 14px; }
 .footer-brand .brand-text { font-size: 28px; }
 .footer .muted { max-width: 440px; }
-.footer-cta { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px; }
-.footer-cta h3 { font-size: 28px; margin-bottom: 6px; }
-.footer-cta .muted { margin-bottom: 18px; }
-.inline-form { display: flex; flex-wrap: wrap; gap: 10px; }
-.inline-form input[type="email"] { flex: 1 1 200px; }
-.inline-form .form-status { flex-basis: 100%; text-align: left; }
 .footer-bottom {
   margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--border);
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; font-size: 14px; color: var(--muted);

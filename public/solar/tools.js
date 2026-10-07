@@ -1,8 +1,6 @@
-/* Your Solar Advisor — theme toggle, free tools, Formspree forms. No dependencies. */
+/* Your Solar Advisor — theme toggle and free tools. No dependencies. */
 
 // ── Config ────────────────────────────────────────────────────────────────
-// Paste your Formspree endpoint here, e.g. "https://formspree.io/f/abcdwxyz".
-const FORMSPREE_ENDPOINT = "";
 // "What's next?" links under each tool's results. An empty Etsy URL hides that card.
 const LINKS = {
   etsySizer: "https://www.etsy.com/listing/4589854852/solar-panel-calculator-spreadsheet-diy",   // Etsy listing: Solar Sizing Calculator ($19)
@@ -250,43 +248,4 @@ const LINKS = {
   compareForm.addEventListener("change", renderComparison);
   compareForm.addEventListener("submit", (e) => e.preventDefault());
   renderComparison();
-
-  // ── Formspree forms ─────────────────────────────────────────────────────
-  $$(".js-formspree").forEach((form) => {
-    const status = $(".form-status", form);
-    const btn = $('button[type="submit"]', form);
-    const btnText = btn.textContent;
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      status.className = "form-status";
-      status.textContent = "";
-
-      if (!FORMSPREE_ENDPOINT) {
-        status.classList.add("err");
-        status.textContent = "This form isn't connected yet. Please email hello@curivanta.com.";
-        return;
-      }
-      btn.disabled = true;
-      btn.textContent = "Sending...";
-      try {
-        const res = await fetch(FORMSPREE_ENDPOINT, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
-        if (res.ok) {
-          form.reset();
-          status.classList.add("ok");
-          status.textContent = "Thanks! We'll be in touch soon.";
-        } else {
-          const body = await res.json().catch(() => ({}));
-          const msg = body.errors && body.errors.length ? body.errors.map((x) => x.message).join(" ") : "";
-          throw new Error(msg || "Something went wrong.");
-        }
-      } catch (err) {
-        status.classList.add("err");
-        status.textContent = (err.message || "Something went wrong.") + " Please try again or email hello@curivanta.com.";
-      } finally {
-        btn.disabled = false;
-        btn.textContent = btnText;
-      }
-    });
-  });
 })();
