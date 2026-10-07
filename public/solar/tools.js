@@ -7,7 +7,7 @@ const FORMSPREE_ENDPOINT = "";
 const LINKS = {
   etsySizer: "https://www.etsy.com/listing/4589854852/solar-panel-calculator-spreadsheet-diy",   // Etsy listing: Solar Sizing Calculator ($19)
   etsyCompare: "https://www.etsy.com/listing/4589854852/solar-panel-calculator-spreadsheet-diy", // TEMP: calculator listing until the Quote Toolkit ($29) is listed
-  booking: "#upload-bill"   // discovery-call booking page; falls back to the analysis form
+  booking: "#book"          // discovery-call calendar, embedded in the #book section
 };
 
 (function () {
@@ -252,16 +252,6 @@ const LINKS = {
   renderComparison();
 
   // ── Formspree forms ─────────────────────────────────────────────────────
-  const fileInput = $("#lf-file");
-  if (fileInput) {
-    fileInput.addEventListener("change", () => {
-      const f = fileInput.files[0];
-      const zone = fileInput.closest(".dropzone");
-      zone.classList.toggle("has-file", !!f);
-      $(".dz-title", zone).textContent = f ? f.name : "Click to upload your bill";
-    });
-  }
-
   $$(".js-formspree").forEach((form) => {
     const status = $(".form-status", form);
     const btn = $('button[type="submit"]', form);
@@ -277,26 +267,14 @@ const LINKS = {
         status.textContent = "This form isn't connected yet. Please email hello@curivanta.com.";
         return;
       }
-      const file = fileInput && form.contains(fileInput) ? fileInput.files[0] : null;
-      if (file && file.size > 10 * 1024 * 1024) {
-        status.classList.add("err");
-        status.textContent = "That file is over 10MB. Please upload a smaller PDF or photo.";
-        return;
-      }
-
       btn.disabled = true;
-      btn.textContent = file ? "Uploading..." : "Sending...";
+      btn.textContent = "Sending...";
       try {
-        const data = new FormData(form);
-        if (!file) data.delete("bill");
-        const res = await fetch(FORMSPREE_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } });
+        const res = await fetch(FORMSPREE_ENDPOINT, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
         if (res.ok) {
           form.reset();
-          if (fileInput && form.contains(fileInput)) fileInput.dispatchEvent(new Event("change"));
           status.classList.add("ok");
-          status.textContent = file
-            ? "Bill uploaded successfully. We'll review your utility bill and get back to you shortly."
-            : "Thanks! We'll be in touch soon.";
+          status.textContent = "Thanks! We'll be in touch soon.";
         } else {
           const body = await res.json().catch(() => ({}));
           const msg = body.errors && body.errors.length ? body.errors.map((x) => x.message).join(" ") : "";

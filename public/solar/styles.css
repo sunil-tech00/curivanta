@@ -417,26 +417,14 @@ input::placeholder { color: color-mix(in srgb, var(--muted) 70%, transparent); }
 .quote figcaption small { color: var(--muted); font-size: 14px; }
 .saved { background: var(--amber-soft); color: var(--amber-text); padding: 4px 12px; border-radius: 999px; font-size: 13.5px; font-weight: 700; white-space: nowrap; }
 
-/* Lead form */
+/* Booking */
 .lead-section { background: var(--amber); color: var(--on-amber); }
 .lead-section .section-head p { color: color-mix(in srgb, var(--on-amber) 80%, transparent); }
-.lead-form {
-  background: var(--surface); color: var(--text); border-radius: 20px; padding: 32px;
-  display: grid; gap: 18px; box-shadow: 0 30px 60px -25px rgba(11, 31, 53, 0.55);
+.calendar-card {
+  background: #fff; border-radius: 20px; padding: 8px; min-height: 640px;
+  box-shadow: 0 30px 60px -25px rgba(11, 31, 53, 0.55);
 }
-.row-2 { display: grid; gap: 18px; grid-template-columns: 1fr; }
-@media (min-width: 640px) { .row-2 { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 520px) { .lead-form { padding: 22px; } }
-.dropzone {
-  display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer;
-  border: 2px dashed var(--border); border-radius: 14px; padding: 30px 16px; text-align: center;
-  transition: border-color .15s, background-color .15s;
-}
-.dropzone:hover, .dropzone.has-file { border-color: var(--amber); background: var(--amber-soft); }
-.dropzone input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-.dropzone svg { width: 40px; height: 40px; color: var(--muted); margin-bottom: 6px; }
-.dz-title { font-weight: 600; }
-.dz-sub { font-size: 14px; color: var(--muted); }
+.calendar-card iframe { display: block; min-height: 620px; border-radius: 14px; }
 .form-status { font-size: 14.5px; min-height: 1em; text-align: center; }
 .form-status.ok { color: var(--good); }
 .form-status.err { color: var(--danger); }

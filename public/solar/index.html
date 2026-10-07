@@ -71,7 +71,7 @@
         <h1>Solar advice that works for <em>you</em>, not the installer.</h1>
         <p class="lead">Independent, vendor-neutral, and commission-free consulting for homeowners. Get the truth before you sign.</p>
         <div class="cta-row">
-          <a class="btn btn-primary btn-lg" data-link="booking" href="#upload-bill">Get Free Consultation</a>
+          <a class="btn btn-primary btn-lg" data-link="booking" href="#book">Get Free Consultation</a>
         </div>
         <ul class="trust">
           <li>10+ Years in Solar</li>
@@ -217,7 +217,7 @@
               <li>14 days of email follow-up</li>
           </ul>
           <div class="review-cta">
-            <a class="btn btn-primary btn-lg" data-link="booking" href="#upload-bill">Start with a free discovery call →</a>
+            <a class="btn btn-primary btn-lg" data-link="booking" href="#book">Start with a free discovery call →</a>
           </div>
         </div>
       </div>
@@ -271,7 +271,7 @@
               </div>
               <div class="next-card">
                 <p><span class="next-emoji" aria-hidden="true">📞</span> <strong>Want an expert to sanity-check it?</strong> — Free 15-minute call. We'll review your numbers and tell you honestly whether solar makes sense for your home — no pitch.</p>
-                <a class="btn btn-primary" data-link="booking" href="#upload-bill">Book free discovery call →</a>
+                <a class="btn btn-primary" data-link="booking" href="#book">Book free discovery call →</a>
               </div>
             </div>
           </div>
@@ -299,7 +299,7 @@
               </div>
               <div class="next-card">
                 <p><span class="next-emoji" aria-hidden="true">📞</span> <strong>Still confused by your quotes?</strong> — That's exactly what the free discovery call is for. An ex-solar-financing insider reviews your quotes with you and spots what the sales reps hope you miss.</p>
-                <a class="btn btn-primary" data-link="booking" href="#upload-bill">Book free discovery call →</a>
+                <a class="btn btn-primary" data-link="booking" href="#book">Book free discovery call →</a>
               </div>
             </div>
           </div>
@@ -347,43 +347,16 @@
       </div>
     </section>
 
-    <!-- Lead capture -->
-    <section id="upload-bill" class="section lead-section">
-      <div class="wrap narrow-sm">
+    <!-- Booking -->
+    <section id="book" class="section lead-section">
+      <div class="wrap narrow">
         <header class="section-head">
-          <h2>Get Your Free Analysis</h2>
-          <p>Upload your utility bill securely. We'll run the numbers and tell you exactly what you should be paying.</p>
+          <h2>Book Your Free Discovery Call</h2>
+          <p>15 minutes, no pitch. Bring your quotes — we'll tell you honestly whether solar makes sense for your home.</p>
         </header>
-        <form class="lead-form js-formspree" enctype="multipart/form-data">
-          <input type="hidden" name="_subject" value="New solar analysis request — Your Solar Advisor" />
-          <input type="hidden" name="form" value="Upload bill" />
-          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <div class="row-2">
-            <div class="field">
-              <label for="lf-name">Full Name</label>
-              <input id="lf-name" name="name" required placeholder="John Doe" autocomplete="name" />
-            </div>
-            <div class="field">
-              <label for="lf-phone">Phone Number</label>
-              <input id="lf-phone" name="phone" type="tel" required placeholder="(555) 123-4567" autocomplete="tel" />
-            </div>
-          </div>
-          <div class="field">
-            <label for="lf-email">Email Address</label>
-            <input id="lf-email" name="email" type="email" required placeholder="john@example.com" autocomplete="email" />
-          </div>
-          <div class="field">
-            <span class="label">Utility Bill (PDF or Image)</span>
-            <label class="dropzone" for="lf-file">
-              <input id="lf-file" name="bill" type="file" accept=".pdf,image/*" />
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
-              <span class="dz-title">Click to upload your bill</span>
-              <span class="dz-sub">Supports PDF, JPG, PNG up to 10MB</span>
-            </label>
-          </div>
-          <button class="btn btn-primary btn-lg full" type="submit">Get My Free Analysis</button>
-          <p class="form-status" role="status"></p>
-        </form>
+        <div class="calendar-card">
+          <iframe src="https://api.leadconnectorhq.com/widget/bookings/solar-consulting-calendar" title="Book a free 15-minute discovery call" style="width: 100%; border: none; overflow: hidden;" scrolling="no" id="solar-consulting-calendar"></iframe>
+        </div>
       </div>
     </section>
   </main>
@@ -425,6 +398,7 @@
   </footer>
 
   <script src="/solar/tools.js" defer></script>
+  <script src="https://link.msgsndr.com/js/form_embed.js" defer></script>
   <script src="https://beta.leadconnectorhq.com/loader.js" data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a309f31b48bf7b6a3192ad2" async></script>
 </body>
 </html>
