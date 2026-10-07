@@ -40,7 +40,7 @@ const QUOTE_TEXT = ["installer_name", "panel", "inverter", "state"];
 const BILL_NUMBERS = ["monthly_kwh", "annual_kwh", "avg_rate_per_kwh", "bill_total"];
 const BILL_TEXT = ["utility_name", "state", "rate_plan"];
 
-const QUOTE_SCHEMA = obj({
+export const QUOTE_SCHEMA = obj({
   is_solar_quote: { type: "boolean" },
   mentions_federal_tax_credit: { type: "boolean" },
   numbers: pairs(QUOTE_NUMBERS, "number"),
@@ -48,14 +48,14 @@ const QUOTE_SCHEMA = obj({
   notes: strings
 });
 
-const BILL_SCHEMA = obj({
+export const BILL_SCHEMA = obj({
   is_utility_bill: { type: "boolean" },
   numbers: pairs(BILL_NUMBERS, "number"),
   text: pairs(BILL_TEXT, "string"),
   notes: strings
 });
 
-function flatten({ numbers = [], text = [], ...rest }) {
+export function flatten({ numbers = [], text = [], ...rest }) {
   const out = { ...rest };
   for (const { field, value } of [...numbers, ...text]) {
     if (!(field in out) && value !== "" && value !== null) out[field] = value;
@@ -63,7 +63,7 @@ function flatten({ numbers = [], text = [], ...rest }) {
   return out;
 }
 
-const EXTRACT_SYSTEM = `You read residential solar documents and extract numbers for an independent quote review.
+export const EXTRACT_SYSTEM = `You read residential solar documents and extract numbers for an independent quote review.
 
 Rules:
 - Extract only what the document states. Put each value you find in "numbers" or "text" as {field, value}; leave out anything the document doesn't show. Never estimate or infer a missing number.
