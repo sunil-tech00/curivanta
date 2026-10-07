@@ -5,7 +5,28 @@ import { Link } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
+// Analytics (see public/analytics.js). Clicks on elements with data-umami-event are tracked by Umami itself.
+const track = (name: string, data?: Record<string, string | number | boolean>) =>
+  (window as Window & { cvTrack?: (name: string, data?: Record<string, string | number | boolean>) => void }).cvTrack?.(name, data);
+
 const Index = () => {
+  // Scroll funnel: how far down the page visitors get (once per section per visit).
+  useEffect(() => {
+    const seen = new Set<string>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = (entry.target as HTMLElement).dataset.trackView;
+        if (entry.isIntersecting && id && !seen.has(id)) {
+          seen.add(id);
+          track('reached_' + id);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('[data-track-view]').forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   useEffect(() => {
     const revealEls = document.querySelectorAll('.reveal:not(.is-visible)');
     const io = new IntersectionObserver((entries) => {
@@ -24,6 +45,8 @@ const Index = () => {
 
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
   const [error, setError] = useState('');
+  const [started, setStarted] = useState(false);
+  const [invalidTracked, setInvalidTracked] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,8 +70,9 @@ const Index = () => {
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(json.error || 'Something went wrong. Please email hello@curivanta.com.');
       setStatus('sent');
-      (window as Window & { cvTrack?: (name: string) => void }).cvTrack?.('audit_form_submitted');
+      track('audit_form_submitted');
     } catch (err) {
+      track('audit_form_error');
       setError(err instanceof Error ? err.message : 'Something went wrong. Please email hello@curivanta.com.');
       setStatus('idle');
     }
@@ -65,20 +89,20 @@ const Index = () => {
             <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
           </div>
           <nav className="links">
-            <Link className="navlink" to="/hair-salon-bot">Hair Salon Bot</Link>
-            <a className="btn ghost desktop-only" href="#contact">Book a free audit</a>
+            <Link className="navlink" to="/hair-salon-bot" data-umami-event="nav_hair_salon_bot" data-umami-event-where="nav">Hair Salon Bot</Link>
+            <a className="btn ghost desktop-only" href="#contact" data-umami-event="cta_book_audit" data-umami-event-where="nav">Book a free audit</a>
             <ThemeToggle />
             
             <div className="mobile-menu-trigger">
               <Sheet>
                 <SheetTrigger asChild>
-                  <button className="p-2 -mr-2 flex items-center justify-center text-foreground" aria-label="Menu">
+                  <button className="p-2 -mr-2 flex items-center justify-center text-foreground" aria-label="Menu" data-umami-event="mobile_menu_open">
                     <Menu className="w-6 h-6" />
                   </button>
                 </SheetTrigger>
                 <SheetContent side="right" className="flex flex-col gap-6 pt-16 bg-background border-border">
-                  <SheetClose asChild><Link className="text-xl font-medium" to="/hair-salon-bot">Hair Salon Bot</Link></SheetClose>
-                  <SheetClose asChild><a className="btn solid text-center mt-4 justify-center" href="#contact">Book a free audit</a></SheetClose>
+                  <SheetClose asChild><Link className="text-xl font-medium" to="/hair-salon-bot" data-umami-event="nav_hair_salon_bot" data-umami-event-where="mobile_menu">Hair Salon Bot</Link></SheetClose>
+                  <SheetClose asChild><a className="btn solid text-center mt-4 justify-center" href="#contact" data-umami-event="cta_book_audit" data-umami-event-where="mobile_menu">Book a free audit</a></SheetClose>
                 </SheetContent>
               </Sheet>
             </div>
@@ -98,8 +122,8 @@ const Index = () => {
             <h1 className="reveal is-visible">Turn every customer interaction<br />into something that<br /><em>runs itself.</em></h1>
             <p className="sub reveal is-visible">Curivanta helps small businesses win more customers with AI workflows, websites, voice agents, and chat automation. Built by an owner who was tired of doing everything by hand.</p>
             <div className="cta-row reveal is-visible">
-              <a className="btn solid" href="#contact">Book a free automation audit</a>
-              <a className="btn ghost" href="#services">See what we build</a>
+              <a className="btn solid" href="#contact" data-umami-event="cta_book_audit" data-umami-event-where="hero">Book a free automation audit</a>
+              <a className="btn ghost" href="#services" data-umami-event="cta_see_services" data-umami-event-where="hero">See what we build</a>
             </div>
           </div>
           <div className="hero-visual reveal is-visible d2">
@@ -110,7 +134,7 @@ const Index = () => {
 
       <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
 
-      <section className="services" id="services">
+      <section className="services" id="services" data-track-view="services">
         <div className="wrap">
           <div className="section-head reveal">
             <p className="eyebrow">What we build</p>
@@ -157,7 +181,7 @@ const Index = () => {
 
       <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
 
-      <section className="approach" id="approach">
+      <section className="approach" id="approach" data-track-view="approach">
         <div className="wrap">
         <div className="section-head reveal">
           <p className="eyebrow">How we work</p>
@@ -191,7 +215,7 @@ const Index = () => {
 
     <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
 
-    <section className="final-cta" id="contact">
+    <section className="final-cta" id="contact" data-track-view="contact">
         <div className="wrap">
           <p className="eyebrow reveal">Ready when you are</p>
           <h2 className="reveal d1">Let's find the manual work worth automating.</h2>
@@ -203,7 +227,16 @@ const Index = () => {
                 <p>We'll reach out within one business day to schedule your free audit.</p>
               </div>
             ) : (
-            <form className="audit-form" onSubmit={handleSubmit}>
+            <form
+              className="audit-form"
+              onSubmit={handleSubmit}
+              onFocus={() => { if (!started) { setStarted(true); track('audit_form_started'); } }}
+              onInvalidCapture={(e) => {
+                if (invalidTracked) return;
+                setInvalidTracked(true);
+                track('audit_form_invalid', { field: (e.target as HTMLInputElement).name || 'unknown' });
+              }}
+            >
               <input type="text" name="name" placeholder="Your name" className="form-input" autoComplete="name" required />
               <input type="text" name="business" placeholder="Business name & location" className="form-input" autoComplete="organization" required />
               <input type="tel" name="phone" placeholder="Mobile number" className="form-input" autoComplete="tel" required />
@@ -236,9 +269,9 @@ const Index = () => {
           </div>
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', flex: 1, justifyContent: 'flex-end', minWidth: '200px' }}>
             <span className="foot-meta" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-              <Link className="foot-link" to="/privacy">Privacy Policy</Link>
+              <Link className="foot-link" to="/privacy" data-umami-event="footer_privacy">Privacy Policy</Link>
               <span style={{ opacity: 0.3 }}>|</span>
-              <Link className="foot-link" to="/terms">Terms of Service</Link>
+              <Link className="foot-link" to="/terms" data-umami-event="footer_terms">Terms of Service</Link>
             </span>
           </div>
         </div>
