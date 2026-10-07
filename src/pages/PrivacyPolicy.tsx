@@ -30,6 +30,9 @@ const PrivacyPolicy = () => {
             <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>Personal Information We Collect</h3>
             <p>When you visit the Site, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device.</p>
             
+            <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>Website Analytics</h3>
+            <p>We use Umami, a privacy-focused analytics service, to count page visits and actions such as using a calculator or starting a checkout. Umami does not use cookies, does not track you across other websites, and does not collect personal information; visits are reported only in aggregate.</p>
+
             <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>How Do We Use Your Personal Information?</h3>
             <p>We use the Order Information that we collect generally to fulfill any orders placed through the Site (including processing your payment information, arranging for shipping, and providing you with invoices and/or order confirmations).</p>
             

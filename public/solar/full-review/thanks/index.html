@@ -34,6 +34,13 @@
     .fine-print { margin-top: 28px; color: var(--muted); font-size: 14px; }
     .fine-print a { color: var(--amber-text); }
   </style>
+  <script src="/analytics.js"></script>
+  <script>
+    // $249 conversion: count once per browser session, not on every refresh.
+    try {
+      if (!sessionStorage.getItem("cv-fr-tracked")) { cvTrack("full_review_purchased"); sessionStorage.setItem("cv-fr-tracked", "1"); }
+    } catch (e) {}
+  </script>
 </head>
 <body>
   <header class="nav">

@@ -47,6 +47,7 @@ const Index = () => {
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(json.error || 'Something went wrong. Please email hello@curivanta.com.');
       setStatus('sent');
+      (window as Window & { cvTrack?: (name: string) => void }).cvTrack?.('audit_form_submitted');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please email hello@curivanta.com.');
       setStatus('idle');

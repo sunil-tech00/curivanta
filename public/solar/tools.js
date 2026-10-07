@@ -22,6 +22,12 @@ const LINKS = {
   const money = (n) => "$" + fmt(Math.round(n));
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+  // Analytics (see /analytics.js). Tool use is counted once per page view.
+  const track = (name, data) => { try { window.cvTrack && window.cvTrack(name, data); } catch (e) {} };
+  const once = new Set();
+  const trackOnce = (name, data) => { if (!once.has(name)) { once.add(name); track(name, data); } };
+  const CLICK_EVENTS = { aiReview: "cta_ai_review", fullReview: "cta_full_review", etsySizer: "etsy_sizer", etsyCompare: "etsy_compare" };
+
   // ── Theme ───────────────────────────────────────────────────────────────
   const root = document.documentElement;
   if (!root.getAttribute("data-theme")) root.setAttribute("data-theme", "dark");
@@ -36,6 +42,7 @@ const LINKS = {
     if (!url) { (a.closest(".next-card") || a).hidden = true; return; }
     a.href = url;
     if (!url.startsWith("#")) { a.target = "_blank"; a.rel = "noopener"; }
+    a.addEventListener("click", () => track(CLICK_EVENTS[a.dataset.link] || "click_" + a.dataset.link, { where: a.closest("section[id]")?.id || "nav" }));
   });
 
   const year = $("#year");
@@ -120,6 +127,7 @@ const LINKS = {
     }
 
     const r = sizeSystem(i);
+    trackOnce("sizer_used");
     const row = (label, value, hint) => `<div class="stat"><dt>${label}</dt><dd>${value}</dd>${hint ? `<span class="hint">${hint}</span>` : ""}</div>`;
     out.innerHTML = `
       <div class="result-hero">
@@ -210,6 +218,7 @@ const LINKS = {
     }
 
     const ranked = quotes.filter((q) => Number.isFinite(q.ppw)).sort((x, y) => x.ppw - y.ppw);
+    trackOnce("compare_used");
     const unranked = quotes.filter((q) => !Number.isFinite(q.ppw));
     const best = ranked[0].ppw;
     const multi = ranked.length > 1;

@@ -24,6 +24,8 @@
 
   const state = { passcode: "", files: { quote: [null, null, null], bill: [null] }, extracted: null, config: null, paid: "" };
   const bypass = new URLSearchParams(location.search).has("bypass"); // owner test runs: passcode + ?bypass
+  // Analytics (see /analytics.js); owner test runs aren't counted.
+  const track = (name, data) => { try { if (!bypass && window.cvTrack) window.cvTrack(name, data); } catch (e) {} };
   const store = {
     get(k) { try { return JSON.parse(sessionStorage.getItem(k)); } catch (e) { return null; } },
     set(k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
@@ -173,6 +175,7 @@
     if (state.files.bill[0]) jobs.push({ kind: "bill", i: 0, f: state.files.bill[0], label: "utility bill" });
 
     btn.disabled = true;
+    track("review_read_docs", { quotes: jobs.filter((j) => j.kind === "quote").length, bill: Boolean(state.files.bill[0]) });
     let done = 0;
     const tick = ticker(progress, `Reading ${jobs.length} document${jobs.length > 1 ? "s" : ""}…`);
     try {
@@ -189,8 +192,10 @@
       renderConfirm();
       syncUnlockButton();
       show("confirm");
+      track("review_read_ok");
     } catch (err) {
       showError(err.message);
+      track("review_error", { step: "read" });
     } finally {
       btn.disabled = false;
       tick.stop();
@@ -371,9 +376,11 @@
     try {
       store.set("ysa-pending", { extracted: state.extracted, req });
       const { url } = await api("checkout", {});
+      track("review_checkout");
       location.href = url;
     } catch (err) {
       showError(err.message);
+      track("review_error", { step: "checkout" });
       btn.disabled = false;
       tick.stop();
     }
@@ -393,8 +400,10 @@
       history.replaceState(null, "", new URL(reportUrl).pathname);
       syncUnlockButton();
       show("report");
+      track("review_report", { verdict: report?.verdict || "", quotes: req.quotes.length });
     } catch (err) {
       showError(err.message);
+      track("review_error", { step: "report" });
     } finally {
       btn.disabled = false;
       tick.stop();
@@ -526,7 +535,7 @@
     // A saved report link works for anyone holding it — no passcode or payment check.
     const savedId = location.pathname.match(/^\/solar\/report\/([A-Za-z0-9_-]{24})\/?$/)?.[1];
     if (savedId) {
-      try { await showSaved("id=" + savedId); }
+      try { await showSaved("id=" + savedId); track("report_viewed"); }
       catch (err) { show("upload"); showError(err.message); }
       return;
     }
@@ -545,9 +554,13 @@
     if (paidId || canceled) {
       history.replaceState(null, "", location.pathname + (bypass ? "?bypass" : ""));
       if (paidId) {
+        // $49 conversion; the URL is cleaned right after, so a refresh doesn't count it again.
+        if (store.get("ysa-paid") !== paidId) track("review_purchased");
         state.paid = paidId;
         store.set("ysa-paid", paidId);
         store.del("ysa-runs-left");
+      } else {
+        track("review_checkout_canceled");
       }
     }
 
