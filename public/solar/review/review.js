@@ -222,6 +222,7 @@
             ${field(id("loan_apr_pct"), "Loan APR (%)", q.loan_apr_pct)}
             ${field(id("loan_term_years"), "Loan term (years)", q.loan_term_years)}
             ${field(id("monthly_loan_payment"), "Monthly payment ($)", q.monthly_loan_payment, undefined, "If shown")}
+            ${field(id("dealer_fee_amount"), "Dealer fee ($)", q.dealer_fee_amount, undefined, "If the quote states one")}
           </div>
           <div class="grid-3 pay-fields" data-for="lease">
             ${field(id("lease_monthly_payment"), "Monthly payment ($)", q.lease_monthly_payment, undefined, "First year")}
@@ -272,6 +273,7 @@
         loan_apr_pct: pay === "loan" ? numOrNull(v("loan_apr_pct")) : null,
         loan_term_years: pay === "loan" ? numOrNull(v("loan_term_years")) : null,
         monthly_loan_payment: pay === "loan" ? numOrNull(v("monthly_loan_payment")) : null,
+        dealer_fee_amount: pay === "loan" ? numOrNull(v("dealer_fee_amount")) : null,
         lease_monthly_payment: pay === "lease" ? numOrNull(v("lease_monthly_payment")) : null,
         lease_escalator_pct: pay === "lease" ? numOrNull(v("lease_escalator_pct")) : null,
         mentions_federal_tax_credit: $(`#q${i}-tax`).checked,

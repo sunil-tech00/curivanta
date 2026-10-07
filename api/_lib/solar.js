@@ -20,6 +20,7 @@ export const DEFAULTS = { derate: 0.8, degradation: 0.005, years: 25 };
 
 const LIMITS = {
   dealerFee: 0.15,        // financed > 15% over cash (toolkit B21)
+  dealerFeeNotice: 0.03,  // smaller financed-over-cash gaps still worth naming
   production: 1.10,       // quoted > 110% of expected (toolkit B22)
   escalator: 0.029,       // lease/PPA escalator above 2.9%/yr (toolkit B23)
   ppwHigh: 3.5,           // top of typical US residential cash $/W
@@ -93,11 +94,17 @@ export function analyzeQuote(q, a) {
     r.cost_basis = null;
   }
   r.cost_per_kwh = r.cost_25yr && r.production_25yr_kwh ? r.cost_25yr / r.production_25yr_kwh : null; // B19
+  if (r.cost_25yr && cash && type !== "cash") r.extra_cost_vs_paying_cash = r.cost_25yr - cash;
   r.cost_per_kwh_cents = r.cost_per_kwh !== null ? Math.round(r.cost_per_kwh * 1000) / 10 : null;
 
+  r.dealer_fee_stated = pos(q.dealer_fee_amount);
   if (r.dealer_fee_markup !== null && r.dealer_fee_markup > LIMITS.dealerFee) {
     r.flags.push({ id: "dealer_fee", severity: "high",
       text: `Financed price is ${pct(r.dealer_fee_markup)} above cash — likely dealer fees in the loan.` });
+  } else if (type === "loan" && (r.dealer_fee_stated || (r.dealer_fee_markup ?? 0) > LIMITS.dealerFeeNotice)) {
+    const fee = r.dealer_fee_stated ?? (financed - cash);
+    r.flags.push({ id: "dealer_fee", severity: "medium",
+      text: `Loan includes a $${Math.round(fee).toLocaleString("en-US")} dealer fee${r.dealer_fee_markup !== null ? ` (${pct(r.dealer_fee_markup)} over cash)` : ""} — you'd pay interest on it for the life of the loan.` });
   }
   if (r.quoted_vs_expected !== null && r.quoted_vs_expected > LIMITS.production) {
     r.flags.push({ id: "inflated_production", severity: "high",

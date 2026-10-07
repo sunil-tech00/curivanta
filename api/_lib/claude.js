@@ -36,6 +36,7 @@ const QUOTE_SCHEMA = obj({
   loan_apr_pct: n,
   loan_term_years: n,
   monthly_loan_payment: n,
+  dealer_fee_amount: n,
   lease_monthly_payment: n,
   lease_escalator_pct: n,
   workmanship_warranty_years: n,
@@ -63,6 +64,7 @@ Rules:
 - System size is DC kilowatts. If only panel count and wattage are given, multiply them (e.g. 18 × 400 W = 7.2 kW) — that one calculation is allowed.
 - cash_price is the full price before incentives. If the quote shows only a price "after tax credit" or "net cost", put the pre-incentive price if it is shown anywhere, otherwise null.
 - financed_price is the total loan amount or financed system price, if different from cash.
+- dealer_fee_amount is a dealer fee, financing fee, or rate buy-down fee in dollars, only if the document states it.
 - For a lease or PPA, fill lease_monthly_payment (first-year monthly) and lease_escalator_pct; leave loan fields null.
 - mentions_federal_tax_credit is true if the quote applies or advertises a federal tax credit / ITC / 30% credit in its pricing or savings.
 - For a utility bill: monthly_kwh is the usage for this bill period; if a 12-month usage history is shown, put the 12-month total in annual_kwh. avg_rate_per_kwh is total charges divided by kWh if not stated.
