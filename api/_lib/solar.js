@@ -135,7 +135,7 @@ export function analyzeQuote(q, a) {
   }
   if (thirdPartyOwned && esc > LIMITS.escalator) {
     r.flags.push({ id: "escalator", severity: "high",
-      text: `${(esc * 100).toFixed(1)}% annual escalator — ${type === "ppa" ? "your per-kWh rate" : "payments"} compound to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}.` });
+      text: `${(esc * 100).toFixed(1)}% annual escalator — ${type === "ppa" ? "your per-kWh rate compounds" : "payments compound"} to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}.` });
   }
   const ppwForBenchmark = r.ppw_solar_only ?? (r.battery_kwh ? null : r.ppw_cash);
   if (ppwForBenchmark !== null && ppwForBenchmark > LIMITS.ppwHigh) {

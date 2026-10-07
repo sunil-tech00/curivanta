@@ -140,9 +140,46 @@
 .upsell-alt { font-size: 13.5px; color: var(--muted); }
 .upsell-alt a { color: var(--amber-text); }
 
+.print-only { display: none; }
+
 @media print {
-  :root { --bg: #fff; --surface: #fff; --surface-2: #f6f3ec; --text: #0B1F35; --muted: #4E5E72; --border: #ddd; --amber-text: #A86708; --good: #1E7A48; --danger: #B3402F; }
+  /* Beat the theme selectors (:root[data-theme="dark"] is more specific than :root). */
+  :root, :root[data-theme="dark"], :root[data-theme="light"] {
+    --bg: #fff; --bg-alt: #fff; --surface: #fff; --surface-2: #f6f3ec;
+    --text: #0B1F35; --muted: #4E5E72; --border: #d9d3c6;
+    --amber: #F5A623; --amber-text: #A86708; --amber-soft: #fdf3e1;
+    --good: #1E7A48; --danger: #B3402F; --danger-soft: #fbeceb;
+    color-scheme: light;
+  }
+  @page { margin: 0; size: letter; }  /* margin 0 drops the browser's date/URL header & footer */
+  html, body { background: #fff !important; color: #0B1F35; font-size: 12.5px; }
+  body { padding: 14mm 15mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .nav, .stepper, .no-print, #error { display: none !important; }
   .review-main { padding: 0; }
-  .verdict, .quote-review, .table-wrap { box-shadow: none; break-inside: avoid; }
+  .review-main .wrap { max-width: none; padding: 0; }
+  .print-only { display: block; }
+  .print-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 2px solid #F5A623; padding-bottom: 8px; margin-bottom: 14px;
+  }
+  .print-head strong { font-family: "Cormorant Garamond", serif; font-size: 20px; }
+  .print-head span { color: #4E5E72; font-size: 11px; }
+  .report { gap: 14px; zoom: 0.86; }
+  .usage-box { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .report h2 { font-size: 22px; margin-top: 6px; break-after: avoid; page-break-after: avoid; }
+  .verdict { padding: 18px 20px; box-shadow: none; }
+  .verdict-word { font-size: 38px; margin: 2px 0 8px; }
+  .verdict h1 { font-size: 19px; }
+  .usage-box > div { padding: 10px 12px; }
+  .usage-box strong { font-size: 17px; }
+  .table-wrap { overflow: visible; border-radius: 10px; }
+  .num-table { min-width: 0; font-size: 12px; }
+  .num-table th, .num-table td { padding: 7px 10px; }
+  .num-table thead th { font-size: 16px; }
+  .verdict, .usage-box, .table-wrap, .quote-review header, .flag-list, .caveats { break-inside: avoid; page-break-inside: avoid; }
+  .quote-review { padding: 14px 16px; box-shadow: none; }
+  .quote-review h3 { font-size: 20px; }
+  .quote-review h4 { break-after: avoid; page-break-after: avoid; }
+  .quote-review li, .questions li { break-inside: avoid; }
+  .caveats { font-size: 11px; }
 }

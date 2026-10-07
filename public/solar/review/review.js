@@ -355,6 +355,10 @@
 
     $("#report").innerHTML = `
       <article class="report">
+        <div class="print-only print-head">
+          <strong>Your Solar Advisor — Quote Review</strong>
+          <span>${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · curivanta.com/solar</span>
+        </div>
         <header class="verdict ${v.cls}">
           <span class="verdict-label">Our verdict</span>
           <strong class="verdict-word">${v.label}</strong>
