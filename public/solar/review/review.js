@@ -48,6 +48,18 @@
     if (msg) el.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
+  // Shows "label… 0:42" while a slow step runs; returns a stop function.
+  function ticker(el, label) {
+    const start = Date.now();
+    const draw = () => {
+      const t = Math.floor((Date.now() - start) / 1000);
+      el.innerHTML = `<span class="spinner"></span> ${label} <span class="elapsed">${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}</span>`;
+    };
+    draw();
+    const id = setInterval(draw, 1000);
+    return { set(text) { label = text; draw(); }, stop() { clearInterval(id); el.textContent = ""; } };
+  }
+
   async function api(path, body) {
     const res = await fetch("/api/review/" + path, {
       method: "POST",
@@ -153,12 +165,12 @@
 
     btn.disabled = true;
     let done = 0;
-    progress.innerHTML = `<span class="spinner"></span> Reading ${jobs.length} document${jobs.length > 1 ? "s" : ""}… this takes about a minute.`;
+    const tick = ticker(progress, `Reading ${jobs.length} document${jobs.length > 1 ? "s" : ""}…`);
     try {
       const results = await Promise.all(jobs.map(async (j) => {
         const { fields } = await api("extract", { kind: j.kind, mediaType: j.f.mediaType, data: j.f.data });
         done++;
-        progress.innerHTML = `<span class="spinner"></span> Read ${done} of ${jobs.length}…`;
+        tick.set(`Read ${done} of ${jobs.length}…`);
         return { ...j, fields };
       }).map((p, k) => p.catch((err) => { throw new Error(`${jobs[k].label}: ${err.message}`); })));
       state.extracted = {
@@ -171,7 +183,7 @@
       showError(err.message);
     } finally {
       btn.disabled = false;
-      progress.textContent = "";
+      tick.stop();
     }
   });
 
@@ -300,7 +312,7 @@
     const btn = $("#report-btn");
     const progress = $("#report-progress");
     btn.disabled = true;
-    progress.innerHTML = '<span class="spinner"></span> Analyzing your quotes… about a minute.';
+    const tick = ticker(progress, "Analyzing your quotes and writing your report…");
     try {
       const { metrics, report } = await api("report", {
         quotes,
@@ -313,7 +325,7 @@
       showError(err.message);
     } finally {
       btn.disabled = false;
-      progress.textContent = "";
+      tick.stop();
     }
   });
 

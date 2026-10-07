@@ -2,7 +2,7 @@ import { allowPost, checkPasscode, sendError } from "../_lib/http.js";
 import { analyze } from "../_lib/solar.js";
 import { writeReport } from "../_lib/claude.js";
 
-export const config = { maxDuration: 120 };
+export const config = { maxDuration: 300 };
 
 export default async function handler(req, res) {
   if (!allowPost(req, res) || !checkPasscode(req, res)) return;

@@ -4,7 +4,7 @@ import { extractDocument } from "../_lib/claude.js";
 const TYPES = new Set(["application/pdf", "image/jpeg", "image/png", "image/webp", "image/gif"]);
 const MAX_BASE64 = 4_300_000; // keeps the request under Vercel's 4.5 MB body limit
 
-export const config = { maxDuration: 120 };
+export const config = { maxDuration: 300 };
 
 export default async function handler(req, res) {
   if (!allowPost(req, res) || !checkPasscode(req, res)) return;

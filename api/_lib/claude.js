@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 
 const MODEL = "claude-opus-5-5";
+const REPORT_EFFORT = "medium";
 // Server-side fallback: if a request is declined, the API retries it on Anthropic's
 // recommended fallback model instead of returning a refusal.
 const FALLBACK = { betas: ["server-side-fallback-2026-07-01"], fallbacks: "default" };
@@ -124,7 +125,8 @@ Writing:
 - recommended_quote: the label of the best quote; leave it out if none is worth signing.
 This is an analysis, not financial or legal advice; don't add disclaimers beyond the caveats.`;
 
-async function call({ system, messages, schema, effort }) {
+async function call({ system, messages, schema, effort, label }) {
+  const started = Date.now();
   const response = await getClient().beta.messages.create({
     model: MODEL,
     max_tokens: 16000,
@@ -133,6 +135,8 @@ async function call({ system, messages, schema, effort }) {
     output_config: { effort, format: { type: "json_schema", schema } },
     messages
   });
+  const u = response.usage || {};
+  console.log(`[claude] ${label} ${effort} ${((Date.now() - started) / 1000).toFixed(1)}s in=${u.input_tokens} out=${u.output_tokens} stop=${response.stop_reason}`);
   if (response.stop_reason === "refusal") {
     throw Object.assign(new Error("The document couldn't be processed."), { status: 422, expose: true });
   }
@@ -154,14 +158,15 @@ export async function extractDocument({ kind, mediaType, data }) {
     system: EXTRACT_SYSTEM,
     messages: [{ role: "user", content: [block, { type: "text", text: ask }] }],
     schema: kind === "bill" ? BILL_SCHEMA : QUOTE_SCHEMA,
-    effort: "medium"
+    effort: "low", // reading numbers off a page needs little reasoning; keeps uploads fast
+    label: `extract-${kind}`
   });
   return fields;
 }
 
 export async function writeReport(metrics) {
   const messages = [{ role: "user", content: `Computed metrics:\n${JSON.stringify(metrics, null, 2)}\n\nWrite the review.` }];
-  const first = await call({ system: REPORT_SYSTEM, messages, schema: REPORT_SCHEMA, effort: "high" });
+  const first = await call({ system: REPORT_SYSTEM, messages, schema: REPORT_SCHEMA, effort: REPORT_EFFORT, label: "report" });
   const stray = unsupportedNumbers(first.data, metrics);
   if (!stray.length) return first.data;
 
@@ -175,7 +180,8 @@ export async function writeReport(metrics) {
       { role: "user", content: `These figures in your review don't appear in the metrics: ${stray.join(", ")}. Rewrite the review using only numbers from the metrics JSON (round them as you like). Where a figure isn't available, describe it in words instead.` }
     ],
     schema: REPORT_SCHEMA,
-    effort: "high"
+    effort: REPORT_EFFORT,
+    label: "report-retry"
   });
   const still = unsupportedNumbers(retry.data, metrics);
   if (still.length) console.warn("report still has unsupported numbers after retry:", still);
