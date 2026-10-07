@@ -6,7 +6,7 @@ const LINKS = {
   etsySizer: "https://www.etsy.com/listing/4589854852/solar-panel-calculator-spreadsheet-diy",   // Etsy listing: Solar Sizing Calculator ($19)
   etsyCompare: "https://www.etsy.com/listing/4590108397/solar-quote-comparison-spreadsheet", // Etsy listing: Solar Quote Toolkit ($29)
   aiReview: "/solar/review", // $49 AI quote review
-  fullReview: ""            // Stripe Payment Link for the $249 Full Solar Review (button hidden until set)
+  fullReview: "https://buy.stripe.com/test_dRm14h17S3Qp8Uadbvffy00" // $249 Full Solar Review — Stripe TEST link; swap for the live link at launch
 };
 
 (function () {

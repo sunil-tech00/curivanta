@@ -14,7 +14,7 @@
   const STATES = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
   const MAX_PDF = 3 * 1024 * 1024;
   // Report CTA: the paid Full Solar Review. Swap in its booking/checkout link when it exists.
-  const FULL_REVIEW_URL = "/solar#full-review";
+  const FULL_REVIEW_URL = "/solar#full-review"; // section holds the $249 payment button
   const FREE_CALL_URL = "/book"; // 15-min call, offered to AI-review buyers only
   const VERDICT = {
     sign: { label: "Sign", cls: "v-sign" },
