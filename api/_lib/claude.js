@@ -14,61 +14,59 @@ const getClient = () => (client ??= new Anthropic(
     : {}
 ));
 
-// Structured outputs allow at most 16 union-typed ("number | null") fields per request,
-// so fields that may be missing are optional (omitted) rather than nullable. Max 24 optional.
-const n = { type: "number" };
-const s = { type: "string" };
-const obj = (properties, optional = []) => {
-  const keys = Object.keys(properties);
-  const opt = Array.isArray(optional) ? optional : keys.filter((k) => !optional.except.includes(k));
-  return { type: "object", properties, required: keys.filter((k) => !opt.includes(k)), additionalProperties: false };
-};
+// Structured outputs cap schema complexity (16 union-typed fields, 24 optional, and a
+// compile budget), so extraction returns a list of {field, value} pairs instead of one
+// nullable property per number. All properties are required; missing data is just absent
+// from the list. flatten() turns the pairs back into a plain object.
+const obj = (properties) => ({
+  type: "object",
+  properties,
+  required: Object.keys(properties),
+  additionalProperties: false
+});
+const pairs = (names, valueType) => ({
+  type: "array",
+  items: obj({ field: { type: "string", enum: names }, value: { type: valueType } })
+});
+const strings = { type: "array", items: { type: "string" } };
 
-// Every property except the named ones is optional; resolved when obj() builds the schema.
-const OPTIONAL_EXCEPT = (...keep) => ({ except: keep });
+const QUOTE_NUMBERS = [
+  "system_size_kw", "panel_count", "battery_kwh", "quoted_annual_production_kwh",
+  "cash_price", "financed_price", "loan_apr_pct", "loan_term_years", "monthly_loan_payment",
+  "dealer_fee_amount", "lease_monthly_payment", "ppa_rate_per_kwh", "lease_escalator_pct",
+  "workmanship_warranty_years", "customer_annual_usage_kwh", "customer_utility_rate_per_kwh"
+];
+const QUOTE_TEXT = ["installer_name", "panel", "inverter", "state"];
+const BILL_NUMBERS = ["monthly_kwh", "annual_kwh", "avg_rate_per_kwh", "bill_total"];
+const BILL_TEXT = ["utility_name", "state", "rate_plan"];
 
 const QUOTE_SCHEMA = obj({
   is_solar_quote: { type: "boolean" },
-  installer_name: s,
-  system_size_kw: n,
-  panel: s,
-  panel_count: n,
-  inverter: s,
-  battery_kwh: n,
-  quoted_annual_production_kwh: n,
-  cash_price: n,
-  financed_price: n,
-  loan_apr_pct: n,
-  loan_term_years: n,
-  monthly_loan_payment: n,
-  dealer_fee_amount: n,
-  lease_monthly_payment: n,
-  ppa_rate_per_kwh: n,
-  lease_escalator_pct: n,
-  workmanship_warranty_years: n,
   mentions_federal_tax_credit: { type: "boolean" },
-  state: s,
-  customer_annual_usage_kwh: n,
-  customer_utility_rate_per_kwh: n,
-  notes: { type: "array", items: { type: "string" } }
-}, OPTIONAL_EXCEPT("is_solar_quote", "mentions_federal_tax_credit", "notes"));
+  numbers: pairs(QUOTE_NUMBERS, "number"),
+  text: pairs(QUOTE_TEXT, "string"),
+  notes: strings
+});
 
 const BILL_SCHEMA = obj({
   is_utility_bill: { type: "boolean" },
-  utility_name: s,
-  state: s,
-  rate_plan: s,
-  monthly_kwh: n,
-  annual_kwh: n,
-  avg_rate_per_kwh: n,
-  bill_total: n,
-  notes: { type: "array", items: { type: "string" } }
-}, OPTIONAL_EXCEPT("is_utility_bill", "notes"));
+  numbers: pairs(BILL_NUMBERS, "number"),
+  text: pairs(BILL_TEXT, "string"),
+  notes: strings
+});
+
+function flatten({ numbers = [], text = [], ...rest }) {
+  const out = { ...rest };
+  for (const { field, value } of [...numbers, ...text]) {
+    if (!(field in out) && value !== "" && value !== null) out[field] = value;
+  }
+  return out;
+}
 
 const EXTRACT_SYSTEM = `You read residential solar documents and extract numbers for an independent quote review.
 
 Rules:
-- Extract only what the document states. Leave out any field the document doesn't show; never estimate or infer a missing number.
+- Extract only what the document states. Put each value you find in "numbers" or "text" as {field, value}; leave out anything the document doesn't show. Never estimate or infer a missing number.
 - Money is in US dollars as plain numbers (24999.00, not "$24,999"). Percentages are numbers in percent (5.99 for 5.99%).
 - System size is DC kilowatts. If only panel count and wattage are given, multiply them (e.g. 18 × 400 W = 7.2 kW) — that one calculation is allowed.
 - cash_price is the full price before incentives. If the quote shows only a price "after tax credit" or "net cost", put the pre-incentive price if it is shown anywhere, otherwise leave it out.
@@ -88,7 +86,7 @@ const REPORT_SCHEMA = obj({
   verdict: { type: "string", enum: ["sign", "renegotiate", "walk_away"] },
   headline: { type: "string" },
   summary: { type: "string" },
-  recommended_quote: s,
+  recommended_quote: { type: "string" },
   quotes: {
     type: "array",
     items: obj({
@@ -100,7 +98,7 @@ const REPORT_SCHEMA = obj({
   },
   questions_to_ask: { type: "array", items: { type: "string" } },
   caveats: { type: "array", items: { type: "string" } }
-}, ["recommended_quote"]);
+});
 
 const REPORT_SYSTEM = `You are an independent solar advisor writing a quote review for a homeowner. You work for the homeowner, not any installer, and you're direct about bad deals.
 
@@ -122,7 +120,7 @@ Writing:
 - talking_points: exact sentences the homeowner can say to the installer, specific to this quote.
 - questions_to_ask: up to 6, most important first.
 - caveats: what this review can't see (roof condition, shading, local rules). Keep it to 2–3.
-- recommended_quote: the label of the best quote; leave it out if none is worth signing.
+- recommended_quote: the label of the best quote, or an empty string if none is worth signing.
 This is an analysis, not financial or legal advice; don't add disclaimers beyond the caveats.`;
 
 async function call({ system, messages, schema, effort, label }) {
@@ -161,7 +159,7 @@ export async function extractDocument({ kind, mediaType, data }) {
     effort: "low", // reading numbers off a page needs little reasoning; keeps uploads fast
     label: `extract-${kind}`
   });
-  return fields;
+  return flatten(fields);
 }
 
 export async function writeReport(metrics) {
