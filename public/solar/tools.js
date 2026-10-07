@@ -3,6 +3,12 @@
 // ── Config ────────────────────────────────────────────────────────────────
 // Paste your Formspree endpoint here, e.g. "https://formspree.io/f/abcdwxyz".
 const FORMSPREE_ENDPOINT = "";
+// "What's next?" links under each tool's results. An empty Etsy URL hides that card.
+const LINKS = {
+  etsySizer: "",            // Etsy listing: Solar Sizing Calculator ($19)
+  etsyCompare: "",          // Etsy listing: Solar Quote Toolkit ($29)
+  booking: "#upload-bill"   // discovery-call booking page; falls back to the analysis form
+};
 
 (function () {
   "use strict";
@@ -24,6 +30,13 @@ const FORMSPREE_ENDPOINT = "";
     const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
     root.setAttribute("data-theme", next);
     try { localStorage.setItem("ysa-theme", next); } catch (e) {}
+  });
+
+  $$("[data-link]").forEach((a) => {
+    const url = LINKS[a.dataset.link];
+    if (!url) { a.closest(".next-card").hidden = true; return; }
+    a.href = url;
+    if (!url.startsWith("#")) { a.target = "_blank"; a.rel = "noopener"; }
   });
 
   const year = $("#year");
@@ -350,8 +363,7 @@ const FORMSPREE_ENDPOINT = "";
           <tr><th scope="row">Production estimate</th>${cells((r) => flag(r.flagProd, "HIGH — inflated estimate"))}</tr>
           <tr><th scope="row">Escalator</th>${cells((r) => flag(r.flagEsc, "HIGH escalator"))}</tr>
         </tbody>
-      </table>
-      <p class="fine left">Want a second opinion on these quotes? <a href="#upload-bill">Send them to us.</a></p>`;
+      </table>`;
   }
 
   quotesEl.append(quoteCard(1), quoteCard(2));

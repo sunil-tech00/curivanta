@@ -345,6 +345,21 @@ input::placeholder { color: color-mix(in srgb, var(--muted) 70%, transparent); }
 .fine { text-align: center; color: var(--muted); font-size: 13.5px; margin-top: 22px; }
 .fine.left { text-align: left; }
 .fine a { color: var(--amber-text); }
+.next-steps { grid-column: 1 / -1; border-top: 1px solid var(--border); padding-top: 26px; }
+.next-steps h3 { font-size: 30px; margin-bottom: 16px; }
+.next-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .next-grid { grid-template-columns: 1fr 1fr; } }
+.next-card {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
+  padding: 22px; border-radius: 16px; background: var(--surface-2); border: 1px solid var(--border);
+}
+.next-card[hidden] + .next-card { grid-column: 1 / -1; }
+#panel-compare .next-steps { margin-top: 28px; }
+.next-card p { color: var(--muted); }
+.next-card strong { color: var(--text); }
+.next-emoji { font-size: 20px; }
+.next-card .btn { align-self: flex-start; }
+@media (max-width: 520px) { .next-card .btn { align-self: stretch; } }
 .tool-note { grid-column: 1 / -1; margin-top: 4px; text-align: left; font-size: 12.5px; }
 .tool-intro { color: var(--muted); margin-bottom: 18px; }
 .tool-intro strong { color: var(--text); }
