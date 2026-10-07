@@ -141,7 +141,6 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2
 @media (min-width: 960px) { .nav-links { display: flex; } }
 @media (max-width: 520px) {
   .brand-text { font-size: 19px; white-space: nowrap; }
-  .nav-actions .btn-sm { padding: 8px 12px; }
   .nav .by-curivanta { display: none; }
 }
 
