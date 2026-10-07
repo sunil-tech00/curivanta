@@ -38,9 +38,13 @@ const QUOTE_SCHEMA = obj({
   monthly_loan_payment: n,
   dealer_fee_amount: n,
   lease_monthly_payment: n,
+  ppa_rate_per_kwh: n,
   lease_escalator_pct: n,
   workmanship_warranty_years: n,
   mentions_federal_tax_credit: { type: "boolean" },
+  state: s,
+  customer_annual_usage_kwh: n,
+  customer_utility_rate_per_kwh: n,
   notes: { type: "array", items: { type: "string" } }
 });
 
@@ -65,10 +69,12 @@ Rules:
 - cash_price is the full price before incentives. If the quote shows only a price "after tax credit" or "net cost", put the pre-incentive price if it is shown anywhere, otherwise null.
 - financed_price is the total loan amount or financed system price, if different from cash.
 - dealer_fee_amount is a dealer fee, financing fee, or rate buy-down fee in dollars, only if the document states it.
-- For a lease or PPA, fill lease_monthly_payment (first-year monthly) and lease_escalator_pct; leave loan fields null.
+- For a lease, fill lease_monthly_payment (first-year monthly) and lease_escalator_pct; leave loan fields null.
+- For a PPA (you pay per kWh produced), fill ppa_rate_per_kwh (first-year $/kWh, e.g. 0.21), lease_escalator_pct (annual rate increase), and lease_monthly_payment only if the quote shows an estimated first-year monthly amount.
 - mentions_federal_tax_credit is true if the quote applies or advertises a federal tax credit / ITC / 30% credit in its pricing or savings.
 - For a utility bill: monthly_kwh is the usage for this bill period; if a 12-month usage history is shown, put the 12-month total in annual_kwh. avg_rate_per_kwh is total charges divided by kWh if not stated.
-- state is the full US state name of the service address (e.g. "California").
+- state is the full US state name of the service address (e.g. "California"), on a quote or a bill.
+- On a quote, customer_annual_usage_kwh and customer_utility_rate_per_kwh are the homeowner's current yearly usage and electricity rate if the quote states them (installers often size the system from these). Don't confuse them with the system's production.
 - Do not extract names, street addresses, account numbers, or phone numbers.
 - notes: short items a homeowner should know that don't fit a field (prepayment penalties, dealer fees mentioned, escalators, production guarantees, unusual terms). Empty array if none.
 - If the document is not the expected type, set is_solar_quote / is_utility_bill to false and leave the rest null.`;
@@ -100,6 +106,8 @@ Units: write per-kWh costs in cents using the *_cents fields (e.g. "23.8¢/kWh")
 How to judge:
 - True cost per kWh (25-year cost ÷ 25-year production) is the main comparison across cash, loan, and lease. Lower wins. If vs_utility_rate is near or above 1, solar costs about as much as buying from the utility — a weak deal.
 - Treat high-severity flags (dealer fees, inflated production, escalators above 2.9%, counting the expired 25D tax credit) as serious.
+- Leases and PPAs are third-party owned: the installer keeps any tax credits, so don't treat that as a problem. For a PPA, payments follow production at a per-kWh rate; compare ppa_rate_cents_year1 and ppa_rate_cents_final_year with utility_rate_cents, and note that the monthly figures use our production estimate rather than the installer's.
+- extra_cost_vs_paying_cash, when present, is the clearest way to show what financing or leasing costs over buying outright.
 - Verdicts: "sign" only when the price is reasonable and there are no high-severity flags; "renegotiate" when the deal is fixable with specific asks; "walk_away" when the economics or terms are fundamentally bad.
 
 Writing:

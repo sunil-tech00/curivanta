@@ -73,7 +73,9 @@
 .confirm-card[data-pay="loan"] .pay-fields[data-for="loan"],
 .confirm-card[data-pay="lease"] .pay-fields[data-for="lease"] { display: grid; }
 .check { display: flex; gap: 10px; align-items: center; font-size: 14.5px; cursor: pointer; }
-.check input { width: 18px; height: 18px; accent-color: var(--amber); }
+.check input { width: 18px; height: 18px; accent-color: var(--amber); flex-shrink: 0; }
+.check small { color: var(--muted); font-size: 12.5px; }
+.confirm-card[data-pay="lease"] .tax-check { display: none; }
 .warn { color: var(--danger); font-size: 14px; }
 .notes summary { cursor: pointer; font-size: 14px; color: var(--muted); }
 .notes ul { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: 14px; }

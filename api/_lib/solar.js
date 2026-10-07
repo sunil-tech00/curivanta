@@ -37,6 +37,7 @@ function payment(rate, nper, pv) {
 }
 
 export function paymentType(q) {
+  if (pos(q.ppa_rate_per_kwh)) return "ppa";
   if (pos(q.lease_monthly_payment)) return "lease";
   if (pos(q.financed_price) || pos(q.monthly_loan_payment)) return "loan";
   return "cash";
@@ -72,7 +73,24 @@ export function analyzeQuote(q, a) {
 
   // B18: lease/PPA → escalating payments; loan → total of payments; otherwise cash price.
   const esc = num(q.lease_escalator_pct) !== null ? q.lease_escalator_pct / 100 : 0;
-  if (type === "lease") {
+  const thirdPartyOwned = type === "lease" || type === "ppa";
+  if (type === "ppa") {
+    // A PPA bills per kWh produced, so price it on our production estimate, not the installer's.
+    const rate = q.ppa_rate_per_kwh;
+    let total = 0;
+    for (let y = 0; y < a.years; y++) {
+      total += rate * Math.pow(1 + esc, y) * r.expected_annual_kwh * Math.pow(1 - a.degradation, y);
+    }
+    r.cost_25yr = total;
+    r.cost_basis = `${a.years} years of PPA payments at our production estimate`;
+    r.ppa_rate_cents_year1 = Math.round(rate * 1000) / 10;
+    r.ppa_rate_cents_final_year = Math.round(rate * Math.pow(1 + esc, a.years - 1) * 1000) / 10;
+    r.monthly_payment_year1 = (rate * r.expected_annual_kwh) / 12;
+    r.monthly_payment_final_year = (rate * Math.pow(1 + esc, a.years - 1) * r.expected_annual_kwh * Math.pow(1 - a.degradation, a.years - 1)) / 12;
+    r.installer_monthly_estimate = pos(q.lease_monthly_payment);
+    r.escalator_pct = esc * 100;
+    if (a.utilityRate) r.ppa_rate_vs_utility_rate = rate / a.utilityRate;
+  } else if (type === "lease") {
     const m = q.lease_monthly_payment;
     r.cost_25yr = esc === 0 ? m * 12 * a.years : (m * 12 * (Math.pow(1 + esc, a.years) - 1)) / esc;
     r.cost_basis = `${a.years} years of lease/PPA payments`;
@@ -110,9 +128,9 @@ export function analyzeQuote(q, a) {
     r.flags.push({ id: "inflated_production", severity: "high",
       text: `Quoted production is ${pct(r.quoted_vs_expected)} of what this system size should produce — estimate looks inflated.` });
   }
-  if (type === "lease" && esc > LIMITS.escalator) {
+  if (thirdPartyOwned && esc > LIMITS.escalator) {
     r.flags.push({ id: "escalator", severity: "high",
-      text: `${(esc * 100).toFixed(1)}% annual escalator — payments compound to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}.` });
+      text: `${(esc * 100).toFixed(1)}% annual escalator — ${type === "ppa" ? "your per-kWh rate" : "payments"} compound to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}.` });
   }
   if (r.ppw_cash !== null && r.ppw_cash > LIMITS.ppwHigh) {
     r.flags.push({ id: "high_price", severity: "medium",
@@ -122,7 +140,7 @@ export function analyzeQuote(q, a) {
     r.flags.push({ id: "no_cash_price", severity: "medium",
       text: "No cash price on the quote — ask for it in writing to compare fairly." });
   }
-  if (q.mentions_federal_tax_credit && type !== "lease") {
+  if (q.mentions_federal_tax_credit && !thirdPartyOwned) {
     r.flags.push({ id: "tax_credit", severity: "high",
       text: "Quote counts a federal tax credit — the 30% homeowner credit (Section 25D) ended for systems installed after Dec 31, 2025." });
   }

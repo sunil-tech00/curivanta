@@ -184,7 +184,7 @@
     </div>`;
 
   function guessPay(q) {
-    if (q.lease_monthly_payment) return "lease";
+    if (q.lease_monthly_payment || q.ppa_rate_per_kwh) return "lease";
     if (q.financed_price || q.monthly_loan_payment) return "loan";
     return "cash";
   }
@@ -225,10 +225,11 @@
             ${field(id("dealer_fee_amount"), "Dealer fee ($)", q.dealer_fee_amount, undefined, "If the quote states one")}
           </div>
           <div class="grid-3 pay-fields" data-for="lease">
-            ${field(id("lease_monthly_payment"), "Monthly payment ($)", q.lease_monthly_payment, undefined, "First year")}
+            ${field(id("lease_monthly_payment"), "Monthly payment ($)", q.lease_monthly_payment, undefined, "First year (estimate for a PPA)")}
+            ${field(id("ppa_rate_per_kwh"), "PPA rate ($/kWh)", q.ppa_rate_per_kwh, undefined, "PPA only — first-year price per kWh")}
             ${field(id("lease_escalator_pct"), "Annual escalator (%)", q.lease_escalator_pct)}
           </div>
-          <label class="check"><input type="checkbox" id="${id("tax")}" ${q.mentions_federal_tax_credit ? "checked" : ""} /> Quote counts a federal tax credit in its pricing or savings</label>
+          <label class="check tax-check"><input type="checkbox" id="${id("tax")}" ${q.mentions_federal_tax_credit ? "checked" : ""} /> Quote counts the 30% federal tax credit in its price or savings <small>(homeowners can't claim it for systems installed after 2025)</small></label>
           ${notes}
         </fieldset>`;
     }).join("");
@@ -237,17 +238,27 @@
       $$('input[type="radio"]', card).forEach((r) => r.addEventListener("change", () => { card.dataset.pay = r.value; }));
     });
 
-    const bill = state.extracted.bill;
-    const sel = $("#b-state");
-    sel.innerHTML = '<option value="">Select your state</option>' + STATES.map((s) => `<option${bill?.state === s ? " selected" : ""}>${s}</option>`).join("");
-    const monthly = bill?.annual_kwh ? Math.round(bill.annual_kwh / 12) : bill?.monthly_kwh;
+    // The bill wins; otherwise fall back to what a quote says about the homeowner.
+    const bill = state.extracted.bill?.is_utility_bill === false ? null : state.extracted.bill;
+    const fromQuote = (k) => state.extracted.quotes.map((q) => q[k]).find((v) => v !== null && v !== undefined);
+    const st = bill?.state || fromQuote("state");
+    const quoteUsage = fromQuote("customer_annual_usage_kwh");
+    const quoteRate = fromQuote("customer_utility_rate_per_kwh");
+    const monthly = bill?.annual_kwh ? Math.round(bill.annual_kwh / 12)
+      : bill?.monthly_kwh ?? (has(quoteUsage) ? Math.round(quoteUsage / 12) : null);
+    const rate = has(bill?.avg_rate_per_kwh) ? bill.avg_rate_per_kwh : quoteRate;
+
+    $("#b-state").innerHTML = '<option value="">Select your state</option>' + STATES.map((s) => `<option${st === s ? " selected" : ""}>${s}</option>`).join("");
     $("#b-monthly").value = monthly ?? "";
-    $("#b-rate").value = has(bill?.avg_rate_per_kwh) ? bill.avg_rate_per_kwh.toFixed(3) : "";
-    $("#bill-note").textContent = !bill
-      ? "No bill uploaded — add your monthly usage and rate for sizing and savings checks."
-      : bill.is_utility_bill === false
-        ? "That file didn't look like a utility bill — please fill these in by hand."
-        : bill.annual_kwh ? "Monthly usage is your 12-month average from the bill." : "Usage is from one bill period; a 12-month average is more accurate if you know it.";
+    $("#b-rate").value = has(rate) ? rate.toFixed(3) : "";
+    const usedQuote = !bill && (has(quoteUsage) || has(quoteRate));
+    $("#bill-note").textContent = state.extracted.bill?.is_utility_bill === false
+      ? "That file didn't look like a utility bill — please check these numbers."
+      : bill
+        ? (bill.annual_kwh ? "Monthly usage is your 12-month average from the bill." : "Usage is from one bill period; a 12-month average is more accurate if you know it.")
+        : usedQuote
+          ? "Filled in from your quote — check them against a recent bill if you can."
+          : "No bill uploaded — add your monthly usage and rate for sizing and savings checks.";
   }
 
   $("#back-upload").addEventListener("click", () => show("upload"));
@@ -275,8 +286,9 @@
         monthly_loan_payment: pay === "loan" ? numOrNull(v("monthly_loan_payment")) : null,
         dealer_fee_amount: pay === "loan" ? numOrNull(v("dealer_fee_amount")) : null,
         lease_monthly_payment: pay === "lease" ? numOrNull(v("lease_monthly_payment")) : null,
+        ppa_rate_per_kwh: pay === "lease" ? numOrNull(v("ppa_rate_per_kwh")) : null,
         lease_escalator_pct: pay === "lease" ? numOrNull(v("lease_escalator_pct")) : null,
-        mentions_federal_tax_credit: $(`#q${i}-tax`).checked,
+        mentions_federal_tax_credit: pay !== "lease" && $(`#q${i}-tax`).checked,
         notes: extracted.notes || []
       };
     });
@@ -335,7 +347,7 @@
         <h2>The numbers</h2>
         <div class="table-wrap">
           <table class="num-table">
-            <thead><tr><th scope="col"><span class="sr-only">Metric</span></th>${qs.map((q) => `<th scope="col">${esc(q.installer)}<small>${q.label} · ${{ cash: "Cash", loan: "Loan", lease: "Lease / PPA" }[q.payment_type]}</small></th>`).join("")}</tr></thead>
+            <thead><tr><th scope="col"><span class="sr-only">Metric</span></th>${qs.map((q) => `<th scope="col">${esc(q.installer)}<small>${q.label} · ${{ cash: "Cash", loan: "Loan", lease: "Lease", ppa: "PPA" }[q.payment_type]}</small></th>`).join("")}</tr></thead>
             <tbody>
               <tr><th scope="row">System size</th>${cell((q) => has(q.system_size_kw) ? fmt(q.system_size_kw, 2) + " kW" : "—")}</tr>
               <tr><th scope="row">$/Watt (cash)<small>Typical $2.50–$3.50</small></th>${cell((q) => has(q.ppw_cash) ? "$" + fmt(q.ppw_cash, 2) : "—")}</tr>
