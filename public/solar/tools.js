@@ -4,7 +4,7 @@
 // "What's next?" links under each tool's results. An empty Etsy URL hides that card.
 const LINKS = {
   etsySizer: "https://www.etsy.com/listing/4589854852/solar-panel-calculator-spreadsheet-diy",   // Etsy listing: Solar Sizing Calculator ($19)
-  etsyCompare: "https://www.etsy.com/listing/4589854852/solar-panel-calculator-spreadsheet-diy", // TEMP: calculator listing until the Quote Toolkit ($29) is listed
+  etsyCompare: "https://www.etsy.com/listing/4590108397/solar-quote-comparison-spreadsheet", // Etsy listing: Solar Quote Toolkit ($29)
   booking: "#book"          // discovery-call calendar, embedded in the #book section
 };
 
