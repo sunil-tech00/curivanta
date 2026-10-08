@@ -32,6 +32,14 @@
       "destination": "/solar/full-review/thanks/index.html"
     },
     {
+      "source": "/solar/guides",
+      "destination": "/solar/guides/index.html"
+    },
+    {
+      "source": "/solar/guides/:slug",
+      "destination": "/solar/guides/:slug/index.html"
+    },
+    {
       "source": "/((?!solar/|api/).*)",
       "destination": "/index.html"
     }

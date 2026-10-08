@@ -225,6 +225,9 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2
 .card:hover { border-color: color-mix(in srgb, var(--amber) 45%, transparent); }
 .card h3 { font-size: 26px; margin-bottom: 10px; }
 .card p { color: var(--muted); }
+.card-link { display: inline-block; margin-top: 14px; color: var(--amber-text); font-weight: 600; font-size: 15px; text-decoration: none; }
+.card-link:hover { text-decoration: underline; }
+.hub-more { text-align: center; margin-top: 36px; }
 .card-alert { border-color: color-mix(in srgb, var(--amber) 55%, transparent); background: color-mix(in srgb, var(--amber) 7%, var(--surface)); }
 .tag {
   display: inline-block; margin-bottom: 12px; padding: 3px 10px; border-radius: 999px;
