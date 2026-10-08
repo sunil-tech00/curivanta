@@ -69,7 +69,8 @@ export async function checkPaid(sessionId) {
   if (runsUsed >= MAX_RUNS) {
     throw exposed(402, `You've used all ${MAX_RUNS} reports included with this purchase.`);
   }
-  return { paymentIntentId: pi.id, runsUsed, email: session.customer_details?.email || null };
+  const name = String(session.customer_details?.name || "").replace(/\s+/g, " ").trim();
+  return { paymentIntentId: pi.id, runsUsed, email: session.customer_details?.email || null, name };
 }
 
 // Counted only after a report is delivered, so failed runs don't use one up.

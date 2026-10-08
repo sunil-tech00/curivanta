@@ -37,8 +37,12 @@ export default async function handler(req, res) {
     const url = reportUrl(siteOrigin(req), id);
     const runsLeft = payment ? await recordRun(payment) : MAX_RUNS;
     if (payment) {
+      const [firstName = "", ...lastName] = payment.name.split(" ");
       await notifyGhl({
         email: payment.email,
+        name: payment.name,
+        first_name: firstName,
+        last_name: lastName.join(" "),
         report_url: url,
         verdict: report.verdict,
         headline: report.headline,
