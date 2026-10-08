@@ -191,6 +191,7 @@
       renderConfirm();
       syncUnlockButton();
       show("confirm");
+      refreshPreview();
       track("review_read_ok");
     } catch (err) {
       showError(err.message);
@@ -347,6 +348,49 @@
     $("#b-monthly").value = req.bill?.monthly_kwh ?? "";
     $("#b-rate").value = req.bill?.avg_rate_per_kwh ?? "";
   }
+
+  // ── Free red-flag preview (code-only check, no AI) ─────────────────────
+  let previewTimer = null;
+  let previewSeq = 0;
+  let previewTracked = false;
+  function refreshPreview() {
+    clearTimeout(previewTimer);
+    previewTimer = setTimeout(loadPreview, 400);
+  }
+  async function loadPreview() {
+    const box = $("#preview");
+    if (state.paid) { box.hidden = true; return; }
+    const req = readForm();
+    if (!req.state || req.quotes.some((q) => !(q.system_size_kw > 0))) { box.hidden = true; return; }
+    const seq = ++previewSeq;
+    try {
+      const body = { ...req, quotes: req.quotes.map(({ _pay, ...q }) => q) };
+      const data = await api("preview", body);
+      if (seq !== previewSeq) return;
+      box.innerHTML = previewHtml(data);
+      box.hidden = false;
+      if (!previewTracked) { previewTracked = true; track("review_preview", { flags: data.total }); }
+    } catch (e) {
+      box.hidden = true;
+    }
+  }
+  function previewHtml(d) {
+    const many = d.quotes.length > 1;
+    const unlock = `<p class="preview-locked"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>The full report adds the <strong>verdict</strong> (sign, renegotiate or walk away), the <strong>true 25-year cost</strong> against your utility bill${many ? ", <strong>how the quotes compare</strong>" : ""}, and <strong>exactly what to say</strong> to the installer.</span></p>`;
+    if (!d.total) {
+      return `<h3>No major red flags in these numbers</h3>
+        <p class="preview-sub">That's a good sign. The full report confirms whether it's actually a good deal.</p>${unlock}`;
+    }
+    const quotes = d.quotes.filter((q) => q.flags.length).map((q) => `
+      <li><strong>${esc(q.label)}${q.name ? " — " + esc(q.name) : ""}</strong>
+        <ul>${q.flags.map((f) => `<li class="sev-${f.severity}">${esc(f.title)}</li>`).join("")}</ul>
+      </li>`).join("");
+    const top = d.top ? `<div class="preview-top"><span class="tag">Most serious${many ? " · " + esc(d.top.label) : ""}</span><p>${esc(d.top.text)}</p></div>` : "";
+    return `<h3>We found ${d.total} red flag${d.total === 1 ? "" : "s"}${many ? " across your quotes" : " in your quote"}</h3>
+      <ul class="preview-list">${quotes}</ul>${top}${unlock}`;
+  }
+  $("#confirm-form").addEventListener("input", refreshPreview);
+  $("#confirm-form").addEventListener("change", refreshPreview);
 
   function syncUnlockButton() {
     const btn = $("#report-btn");
@@ -571,6 +615,7 @@
       applyForm(pending.req);
       syncUnlockButton();
       show("confirm");
+      refreshPreview();
       if (paidId) {
         $("#unlock-note").textContent = "Payment received — writing your report now.";
         generate(pending.req);

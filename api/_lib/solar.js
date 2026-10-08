@@ -142,7 +142,9 @@ export function analyzeQuote(q, a) {
     r.flags.push({ id: "high_price", severity: "medium",
       text: `$${ppwForBenchmark.toFixed(2)}/W ${r.ppw_solar_only ? "for the solar alone" : "cash"} is above the typical $2.50–$3.50/W range.` });
   }
-  if (!cash) {
+  // Lease/PPA offers often come without a cash price (and in some areas only a lease is offered),
+  // so a missing cash price is only a flag for quotes the homeowner would own.
+  if (!cash && !thirdPartyOwned) {
     r.flags.push({ id: "no_cash_price", severity: "medium",
       text: "No cash price on the quote — ask for it in writing to compare fairly." });
   }
