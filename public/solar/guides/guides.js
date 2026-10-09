@@ -43,7 +43,7 @@
       const verdict = ppw > 3.5
         ? `<p class="verdict bad">Above the typical $2.50–$3.50/W range. Ask for an itemized price and get a competing quote.</p>`
         : ppw < 2.5
-          ? `<p class="verdict ok">Below the typical range — a good price, as long as the equipment and warranty are solid.</p>`
+          ? `<p class="verdict ok">Below the typical range: a good price, as long as the equipment and warranty are solid.</p>`
           : `<p class="verdict ok">Within the typical $2.50–$3.50/W range.</p>`;
       return `<dl class="stats">${stat(v.battery ? "Solar-only price" : "Price", money(price))}${stat("Cost per watt", "$" + fmt(ppw, 2))}</dl>${verdict}`;
     },
@@ -56,7 +56,7 @@
       const verdict = fee / v.cash > 0.15
         ? `<p class="verdict bad">That's ${fmt(fee / v.cash * 100)}% on top of the cash price. Compare the true rate with a credit union loan on the cash price.</p>`
         : fee > 0
-          ? `<p class="verdict">A ${fmt(fee / v.cash * 100)}% markup — modest, but still interest you pay on a fee.</p>`
+          ? `<p class="verdict">A ${fmt(fee / v.cash * 100)}% markup: modest, but you still pay interest on the fee.</p>`
           : `<p class="verdict ok">No dealer fee: the loan amount matches the cash price.</p>`;
       return `<dl class="stats">${stat("Dealer fee", fee > 0 ? money(fee) : "$0")}${stat("Monthly payment", money(pay))}${stat("Total of payments", money(pay * months))}${stat("True interest rate", fmt(real * 100, 2) + "%")}</dl>${verdict}`;
     },

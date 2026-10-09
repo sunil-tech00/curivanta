@@ -256,7 +256,7 @@
           </div>
           <div class="grid-3 pay-fields" data-for="lease">
             ${field(id("lease_monthly_payment"), "Monthly payment ($)", q.lease_monthly_payment, undefined, "First year (estimate for a PPA)")}
-            ${field(id("ppa_rate_per_kwh"), "PPA rate ($/kWh)", q.ppa_rate_per_kwh, undefined, "PPA only — first-year price per kWh")}
+            ${field(id("ppa_rate_per_kwh"), "PPA rate ($/kWh)", q.ppa_rate_per_kwh, undefined, "PPA only: first-year price per kWh")}
             ${field(id("lease_escalator_pct"), "Annual escalator (%)", q.lease_escalator_pct)}
           </div>
           <label class="check tax-check"><input type="checkbox" id="${id("tax")}" ${q.mentions_federal_tax_credit ? "checked" : ""} /> Quote counts the 30% federal tax credit in its price or savings <small>(homeowners can't claim it for systems installed after 2025)</small></label>
@@ -283,12 +283,12 @@
     $("#b-rate").value = has(rate) ? rate.toFixed(3) : "";
     const usedQuote = !bill && (has(quoteUsage) || has(quoteRate));
     $("#bill-note").textContent = state.extracted.bill?.is_utility_bill === false
-      ? "That file didn't look like a utility bill — please check these numbers."
+      ? "That file didn't look like a utility bill. Please check these numbers."
       : bill
         ? (bill.annual_kwh ? "Monthly usage is your 12-month average from the bill." : "Usage is from one bill period; a 12-month average is more accurate if you know it.")
         : usedQuote
-          ? "Filled in from your quote — check them against a recent bill if you can."
-          : "No bill uploaded — add your monthly usage and rate for sizing and savings checks.";
+          ? "Filled in from your quote. Check them against a recent bill if you can."
+          : "No bill uploaded. Add your monthly usage and rate for sizing and savings checks.";
   }
 
   $("#back-upload").addEventListener("click", () => show("upload"));
@@ -382,7 +382,7 @@
         <p class="preview-sub">That's a good sign. The full report confirms whether it's actually a good deal.</p>${unlock}`;
     }
     const quotes = d.quotes.filter((q) => q.flags.length).map((q) => `
-      <li><strong>${esc(q.label)}${q.name ? " — " + esc(q.name) : ""}</strong>
+      <li><strong>${esc(q.label)}${q.name ? ": " + esc(q.name) : ""}</strong>
         <ul>${q.flags.map((f) => `<li class="sev-${f.severity}">${esc(f.title)}</li>`).join("")}</ul>
       </li>`).join("");
     const top = d.top ? `<div class="preview-top"><span class="tag">Most serious${many ? " · " + esc(d.top.label) : ""}</span><p>${esc(d.top.text)}</p></div>` : "";
@@ -395,7 +395,7 @@
   function syncUnlockButton() {
     const btn = $("#report-btn");
     const price = "$" + ((state.config?.priceCents ?? 4900) / 100).toFixed(0);
-    btn.textContent = state.paid || bypass ? "Generate my report" : `Unlock my report — ${price}`;
+    btn.textContent = state.paid || bypass ? "Generate my report" : `Unlock my report: ${price}`;
     const left = store.get("ysa-runs-left");
     $("#unlock-note").textContent = state.paid
       ? (left !== null ? `${left} report run${left === 1 ? "" : "s"} left with your purchase.` : "")
@@ -472,13 +472,13 @@
     $("#report").innerHTML = `
       <article class="report">
         <div class="print-only print-head">
-          <strong>Your Solar Advisor — Quote Review</strong>
+          <strong>Your Solar Advisor | Quote Review</strong>
           <span>${new Date(saved?.createdAt || Date.now()).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · curivanta.com/solar</span>
         </div>
         ${saved ? `
         <div class="saved-link no-print">
           <div>
-            <strong>Your report is saved.</strong> Bookmark this private link — it's kept for 12 months${saved.test ? " (test run)" : ""}:
+            <strong>Your report is saved.</strong> Bookmark this private link. It's kept for 12 months${saved.test ? " (test run)" : ""}:
             <a href="${esc(saved.url)}">${esc(saved.url.replace(/^https?:\/\//, ""))}</a>
           </div>
           <button type="button" class="btn btn-outline btn-sm copy-link" data-url="${esc(saved.url)}">Copy link</button>
@@ -498,16 +498,16 @@
           <table class="num-table">
             <thead><tr><th scope="col"><span class="sr-only">Metric</span></th>${qs.map((q) => `<th scope="col">${esc(q.installer)}<small>${q.label} · ${{ cash: "Cash", loan: "Loan", lease: "Lease", ppa: "PPA" }[q.payment_type]}</small></th>`).join("")}</tr></thead>
             <tbody>
-              <tr><th scope="row">System size</th>${cell((q) => has(q.system_size_kw) ? fmt(q.system_size_kw, 2) + " kW" : "—")}</tr>
+              <tr><th scope="row">System size</th>${cell((q) => has(q.system_size_kw) ? fmt(q.system_size_kw, 2) + " kW" : "-")}</tr>
               <tr><th scope="row">Battery</th>${cell((q) => has(q.battery_kwh) ? `${fmt(q.battery_kwh, 1)} kWh${has(q.battery_vs_daily_use) ? `<small>${pct(q.battery_vs_daily_use)} of a day's use</small>` : ""}` : "None")}</tr>
-              <tr><th scope="row">$/Watt (cash)<small>Typical $2.50–$3.50 for solar</small></th>${cell((q) => has(q.ppw_cash) ? "$" + fmt(q.ppw_cash, 2) + (has(q.ppw_solar_only) ? `<small>$${fmt(q.ppw_solar_only, 2)} solar only</small>` : has(q.battery_kwh) ? "<small>includes battery</small>" : "") : "—")}</tr>
-              <tr><th scope="row">Dealer-fee markup<small>Financed vs cash</small></th>${cell((q) => has(q.dealer_fee_markup) ? pct(q.dealer_fee_markup, 1) : "—")}</tr>
-              <tr><th scope="row">Expected production<small>What the roof should make</small></th>${cell((q) => has(q.expected_annual_kwh) ? fmt(q.expected_annual_kwh) + " kWh/yr" : "—")}</tr>
-              <tr><th scope="row">Quoted vs expected<small>Over 110% is a red flag</small></th>${cell((q) => has(q.quoted_vs_expected) ? pct(q.quoted_vs_expected) : "—")}</tr>
-              ${m.usage ? `<tr><th scope="row">Covers your usage</th>${cell((q) => has(q.usage_coverage) ? pct(q.usage_coverage) : "—")}</tr>` : ""}
-              <tr><th scope="row">25-year total cost</th>${cell((q) => has(q.cost_25yr) ? `${money(q.cost_25yr)}<small>${esc(q.cost_basis)}</small>` : "—")}</tr>
-              <tr class="key"><th scope="row">True cost per kWh<small>Lower wins</small></th>${cell((q) => has(q.cost_per_kwh) ? `${fmt(q.cost_per_kwh * 100, 1)}¢${q.label === lowest ? " ✓" : ""}` : "—")}</tr>
-              ${m.usage?.utility_rate ? `<tr><th scope="row">vs. your utility rate</th>${cell((q) => has(q.vs_utility_rate) ? pct(q.vs_utility_rate) + " of utility" : "—")}</tr>` : ""}
+              <tr><th scope="row">$/Watt (cash)<small>Typical $2.50–$3.50 for solar</small></th>${cell((q) => has(q.ppw_cash) ? "$" + fmt(q.ppw_cash, 2) + (has(q.ppw_solar_only) ? `<small>$${fmt(q.ppw_solar_only, 2)} solar only</small>` : has(q.battery_kwh) ? "<small>includes battery</small>" : "") : "-")}</tr>
+              <tr><th scope="row">Dealer-fee markup<small>Financed vs cash</small></th>${cell((q) => has(q.dealer_fee_markup) ? pct(q.dealer_fee_markup, 1) : "-")}</tr>
+              <tr><th scope="row">Expected production<small>What the roof should make</small></th>${cell((q) => has(q.expected_annual_kwh) ? fmt(q.expected_annual_kwh) + " kWh/yr" : "-")}</tr>
+              <tr><th scope="row">Quoted vs expected<small>Over 110% is a red flag</small></th>${cell((q) => has(q.quoted_vs_expected) ? pct(q.quoted_vs_expected) : "-")}</tr>
+              ${m.usage ? `<tr><th scope="row">Covers your usage</th>${cell((q) => has(q.usage_coverage) ? pct(q.usage_coverage) : "-")}</tr>` : ""}
+              <tr><th scope="row">25-year total cost</th>${cell((q) => has(q.cost_25yr) ? `${money(q.cost_25yr)}<small>${esc(q.cost_basis)}</small>` : "-")}</tr>
+              <tr class="key"><th scope="row">True cost per kWh<small>Lower wins</small></th>${cell((q) => has(q.cost_per_kwh) ? `${fmt(q.cost_per_kwh * 100, 1)}¢${q.label === lowest ? " ✓" : ""}` : "-")}</tr>
+              ${m.usage?.utility_rate ? `<tr><th scope="row">vs. your utility rate</th>${cell((q) => has(q.vs_utility_rate) ? pct(q.vs_utility_rate) + " of utility" : "-")}</tr>` : ""}
             </tbody>
           </table>
         </div>
@@ -541,7 +541,7 @@
         <div class="upsell no-print">
           <div>
             <p class="upsell-title"><strong>Want an expert to take it from here?</strong></p>
-            <p>The <strong>Full Solar Review — $249 flat</strong>: we go through your actual quotes and bills line by line, vet the installers, and walk you through a written report and negotiation playbook — then review the contract before you sign, with 14 days of email support.</p>
+            <p>The <strong>Full Solar Review ($249 flat)</strong>: we go through your actual quotes and bills line by line, vet the installers, and walk you through a written report and negotiation playbook, then review the contract before you sign, with 14 days of email support.</p>
           </div>
           <a class="btn btn-primary" href="${FULL_REVIEW_URL}">Get the Full Solar Review →</a>
         </div>
@@ -617,10 +617,10 @@
       show("confirm");
       refreshPreview();
       if (paidId) {
-        $("#unlock-note").textContent = "Payment received — writing your report now.";
+        $("#unlock-note").textContent = "Payment received. Writing your report now.";
         generate(pending.req);
       } else {
-        showError("Checkout was canceled — your numbers are still here when you're ready.");
+        showError("Checkout was canceled. Your numbers are still here when you're ready.");
       }
       return;
     }

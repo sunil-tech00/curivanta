@@ -189,21 +189,21 @@ const Index = () => {
         </div>
           <div className="steps">
             <div className="step reveal">
-              <span className="step-num">01 — Audit</span>
+              <span className="step-num">01 · Audit</span>
               <div>
                 <h3>We map where manual work is actually costing you</h3>
                 <p>A short, honest look at where calls, leads, and follow-ups are falling through. Not a generic checklist, a read on your actual business.</p>
               </div>
             </div>
             <div className="step reveal d1">
-              <span className="step-num">02 — Build</span>
+              <span className="step-num">02 · Build</span>
               <div>
                 <h3>We wire it into tools you already use</h3>
                 <p>Workflows, bots, and sites built on infrastructure you can see and control, not a black box you're locked into.</p>
               </div>
             </div>
             <div className="step reveal d2">
-              <span className="step-num">03 — Launch &amp; tune</span>
+              <span className="step-num">03 · Launch &amp; tune</span>
               <div>
                 <h3>Live against real customers, not a demo script</h3>
                 <p>We stay on it after launch, refining against how people actually call, text, and book; not how the pitch deck said they would.</p>
@@ -223,7 +223,7 @@ const Index = () => {
           <div className="audit-form-container reveal d3">
             {status === 'sent' ? (
               <div className="form-success" role="status">
-                <h3>Thanks — we've got it.</h3>
+                <h3>Thanks, we've got it.</h3>
                 <p>We'll reach out within one business day to schedule your free audit.</p>
               </div>
             ) : (

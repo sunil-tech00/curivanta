@@ -233,7 +233,7 @@ const LINKS = {
       const diff = rank > 1 ? `<span class="rank-diff">+$${fmt(q.ppw - best, 2)}/W vs #1</span>` : "";
       return `
         <li class="rank-row${top ? " top" : ""}">
-          <span class="rank-num">${rank ? "#" + rank : "—"}</span>
+          <span class="rank-num">${rank ? "#" + rank : "-"}</span>
           <span class="rank-name">${esc(q.name || q.label)}<span class="pay-tag pay-${q.pay}">${payLabel[q.pay]}</span>${top ? '<span class="badge-best">Cheapest per watt</span>' : ""}<small>${details}</small></span>
           <span class="rank-ppw">${rank ? "$" + fmt(q.ppw, 2) + "<small>/W</small>" : `<small>Need ${q.kw > 0 ? "cash price" : "system size"}</small>`}${diff}</span>
         </li>`;

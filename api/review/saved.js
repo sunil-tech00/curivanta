@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     const session = url.searchParams.get("session");
     if (!id && session) id = await latestForSession(session);
     const doc = id ? await loadReport(id) : null;
-    if (!doc) return res.status(404).json({ error: "We couldn't find that report. Check the link in your email — reports are kept for 12 months." });
+    if (!doc) return res.status(404).json({ error: "We couldn't find that report. Check the link in your email. Reports are kept for 12 months." });
     res.status(200).json({ ...doc, id, url: reportUrl(siteOrigin(req), id) });
   } catch (err) {
     console.error(err);

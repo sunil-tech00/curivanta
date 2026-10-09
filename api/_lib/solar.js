@@ -123,19 +123,19 @@ export function analyzeQuote(q, a) {
   r.dealer_fee_stated = pos(q.dealer_fee_amount);
   if (r.dealer_fee_markup !== null && r.dealer_fee_markup > LIMITS.dealerFee) {
     r.flags.push({ id: "dealer_fee", severity: "high",
-      text: `Financed price is ${pct(r.dealer_fee_markup)} above cash — likely dealer fees in the loan.` });
+      text: `Financed price is ${pct(r.dealer_fee_markup)} above cash, likely dealer fees in the loan.` });
   } else if (type === "loan" && (r.dealer_fee_stated || (r.dealer_fee_markup ?? 0) > LIMITS.dealerFeeNotice)) {
     const fee = r.dealer_fee_stated ?? (financed - cash);
     r.flags.push({ id: "dealer_fee", severity: "medium",
-      text: `Loan includes a $${Math.round(fee).toLocaleString("en-US")} dealer fee${r.dealer_fee_markup !== null ? ` (${pct(r.dealer_fee_markup)} over cash)` : ""} — you'd pay interest on it for the life of the loan.` });
+      text: `Loan includes a $${Math.round(fee).toLocaleString("en-US")} dealer fee${r.dealer_fee_markup !== null ? ` (${pct(r.dealer_fee_markup)} over cash)` : ""}. You'd pay interest on it for the life of the loan.` });
   }
   if (r.quoted_vs_expected !== null && r.quoted_vs_expected > LIMITS.production) {
     r.flags.push({ id: "inflated_production", severity: "high",
-      text: `Quoted production is ${pct(r.quoted_vs_expected)} of what this system size should produce — estimate looks inflated.` });
+      text: `Quoted production is ${pct(r.quoted_vs_expected)} of what this system size should produce. The estimate looks inflated.` });
   }
   if (thirdPartyOwned && esc > LIMITS.escalator) {
     r.flags.push({ id: "escalator", severity: "high",
-      text: `${(esc * 100).toFixed(1)}% annual escalator — ${type === "ppa" ? "your per-kWh rate compounds" : "payments compound"} to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}.` });
+      text: `${(esc * 100).toFixed(1)}% annual escalator: ${type === "ppa" ? "your per-kWh rate compounds" : "payments compound"} to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}.` });
   }
   const ppwForBenchmark = r.ppw_solar_only ?? (r.battery_kwh ? null : r.ppw_cash);
   if (ppwForBenchmark !== null && ppwForBenchmark > LIMITS.ppwHigh) {
@@ -146,36 +146,36 @@ export function analyzeQuote(q, a) {
   // so a missing cash price is only a flag for quotes the homeowner would own.
   if (!cash && !thirdPartyOwned) {
     r.flags.push({ id: "no_cash_price", severity: "medium",
-      text: "No cash price on the quote — ask for it in writing to compare fairly." });
+      text: "No cash price on the quote. Ask for it in writing to compare fairly." });
   }
   if (q.mentions_federal_tax_credit && !thirdPartyOwned) {
     r.flags.push({ id: "tax_credit", severity: "high",
-      text: "Quote counts a federal tax credit — the 30% homeowner credit (Section 25D) ended for systems installed after Dec 31, 2025." });
+      text: "Quote counts a federal tax credit, but the 30% homeowner credit (Section 25D) ended for systems installed after Dec 31, 2025." });
   }
 
   // Batteries
   if (r.battery_kwh) {
     if (!r.battery_price && cash) {
       r.flags.push({ id: "battery_unpriced", severity: "low",
-        text: "Battery isn't priced separately — ask for solar-only and battery prices so you can judge each." });
+        text: "Battery isn't priced separately. Ask for solar-only and battery prices so you can judge each." });
     }
     if (a.annualUsageKwh) {
       r.battery_vs_daily_use = r.battery_kwh / (a.annualUsageKwh / 12 / 30);
       if (r.battery_vs_daily_use > LIMITS.batteryLarge) {
         r.flags.push({ id: "battery_large", severity: "medium",
-          text: `${fmt1(r.battery_kwh)} kWh of storage is ${pct(r.battery_vs_daily_use)} of a typical day's use — more than most homes can fill and empty daily.` });
+          text: `${fmt1(r.battery_kwh)} kWh of storage is ${pct(r.battery_vs_daily_use)} of a typical day's use, more than most homes can fill and empty daily.` });
       }
     }
   } else if (a.state === "California") {
     r.flags.push({ id: "no_battery_nem3", severity: "medium",
-      text: "No battery: under NEM 3.0, solar you export earns a fraction of what you pay for power, so a battery — or a smaller system — usually matters for savings." });
+      text: "No battery: under NEM 3.0, solar you export earns a fraction of what you pay for power, so a battery (or a smaller system) usually matters for savings." });
   }
 
   if (a.annualUsageKwh) {
     r.usage_coverage = r.expected_annual_kwh / a.annualUsageKwh;
     if (r.usage_coverage > LIMITS.oversize) {
       r.flags.push({ id: "oversized", severity: "medium",
-        text: `Would produce ${pct(r.usage_coverage)} of your annual usage — under net-billing rules like NEM 3.0, extra exports earn little.` });
+        text: `Would produce ${pct(r.usage_coverage)} of your annual usage. Under net-billing rules like NEM 3.0, extra exports earn little.` });
     } else if (r.usage_coverage < LIMITS.undersize) {
       r.flags.push({ id: "undersized", severity: "low",
         text: `Covers only ${pct(r.usage_coverage)} of your annual usage.` });
