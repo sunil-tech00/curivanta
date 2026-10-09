@@ -165,6 +165,11 @@ const HairSalonBot = () => {
               <a className="btn solid" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hero_demo">Try Demo in Chat</a>
               <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
             </div>
+            <ul className="hero-highlights reveal is-visible">
+              <li>No contracts — month to month</li>
+              <li>Done-for-you setup, 100% remote. Live in days</li>
+              <li>Works with the software you already use</li>
+            </ul>
           </div>
           
           <div className="hero-visual reveal is-visible d2" style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
