@@ -166,7 +166,7 @@ const HairSalonBot = () => {
               Proven and Working at multiple locations
             </p>
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Never miss a call, text or<br /><em>appointment</em> again.</h1>
-            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Your AI-powered front desk answers your phone and text/WhatsApp messages 24/7, checks live availability, and books appointments straight into Salon Ultimate, Vagaro, or any salon software you use, so clients can book however they reach out, and no one ever hits voicemail.</p>
+            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Your AI-powered front desk answers your phone and text/WhatsApp messages 24/7, checks live availability, and books appointments straight into Salon Ultimate or Vagaro, so clients can book however they reach out, and no one ever hits voicemail.</p>
             <div className="cta-row reveal is-visible">
               <a className="btn solid" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hero_demo">Try Demo in Chat</a>
               <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
