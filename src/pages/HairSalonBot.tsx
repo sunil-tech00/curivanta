@@ -8,24 +8,28 @@ import { ChatAnimation } from '../components/ChatAnimation';
 
 const faqs = [
   {
-    q: "Does this replace my front desk staff?",
-    a: "Not necessarily. It acts as a safety net to ensure no calls or messages are missed when your staff is busy with clients in the salon. It handles the routine bookings and inquiries, freeing up your team to provide a better in-person experience."
+    q: "Will customers know they're talking to an AI?",
+    a: "It greets callers with your salon's name and gets them helped in seconds. Most callers never ask — they're just glad someone picked up. And you see a summary of every conversation, so nothing happens out of sight."
   },
   {
-    q: "What happens when the AI can't answer something?",
-    a: "The AI is trained to hand off the conversation gracefully. It will notify your team that human assistance is needed, and you can jump right into the chat or call the customer back from the unified inbox."
+    q: "What happens if the AI can't handle a request?",
+    a: "It doesn't guess, and it never strands a caller. It captures the details and alerts you instantly so you can call back within minutes. You set the rules for what gets escalated."
   },
   {
-    q: "Do I need to change my booking software?",
-    a: "No, the AI integrates directly with your existing scheduling tools like Salon Ultimate, so appointments are booked exactly where you're used to seeing them."
-  },
-  {
-    q: "Is there a contract?",
-    a: "No, our plans are month-to-month and you can cancel at any time. We believe in earning your business every month."
+    q: "I already use Salon Ultimate / Vagaro. Do I need new software?",
+    a: "No — that's the point. Curivanta connects to the software you already run. Your staff keeps using the same calendar; the AI just makes sure it stays full."
   },
   {
     q: "How long does setup take?",
-    a: "Typical setup takes less than 48 hours. We handle the technical configuration, test it thoroughly, and provide a simple onboarding session before going live."
+    a: "We handle everything remotely: your number, the integration, the greeting, your services and FAQs. Most salons are live within about a week."
+  },
+  {
+    q: "What does it cost after the included minutes?",
+    a: "Starter includes 300 AI minutes, Autopilot 1,000. Anything beyond that is billed at cost — no markup, no surprises."
+  },
+  {
+    q: "Can customers book by text instead of calling?",
+    a: "Yes. The same AI that answers your phone also handles two-way texting — a customer can text to book, reschedule, or ask a question, and it checks the same live calendar. WhatsApp works too. However your customers reach out, they reach the same front desk."
   }
 ];
 
@@ -234,6 +238,58 @@ const HairSalonBot = () => {
                 <p>Full conversation history in one inbox. Step in and take over any chat, any time. And if a caller ever needs a human, you or your manager is alerted instantly — no dead ends, no lost bookings.</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
+
+      <section id="integrations" style={{ padding: '100px 0' }}>
+        <div className="wrap" style={{ maxWidth: '1000px' }}>
+          <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 40px' }}>
+            <p className="eyebrow">Built for the software you already run</p>
+            <h2>Plugs into Salon Ultimate and Vagaro. Nothing new to learn.</h2>
+          </div>
+          <p className="reveal d1" style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '760px', margin: '0 auto 48px', textAlign: 'center' }}>No new system. No double entry. No retraining your staff, and no behavior change for your customers. Curivanta connects directly to the calendar you already use — it reads your real availability and writes confirmed bookings into it. Whether a booking starts as a phone call or a text message, it lands in the same place: your calendar. We handle the connection, the phone number, and the carrier registration. You change nothing about how you run your salon.</p>
+          <div className="service-grid">
+            <div className="service-card reveal d1">
+              <h3>Salon Ultimate</h3>
+              <p>Books directly into your Salon Ultimate calendar — live availability checked on every call, confirmed appointments written back automatically. This is the exact setup running in my own salons today.</p>
+            </div>
+            <div className="service-card reveal d2">
+              <h3>Vagaro</h3>
+              <p>Connects through Vagaro's official developer API — availability and bookings synced in real time, with your salon's approval handled as part of setup.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
+
+      <section id="hear-it" style={{ padding: '100px 0' }}>
+        <div className="wrap" style={{ maxWidth: '800px', textAlign: 'center' }}>
+          <div className="reveal">
+            <p className="eyebrow" style={{ marginBottom: '16px' }}>Hear it yourself</p>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '24px' }}>This isn't a script reading.</h2>
+            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>The Curivanta AI runs the front desk at my own two salons — handling real customers, real bookings, and real Saturday chaos every week.</p>
+            <div className="cta-row" style={{ justifyContent: 'center', marginTop: '32px', display: 'flex' }}>
+              <a className="btn solid" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hear_it_demo">Try Demo in Chat</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
+
+      <section id="handoff" style={{ padding: '100px 0' }}>
+        <div className="wrap" style={{ maxWidth: '800px' }}>
+          <div className="reveal">
+            <p className="eyebrow" style={{ marginBottom: '16px' }}>When the AI needs a human</p>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '32px' }}>It never guesses. It never dead-ends a caller.</h2>
+            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>Curivanta handles the everyday calls — bookings, hours, prices, directions, reschedules. When a caller needs something outside that playbook, it takes the details and alerts you instantly, so you can call back within minutes. Your customer always reaches a resolution; you always know what happened.</p>
+          </div>
+          <div className="reveal d1" style={{ marginTop: '40px', padding: '32px 36px', background: 'var(--ink-soft)', border: '1px solid var(--line)', borderLeft: '3px solid var(--brass)', borderRadius: '12px' }}>
+            <p style={{ fontSize: '1.15rem', color: 'var(--bone)', lineHeight: 1.7 }}>This is the part most AI receptionists skip. It's the part we watch closest — because a clean handoff isn't a failure. It's the feature.</p>
           </div>
         </div>
       </section>
