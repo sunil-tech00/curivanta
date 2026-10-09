@@ -13,7 +13,7 @@ const faqs = [
   },
   {
     q: "What happens if the AI can't handle a request?",
-    a: "It doesn't guess, and it never strands a caller. It captures the details and alerts you instantly so you can call back within minutes. You set the rules for what gets escalated."
+    a: "It doesn't guess, and it never strands a caller. It captures the details and alerts you or your manager instantly so you can call back within minutes. You set the rules for what gets escalated."
   },
   {
     q: "I already use Salon Ultimate / Vagaro. Do I need new software?",
