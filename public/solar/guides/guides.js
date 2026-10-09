@@ -60,6 +60,12 @@
           : `<p class="verdict ok">No dealer fee: the loan amount matches the cash price.</p>`;
       return `<dl class="stats">${stat("Dealer fee", fee > 0 ? money(fee) : "$0")}${stat("Monthly payment", money(pay))}${stat("Total of payments", money(pay * months))}${stat("True interest rate", fmt(real * 100, 2) + "%")}</dl>${verdict}`;
     },
+    ev(v) {
+      if (!(v.miles > 0) || !(v.eff > 0) || !(v.sun > 0)) return null;
+      const kwh = v.miles / v.eff;
+      const panels = Math.ceil((kwh / (v.sun * 365 * 0.8)) * 1000 / 400 - 1e-9);
+      return `<dl class="stats">${stat("EV charging", fmt(kwh) + " kWh/yr")}${stat("Per month", "≈ " + fmt(kwh / 12) + " kWh")}${stat("Extra panels", panels + " × 400 W")}${stat("Extra system", fmt(panels * 0.4, 1) + " kW")}</dl>`;
+    },
     escalator(v) {
       if (!(v.start > 0) || !(v.years > 0)) return null;
       const e = v.esc / 100;

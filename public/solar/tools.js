@@ -5,6 +5,7 @@
 const LINKS = {
   etsySizer: "https://www.etsy.com/listing/4589854852/solar-panel-calculator-spreadsheet-diy",   // Etsy listing: Solar Sizing Calculator ($19)
   etsyCompare: "https://www.etsy.com/listing/4590108397/solar-quote-comparison-spreadsheet", // Etsy listing: Solar Quote Toolkit ($29)
+  etsyEv: "https://www.etsy.com/listing/4592134650/ev-solar-panel-calculator-how-many-solar", // Etsy listing: EV + Solar Sizing Kit ($19)
   aiReview: "/solar/review", // $49 AI quote review
   fullReview: "https://buy.stripe.com/dRm14h17S3Qp8Uadbvffy00" // $249 Full Solar Review — Stripe live link
 };
@@ -26,7 +27,7 @@ const LINKS = {
   const track = (name, data) => { try { window.cvTrack && window.cvTrack(name, data); } catch (e) {} };
   const once = new Set();
   const trackOnce = (name, data) => { if (!once.has(name)) { once.add(name); track(name, data); } };
-  const CLICK_EVENTS = { aiReview: "cta_ai_review", fullReview: "cta_full_review", etsySizer: "etsy_sizer", etsyCompare: "etsy_compare" };
+  const CLICK_EVENTS = { aiReview: "cta_ai_review", fullReview: "cta_full_review", etsySizer: "etsy_sizer", etsyCompare: "etsy_compare", etsyEv: "etsy_ev" };
 
   // ── Theme ───────────────────────────────────────────────────────────────
   const root = document.documentElement;
@@ -145,6 +146,59 @@ const LINKS = {
   $("#sizer-form").addEventListener("change", renderSizer);
   $("#sizer-form").addEventListener("submit", (e) => e.preventDefault());
   renderSizer();
+
+  // ── EV + Solar ──────────────────────────────────────────────────────────
+  // Extra solar to cover an EV's charging, sized the same way as the sizer above
+  // (matches the Etsy EV kit: no separate charging-loss allowance).
+  const ev = (id) => $("#ev-" + id);
+  const evState = ev("state");
+  evState.innerHTML = stateSel.innerHTML;
+  evState.addEventListener("change", () => { ev("sun").value = SUN_HOURS[evState.value]; });
+  ev("type").addEventListener("change", () => { ev("eff").value = ev("type").value; });
+
+  function renderEv() {
+    const out = $("#ev-result");
+    const miles = num(ev("miles").value), eff = num(ev("eff").value), sun = num(ev("sun").value);
+    const missing = [
+      [miles > 0, "miles per year"],
+      [eff > 0, "efficiency"],
+      [sun > 0, "your state (or peak sun hours)"]
+    ].filter(([ok]) => !ok).map(([, label]) => label);
+    if (missing.length) {
+      out.innerHTML = `<p class="empty">${sun > 0 ? "Enter" : "Choose"} ${missing.join(", ")} to see how many panels your EV needs.</p>`;
+      return;
+    }
+    const annualKwh = miles / eff;
+    const kw = annualKwh / (sun * 365 * DERATE);
+    const panels = roundUp((kw * 1000) / PANEL_W);
+    const actualKw = (panels * PANEL_W) / 1000;
+    const monthly = annualKwh / 12;
+    trackOnce("ev_used");
+    const row = (label, value, hint) => `<div class="stat"><dt>${label}</dt><dd>${value}</dd>${hint ? `<span class="hint">${hint}</span>` : ""}</div>`;
+    out.innerHTML = `
+      <div class="result-hero">
+        <div class="big">+${panels} panels</div>
+        <div class="unit">to charge your EV with solar (${fmt(actualKw, 1)} kW)</div>
+      </div>
+      <dl class="stats">
+        ${row("EV charging", fmt(annualKwh) + " kWh/yr", "Miles ÷ miles per kWh")}
+        ${row("Per month", "≈ " + fmt(monthly) + " kWh", "Add this to your usage")}
+        ${row("Extra system", fmt(actualKw, 1) + " kW", `${PANEL_W} W panels, rounded up`)}
+      </dl>
+      <button class="btn btn-outline btn-sm ev-to-sizer" type="button">Size home + EV together →</button>`;
+    $(".ev-to-sizer", out).addEventListener("click", () => {
+      sz("kwh").value = Math.round((num(sz("kwh").value) || 0) + monthly);
+      if (evState.value) { stateSel.value = evState.value; sz("sun").value = SUN_HOURS[evState.value]; }
+      renderSizer();
+      selectTab($("#tab-sizer"));
+      track("ev_to_sizer");
+      $("#tools").scrollIntoView({ behavior: "smooth" });
+    });
+  }
+  $("#ev-form").addEventListener("input", renderEv);
+  $("#ev-form").addEventListener("change", renderEv);
+  $("#ev-form").addEventListener("submit", (e) => e.preventDefault());
+  renderEv();
 
   // ── Solar Quote Comparator ──────────────────────────────────────────────
   // Free site version of solar-quote-toolkit-v1.xlsx: ranks quotes by $/Watt (cash), 2-Comparison B10.

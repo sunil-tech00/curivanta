@@ -303,8 +303,11 @@ svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2
   background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
   padding: 28px; box-shadow: var(--shadow); max-width: 1060px; margin: 0 auto;
 }
-#panel-sizer:not([hidden]) { display: grid; gap: 28px; grid-template-columns: 1fr; }
-@media (min-width: 880px) { #panel-sizer:not([hidden]) { grid-template-columns: 1fr 1.1fr; padding: 36px; } }
+#panel-sizer:not([hidden]), #panel-ev:not([hidden]) { display: grid; gap: 28px; grid-template-columns: 1fr; }
+@media (min-width: 880px) { #panel-sizer:not([hidden]), #panel-ev:not([hidden]) { grid-template-columns: 1fr 1.1fr; padding: 36px; } }
+#ev-result .stats { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 480px) { #ev-result .stats { grid-template-columns: 1fr 1fr; } }
+.ev-to-sizer { margin-top: 16px; }
 @media (max-width: 520px) { .tool { padding: 20px; } }
 
 .tool-form { display: grid; gap: 16px; grid-template-columns: 1fr 1fr; align-content: start; }

@@ -242,6 +242,7 @@
         <div class="tool-tabs" role="tablist" aria-label="Free tools">
           <button role="tab" id="tab-sizer" aria-controls="panel-sizer" aria-selected="true">Solar System Sizer</button>
           <button role="tab" id="tab-compare" aria-controls="panel-compare" aria-selected="false" tabindex="-1">Solar Quote Comparator</button>
+          <button role="tab" id="tab-ev" aria-controls="panel-ev" aria-selected="false" tabindex="-1">EV + Solar</button>
         </div>
 
         <!-- Sizer -->
@@ -313,6 +314,57 @@
           </div>
 
           <p class="fine tool-note">Planning estimates only, not financial advice. ~$2.50–$3.50/W cash is typical US residential.</p>
+        </div>
+
+        <!-- EV + Solar -->
+        <div class="tool" id="panel-ev" role="tabpanel" aria-labelledby="tab-ev" hidden>
+          <form class="tool-form" id="ev-form" novalidate>
+            <div class="field span-2">
+              <label for="ev-miles">Miles driven per year</label>
+              <input id="ev-miles" type="number" min="0" step="500" inputmode="decimal" value="12000" />
+              <small>The US average is about 12,000 to 13,500 miles a year</small>
+            </div>
+            <div class="field">
+              <label for="ev-type">Vehicle type</label>
+              <select id="ev-type">
+                <option value="4.0">Efficient sedan</option>
+                <option value="3.4" selected>Crossover or small SUV</option>
+                <option value="2.7">Large SUV</option>
+                <option value="2.2">Pickup truck</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ev-eff">Efficiency (miles per kWh)</label>
+              <input id="ev-eff" type="number" min="1" max="6" step="0.1" inputmode="decimal" value="3.4" />
+              <small>Auto-fills by type. Use your car's EPA rating if you know it</small>
+            </div>
+            <div class="field">
+              <label for="ev-state">State</label>
+              <select id="ev-state"></select>
+            </div>
+            <div class="field">
+              <label for="ev-sun">Peak sun hours / day</label>
+              <input id="ev-sun" type="number" min="0.5" max="10" step="0.1" inputmode="decimal" />
+              <small>Auto-fills by state</small>
+            </div>
+          </form>
+
+          <div class="tool-result" id="ev-result" aria-live="polite"></div>
+
+          <div class="next-steps">
+            <h3>Know what your car needs. What's next?</h3>
+            <div class="next-grid">
+              <div class="next-card">
+                <p><span class="next-emoji" aria-hidden="true">📥</span> <strong>Size your home and EV together</strong> Download the EV + Solar Sizing Kit on Etsy ($19): 23 EV models with EPA efficiency, the home-vs-car panel split, fuel savings vs gas, and a 12-item EV checklist for before you sign.</p>
+                <a class="btn btn-outline" data-link="etsyEv" href="#">Get it on Etsy →</a>
+              </div>
+              <div class="next-card">
+                <p><span class="next-emoji" aria-hidden="true">🔍</span> <strong>Got quotes that include your EV?</strong> Check whether the installer sized the car correctly, plus dealer fees, escalators and the true 25-year cost.</p>
+                <a class="btn btn-primary" data-link="aiReview" href="/solar/review">Check My Quote FREE →</a>
+              </div>
+            </div>
+          </div>
+          <p class="fine tool-note">Planning estimates only. Uses the same 0.8 derate and 400 W panels as the system sizer. Charging mostly at night? Read <a href="/solar/guides/ev-solar-panels">how many panels an EV really needs</a> first.</p>
         </div>
 
         
