@@ -138,7 +138,6 @@ const HairSalonBot = () => {
           </div>
           <nav className="links">
             <Link className="navlink" to="/hair-salon-bot">Hair Salon Bot</Link>
-            <a className="btn ghost desktop-only" href="#contact" data-umami-event="salon_cta" data-umami-event-where="nav">Book a free audit</a>
             <ThemeToggle />
             
             <div className="mobile-menu-trigger">
@@ -150,7 +149,6 @@ const HairSalonBot = () => {
                 </SheetTrigger>
                 <SheetContent side="right" className="flex flex-col gap-6 pt-16 bg-background border-border">
                   <SheetClose asChild><Link className="text-xl font-medium" to="/hair-salon-bot">Hair Salon Bot</Link></SheetClose>
-                  <SheetClose asChild><a className="btn solid text-center mt-4 justify-center" href="#contact">Book a free audit</a></SheetClose>
                 </SheetContent>
               </Sheet>
             </div>

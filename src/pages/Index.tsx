@@ -90,7 +90,6 @@ const Index = () => {
           </div>
           <nav className="links">
             <Link className="navlink" to="/hair-salon-bot" data-umami-event="nav_hair_salon_bot" data-umami-event-where="nav">Hair Salon Bot</Link>
-            <a className="btn ghost desktop-only" href="#contact" data-umami-event="cta_book_audit" data-umami-event-where="nav">Book a free audit</a>
             <ThemeToggle />
             
             <div className="mobile-menu-trigger">
@@ -102,7 +101,6 @@ const Index = () => {
                 </SheetTrigger>
                 <SheetContent side="right" className="flex flex-col gap-6 pt-16 bg-background border-border">
                   <SheetClose asChild><Link className="text-xl font-medium" to="/hair-salon-bot" data-umami-event="nav_hair_salon_bot" data-umami-event-where="mobile_menu">Hair Salon Bot</Link></SheetClose>
-                  <SheetClose asChild><a className="btn solid text-center mt-4 justify-center" href="#contact" data-umami-event="cta_book_audit" data-umami-event-where="mobile_menu">Book a free audit</a></SheetClose>
                 </SheetContent>
               </Sheet>
             </div>
