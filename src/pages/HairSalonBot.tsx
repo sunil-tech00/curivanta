@@ -258,11 +258,11 @@ const HairSalonBot = () => {
           <div className="service-grid">
             <div className="service-card reveal d1">
               <h3>Salon Ultimate</h3>
-              <p>Books directly into your Salon Ultimate calendar — live availability checked on every call, confirmed appointments written back automatically. This is the exact setup running in my own salons today.</p>
+              <p>Books directly into your Salon Ultimate appointment book. Live availability checked on every call, confirmed appointments written back automatically. This is the exact setup running in my own salons today.</p>
             </div>
             <div className="service-card reveal d2">
               <h3>Vagaro</h3>
-              <p>Connects through Vagaro's official developer API — availability and bookings synced in real time, with your salon's approval handled as part of setup.</p>
+              <p>Connects through Vagaro's official developer API. Availability and bookings synced in real time, with your salon's approval handled as part of setup.</p>
             </div>
           </div>
         </div>
