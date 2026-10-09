@@ -230,7 +230,7 @@ const HairSalonBot = () => {
               <span className="step-num">Step 03</span>
               <div>
                 <h3>It books into your calendar</h3>
-                <p>The AI checks live availability in Salon Ultimate, Vagaro or any salon software you use, offers open slots, books the appointment, and sends the customer a confirmation.</p>
+                <p>The AI checks live availability in Salon Ultimate or Vagaro, offers open slots, books the appointment, and sends the customer a confirmation.</p>
               </div>
             </div>
             <div className="step reveal d3">
