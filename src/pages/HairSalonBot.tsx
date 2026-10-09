@@ -30,6 +30,10 @@ const faqs = [
   {
     q: "Can customers book by text instead of calling?",
     a: "Yes. The same AI that answers your phone also handles two-way texting — a customer can text to book, reschedule, or ask a question, and it checks the same live calendar. WhatsApp works too. However your customers reach out, they reach the same front desk."
+  },
+  {
+    q: "Can it speak Spanish?",
+    a: "Yes — English and Spanish."
   }
 ];
 
