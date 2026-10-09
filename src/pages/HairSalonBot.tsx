@@ -270,12 +270,13 @@ const HairSalonBot = () => {
 
       <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
 
+      {/* Call recording demo goes in this section. */}
       <section id="hear-it" style={{ padding: '100px 0' }}>
         <div className="wrap" style={{ maxWidth: '800px', textAlign: 'center' }}>
           <div className="reveal">
             <p className="eyebrow" style={{ marginBottom: '16px' }}>Hear it yourself</p>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '24px' }}>This isn't a script reading.</h2>
-            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>The Curivanta AI runs the front desk at my own two salons — handling real customers, real bookings, and real Saturday chaos every week.</p>
+            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>The Curivanta AI runs the front desk at my own two salons.</p>
             <div className="cta-row" style={{ justifyContent: 'center', marginTop: '32px', display: 'flex' }}>
               <a className="btn solid" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hear_it_demo">Try Demo in Chat</a>
             </div>
