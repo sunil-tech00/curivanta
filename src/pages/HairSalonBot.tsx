@@ -223,8 +223,15 @@ const HairSalonBot = () => {
             <div className="step reveal d2">
               <span className="step-num">Step 03</span>
               <div>
-                <h3>You see every conversation</h3>
-                <p>Full conversation history in one inbox. Step in and take over any chat, any time.</p>
+                <h3>It books into your calendar</h3>
+                <p>The AI checks live availability in Salon Ultimate, Vagaro or any salon software you use, offers open slots, books the appointment, and sends the customer a confirmation.</p>
+              </div>
+            </div>
+            <div className="step reveal d3">
+              <span className="step-num">Step 04</span>
+              <div>
+                <h3>You stay in the loop</h3>
+                <p>Full conversation history in one inbox. Step in and take over any chat, any time. And if a caller ever needs a human, you or your manager is alerted instantly — no dead ends, no lost bookings.</p>
               </div>
             </div>
           </div>
