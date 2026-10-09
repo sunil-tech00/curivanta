@@ -254,7 +254,7 @@ const HairSalonBot = () => {
             <p className="eyebrow">Built for the software you already run</p>
             <h2>Plugs into Salon Ultimate and Vagaro. Nothing new to learn.</h2>
           </div>
-          <p className="reveal d1" style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '760px', margin: '0 auto 48px', textAlign: 'center' }}>No new system. No double entry. No retraining your staff, and no behavior change for your customers. Curivanta connects directly to the calendar you already use — it reads your real availability and writes confirmed bookings into it. Whether a booking starts as a phone call or a text message, it lands in the same place: your calendar. We handle the connection, the phone number, and the carrier registration. You change nothing about how you run your salon.</p>
+          <p className="reveal d1" style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '760px', margin: '0 auto 48px', textAlign: 'center' }}>No new system. No double entry. No retraining your staff, and no behavior change for your customers. Curivanta connects directly to the appointment book you already use. It reads your real availability and writes confirmed bookings into it. Whether a booking starts as a phone call or a text message, it lands in the same place: your appointment book. We handle the connection, the phone number, and the carrier registration. You change nothing about how you run your salon.</p>
           <div className="service-grid">
             <div className="service-card reveal d1">
               <h3>Salon Ultimate</h3>
