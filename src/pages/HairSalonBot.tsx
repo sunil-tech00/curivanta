@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "I already use Salon Ultimate / Vagaro. Do I need new software?",
-    a: "No — that's the point. Curivanta connects to the software you already run. Your staff keeps using the same calendar; the AI just makes sure it stays full."
+    a: "No. That's the point. Curivanta connects to the software you already run. Your staff keeps using the same calendar; the AI just makes sure it stays full."
   },
   {
     q: "How long does setup take?",
@@ -25,15 +25,15 @@ const faqs = [
   },
   {
     q: "What does it cost after the included minutes?",
-    a: "Starter includes 300 AI minutes, Autopilot 1,000. Anything beyond that is billed at cost — no markup, no surprises."
+    a: "Starter includes 300 AI minutes, Autopilot 1,000. Anything beyond that is billed at cost. No markup, no surprises."
   },
   {
     q: "Can customers book by text instead of calling?",
-    a: "Yes. The same AI that answers your phone also handles two-way texting — a customer can text to book, reschedule, or ask a question, and it checks the same live calendar. WhatsApp works too. However your customers reach out, they reach the same front desk."
+    a: "Yes. The same AI that answers your phone also handles two-way texting. A customer can text to book, reschedule, or ask a question, and it checks the same live calendar. WhatsApp works too. However your customers reach out, they reach the same front desk."
   },
   {
     q: "Can it speak Spanish?",
-    a: "Yes — English and Spanish."
+    a: "Yes. English and Spanish."
   }
 ];
 
@@ -168,13 +168,13 @@ const HairSalonBot = () => {
               Proven and Working at multiple locations
             </p>
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Never miss a call, text or<br /><em>appointment</em> again.</h1>
-            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Your AI-powered front desk answers your phone and text/WhatsApp messages 24/7, checks live availability, and books appointments straight into Salon Ultimate, Vagaro, or any salon software you use — so clients can book however they reach out, and no one ever hits voicemail.</p>
+            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Your AI-powered front desk answers your phone and text/WhatsApp messages 24/7, checks live availability, and books appointments straight into Salon Ultimate, Vagaro, or any salon software you use, so clients can book however they reach out, and no one ever hits voicemail.</p>
             <div className="cta-row reveal is-visible">
               <a className="btn solid" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hero_demo">Try Demo in Chat</a>
               <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
             </div>
             <ul className="hero-highlights reveal is-visible">
-              <li>No contracts — month to month</li>
+              <li>No contracts, month to month</li>
               <li>Done-for-you setup, 100% remote. Live in days</li>
               <li>Works with the software you already use</li>
             </ul>
@@ -195,7 +195,7 @@ const HairSalonBot = () => {
           </div>
           <div className="reveal d2">
             <h3 style={{ fontSize: '3.5rem', color: 'var(--bone)', marginBottom: '8px' }}>85%</h3>
-            <p style={{ color: 'var(--bone-dim)', margin: '0 auto', maxWidth: '240px' }}>of missed callers won't call back — they book elsewhere</p>
+            <p style={{ color: 'var(--bone-dim)', margin: '0 auto', maxWidth: '240px' }}>of missed callers won't call back. They book elsewhere</p>
           </div>
           <div className="reveal d3">
             <h3 style={{ fontSize: '3.5rem', color: 'var(--bone)', marginBottom: '8px' }}>24/7</h3>
@@ -239,7 +239,7 @@ const HairSalonBot = () => {
               <span className="step-num">Step 04</span>
               <div>
                 <h3>You stay in the loop</h3>
-                <p>Full conversation history in one inbox. Step in and take over any chat, any time. And if a caller ever needs a human, you or your manager is alerted instantly — no dead ends, no lost bookings.</p>
+                <p>Full conversation history in one inbox. Step in and take over any chat, any time. And if a caller ever needs a human, you or your manager is alerted instantly - no dead ends, no lost bookings.</p>
               </div>
             </div>
           </div>
@@ -312,7 +312,7 @@ const HairSalonBot = () => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px' }}>
             {/* Starter Plan */}
             <div className="service-card reveal d1" style={{ display: 'flex', flexDirection: 'column' }}>
-              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)' }}>Starter — AI Voice</h3>
+              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)' }}>Starter: AI Voice</h3>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', margin: '16px 0' }}>
                 <span style={{ fontSize: '3.5rem', fontWeight: 'bold' }}>$149</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
@@ -323,10 +323,10 @@ const HairSalonBot = () => {
               </div>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Every call answered, 24/7 — no dead ends, no voicemail
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Every call answered, 24/7. No dead ends, no voicemail
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> AI handles the full call — answers questions, checks availability, captures booking requests, no staff needed to pick up
+                  <span style={{ color: 'var(--brass)' }}>✓</span> AI handles the full call: answers questions, checks availability, captures booking requests, no staff needed to pick up
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Bilingual English &amp; Spanish
@@ -344,7 +344,7 @@ const HairSalonBot = () => {
             {/* Autopilot Plan */}
             <div className="service-card reveal d2" style={{ display: 'flex', flexDirection: 'column', borderColor: 'var(--brass)', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, right: 0, width: '200px', height: '200px', background: 'var(--brass)', filter: 'blur(100px)', opacity: 0.1, borderRadius: '50%' }}></div>
-              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)' }}>Autopilot — Fully Automated Booking</h3>
+              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)' }}>Autopilot: Fully Automated Booking</h3>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', margin: '16px 0' }}>
                 <span style={{ fontSize: '3.5rem', fontWeight: 'bold' }}>$249</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
@@ -355,13 +355,13 @@ const HairSalonBot = () => {
               </div>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Voice + two-way SMS included — customers can call or text to book
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Voice + two-way SMS included, so customers can call or text to book
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Fully hands-free — zero manual action from owner
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Fully hands-free, with zero manual action from the owner
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Books appointments 24/7 — even when closed
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Books appointments 24/7, even when closed
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Eliminates booking errors and missed notifications
@@ -373,7 +373,7 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Scales during Saturday rush without missing a booking
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Usage overage billed at cost — no markup
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Usage overage billed at cost, no markup
                 </li>
               </ul>
               <a className="btn solid" href="#contact" onClick={() => setSelectedPlan('autopilot')} data-umami-event="salon_cta" data-umami-event-where="pricing_autopilot" style={{ width: '100%', justifyContent: 'center' }}>Choose Autopilot</a>
@@ -394,7 +394,7 @@ const HairSalonBot = () => {
               <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '16px' }}>Add to Starter or Autopilot</p>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Untapped channel — competitors aren't using it
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Untapped channel: competitors aren't using it
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Immediate differentiation in Latino and Asian-dense markets
@@ -421,16 +421,16 @@ const HairSalonBot = () => {
                 <span style={{ color: 'var(--brass)' }}>$35 for new customers</span>
               </div>
               <p style={{ fontSize: '0.8rem', color: 'var(--bone-dimmer)', marginBottom: '8px' }}>Covers required SMS carrier/A2P registration.</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '16px' }}>Available on Starter only — Autopilot already includes SMS.</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '16px' }}>Available on Starter only. Autopilot already includes SMS.</p>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Two-way text booking — customers can text instead of call
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Two-way text booking, so customers can text instead of call
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Works alongside your existing Salon Ultimate reminders
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Same AI, same inbox — one more way clients reach you
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Same AI, same inbox: one more way clients reach you
                 </li>
               </ul>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '16px' }}>
@@ -495,7 +495,7 @@ const HairSalonBot = () => {
           
           {status === 'sent' ? (
             <div className="reveal d2 is-visible form-success" role="status" style={{ background: 'var(--ink)', padding: '40px', borderRadius: '12px', border: '1px solid var(--line)' }}>
-              <h3>Thanks — we've got it.</h3>
+              <h3>Thanks, we've got it.</h3>
               <p>We'll reach out within one business day to get your Hair Salon Bot set up.</p>
             </div>
           ) : (
