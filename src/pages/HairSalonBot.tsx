@@ -291,7 +291,7 @@ const HairSalonBot = () => {
           <div className="reveal">
             <p className="eyebrow" style={{ marginBottom: '16px' }}>When the AI needs a human</p>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '32px' }}>It never guesses. It never dead-ends a caller.</h2>
-            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>Curivanta handles the everyday calls — bookings, hours, prices, directions, reschedules. When a caller needs something outside that playbook, it takes the details and alerts you instantly, so you can call back within minutes. Your customer always reaches a resolution; you always know what happened.</p>
+            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>Curivanta handles the everyday calls — bookings, hours, prices, directions, reschedules. When a caller needs something outside that playbook, it takes the details and alerts you or your manager instantly, so you can call or text back within minutes. Your customer always reaches a resolution; you always know what happened.</p>
           </div>
           <div className="reveal d1" style={{ marginTop: '40px', padding: '32px 36px', background: 'var(--ink-soft)', border: '1px solid var(--line)', borderLeft: '3px solid var(--brass)', borderRadius: '12px' }}>
             <p style={{ fontSize: '1.15rem', color: 'var(--bone)', lineHeight: 1.7 }}>This is the part most AI receptionists skip. It's the part we watch closest — because a clean handoff isn't a failure. It's the feature.</p>
