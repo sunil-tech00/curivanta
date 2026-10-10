@@ -37,6 +37,10 @@ const faqs = [
   }
 ];
 
+// Live voice demo line (GHL Voice AI). Text and chat demos run through the chat widget.
+const DEMO_PHONE = "(949) 821-0811";
+const DEMO_PHONE_TEL = "tel:+19498210811";
+
 const PLAN_OPTIONS = [
   { id: 'starter', name: 'Starter', desc: 'AI Voice' },
   { id: 'autopilot', name: 'Autopilot', desc: 'Fully Automated' },
@@ -171,6 +175,7 @@ const HairSalonBot = () => {
               <a className="btn solid" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hero_demo">Try Demo in Chat</a>
               <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
             </div>
+            <p className="hero-demo-line reveal is-visible">Or call our demo salon now: <a href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hero">{DEMO_PHONE}</a></p>
             <ul className="hero-highlights reveal is-visible">
               <li>No contracts, month to month</li>
               <li>Done-for-you setup, 100% remote. Live in days</li>
@@ -268,16 +273,31 @@ const HairSalonBot = () => {
 
       <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
 
-      {/* Call recording demo goes in this section. */}
+      {/* Live demo line (voice). A call recording can be added here later. */}
       <section id="hear-it" style={{ padding: '100px 0' }}>
         <div className="wrap" style={{ maxWidth: '800px', textAlign: 'center' }}>
           <div className="reveal">
             <p className="eyebrow" style={{ marginBottom: '16px' }}>Hear it yourself</p>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '24px' }}>This isn't a script reading.</h2>
-            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>The Curivanta AI runs the front desk at my own two salons.</p>
-            <div className="cta-row" style={{ justifyContent: 'center', marginTop: '32px', display: 'flex' }}>
-              <a className="btn solid" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hear_it_demo">Try Demo in Chat</a>
+            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>The Curivanta AI runs the front desk at my own two salons. Call our demo salon and try it yourself, any time.</p>
+          </div>
+          <div className="demo-call reveal d1">
+            <p className="demo-call-label">Call the demo salon</p>
+            <a className="demo-call-number" href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hear_it">{DEMO_PHONE}</a>
+            <p className="demo-call-sub">Available 24/7. On a computer? Dial it from your phone.</p>
+            <div className="demo-call-tries">
+              <p>Things to try:</p>
+              <ul>
+                <li>"Book a first haircut for Saturday"</li>
+                <li>"How much is a girls cut?"</li>
+                <li>Speak in Spanish</li>
+                <li>Ask for something unusual and see how it hands off to the manager</li>
+              </ul>
             </div>
+          </div>
+          <p className="reveal d2" style={{ marginTop: '28px', color: 'var(--bone-dim)' }}>Prefer to type or talk in the browser?</p>
+          <div className="cta-row" style={{ justifyContent: 'center', marginTop: '14px', display: 'flex' }}>
+            <a className="btn ghost" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hear_it_demo">Try Demo in Chat</a>
           </div>
         </div>
       </section>
