@@ -39,6 +39,7 @@ function payment(rate, nper, pv) {
 }
 
 export function paymentType(q) {
+  if (pos(q.tpo_minimum_monthly_bill)) return "tpo_hybrid"; // minimum bill + per-kWh rate (e.g. Sunrun Flex)
   if (pos(q.ppa_rate_per_kwh)) return "ppa";
   if (pos(q.lease_monthly_payment)) return "lease";
   if (pos(q.financed_price) || pos(q.monthly_loan_payment)) return "loan";
@@ -54,6 +55,7 @@ export function analyzeQuote(q, a) {
     label: q.label, installer: q.installer_name || q.label, payment_type: type, system_size_kw: kw,
     panel: q.panel || null, inverter: q.inverter || null,
     battery: q.battery || null, battery_kwh: pos(q.battery_kwh), battery_price: pos(q.battery_price),
+    battery_service_monthly: pos(q.battery_service_monthly), agreement_term_years: pos(q.agreement_term_years),
     workmanship_warranty_years: pos(q.workmanship_warranty_years),
     document_notes: Array.isArray(q.notes) ? q.notes.slice(0, 10) : [],
     flags: []
@@ -78,29 +80,65 @@ export function analyzeQuote(q, a) {
 
   // B18: lease/PPA → escalating payments; loan → total of payments; otherwise cash price.
   const esc = num(q.lease_escalator_pct) !== null ? q.lease_escalator_pct / 100 : 0;
-  const thirdPartyOwned = type === "lease" || type === "ppa";
-  if (type === "ppa") {
+  // Escalators apply every year, or every other year when the agreement says so.
+  const every = pos(q.escalator_interval_years) === 2 ? 2 : 1;
+  const grow = (y) => Math.pow(1 + esc, Math.floor(y / every)); // y = years since start (0-based)
+  const deg = (y) => Math.pow(1 - a.degradation, y);
+  const thirdPartyOwned = type === "lease" || type === "ppa" || type === "tpo_hybrid";
+  if (esc > 0) r.escalator_interval_years = every;
+  if (type === "tpo_hybrid") {
+    // Fixed minimum bill (escalating yearly) plus the documented extra-kWh allowance at the
+    // flex rate (escalating on the stated cadence), scaled by panel degradation.
+    const bill = q.tpo_minimum_monthly_bill;
+    const rate = pos(q.ppa_rate_per_kwh) ?? 0;
+    const allowance = pos(q.flex_allowance_kwh) ?? 0;
+    let billTotal = 0, flexTotal = 0;
+    for (let y = 0; y < a.years; y++) {
+      billTotal += bill * 12 * Math.pow(1 + esc, y);
+      flexTotal += allowance * rate * grow(y) * deg(y);
+    }
+    r.cost_25yr = billTotal + flexTotal;
+    r.cost_basis = allowance && rate
+      ? `${a.years} years of minimum bills plus the extra-kWh allowance`
+      : `${a.years} years of minimum bills`;
+    r.minimum_bill_year1 = bill;
+    r.minimum_bill_final_year = bill * Math.pow(1 + esc, a.years - 1);
+    r.minimum_bill_total = billTotal;
+    if (rate) {
+      r.flex_rate_cents_year1 = Math.round(rate * 1000) / 10;
+      r.flex_rate_cents_final_year = Math.round(rate * grow(a.years - 1) * 1000) / 10;
+    }
+    if (allowance && rate) {
+      r.flex_allowance_kwh = allowance;
+      r.flex_energy_total = flexTotal;
+    }
+    r.monthly_payment_year1 = bill + (allowance * rate) / 12;
+    r.monthly_payment_final_year = r.minimum_bill_final_year + (allowance * rate * grow(a.years - 1) * deg(a.years - 1)) / 12;
+    r.escalator_pct = esc * 100;
+  } else if (type === "ppa") {
     // A PPA bills per kWh produced, so price it on our production estimate, not the installer's.
     const rate = q.ppa_rate_per_kwh;
     let total = 0;
     for (let y = 0; y < a.years; y++) {
-      total += rate * Math.pow(1 + esc, y) * r.expected_annual_kwh * Math.pow(1 - a.degradation, y);
+      total += rate * grow(y) * r.expected_annual_kwh * deg(y);
     }
     r.cost_25yr = total;
     r.cost_basis = `${a.years} years of PPA payments at our production estimate`;
     r.ppa_rate_cents_year1 = Math.round(rate * 1000) / 10;
-    r.ppa_rate_cents_final_year = Math.round(rate * Math.pow(1 + esc, a.years - 1) * 1000) / 10;
+    r.ppa_rate_cents_final_year = Math.round(rate * grow(a.years - 1) * 1000) / 10;
     r.monthly_payment_year1 = (rate * r.expected_annual_kwh) / 12;
-    r.monthly_payment_final_year = (rate * Math.pow(1 + esc, a.years - 1) * r.expected_annual_kwh * Math.pow(1 - a.degradation, a.years - 1)) / 12;
+    r.monthly_payment_final_year = (rate * grow(a.years - 1) * r.expected_annual_kwh * deg(a.years - 1)) / 12;
     r.installer_monthly_estimate = pos(q.lease_monthly_payment);
     r.escalator_pct = esc * 100;
     if (a.utilityRate) r.ppa_rate_vs_utility_rate = rate / a.utilityRate;
   } else if (type === "lease") {
     const m = q.lease_monthly_payment;
-    r.cost_25yr = esc === 0 ? m * 12 * a.years : (m * 12 * (Math.pow(1 + esc, a.years) - 1)) / esc;
-    r.cost_basis = `${a.years} years of lease/PPA payments`;
+    let total = 0;
+    for (let y = 0; y < a.years; y++) total += m * 12 * grow(y);
+    r.cost_25yr = total;
+    r.cost_basis = `${a.years} years of lease payments`;
     r.monthly_payment_year1 = m;
-    r.monthly_payment_final_year = m * Math.pow(1 + esc, a.years - 1);
+    r.monthly_payment_final_year = m * grow(a.years - 1);
     r.escalator_pct = esc * 100;
   } else if (type === "loan" && pos(q.loan_term_years) && (financed || pos(q.monthly_loan_payment))) {
     const n = q.loan_term_years * 12;
@@ -135,7 +173,9 @@ export function analyzeQuote(q, a) {
   }
   if (thirdPartyOwned && esc > LIMITS.escalator) {
     r.flags.push({ id: "escalator", severity: "high",
-      text: `${(esc * 100).toFixed(1)}% annual escalator: ${type === "ppa" ? "your per-kWh rate compounds" : "payments compound"} to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}.` });
+      text: type === "tpo_hybrid"
+        ? `${(esc * 100).toFixed(1)}% escalator: the minimum bill compounds to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}${every === 2 ? ", and the per-kWh rate rises every other year" : ""}.`
+        : `${(esc * 100).toFixed(1)}% escalator ${every === 2 ? "every other year" : "every year"}: ${type === "ppa" ? "your per-kWh rate compounds" : "payments compound"} to ${pct(grow(a.years - 1))} of today's by year ${a.years}.` });
   }
   const ppwForBenchmark = r.ppw_solar_only ?? (r.battery_kwh ? null : r.ppw_cash);
   if (ppwForBenchmark !== null && ppwForBenchmark > LIMITS.ppwHigh) {
@@ -153,7 +193,8 @@ export function analyzeQuote(q, a) {
       text: "Quote counts a federal tax credit, but the 30% homeowner credit (Section 25D) ended for systems installed after Dec 31, 2025." });
   }
 
-  // Batteries
+  // Batteries. A named battery model (or "battery included") counts even without a stated kWh.
+  const hasBattery = Boolean(r.battery_kwh || r.battery || q.includes_battery === true);
   if (r.battery_kwh) {
     if (!r.battery_price && cash) {
       r.flags.push({ id: "battery_unpriced", severity: "low",
@@ -166,7 +207,7 @@ export function analyzeQuote(q, a) {
           text: `${fmt1(r.battery_kwh)} kWh of storage is ${pct(r.battery_vs_daily_use)} of a typical day's use, more than most homes can fill and empty daily.` });
       }
     }
-  } else if (a.state === "California") {
+  } else if (!hasBattery && a.state === "California") {
     r.flags.push({ id: "no_battery_nem3", severity: "medium",
       text: "No battery: under NEM 3.0, solar you export earns a fraction of what you pay for power, so a battery (or a smaller system) usually matters for savings." });
   }

@@ -47,17 +47,53 @@ export async function loadReport(id) {
   return read(`reports/${id}.json`);
 }
 
+// Large uploads arrive in base64 pieces (Vercel caps a request at ~4.5 MB). Pieces are held
+// only until the document is read, then deleted; the daily cleanup removes any leftovers.
+const UPLOAD_RE = /^[A-Za-z0-9_-]{16,40}$/;
+export const MAX_UPLOAD_PARTS = 5;
+const uploadName = (id, i) => `uploads/${id}/${i}.json`;
+
+export async function saveUploadPart(id, index, chunk) {
+  if (!UPLOAD_RE.test(String(id)) || !Number.isInteger(index) || index < 0 || index >= MAX_UPLOAD_PARTS) return false;
+  await write(uploadName(id, index), { c: chunk });
+  return true;
+}
+
+export async function takeUpload(id, parts) {
+  if (!UPLOAD_RE.test(String(id)) || !Number.isInteger(parts) || parts < 1 || parts > MAX_UPLOAD_PARTS) return null;
+  const pieces = [];
+  for (let i = 0; i < parts; i++) {
+    const p = await read(uploadName(id, i));
+    if (!p || typeof p.c !== "string") return null;
+    pieces.push(p.c);
+  }
+  await removeUpload(id, parts).catch(() => {});
+  return pieces.join("");
+}
+
+async function removeUpload(id, parts) {
+  const names = Array.from({ length: parts }, (_, i) => uploadName(id, i));
+  if (process.env.REPORTS_LOCAL_DIR) {
+    await Promise.all(names.map((n) => fs.rm(path.join(process.env.REPORTS_LOCAL_DIR, n), { force: true })));
+    return;
+  }
+  const { blobs } = await list({ prefix: `uploads/${id}/` });
+  if (blobs.length) await del(blobs.map((b) => b.url));
+}
+
 export async function latestForSession(sessionId) {
   if (!SESSION_RE.test(String(sessionId))) return null;
   const pointer = await read(`sessions/${sessionId}.json`);
   return pointer?.latest ?? null;
 }
 
-// Deletes saved reports and session pointers older than RETENTION_DAYS. Run daily by Vercel Cron.
+// Deletes saved reports and session pointers older than RETENTION_DAYS, and any upload pieces
+// older than a day. Run daily by Vercel Cron.
 export async function deleteExpired(now = Date.now()) {
-  const cutoff = now - RETENTION_DAYS * 24 * 60 * 60 * 1000;
+  const day = 24 * 60 * 60 * 1000;
   let deleted = 0;
-  for (const prefix of ["reports/", "sessions/"]) {
+  for (const [prefix, keepDays] of [["reports/", RETENTION_DAYS], ["sessions/", RETENTION_DAYS], ["uploads/", 1]]) {
+    const cutoff = now - keepDays * day;
     let cursor;
     do {
       const page = await list({ prefix, cursor, limit: 1000 });

@@ -34,7 +34,9 @@ const QUOTE_NUMBERS = [
   "system_size_kw", "panel_count", "battery_kwh", "battery_price", "quoted_annual_production_kwh",
   "cash_price", "financed_price", "loan_apr_pct", "loan_term_years", "monthly_loan_payment",
   "dealer_fee_amount", "lease_monthly_payment", "ppa_rate_per_kwh", "lease_escalator_pct",
-  "workmanship_warranty_years", "customer_annual_usage_kwh", "customer_utility_rate_per_kwh"
+  "workmanship_warranty_years", "customer_annual_usage_kwh", "customer_utility_rate_per_kwh",
+  "agreement_term_years", "tpo_minimum_monthly_bill", "flex_allowance_kwh", "escalator_interval_years",
+  "battery_service_monthly"
 ];
 const QUOTE_TEXT = ["installer_name", "panel", "inverter", "battery", "state"];
 const BILL_NUMBERS = ["monthly_kwh", "annual_kwh", "avg_rate_per_kwh", "bill_total"];
@@ -43,6 +45,7 @@ const BILL_TEXT = ["utility_name", "state", "rate_plan"];
 export const QUOTE_SCHEMA = obj({
   is_solar_quote: { type: "boolean" },
   mentions_federal_tax_credit: { type: "boolean" },
+  includes_battery: { type: "boolean" },
   numbers: pairs(QUOTE_NUMBERS, "number"),
   text: pairs(QUOTE_TEXT, "string"),
   notes: strings
@@ -74,7 +77,12 @@ Rules:
 - battery_kwh is the total usable storage capacity quoted (e.g. 13.5 for one Tesla Powerwall 3); battery is the make/model and count (e.g. "1 x Tesla Powerwall 3"). battery_price is the battery's own price in dollars only if the quote lists it separately; cash_price stays the full system price.
 - dealer_fee_amount is a dealer fee, financing fee, or rate buy-down fee in dollars, only if the document states it.
 - For a lease, fill lease_monthly_payment (first-year monthly) and lease_escalator_pct; leave out the loan fields.
-- For a PPA (you pay per kWh produced), fill ppa_rate_per_kwh (first-year $/kWh, e.g. 0.21), lease_escalator_pct (annual rate increase), and lease_monthly_payment only if the quote shows an estimated first-year monthly amount.
+- For a PPA (you pay per kWh produced), fill ppa_rate_per_kwh (first-year $/kWh, e.g. 0.21), lease_escalator_pct (the escalator percentage), and lease_monthly_payment only if the quote shows an estimated first-year monthly amount.
+- Hybrid third-party-owned plans (e.g. Sunrun "Flex"): a fixed minimum monthly bill PLUS a per-kWh rate for energy above a baseline. Put the minimum bill in tpo_minimum_monthly_bill (not lease_monthly_payment), the per-kWh rate in ppa_rate_per_kwh, the documented extra kWh allowance per year in flex_allowance_kwh, and the escalator in lease_escalator_pct.
+- agreement_term_years is the term of a lease, PPA or hybrid agreement in years (e.g. 25). loan_term_years is only for loans.
+- Escalator cadence: extract it exactly as the document states it. escalator_interval_years is 1 when the escalator applies every year ("per year", "annually") and 2 when it applies every other year ("every other year", "biennially"). For PPA and hybrid plans it describes the per-kWh rate (PPA rate or Flex rate); a hybrid plan's minimum monthly bill is treated as escalating yearly. For a lease it describes the monthly payment. Leave it out if there is no escalator. In notes, never simplify "every other year" to "per year".
+- If the document does not explicitly name an inverter brand and model, leave inverter out. Never infer the inverter from the battery brand, the panel brand, or the installer name. A Tesla Powerwall is a battery, not an inverter. A missing inverter is missing data, not a guess.
+- includes_battery is true if the quote or agreement includes a battery (any make or model), even when its capacity isn't stated. Fill battery_kwh only if the capacity is written in the document; never look it up from the model name. battery_service_monthly is a separate or bundled monthly battery charge in dollars, only if stated.
 - mentions_federal_tax_credit is true if the quote applies or advertises a federal tax credit / ITC / 30% credit in its pricing or savings.
 - For a utility bill: monthly_kwh is the usage for this bill period; if a 12-month usage history is shown, put the 12-month total in annual_kwh. avg_rate_per_kwh is total charges divided by kWh if not stated.
 - state is the full US state name of the service address (e.g. "California"), on a quote or a bill.
@@ -111,6 +119,8 @@ How to judge:
 - True cost per kWh (25-year cost ÷ 25-year production) is the main comparison across cash, loan, and lease. Lower wins. If vs_utility_rate is near or above 1, solar costs about as much as buying from the utility — a weak deal.
 - Treat high-severity flags (dealer fees, inflated production, escalators above 2.9%, counting the expired 25D tax credit) as serious.
 - Leases and PPAs are third-party owned: the installer keeps any tax credits, so don't treat that as a problem. For a PPA, payments follow production at a per-kWh rate; compare ppa_rate_cents_year1 and ppa_rate_cents_final_year with utility_rate_cents, and note that the monthly figures use our production estimate rather than the installer's.
+- Hybrid plans (payment_type "tpo_hybrid", e.g. Sunrun Flex) charge a fixed minimum monthly bill plus a per-kWh rate for extra energy. Use minimum_bill_year1 and minimum_bill_final_year, flex_rate_cents_year1 and flex_rate_cents_final_year, and escalator_interval_years (2 means the escalator applies every other year: say "every other year", never "per year").
+- agreement_term_years, when present, is the length of a lease, PPA or hybrid agreement.
 - Lease and PPA offers often come without a cash price, and in some areas a lease is the only option offered. Don't treat a missing cash price on a lease or PPA as a problem, and don't make asking for one a talking point.
 - Write without em dashes (—). Use commas, colons, parentheses or separate sentences instead.
 - Batteries: under California's NEM 3.0, solar sent to the grid earns far less than power costs to buy, so storing midday solar for evening use drives savings. Use the battery metrics (battery_kwh, battery_vs_daily_use, usage.battery_for_one_day_backup_kwh, ppw_solar_only) and battery flags to say whether the quote's battery choice fits this home — including when no battery is quoted. Don't invent battery prices, savings, or backup hours.
