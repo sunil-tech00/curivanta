@@ -8,7 +8,7 @@ const PORTAL_URL = ''; // Stripe customer portal login link; hidden until set
 
 type Summary = {
   plan: string; planName: string; addons: string[]; software: string; monthly: number;
-  paidToday: number; billingStarts: string | null; salonName: string; name: string;
+  paidToday: number; billingStarts: string | null; salonName: string; name: string; onboardingForm: boolean;
 };
 
 const track = (name: string, data?: Record<string, string | number | boolean>) =>
@@ -110,13 +110,18 @@ const SalonWelcome = () => {
               </div>
 
               <ol className="welcome-steps">
-                <li><strong>Send us your salon details</strong> using the form below (5 minutes).</li>
+                <li><strong>Send us your salon details</strong> {summary.onboardingForm ? 'using the form below (5 minutes).' : "when we email you within one business day (5 minutes)."}</li>
                 <li><strong>Kickoff call</strong> (20 minutes): we confirm your setup and connect {summary.software}.</li>
                 <li><strong>We build and test</strong> your AI front desk, your greeting, services and FAQs.</li>
                 <li><strong>You go live</strong>, usually within about a week. Your monthly fee starts after the setup period.</li>
               </ol>
 
-              {status === 'sent' ? (
+              {!summary.onboardingForm ? (
+                <div className="welcome-card">
+                  <h3 style={{ fontSize: '1.3rem' }}>We'll be in touch within one business day</h3>
+                  <p style={{ color: 'var(--bone-dim)' }}>We'll email you to collect your salon's hours, services and stylists, and to book your kickoff call. Questions in the meantime? Write to hello@curivanta.com.</p>
+                </div>
+              ) : status === 'sent' ? (
                 <div className="welcome-card form-success" role="status">
                   <h3>Thanks, we've got everything.</h3>
                   <p>We'll be in touch within one business day to book your kickoff call.</p>

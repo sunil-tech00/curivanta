@@ -18,6 +18,7 @@ const PRODUCT = "hair_salon_bot";
 
 // New-customer workflow in GHL (separate from the lead-form workflows).
 const CUSTOMER_WEBHOOK_URL = process.env.SALON_CUSTOMER_WEBHOOK_URL || "";
+export const onboardingEnabled = () => Boolean(CUSTOMER_WEBHOOK_URL);
 
 export function normalizeOrder(body) {
   const plan = PLANS[body?.plan] ? body.plan : null;
