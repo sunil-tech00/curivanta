@@ -60,7 +60,10 @@ const HairSalonBot = () => {
 
   // Opens the GHL chat widget (bottom-right bubble). If it hasn't loaded or is blocked,
   // the link falls through to the contact form with "Not sure / need a demo" picked.
+  // Tracked here rather than with data-umami-event: Umami follows tracked links itself,
+  // which would jump the page to #contact even when the chat opens.
   const openChatDemo = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    track('salon_cta', { where: e.currentTarget.dataset.where || 'demo' });
     const chat = (window as Window & { leadConnector?: { chatWidget?: { openWidget?: () => void } } }).leadConnector?.chatWidget;
     if (chat?.openWidget) {
       e.preventDefault();
@@ -172,7 +175,7 @@ const HairSalonBot = () => {
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Never miss a call, text or<br /><em>appointment</em> again.</h1>
             <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Your AI-powered front desk answers your phone and text/WhatsApp messages 24/7, checks live availability, and books appointments straight into Salon Ultimate or Vagaro, so clients can book however they reach out, and no one ever hits voicemail.</p>
             <div className="cta-row reveal is-visible">
-              <a className="btn solid" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hero_demo">Try the Demo: Chat or Talk</a>
+              <a className="btn solid" href="#contact" onClick={openChatDemo} data-where="hero_demo">Try the Demo: Chat or Talk</a>
               <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
             </div>
             <p className="hero-demo-line reveal is-visible">Or call our demo salon now: <a href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hero">{DEMO_PHONE}</a></p>
@@ -297,7 +300,7 @@ const HairSalonBot = () => {
           </div>
           <p className="reveal d2" style={{ marginTop: '28px', color: 'var(--bone-dim)' }}>No phone handy? Chat or talk to the same AI right here.</p>
           <div className="cta-row" style={{ justifyContent: 'center', marginTop: '14px', display: 'flex' }}>
-            <a className="btn ghost" href="#contact" onClick={openChatDemo} data-umami-event="salon_cta" data-umami-event-where="hear_it_demo">Talk or Chat in Your Browser</a>
+            <a className="btn ghost" href="#contact" onClick={openChatDemo} data-where="hear_it_demo">Talk or Chat in Your Browser</a>
           </div>
         </div>
       </section>
