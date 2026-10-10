@@ -8,7 +8,7 @@ import { analyze } from "../_lib/solar.js";
 const TITLES = {
   dealer_fee: "Dealer fee built into the loan",
   inflated_production: "Production estimate looks inflated",
-  escalator: "High annual escalator",
+  escalator: "High escalator",
   high_price: "Price above the typical range",
   no_cash_price: "No cash price on the quote",
   tax_credit: "Counts a tax credit that has ended",

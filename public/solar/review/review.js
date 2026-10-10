@@ -7,12 +7,16 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const fmt = (n, d = 0) => Number(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
   const money = (n) => "$" + fmt(Math.round(n));
+  const cents2 = (n) => "$" + fmt(n, 2);
   const pct = (x, d = 0) => fmt(x * 100, d) + "%";
   const has = (v) => typeof v === "number" && Number.isFinite(v);
   const numOrNull = (v) => { const n = parseFloat(String(v).replace(/[^0-9.\-]/g, "")); return Number.isFinite(n) ? n : null; };
 
   const STATES = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","District of Columbia","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
-  const MAX_PDF = 3 * 1024 * 1024;
+  const MAX_PDF = 10 * 1024 * 1024;
+  // Requests are capped at ~4.5 MB, so larger documents go up in pieces first.
+  const INLINE_MAX = 4_000_000;
+  const PIECE = 3_800_000;
   // Report CTA: the paid Full Solar Review. Swap in its booking/checkout link when it exists.
   const FULL_REVIEW_URL = "/solar#full-review"; // section holds the $249 payment button
   const VERDICT = {
@@ -140,10 +144,20 @@
     $("#read-btn").disabled = !state.files.quote[0];
   }
 
+  async function extractDoc(kind, f) {
+    if (f.data.length <= INLINE_MAX) return api("extract", { kind, mediaType: f.mediaType, data: f.data });
+    const uploadId = Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => b.toString(16).padStart(2, "0")).join("");
+    const parts = Math.ceil(f.data.length / PIECE);
+    for (let i = 0; i < parts; i++) {
+      await api("upload", { uploadId, index: i, chunk: f.data.slice(i * PIECE, (i + 1) * PIECE) });
+    }
+    return api("extract", { kind, mediaType: f.mediaType, uploadId, parts });
+  }
+
   // PDFs are sent as-is; photos are downscaled to keep requests small.
   async function prepareFile(file) {
     if (file.type === "application/pdf") {
-      if (file.size > MAX_PDF) throw new Error(`${file.name} is over 3 MB. Try a smaller PDF or a photo of the pricing page.`);
+      if (file.size > MAX_PDF) throw new Error(`${file.name} is over 10 MB. Try a smaller PDF or a photo of the pricing page.`);
       return { name: file.name, mediaType: "application/pdf", data: await toBase64(file) };
     }
     if (!file.type.startsWith("image/")) throw new Error("Please upload a PDF or an image.");
@@ -179,7 +193,7 @@
     const tick = ticker(progress, `Reading ${jobs.length} document${jobs.length > 1 ? "s" : ""}…`);
     try {
       const results = await Promise.all(jobs.map(async (j) => {
-        const { fields } = await api("extract", { kind: j.kind, mediaType: j.f.mediaType, data: j.f.data });
+        const { fields } = await extractDoc(j.kind, j.f);
         done++;
         tick.set(`Read ${done} of ${jobs.length}…`);
         return { ...j, fields };
@@ -203,15 +217,26 @@
   });
 
   // ── Confirm ─────────────────────────────────────────────────────────────
+  // Rounds extracted numbers for display (e.g. 3.2799999713897705 → 3.28); typed values are untouched.
+  const DECIMALS = {
+    system_size_kw: 2, quoted_annual_production_kwh: 0, flex_allowance_kwh: 0, battery_kwh: 1,
+    ppa_rate_per_kwh: 4, loan_apr_pct: 3, lease_escalator_pct: 2,
+    loan_term_years: 0, agreement_term_years: 0
+  };
+  const shown = (id, value) => {
+    if (typeof value !== "number" || !Number.isFinite(value)) return value;
+    const key = id.replace(/^q\d+-/, "");
+    return String(Number(value.toFixed(DECIMALS[key] ?? 2)));
+  };
   const field = (id, label, value, attrs = 'type="number" min="0" step="any" inputmode="decimal"', hint = "") => `
     <div class="field">
       <label for="${id}">${label}</label>
-      <input id="${id}" ${attrs} value="${value === null || value === undefined ? "" : esc(value)}" />
+      <input id="${id}" ${attrs} value="${value === null || value === undefined ? "" : esc(shown(id, value))}" />
       ${hint ? `<small>${hint}</small>` : ""}
     </div>`;
 
   function guessPay(q) {
-    if (q.lease_monthly_payment || q.ppa_rate_per_kwh) return "lease";
+    if (q.lease_monthly_payment || q.ppa_rate_per_kwh || q.tpo_minimum_monthly_bill) return "lease";
     if (q.financed_price || q.monthly_loan_payment) return "loan";
     return "cash";
   }
@@ -255,9 +280,21 @@
             ${field(id("dealer_fee_amount"), "Dealer fee ($)", q.dealer_fee_amount, undefined, "If the quote states one")}
           </div>
           <div class="grid-3 pay-fields" data-for="lease">
-            ${field(id("lease_monthly_payment"), "Monthly payment ($)", q.lease_monthly_payment, undefined, "First year (estimate for a PPA)")}
-            ${field(id("ppa_rate_per_kwh"), "PPA rate ($/kWh)", q.ppa_rate_per_kwh, undefined, "PPA only: first-year price per kWh")}
-            ${field(id("lease_escalator_pct"), "Annual escalator (%)", q.lease_escalator_pct)}
+            ${field(id("lease_monthly_payment"), "Monthly payment ($)", q.lease_monthly_payment, undefined, "Lease, or first-year estimate for a PPA")}
+            ${field(id("ppa_rate_per_kwh"), "Rate per kWh ($)", q.ppa_rate_per_kwh, undefined, "PPA or Flex rate, first year")}
+            ${field(id("lease_escalator_pct"), "Escalator (%)", q.lease_escalator_pct)}
+            <div class="field">
+              <label for="${id("escalator_interval_years")}">Escalator applies</label>
+              <select id="${id("escalator_interval_years")}">
+                <option value="1"${q.escalator_interval_years === 2 ? "" : " selected"}>Every year</option>
+                <option value="2"${q.escalator_interval_years === 2 ? " selected" : ""}>Every other year</option>
+              </select>
+              <small>Check the agreement's wording</small>
+            </div>
+            ${field(id("agreement_term_years"), "Term (years)", q.agreement_term_years)}
+            ${field(id("tpo_minimum_monthly_bill"), "Minimum monthly bill ($)", q.tpo_minimum_monthly_bill, undefined, "Flex-style plans only")}
+            ${field(id("flex_allowance_kwh"), "Extra kWh allowance / yr", q.flex_allowance_kwh, undefined, "Flex-style plans: kWh at the per-kWh rate")}
+            ${field(id("battery_service_monthly"), "Battery service ($/mo)", q.battery_service_monthly, undefined, "If the agreement lists one")}
           </div>
           <label class="check tax-check"><input type="checkbox" id="${id("tax")}" ${q.mentions_federal_tax_credit ? "checked" : ""} /> Quote counts the 30% federal tax credit in its price or savings <small>(homeowners can't claim it for systems installed after 2025)</small></label>
           ${notes}
@@ -318,6 +355,12 @@
         lease_monthly_payment: pay === "lease" ? numOrNull(v("lease_monthly_payment")) : null,
         ppa_rate_per_kwh: pay === "lease" ? numOrNull(v("ppa_rate_per_kwh")) : null,
         lease_escalator_pct: pay === "lease" ? numOrNull(v("lease_escalator_pct")) : null,
+        escalator_interval_years: pay === "lease" && v("lease_escalator_pct") ? Number(v("escalator_interval_years")) : null,
+        agreement_term_years: pay === "lease" ? numOrNull(v("agreement_term_years")) : null,
+        tpo_minimum_monthly_bill: pay === "lease" ? numOrNull(v("tpo_minimum_monthly_bill")) : null,
+        flex_allowance_kwh: pay === "lease" ? numOrNull(v("flex_allowance_kwh")) : null,
+        battery_service_monthly: pay === "lease" ? numOrNull(v("battery_service_monthly")) : null,
+        includes_battery: extracted.includes_battery === true,
         mentions_federal_tax_credit: pay !== "lease" && $(`#q${i}-tax`).checked,
         notes: extracted.notes || [],
         _pay: pay
@@ -337,7 +380,7 @@
       if (!card) return;
       for (const [k, val] of Object.entries(q)) {
         const el = $(`#q${i}-${k}`);
-        if (el && el.type !== "checkbox") el.value = val ?? "";
+        if (el && el.type !== "checkbox" && !(el.tagName === "SELECT" && (val === null || val === undefined))) el.value = val ?? "";
       }
       const radio = $(`input[name="q${i}-pay"][value="${q._pay}"]`, card);
       if (radio) { radio.checked = true; card.dataset.pay = q._pay; }
@@ -496,15 +539,20 @@
         <h2>The numbers</h2>
         <div class="table-wrap">
           <table class="num-table">
-            <thead><tr><th scope="col"><span class="sr-only">Metric</span></th>${qs.map((q) => `<th scope="col">${esc(q.installer)}<small>${q.label} · ${{ cash: "Cash", loan: "Loan", lease: "Lease", ppa: "PPA" }[q.payment_type]}</small></th>`).join("")}</tr></thead>
+            <thead><tr><th scope="col"><span class="sr-only">Metric</span></th>${qs.map((q) => `<th scope="col">${esc(q.installer)}<small>${q.label} · ${{ cash: "Cash", loan: "Loan", lease: "Lease", ppa: "PPA", tpo_hybrid: "Flex (hybrid)" }[q.payment_type]}</small></th>`).join("")}</tr></thead>
             <tbody>
               <tr><th scope="row">System size</th>${cell((q) => has(q.system_size_kw) ? fmt(q.system_size_kw, 2) + " kW" : "-")}</tr>
-              <tr><th scope="row">Battery</th>${cell((q) => has(q.battery_kwh) ? `${fmt(q.battery_kwh, 1)} kWh${has(q.battery_vs_daily_use) ? `<small>${pct(q.battery_vs_daily_use)} of a day's use</small>` : ""}` : "None")}</tr>
+              <tr><th scope="row">Battery</th>${cell((q) => has(q.battery_kwh) ? `${fmt(q.battery_kwh, 1)} kWh${has(q.battery_vs_daily_use) ? `<small>${pct(q.battery_vs_daily_use)} of a day's use</small>` : ""}` : q.battery ? `${esc(q.battery)}<small>capacity not stated</small>` : "None")}</tr>
               <tr><th scope="row">$/Watt (cash)<small>Typical $2.50–$3.50 for solar</small></th>${cell((q) => has(q.ppw_cash) ? "$" + fmt(q.ppw_cash, 2) + (has(q.ppw_solar_only) ? `<small>$${fmt(q.ppw_solar_only, 2)} solar only</small>` : has(q.battery_kwh) ? "<small>includes battery</small>" : "") : "-")}</tr>
               <tr><th scope="row">Dealer-fee markup<small>Financed vs cash</small></th>${cell((q) => has(q.dealer_fee_markup) ? pct(q.dealer_fee_markup, 1) : "-")}</tr>
               <tr><th scope="row">Expected production<small>What the roof should make</small></th>${cell((q) => has(q.expected_annual_kwh) ? fmt(q.expected_annual_kwh) + " kWh/yr" : "-")}</tr>
               <tr><th scope="row">Quoted vs expected<small>Over 110% is a red flag</small></th>${cell((q) => has(q.quoted_vs_expected) ? pct(q.quoted_vs_expected) : "-")}</tr>
               ${m.usage ? `<tr><th scope="row">Covers your usage</th>${cell((q) => has(q.usage_coverage) ? pct(q.usage_coverage) : "-")}</tr>` : ""}
+              ${qs.some((q) => has(q.monthly_payment_year1) || has(q.ppa_rate_cents_year1)) ? `<tr><th scope="row">Payments, year 1 → year 25<small>With the escalator</small></th>${cell((q) => q.payment_type === "tpo_hybrid"
+                ? `${cents2(q.minimum_bill_year1)} → ${cents2(q.minimum_bill_final_year)}/mo minimum${has(q.flex_rate_cents_year1) ? `<small>Flex rate ${fmt(q.flex_rate_cents_year1, 1)}¢ → ${fmt(q.flex_rate_cents_final_year, 1)}¢/kWh${q.escalator_interval_years === 2 ? ", rising every other year" : ""}</small>` : ""}`
+                : q.payment_type === "ppa" ? `${fmt(q.ppa_rate_cents_year1, 1)}¢ → ${fmt(q.ppa_rate_cents_final_year, 1)}¢/kWh${q.escalator_interval_years === 2 ? "<small>Rises every other year</small>" : ""}`
+                : q.payment_type === "lease" ? `${cents2(q.monthly_payment_year1)} → ${cents2(q.monthly_payment_final_year)}/mo`
+                : "-")}</tr>` : ""}
               <tr><th scope="row">25-year total cost</th>${cell((q) => has(q.cost_25yr) ? `${money(q.cost_25yr)}<small>${esc(q.cost_basis)}</small>` : "-")}</tr>
               <tr class="key"><th scope="row">True cost per kWh<small>Lower wins</small></th>${cell((q) => has(q.cost_per_kwh) ? `${fmt(q.cost_per_kwh * 100, 1)}¢${q.label === lowest ? " ✓" : ""}` : "-")}</tr>
               ${m.usage?.utility_rate ? `<tr><th scope="row">vs. your utility rate</th>${cell((q) => has(q.vs_utility_rate) ? pct(q.vs_utility_rate) + " of utility" : "-")}</tr>` : ""}
