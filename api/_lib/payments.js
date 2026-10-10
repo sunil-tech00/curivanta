@@ -7,7 +7,7 @@ export const MAX_RUNS = 3;
 const PRODUCT = "ai_quote_review";
 
 let stripe;
-function getStripe() {
+export function getStripe() {
   const key = process.env.STRIPE_SECRET_KEY;
   if (!key) throw exposed(503, "Payments aren't set up yet.");
   if (!stripe) {
@@ -18,7 +18,7 @@ function getStripe() {
   return stripe;
 }
 
-const exposed = (status, message) => Object.assign(new Error(message), { status, expose: true });
+export const exposed = (status, message) => Object.assign(new Error(message), { status, expose: true });
 
 export function paymentsReady() {
   return Boolean(process.env.STRIPE_SECRET_KEY);

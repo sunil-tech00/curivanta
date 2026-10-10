@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import HairSalonBot from "./pages/HairSalonBot";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import SalonWelcome from "./pages/SalonWelcome";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/hair-salon-bot" element={<HairSalonBot />} />
+          <Route path="/hair-salon-bot/welcome" element={<SalonWelcome />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

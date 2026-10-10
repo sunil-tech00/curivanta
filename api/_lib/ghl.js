@@ -1,8 +1,7 @@
 // Tells GHL about a delivered report (contact + report link). A GHL workflow with an
 // Inbound Webhook trigger does the rest (create/update contact, send the email).
 // Never blocks or fails the customer's report: errors are logged only.
-export async function notifyGhl(payload) {
-  const url = process.env.GHL_WEBHOOK_URL;
+export async function notifyGhl(payload, url = process.env.GHL_WEBHOOK_URL) {
   if (!url) return false;
   try {
     const res = await fetch(url, {

@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/s
 import { Menu } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ChatAnimation } from '../components/ChatAnimation';
+import { SalonPlanBuilder, type PlanId, type AddonId } from '../components/SalonPlanBuilder';
 
 const faqs = [
   {
@@ -52,7 +53,13 @@ const track = (name: string, data?: Record<string, string | number | boolean>) =
   (window as Window & { cvTrack?: (name: string, data?: Record<string, string | number | boolean>) => void }).cvTrack?.(name, data);
 
 const HairSalonBot = () => {
-  const [selectedPlan, setSelectedPlan] = useState('autopilot');
+  const [selectedPlan, setSelectedPlan] = useState('notsure');
+  const [builder, setBuilder] = useState<{ open: boolean; plan: PlanId; addon: AddonId | null }>({ open: false, plan: 'autopilot', addon: null });
+  const openBuilder = (plan: PlanId, addon: AddonId | null = null) => setBuilder({ open: true, plan, addon });
+  const talkToUs = () => {
+    setSelectedPlan('notsure');
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
   const [error, setError] = useState('');
   const [started, setStarted] = useState(false);
@@ -176,7 +183,7 @@ const HairSalonBot = () => {
             <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Your AI-powered front desk answers your phone and text/WhatsApp messages 24/7, checks live availability, and books appointments straight into Salon Ultimate or Vagaro, so clients can book however they reach out, and no one ever hits voicemail.</p>
             <div className="cta-row reveal is-visible">
               <a className="btn solid" href="#contact" onClick={openChatDemo} data-where="hero_demo">Try the Demo: Chat or Talk</a>
-              <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
+              <a className="btn ghost" href="#pricing" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
             </div>
             <p className="hero-demo-line reveal is-visible">Or call our demo salon now: <a href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hero">{DEMO_PHONE}</a></p>
             <ul className="hero-highlights reveal is-visible">
@@ -356,10 +363,13 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Works during peak hours and closed hours
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> 300 AI minutes a month included
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Clean booking notification sent to your team
                 </li>
               </ul>
-              <a className="btn ghost" href="#contact" onClick={() => setSelectedPlan('starter')} data-umami-event="salon_cta" data-umami-event-where="pricing_starter" style={{ width: '100%', justifyContent: 'center' }}>Choose Starter</a>
+              <button type="button" className="btn ghost" onClick={() => openBuilder('starter')} style={{ width: '100%', justifyContent: 'center' }}>Start with Starter</button>
             </div>
 
             {/* Autopilot Plan */}
@@ -394,10 +404,13 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Scales during Saturday rush without missing a booking
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> 1,000 AI minutes a month included
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Usage overage billed at cost, no markup
                 </li>
               </ul>
-              <a className="btn solid" href="#contact" onClick={() => setSelectedPlan('autopilot')} data-umami-event="salon_cta" data-umami-event-where="pricing_autopilot" style={{ width: '100%', justifyContent: 'center' }}>Choose Autopilot</a>
+              <button type="button" className="btn solid" onClick={() => openBuilder('autopilot')} style={{ width: '100%', justifyContent: 'center' }}>Start with Autopilot</button>
             </div>
           </div>
 
@@ -428,7 +441,7 @@ const HairSalonBot = () => {
                 <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>$49</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
               </div>
-              <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="pricing_whatsapp" style={{ width: '100%', justifyContent: 'center' }}>Add WhatsApp</a>
+              <button type="button" className="btn ghost" onClick={() => openBuilder('autopilot', 'whatsapp')} style={{ width: '100%', justifyContent: 'center' }}>Add WhatsApp</button>
             </div>
 
             {/* SMS Add-On */}
@@ -458,13 +471,14 @@ const HairSalonBot = () => {
                 <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>$49</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
               </div>
-              <a className="btn ghost" href="#contact" data-umami-event="salon_cta" data-umami-event-where="pricing_sms" style={{ width: '100%', justifyContent: 'center' }}>Add SMS</a>
+              <button type="button" className="btn ghost" onClick={() => openBuilder('starter', 'sms')} style={{ width: '100%', justifyContent: 'center' }}>Add SMS</button>
             </div>
           </div>
 
           <div className="reveal d3" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '24px', borderRadius: '12px', textAlign: 'center', marginTop: '32px' }}>
             <p style={{ color: 'var(--bone-dim)' }}>💡 If this system books just <strong>1 extra appointment per day</strong>, that's <strong style={{ color: 'var(--brass)' }}>$300–400/month</strong> in added revenue against a $149 cost.</p>
           </div>
+          <p className="reveal d3" style={{ textAlign: 'center', marginTop: '20px', color: 'var(--bone-dimmer)', fontSize: '0.9rem' }}>Sign up online in minutes: no contract, cancel anytime, live in about a week. Not sure which plan? <a href="#contact" onClick={(e) => { e.preventDefault(); talkToUs(); }} style={{ color: 'var(--brass-light)' }}>Talk to us first</a>.</p>
         </div>
       </section>
 
@@ -511,8 +525,8 @@ const HairSalonBot = () => {
 
       <section className="final-cta" id="contact" style={{ padding: '100px 0', background: 'var(--ink-soft)' }}>
         <div className="wrap" style={{ maxWidth: '600px' }}>
-          <h2 className="reveal">Ready to get started?</h2>
-          <p className="sub reveal d1" style={{ color: 'var(--bone-dim)', marginBottom: '40px' }}>Leave your details below and our team will reach out to get your Hair Salon Bot configured and running.</p>
+          <h2 className="reveal">Not sure yet? Talk to us first.</h2>
+          <p className="sub reveal d1" style={{ color: 'var(--bone-dim)', marginBottom: '40px' }}>Leave your details and we'll reach out to answer your questions and help you pick the right plan.</p>
           
           {status === 'sent' ? (
             <div className="reveal d2 is-visible form-success" role="status" style={{ background: 'var(--ink)', padding: '40px', borderRadius: '12px', border: '1px solid var(--line)' }}>
@@ -566,6 +580,14 @@ const HairSalonBot = () => {
           )}
         </div>
       </section>
+
+      <SalonPlanBuilder
+        open={builder.open}
+        onOpenChange={(open) => setBuilder((b) => ({ ...b, open }))}
+        initialPlan={builder.plan}
+        initialAddon={builder.addon}
+        onTalkToUs={talkToUs}
+      />
 
       <footer>
         <div className="wrap foot-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '24px' }}>

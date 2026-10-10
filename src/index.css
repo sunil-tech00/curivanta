@@ -476,3 +476,37 @@ footer a.foot-link:hover { color: var(--brass-light); }
 }
 ::selection { background: var(--brass); color: var(--ink); }
 :focus-visible { outline: 2px solid var(--brass-light); outline-offset: 2px; }
+/* Hair Salon Bot plan builder (dialog) */
+div.pb-dialog { background: var(--ink-soft); color: var(--bone); border-color: var(--line); max-width: 560px; max-height: 92vh; overflow-y: auto; font-family: var(--sans); gap: 18px; }
+.pb-title { font-family: var(--serif); font-size: 1.7rem; font-weight: 460; color: var(--bone); }
+.pb-desc { color: var(--bone-dim); margin-top: -10px; }
+.pb-group { border: 0; padding: 0; margin: 0; display: grid; gap: 8px; }
+.pb-group legend { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass-light); margin-bottom: 8px; }
+.pb-option { display: grid; grid-template-columns: 20px 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; transition: border-color .2s, background .2s; }
+.pb-option.on { border-color: var(--brass); background: rgba(77,107,246,0.08); }
+.pb-option input { accent-color: var(--brass); width: 16px; height: 16px; }
+.pb-opt-main { font-weight: 600; font-size: 0.98rem; }
+.pb-opt-main small { display: block; font-weight: 400; color: var(--bone-dim); font-size: 0.82rem; margin-top: 2px; }
+.pb-opt-price { font-weight: 700; font-size: 1.1rem; white-space: nowrap; }
+.pb-opt-price small { font-weight: 400; color: var(--bone-dim); font-size: 0.8rem; }
+.pb-note { font-size: 0.85rem; color: var(--bone-dim); }
+.pb-software { display: flex; flex-wrap: wrap; gap: 8px; }
+.pb-chip { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 0.92rem; }
+.pb-chip.on { border-color: var(--brass); background: rgba(77,107,246,0.08); }
+.pb-chip input { accent-color: var(--brass); }
+.pb-summary { border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 10px; }
+.pb-summary p { color: var(--bone-dim); font-size: 0.95rem; }
+.pb-line { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.pb-line strong { font-size: 1.15rem; white-space: nowrap; }
+.pb-fine { font-size: 0.8rem !important; color: var(--bone-dimmer) !important; line-height: 1.5; }
+.pb-trust { text-align: center; font-size: 0.8rem !important; color: var(--bone-dimmer) !important; }
+.pb-summary .btn.full-width { margin-top: 4px; }
+
+/* Hair Salon Bot welcome page */
+.welcome-card { margin-top: 28px; padding: 22px 24px; background: var(--ink-soft); border: 1px solid var(--line); border-radius: 12px; display: grid; gap: 10px; }
+.welcome-card .pb-line span { color: var(--bone-dim); }
+.welcome-steps { list-style: decimal; margin: 28px 0 0; padding-left: 22px; display: grid; gap: 10px; color: var(--bone-dim); line-height: 1.6; }
+.welcome-steps strong { color: var(--bone); }
+.welcome-form { margin-top: 32px; padding: 32px; background: var(--ink-soft); border: 1px solid var(--line); border-radius: 12px; }
+.welcome-field { display: grid; gap: 6px; font-size: 0.9rem; color: var(--bone-dim); }
+.welcome-field textarea.form-input { resize: vertical; font-family: var(--sans); }
