@@ -10,7 +10,7 @@ const track = (name: string, data?: Record<string, string | number | boolean>) =
   (window as Window & { cvTrack?: (name: string, data?: Record<string, string | number | boolean>) => void }).cvTrack?.(name, data);
 
 const Index = () => {
-  useEffect(() => { document.title = 'Curivanta — AI Consulting & Automation for Small Business'; }, []);
+  useEffect(() => { document.title = 'Curivanta | AI Consulting & Automation for Small Business'; }, []);
   // Scroll funnel: how far down the page visitors get (once per section per visit).
   useEffect(() => {
     const seen = new Set<string>();
