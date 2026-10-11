@@ -24,7 +24,7 @@ const LIMITS = {
   production: 1.10,       // quoted > 110% of expected (toolkit B22)
   escalator: 0.029,       // lease/PPA escalator above 2.9%/yr (toolkit B23)
   ppwHigh: 3.5,           // top of typical US residential cash $/W
-  oversize: 1.2,          // expected production > 120% of usage
+  oversize: 1.2,          // production (quoted, else estimated) > 120% of usage
   batteryLarge: 1.5,      // battery > 1.5 days of average use
   lithiumDoD: 0.85,       // Sizing Calculator 1-Inputs B18 (LiFePO4)
   undersize: 0.6          // expected production < 60% of usage
@@ -92,17 +92,23 @@ export function analyzeQuote(q, a) {
     const bill = q.tpo_minimum_monthly_bill;
     const rate = pos(q.ppa_rate_per_kwh) ?? 0;
     const allowance = pos(q.flex_allowance_kwh) ?? 0;
+    // The minimum bill can have its own escalator and cadence (Flex: bill yearly, rate every other year).
+    const billEsc = (num(q.minimum_bill_escalator_pct) ?? (esc * 100)) / 100;
+    const billEvery = pos(q.minimum_bill_interval_years) === 2 ? 2 : 1;
+    const billGrow = (y) => Math.pow(1 + billEsc, Math.floor(y / billEvery));
     let billTotal = 0, flexTotal = 0;
     for (let y = 0; y < a.years; y++) {
-      billTotal += bill * 12 * Math.pow(1 + esc, y);
+      billTotal += bill * 12 * billGrow(y);
       flexTotal += allowance * rate * grow(y) * deg(y);
     }
+    r.minimum_bill_escalator_pct = billEsc * 100;
+    if (billEsc > 0) r.minimum_bill_interval_years = billEvery;
     r.cost_25yr = billTotal + flexTotal;
     r.cost_basis = allowance && rate
       ? `${a.years} years of minimum bills plus the extra-kWh allowance`
       : `${a.years} years of minimum bills`;
     r.minimum_bill_year1 = bill;
-    r.minimum_bill_final_year = bill * Math.pow(1 + esc, a.years - 1);
+    r.minimum_bill_final_year = bill * billGrow(a.years - 1);
     r.minimum_bill_total = billTotal;
     if (rate) {
       r.flex_rate_cents_year1 = Math.round(rate * 1000) / 10;
@@ -171,11 +177,21 @@ export function analyzeQuote(q, a) {
     r.flags.push({ id: "inflated_production", severity: "high",
       text: `Quoted production is ${pct(r.quoted_vs_expected)} of what this system size should produce. The estimate looks inflated.` });
   }
-  if (thirdPartyOwned && esc > LIMITS.escalator) {
+  const cad = (n) => (n === 2 ? "every other year" : "every year");
+  if (type === "tpo_hybrid") {
+    const parts = [];
+    if (r.minimum_bill_escalator_pct / 100 > LIMITS.escalator) {
+      parts.push(`the minimum bill escalates ${r.minimum_bill_escalator_pct.toFixed(1)}% ${cad(r.minimum_bill_interval_years)} and reaches ${pct(r.minimum_bill_final_year / r.minimum_bill_year1)} of today's by year ${a.years}`);
+    }
+    if (esc > LIMITS.escalator && r.flex_rate_cents_year1) {
+      parts.push(`the per-kWh rate escalates ${(esc * 100).toFixed(1)}% ${cad(every)}`);
+    }
+    if (parts.length) {
+      r.flags.push({ id: "escalator", severity: "high", text: `High escalator: ${parts.join("; ")}.` });
+    }
+  } else if (thirdPartyOwned && esc > LIMITS.escalator) {
     r.flags.push({ id: "escalator", severity: "high",
-      text: type === "tpo_hybrid"
-        ? `${(esc * 100).toFixed(1)}% escalator: the minimum bill compounds to ${pct(Math.pow(1 + esc, a.years - 1))} of today's by year ${a.years}${every === 2 ? ", and the per-kWh rate rises every other year" : ""}.`
-        : `${(esc * 100).toFixed(1)}% escalator ${every === 2 ? "every other year" : "every year"}: ${type === "ppa" ? "your per-kWh rate compounds" : "payments compound"} to ${pct(grow(a.years - 1))} of today's by year ${a.years}.` });
+      text: `${(esc * 100).toFixed(1)}% escalator ${cad(every)}: ${type === "ppa" ? "your per-kWh rate compounds" : "payments compound"} to ${pct(grow(a.years - 1))} of today's by year ${a.years}.` });
   }
   const ppwForBenchmark = r.ppw_solar_only ?? (r.battery_kwh ? null : r.ppw_cash);
   if (ppwForBenchmark !== null && ppwForBenchmark > LIMITS.ppwHigh) {
@@ -191,6 +207,11 @@ export function analyzeQuote(q, a) {
   if (q.mentions_federal_tax_credit && !thirdPartyOwned) {
     r.flags.push({ id: "tax_credit", severity: "high",
       text: "Quote counts a federal tax credit, but the 30% homeowner credit (Section 25D) ended for systems installed after Dec 31, 2025." });
+  }
+
+  if (!r.inverter) {
+    r.flags.push({ id: "inverter_missing", severity: "low",
+      text: "Inverter brand not stated in the agreement. Ask which inverter will be installed and what its warranty is." });
   }
 
   // Batteries. A named battery model (or "battery included") counts even without a stated kWh.
@@ -213,10 +234,16 @@ export function analyzeQuote(q, a) {
   }
 
   if (a.annualUsageKwh) {
-    r.usage_coverage = r.expected_annual_kwh / a.annualUsageKwh;
+    // Sizing is judged on the installer's quoted production when the quote gives one (the same
+    // figure a homeowner sees on the proposal), otherwise on our estimate. One number feeds the
+    // flag, the table and the report.
+    r.usage_coverage_basis = r.quoted_annual_kwh ? "quoted" : "estimated";
+    const produced = r.quoted_annual_kwh ?? r.expected_annual_kwh;
+    r.usage_coverage = produced / a.annualUsageKwh;
+    r.annual_usage_kwh = a.annualUsageKwh;
     if (r.usage_coverage > LIMITS.oversize) {
       r.flags.push({ id: "oversized", severity: "medium",
-        text: `Would produce ${pct(r.usage_coverage)} of your annual usage. Under net-billing rules like NEM 3.0, extra exports earn little.` });
+        text: `${r.quoted_annual_kwh ? "Quoted production" : "Estimated production"} of ${Math.round(produced).toLocaleString("en-US")} kWh/yr is ${pct(r.usage_coverage)} of your annual usage (${Math.round(a.annualUsageKwh).toLocaleString("en-US")} kWh). Under net-billing rules like NEM 3.0, extra exports earn little.` });
     } else if (r.usage_coverage < LIMITS.undersize) {
       r.flags.push({ id: "undersized", severity: "low",
         text: `Covers only ${pct(r.usage_coverage)} of your annual usage.` });

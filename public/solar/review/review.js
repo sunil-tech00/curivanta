@@ -221,7 +221,7 @@
   const DECIMALS = {
     system_size_kw: 2, quoted_annual_production_kwh: 0, flex_allowance_kwh: 0, battery_kwh: 1,
     ppa_rate_per_kwh: 4, loan_apr_pct: 3, lease_escalator_pct: 2,
-    loan_term_years: 0, agreement_term_years: 0
+    loan_term_years: 0, agreement_term_years: 0, minimum_bill_escalator_pct: 2
   };
   const shown = (id, value) => {
     if (typeof value !== "number" || !Number.isFinite(value)) return value;
@@ -282,7 +282,7 @@
           <div class="grid-3 pay-fields" data-for="lease">
             ${field(id("lease_monthly_payment"), "Monthly payment ($)", q.lease_monthly_payment, undefined, "Lease, or first-year estimate for a PPA")}
             ${field(id("ppa_rate_per_kwh"), "Rate per kWh ($)", q.ppa_rate_per_kwh, undefined, "PPA or Flex rate, first year")}
-            ${field(id("lease_escalator_pct"), "Escalator (%)", q.lease_escalator_pct)}
+            ${field(id("lease_escalator_pct"), "Payment / rate escalator (%)", q.lease_escalator_pct)}
             <div class="field">
               <label for="${id("escalator_interval_years")}">Escalator applies</label>
               <select id="${id("escalator_interval_years")}">
@@ -293,6 +293,14 @@
             </div>
             ${field(id("agreement_term_years"), "Term (years)", q.agreement_term_years)}
             ${field(id("tpo_minimum_monthly_bill"), "Minimum monthly bill ($)", q.tpo_minimum_monthly_bill, undefined, "Flex-style plans only")}
+            ${field(id("minimum_bill_escalator_pct"), "Minimum bill escalator (%)", q.minimum_bill_escalator_pct, undefined, "Flex-style plans only")}
+            <div class="field">
+              <label for="${id("minimum_bill_interval_years")}">Minimum bill escalator applies</label>
+              <select id="${id("minimum_bill_interval_years")}">
+                <option value="1"${q.minimum_bill_interval_years === 2 ? "" : " selected"}>Every year</option>
+                <option value="2"${q.minimum_bill_interval_years === 2 ? " selected" : ""}>Every other year</option>
+              </select>
+            </div>
             ${field(id("flex_allowance_kwh"), "Extra kWh allowance / yr", q.flex_allowance_kwh, undefined, "Flex-style plans: kWh at the per-kWh rate")}
             ${field(id("battery_service_monthly"), "Battery service ($/mo)", q.battery_service_monthly, undefined, "If the agreement lists one")}
           </div>
@@ -358,6 +366,8 @@
         escalator_interval_years: pay === "lease" && v("lease_escalator_pct") ? Number(v("escalator_interval_years")) : null,
         agreement_term_years: pay === "lease" ? numOrNull(v("agreement_term_years")) : null,
         tpo_minimum_monthly_bill: pay === "lease" ? numOrNull(v("tpo_minimum_monthly_bill")) : null,
+        minimum_bill_escalator_pct: pay === "lease" && v("tpo_minimum_monthly_bill") ? numOrNull(v("minimum_bill_escalator_pct")) : null,
+        minimum_bill_interval_years: pay === "lease" && v("tpo_minimum_monthly_bill") ? Number(v("minimum_bill_interval_years")) : null,
         flex_allowance_kwh: pay === "lease" ? numOrNull(v("flex_allowance_kwh")) : null,
         battery_service_monthly: pay === "lease" ? numOrNull(v("battery_service_monthly")) : null,
         includes_battery: extracted.includes_battery === true,

@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { normalizeExtraction } from "./normalize.js";
 
 const MODEL = "claude-opus-5-5";
 const REPORT_EFFORT = "medium";
@@ -36,9 +37,10 @@ const QUOTE_NUMBERS = [
   "dealer_fee_amount", "lease_monthly_payment", "ppa_rate_per_kwh", "lease_escalator_pct",
   "workmanship_warranty_years", "customer_annual_usage_kwh", "customer_utility_rate_per_kwh",
   "agreement_term_years", "tpo_minimum_monthly_bill", "flex_allowance_kwh", "escalator_interval_years",
-  "battery_service_monthly"
+  "battery_service_monthly", "minimum_bill_escalator_pct"
 ];
-const QUOTE_TEXT = ["installer_name", "panel", "inverter", "battery", "state"];
+const QUOTE_TEXT = ["installer_name", "panel", "inverter", "battery", "state",
+  "inverter_evidence", "rate_escalator_evidence", "bill_escalator_evidence"];
 const BILL_NUMBERS = ["monthly_kwh", "annual_kwh", "avg_rate_per_kwh", "bill_total"];
 const BILL_TEXT = ["utility_name", "state", "rate_plan"];
 
@@ -78,10 +80,12 @@ Rules:
 - dealer_fee_amount is a dealer fee, financing fee, or rate buy-down fee in dollars, only if the document states it.
 - For a lease, fill lease_monthly_payment (first-year monthly) and lease_escalator_pct; leave out the loan fields.
 - For a PPA (you pay per kWh produced), fill ppa_rate_per_kwh (first-year $/kWh, e.g. 0.21), lease_escalator_pct (the escalator percentage), and lease_monthly_payment only if the quote shows an estimated first-year monthly amount.
-- Hybrid third-party-owned plans (e.g. Sunrun "Flex"): a fixed minimum monthly bill PLUS a per-kWh rate for energy above a baseline. Put the minimum bill in tpo_minimum_monthly_bill (not lease_monthly_payment), the per-kWh rate in ppa_rate_per_kwh, the documented extra kWh allowance per year in flex_allowance_kwh, and the escalator in lease_escalator_pct.
+- Hybrid third-party-owned plans (e.g. Sunrun "Flex"): a fixed minimum monthly bill PLUS a per-kWh rate for energy above a baseline. Put the minimum bill in tpo_minimum_monthly_bill (not lease_monthly_payment), the per-kWh rate in ppa_rate_per_kwh, the documented extra kWh allowance per year in flex_allowance_kwh, the per-kWh rate's escalator in lease_escalator_pct, and the minimum bill's own escalator in minimum_bill_escalator_pct.
+- Escalator evidence: copy, word for word, the document sentence that states how the per-kWh rate or lease payment escalates into rate_escalator_evidence, and (for hybrid plans) the sentence about the minimum bill's escalation into bill_escalator_evidence. Keep the cadence words exactly as written ("every other year", "annually").
 - agreement_term_years is the term of a lease, PPA or hybrid agreement in years (e.g. 25). loan_term_years is only for loans.
 - Escalator cadence: extract it exactly as the document states it. escalator_interval_years is 1 when the escalator applies every year ("per year", "annually") and 2 when it applies every other year ("every other year", "biennially"). For PPA and hybrid plans it describes the per-kWh rate (PPA rate or Flex rate); a hybrid plan's minimum monthly bill is treated as escalating yearly. For a lease it describes the monthly payment. Leave it out if there is no escalator. In notes, never simplify "every other year" to "per year".
-- If the document does not explicitly name an inverter brand and model, leave inverter out. Never infer the inverter from the battery brand, the panel brand, or the installer name. A Tesla Powerwall is a battery, not an inverter. A missing inverter is missing data, not a guess.
+- If the document does not explicitly name an inverter brand and model, leave inverter out. Never infer the inverter from the battery brand, the panel brand, or the installer name. A Tesla Powerwall is a battery, not an inverter. A missing inverter is missing data, not a guess. Example of what NOT to do: a document mentioning "Tesla Powerwall" does not establish a Tesla inverter; output no inverter.
+- inverter_evidence: when you fill inverter, copy word for word the document sentence or table row that names the inverter (it must contain the inverter's brand). Without such a sentence, leave both out.
 - includes_battery is true if the quote or agreement includes a battery (any make or model), even when its capacity isn't stated. Fill battery_kwh only if the capacity is written in the document; never look it up from the model name. battery_service_monthly is a separate or bundled monthly battery charge in dollars, only if stated.
 - mentions_federal_tax_credit is true if the quote applies or advertises a federal tax credit / ITC / 30% credit in its pricing or savings.
 - For a utility bill: monthly_kwh is the usage for this bill period; if a 12-month usage history is shown, put the 12-month total in annual_kwh. avg_rate_per_kwh is total charges divided by kWh if not stated.
@@ -89,6 +93,7 @@ Rules:
 - On a quote, customer_annual_usage_kwh and customer_utility_rate_per_kwh are the homeowner's current yearly usage and electricity rate if the quote states them (installers often size the system from these). Don't confuse them with the system's production.
 - Do not extract names, street addresses, account numbers, or phone numbers.
 - notes: short items a homeowner should know that don't fit a field (prepayment penalties, dealer fees mentioned, escalators, production guarantees, unusual terms). Empty array if none.
+- Write notes without em dashes (—); use commas, colons or separate sentences.
 - If the document is not the expected type, set is_solar_quote / is_utility_bill to false and leave out the other fields.`;
 
 const REPORT_SCHEMA = obj({
@@ -119,8 +124,10 @@ How to judge:
 - True cost per kWh (25-year cost ÷ 25-year production) is the main comparison across cash, loan, and lease. Lower wins. If vs_utility_rate is near or above 1, solar costs about as much as buying from the utility — a weak deal.
 - Treat high-severity flags (dealer fees, inflated production, escalators above 2.9%, counting the expired 25D tax credit) as serious.
 - Leases and PPAs are third-party owned: the installer keeps any tax credits, so don't treat that as a problem. For a PPA, payments follow production at a per-kWh rate; compare ppa_rate_cents_year1 and ppa_rate_cents_final_year with utility_rate_cents, and note that the monthly figures use our production estimate rather than the installer's.
-- Hybrid plans (payment_type "tpo_hybrid", e.g. Sunrun Flex) charge a fixed minimum monthly bill plus a per-kWh rate for extra energy. Use minimum_bill_year1 and minimum_bill_final_year, flex_rate_cents_year1 and flex_rate_cents_final_year, and escalator_interval_years (2 means the escalator applies every other year: say "every other year", never "per year").
+- Hybrid plans (payment_type "tpo_hybrid", e.g. Sunrun Flex) charge a fixed minimum monthly bill plus a per-kWh rate for extra energy. Use minimum_bill_year1 and minimum_bill_final_year, flex_rate_cents_year1 and flex_rate_cents_final_year. Escalator timing comes only from the fields: escalator_interval_years is the per-kWh rate's, minimum_bill_interval_years is the minimum bill's (1 = every year, 2 = every other year). When they differ, describe each separately; never merge them into one "both escalate per year" statement, and never say "per year" for an every-other-year escalator.
 - agreement_term_years, when present, is the length of a lease, PPA or hybrid agreement.
+- usage_coverage is production divided by the homeowner's annual usage; usage_coverage_basis says whether it uses the installer's quoted production ("quoted") or our estimate ("estimated"). Quote that percentage as given, never recompute it.
+- If inverter is missing, the document doesn't name one: say so plainly and suggest asking which inverter will be installed.
 - Lease and PPA offers often come without a cash price, and in some areas a lease is the only option offered. Don't treat a missing cash price on a lease or PPA as a problem, and don't make asking for one a talking point.
 - Write without em dashes (—). Use commas, colons, parentheses or separate sentences instead.
 - Batteries: under California's NEM 3.0, solar sent to the grid earns far less than power costs to buy, so storing midday solar for evening use drives savings. Use the battery metrics (battery_kwh, battery_vs_daily_use, usage.battery_for_one_day_backup_kwh, ppw_solar_only) and battery flags to say whether the quote's battery choice fits this home — including when no battery is quoted. Don't invent battery prices, savings, or backup hours.
@@ -173,7 +180,7 @@ export async function extractDocument({ kind, mediaType, data }) {
     effort: "low", // reading numbers off a page needs little reasoning; keeps uploads fast
     label: `extract-${kind}`
   });
-  return flatten(fields);
+  return normalizeExtraction(kind, flatten(fields));
 }
 
 export async function writeReport(metrics) {

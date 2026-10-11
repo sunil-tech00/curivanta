@@ -16,12 +16,13 @@ const TITLES = {
   battery_large: "Battery larger than you can use daily",
   no_battery_nem3: "No battery under NEM 3.0",
   oversized: "System larger than your usage",
-  undersized: "System covers little of your usage"
+  undersized: "System covers little of your usage",
+  inverter_missing: "Inverter brand not stated"
 };
 const RANK = { high: 0, medium: 1, low: 2 };
 // Within a severity, the findings that usually cost the homeowner most come first.
 const IMPACT = ["escalator", "dealer_fee", "tax_credit", "inflated_production", "high_price", "oversized",
-  "no_battery_nem3", "battery_large", "no_cash_price", "battery_unpriced", "undersized"];
+  "no_battery_nem3", "battery_large", "no_cash_price", "battery_unpriced", "undersized", "inverter_missing"];
 const order = (x, y) => RANK[x.severity] - RANK[y.severity] || IMPACT.indexOf(x.id) - IMPACT.indexOf(y.id);
 
 export default function handler(req, res) {
