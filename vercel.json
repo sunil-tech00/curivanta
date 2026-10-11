@@ -40,6 +40,10 @@
       "destination": "/solar/guides/:slug/index.html"
     },
     {
+      "source": "/hair-salon-bot",
+      "destination": "/hair-salon-bot/index.html"
+    },
+    {
       "source": "/((?!solar/|api/).*)",
       "destination": "/index.html"
     }

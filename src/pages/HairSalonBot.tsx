@@ -53,6 +53,9 @@ const track = (name: string, data?: Record<string, string | number | boolean>) =
   (window as Window & { cvTrack?: (name: string, data?: Record<string, string | number | boolean>) => void }).cvTrack?.(name, data);
 
 const HairSalonBot = () => {
+  // Tab title for in-site navigation; link previews come from dist/hair-salon-bot/index.html
+  // (scripts/page-meta.mjs), since crawlers don't run JavaScript.
+  useEffect(() => { document.title = 'Hair Salon Bot: AI Front Desk for Salons | Curivanta'; }, []);
   const [selectedPlan, setSelectedPlan] = useState('notsure');
   const [builder, setBuilder] = useState<{ open: boolean; plan: PlanId; addon: AddonId | null }>({ open: false, plan: 'autopilot', addon: null });
   const openBuilder = (plan: PlanId, addon: AddonId | null = null) => setBuilder({ open: true, plan, addon });
