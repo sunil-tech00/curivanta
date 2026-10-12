@@ -36,6 +36,10 @@ const faqs = [
     a: "Yes. They run on the same system, so bundling both is simple and costs less."
   },
   {
+    q: "How does the free month work?",
+    a: "You get the full service free for your first month. The only cost upfront is a one-time $35 that covers text message carrier registration. If it isn't for you, cancel before the month ends and you won't be charged again. Every review you earned stays on your Google profile."
+  },
+  {
     q: "Is there a contract?",
     a: "No. Month to month, cancel anytime. The reviews you earn are yours to keep."
   }
@@ -173,11 +177,11 @@ const ReviewAutomation = () => {
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Happy clients.<br />Now on <em>Google</em>.</h1>
             <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Every client gets a friendly text and email asking for a Google review after their visit, with gentle follow-ups. Every review gets a thoughtful reply from AI. Your salon climbs in local search and new clients pick you over the shop down the street.</p>
             <div className="cta-row reveal is-visible">
-              <a className="btn solid" href="#pricing" data-umami-event="reviews_cta" data-umami-event-where="hero_start">Start Getting Reviews</a>
+              <a className="btn solid" href="#pricing" data-umami-event="reviews_cta" data-umami-event-where="hero_start">Try It Free for a Month</a>
               <a className="btn ghost" href="#contact" data-umami-event="reviews_cta" data-umami-event-where="hero_talk">Talk to Us First</a>
             </div>
             <ul className="hero-highlights reveal is-visible">
-              <li>No contracts, month to month</li>
+              <li>First month free. No contracts, month to month</li>
               <li>Done-for-you setup, 100% remote. Live in days</li>
               <li>Works with the software you already use</li>
             </ul>
@@ -335,8 +339,8 @@ const ReviewAutomation = () => {
         <div className="wrap">
           <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 60px' }}>
             <p className="eyebrow">Pricing</p>
-            <h2>Simple plans. No contracts.</h2>
-            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Priced by how many clients you see. Follow-up reminders never count toward your limit.</p>
+            <h2>Your first month is free.</h2>
+            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Try it for a full month at no charge, then pick up month to month. Priced by how many clients you see. Follow-up reminders never count toward your limit.</p>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
@@ -346,7 +350,7 @@ const ReviewAutomation = () => {
                 <span style={{ fontSize: '3.5rem', fontWeight: 'bold' }}>$79</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '24px' }}>Up to 150 review requests a month</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '24px' }}>Up to 50 review requests a month</p>
               <ul style={listStyle}>
                 <li style={liStyle}>{CHECK} Automatic text and email requests after every visit</li>
                 <li style={liStyle}>{CHECK} Up to two gentle reminders</li>
@@ -354,7 +358,7 @@ const ReviewAutomation = () => {
                 <li style={liStyle}>{CHECK} AI replies to every Google review</li>
                 <li style={liStyle}>{CHECK} New review alerts</li>
               </ul>
-              <button type="button" className="btn ghost" onClick={() => choosePlan('starter')} style={{ width: '100%', justifyContent: 'center' }}>Start with Starter</button>
+              <button type="button" className="btn ghost" onClick={() => choosePlan('starter')} style={{ width: '100%', justifyContent: 'center' }}>Try Starter Free</button>
             </div>
 
             <div className="service-card reveal d2" style={{ display: 'flex', flexDirection: 'column', borderColor: 'var(--brass)', position: 'relative', overflow: 'hidden' }}>
@@ -364,7 +368,7 @@ const ReviewAutomation = () => {
                 <span style={{ fontSize: '3.5rem', fontWeight: 'bold' }}>$129</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '24px' }}>Up to 400 review requests a month</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '24px' }}>Up to 200 review requests a month</p>
               <ul style={listStyle}>
                 <li style={liStyle}>{CHECK} Everything in Starter</li>
                 <li style={liStyle}>{CHECK} Requests mention the stylist the client saw</li>
@@ -372,14 +376,14 @@ const ReviewAutomation = () => {
                 <li style={liStyle}>{CHECK} Monthly review report</li>
                 <li style={liStyle}>{CHECK} Priority support</li>
               </ul>
-              <button type="button" className="btn solid" onClick={() => choosePlan('growth')} style={{ width: '100%', justifyContent: 'center' }}>Start with Growth</button>
+              <button type="button" className="btn solid" onClick={() => choosePlan('growth')} style={{ width: '100%', justifyContent: 'center' }}>Try Growth Free</button>
             </div>
           </div>
 
           <div className="reveal d3" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '24px', borderRadius: '12px', textAlign: 'center', marginTop: '32px' }}>
             <p style={{ color: 'var(--bone-dim)' }}>Already on the <Link to="/hair-salon-bot" style={{ color: 'var(--brass-light)' }}>Hair Salon Bot</Link>? Add Review Automation for <strong style={{ color: 'var(--brass)' }}>$49/month</strong>. It runs on the same system, nothing new to set up.</p>
           </div>
-          <p className="reveal d3" style={{ textAlign: 'center', marginTop: '20px', color: 'var(--bone-dimmer)', fontSize: '0.9rem' }}>No contract, cancel anytime, live in days. A one-time $35 covers text message carrier registration. Multiple locations? <a href="#contact" onClick={() => setSelectedPlan('notsure')} style={{ color: 'var(--brass-light)' }}>Talk to us</a> about bundle pricing.</p>
+          <p className="reveal d3" style={{ textAlign: 'center', marginTop: '20px', color: 'var(--bone-dimmer)', fontSize: '0.9rem' }}>First month free, then month to month. Cancel before your free month ends and you pay nothing more. A one-time $35 covers text message carrier registration. Multiple locations? <a href="#contact" onClick={() => setSelectedPlan('notsure')} style={{ color: 'var(--brass-light)' }}>Talk to us</a> about bundle pricing.</p>
         </div>
       </section>
 
