@@ -13,7 +13,8 @@ export const SETUP_DAYS = 14;
 export const FREE_DAYS = 30;
 const PRODUCT = "review_automation";
 
-const CUSTOMER_WEBHOOK_URL = process.env.REVIEWS_CUSTOMER_WEBHOOK_URL || "";
+const CUSTOMER_WEBHOOK_URL = process.env.REVIEWS_CUSTOMER_WEBHOOK_URL ||
+  "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/177de2e2-a179-4a52-9d93-2adc55fd4536";
 
 export function normalizeOrder(body) {
   const plan = PLANS[body?.plan] ? body.plan : null;
