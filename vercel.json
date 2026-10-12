@@ -56,6 +56,15 @@
   ],
   "headers": [
     {
+      "source": "/reviewautomation/welcome",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
       "source": "/hair-salon-bot/welcome",
       "headers": [
         {

@@ -1,15 +1,42 @@
 import { allowPost, sendError, siteOrigin, tooMany } from "../_lib/http.js";
 import { allow } from "../_lib/limit.js";
 import { normalizeOrder, createSalonCheckout, loadSalonSession, announceNewCustomer, sendOnboarding, onboardingEnabled } from "../_lib/salon-billing.js";
+import * as reviews from "../_lib/reviews-billing.js";
 
 // Hair Salon Bot billing: /api/salon/checkout, /api/salon/confirm and /api/salon/onboard share one
-// function (Vercel's Hobby plan allows 12 functions per deployment).
+// function (Vercel's Hobby plan allows 12 functions per deployment), as does Review Automation.
 export default async function handler(req, res) {
   const action = String(req.query?.action || "");
   if (action === "checkout") return checkout(req, res);
   if (action === "confirm") return confirm(req, res);
   if (action === "onboard") return onboard(req, res);
+  if (action === "reviews-checkout") return reviewsCheckout(req, res);
+  if (action === "reviews-confirm") return reviewsConfirm(req, res);
   res.status(404).json({ error: "Not found" });
+}
+
+// Review Automation: /api/salon/reviews-checkout and /api/salon/reviews-confirm.
+async function reviewsCheckout(req, res) {
+  if (!allowPost(req, res)) return;
+  if (!allow(req, "reviews-checkout", 10, 10 * 60 * 1000)) return tooMany(res);
+  try {
+    const order = reviews.normalizeOrder(req.body ?? {});
+    res.status(200).json({ url: await reviews.createReviewsCheckout(order, siteOrigin(req)) });
+  } catch (err) {
+    sendError(res, err, req);
+  }
+}
+
+async function reviewsConfirm(req, res) {
+  res.setHeader("Cache-Control", "no-store");
+  try {
+    const order = await reviews.loadReviewsSession(String(req.query?.session_id || ""));
+    await reviews.announceNewCustomer(order).catch((err) => console.error("reviews new-customer notify failed:", err.message));
+    const { email, phone, ...summary } = order.summary;
+    res.status(200).json(summary);
+  } catch (err) {
+    sendError(res, err, req);
+  }
 }
 
 // Starts Stripe Checkout for a Hair Salon Bot plan (one location per checkout).

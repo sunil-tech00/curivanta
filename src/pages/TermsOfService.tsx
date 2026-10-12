@@ -41,6 +41,14 @@ const TermsOfService = () => {
             <p><strong>What we need from you.</strong> Setup depends on accurate information about your salon (hours, services, prices, staff) and on access or approval for your booking software. Text messaging features require carrier registration, which we handle with information you provide; approval times are set by the carriers.</p>
             <p><strong>Service.</strong> The AI front desk is designed to answer calls and messages and book appointments around the clock, but like any phone or software service it may occasionally be unavailable or make mistakes. You remain responsible for your appointments and customer relationships. We may update features and the AI over time to improve the service.</p>
             
+            <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>Review Automation Subscriptions</h3>
+            <p>These terms apply when you buy a Review Automation plan (Starter or Growth) on curivanta.com. Each purchase covers one salon location.</p>
+            <p><strong>Billing and free month.</strong> A one-time text message carrier registration fee is charged when you sign up. Your first month after your service goes live is free. After that, your monthly subscription fee is billed automatically every month to the card you provided, through our payment processor, Stripe. Your first charge date is shown at checkout. Prices are shown on the Review Automation page at the time you sign up.</p>
+            <p><strong>Included usage.</strong> Starter includes up to 100 review requests a month and Growth up to 200. Follow-up reminders do not count toward these limits.</p>
+            <p><strong>No contract; cancelling.</strong> Plans are month to month. You can cancel at any time by emailing hello@curivanta.com. If you cancel before your first charge, you will not be billed. Otherwise cancellation takes effect at the end of the billing month you are in, and monthly fees already paid are not refunded for partial months.</p>
+            <p><strong>Registration fee.</strong> The one-time registration fee covers text message carrier registration and is non-refundable, including if you cancel before your service goes live or during your free month.</p>
+            <p><strong>Reviews.</strong> We ask your clients for reviews in line with Google's policies: every client is asked the same way, and we do not filter out unhappy clients or offer anything in exchange for a review. We cannot remove or guarantee reviews, and what clients write is up to them. You are responsible for having your clients' permission to contact them by text and email.</p>
+
             <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>Contact Us</h3>
             <p>If you have any questions about these Terms, please contact us at <a href="mailto:hello@curivanta.com" style={{ color: 'var(--brass)' }}>hello@curivanta.com</a>.</p>
           </div>

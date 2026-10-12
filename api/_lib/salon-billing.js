@@ -17,7 +17,8 @@ export const SETUP_DAYS = 14;
 const PRODUCT = "hair_salon_bot";
 
 // New-customer workflow in GHL (separate from the lead-form workflows).
-const CUSTOMER_WEBHOOK_URL = process.env.SALON_CUSTOMER_WEBHOOK_URL || "";
+const CUSTOMER_WEBHOOK_URL = process.env.SALON_CUSTOMER_WEBHOOK_URL ||
+  "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/37eb5e5c-62bd-497d-9dc9-cb28a9348c68";
 export const onboardingEnabled = () => Boolean(CUSTOMER_WEBHOOK_URL);
 
 export function normalizeOrder(body) {

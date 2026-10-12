@@ -10,6 +10,8 @@ import HairSalonBot from "./pages/HairSalonBot";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import SalonWelcome from "./pages/SalonWelcome";
+import ReviewAutomation from "./pages/ReviewAutomation";
+import ReviewsWelcome from "./pages/ReviewsWelcome";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +26,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/hair-salon-bot" element={<HairSalonBot />} />
           <Route path="/hair-salon-bot/welcome" element={<SalonWelcome />} />
+          <Route path="/reviewautomation" element={<ReviewAutomation />} />
+          <Route path="/reviewautomation/welcome" element={<ReviewsWelcome />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
