@@ -171,7 +171,7 @@ const ReviewAutomation = () => {
               Review Automation for Salons
             </p>
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Happy clients.<br />Now on <em>Google</em>.</h1>
-            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Every client gets a friendly text asking for a Google review after their visit, with gentle follow-ups. Every review gets a thoughtful reply from AI. Your salon climbs in local search and new clients pick you over the shop down the street.</p>
+            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Every client gets a friendly text and email asking for a Google review after their visit, with gentle follow-ups. Every review gets a thoughtful reply from AI. Your salon climbs in local search and new clients pick you over the shop down the street.</p>
             <div className="cta-row reveal is-visible">
               <a className="btn solid" href="#pricing" data-umami-event="reviews_cta" data-umami-event-where="hero_start">Start Getting Reviews</a>
               <a className="btn ghost" href="#contact" data-umami-event="reviews_cta" data-umami-event-where="hero_talk">Talk to Us First</a>
