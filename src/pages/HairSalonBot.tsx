@@ -155,6 +155,7 @@ const HairSalonBot = () => {
           </div>
           <nav className="links">
             <Link className="navlink" to="/hair-salon-bot">Hair Salon Bot</Link>
+            <Link className="navlink" to="/reviewautomation">Review Automation</Link>
             <ThemeToggle />
             
             <div className="mobile-menu-trigger">
@@ -166,6 +167,7 @@ const HairSalonBot = () => {
                 </SheetTrigger>
                 <SheetContent side="right" className="flex flex-col gap-6 pt-16 bg-background border-border">
                   <SheetClose asChild><Link className="text-xl font-medium" to="/hair-salon-bot">Hair Salon Bot</Link></SheetClose>
+                  <SheetClose asChild><Link className="text-xl font-medium" to="/reviewautomation">Review Automation</Link></SheetClose>
                 </SheetContent>
               </Sheet>
             </div>

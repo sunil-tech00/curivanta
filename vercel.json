@@ -56,7 +56,7 @@
   ],
   "headers": [
     {
-      "source": "/reviewautomation(/welcome)?",
+      "source": "/reviewautomation/welcome",
       "headers": [
         {
           "key": "X-Robots-Tag",

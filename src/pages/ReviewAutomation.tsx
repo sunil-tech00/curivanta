@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { Link } from 'react-router-dom';
 import { MapPin, Handshake, Star, CalendarCheck } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ReviewsCheckout, type ReviewsPlanId } from '../components/ReviewsCheckout';
 
-// Review Automation: preview page, not linked from the site and noindex (vercel.json + meta below).
-// Pricing is a draft for review.
 
 const faqs = [
   {
@@ -105,14 +105,7 @@ function ReviewMock() {
 }
 
 const ReviewAutomation = () => {
-  useEffect(() => {
-    document.title = 'Review Automation for Salons & Barbershops | Curivanta';
-    const robots = document.createElement('meta');
-    robots.name = 'robots';
-    robots.content = 'noindex, nofollow';
-    document.head.appendChild(robots);
-    return () => { robots.remove(); };
-  }, []);
+  useEffect(() => { document.title = 'Review Automation for Salons & Barbershops | Curivanta'; }, []);
 
   const [selectedPlan, setSelectedPlan] = useState('notsure');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
@@ -182,8 +175,23 @@ const ReviewAutomation = () => {
             </Link>
           </div>
           <nav className="links">
+            <Link className="navlink" to="/hair-salon-bot">Hair Salon Bot</Link>
             <a className="navlink" href="#pricing">Pricing</a>
             <ThemeToggle />
+
+            <div className="mobile-menu-trigger">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <button className="p-2 -mr-2 flex items-center justify-center text-foreground" aria-label="Menu">
+                    <Menu className="w-6 h-6" />
+                  </button>
+                </SheetTrigger>
+                <SheetContent side="right" className="flex flex-col gap-6 pt-16 bg-background border-border">
+                  <SheetClose asChild><Link className="text-xl font-medium" to="/hair-salon-bot">Hair Salon Bot</Link></SheetClose>
+                  <SheetClose asChild><a className="text-xl font-medium" href="#pricing">Pricing</a></SheetClose>
+                </SheetContent>
+              </Sheet>
+            </div>
           </nav>
         </div>
       </header>
