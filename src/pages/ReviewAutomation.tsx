@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { Link } from 'react-router-dom';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { ReviewsCheckout, type ReviewsPlanId } from '../components/ReviewsCheckout';
 
 // Review Automation: preview page, not linked from the site and noindex (vercel.json + meta below).
 // Pricing is a draft for review.
@@ -37,7 +38,7 @@ const faqs = [
   },
   {
     q: "How does the free month work?",
-    a: "You get the full service free for your first month. The only cost upfront is a one-time $35 that covers text message carrier registration. If it isn't for you, cancel before the month ends and you won't be charged again. Every review you earned stays on your Google profile."
+    a: "You get the full service free for your first month. Sign up online with a card. The only charge today is a one-time $35 that covers text message carrier registration, and your free month starts when you go live. If it isn't for you, cancel before the month ends and you won't be charged. Every review you earned stays on your Google profile."
   },
   {
     q: "Is there a contract?",
@@ -97,9 +98,10 @@ const ReviewAutomation = () => {
   const [error, setError] = useState('');
   const [started, setStarted] = useState(false);
 
-  const choosePlan = (plan: string) => {
-    setSelectedPlan(plan);
-    track('reviews_cta', { where: `pricing_${plan}` });
+  const [builder, setBuilder] = useState<{ open: boolean; plan: ReviewsPlanId }>({ open: false, plan: 'growth' });
+  const openBuilder = (plan: ReviewsPlanId) => setBuilder({ open: true, plan });
+  const talkToUs = () => {
+    setSelectedPlan('notsure');
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -357,7 +359,7 @@ const ReviewAutomation = () => {
                 <li style={liStyle}>{CHECK} AI replies to every Google review</li>
                 <li style={liStyle}>{CHECK} New review alerts</li>
               </ul>
-              <button type="button" className="btn ghost" onClick={() => choosePlan('starter')} style={{ width: '100%', justifyContent: 'center' }}>Try Starter Free</button>
+              <button type="button" className="btn ghost" onClick={() => openBuilder('starter')} style={{ width: '100%', justifyContent: 'center' }}>Try Starter Free</button>
             </div>
 
             <div className="service-card reveal d2" style={{ display: 'flex', flexDirection: 'column', borderColor: 'var(--brass)', position: 'relative', overflow: 'hidden' }}>
@@ -375,14 +377,14 @@ const ReviewAutomation = () => {
                 <li style={liStyle}>{CHECK} Monthly review report</li>
                 <li style={liStyle}>{CHECK} Priority support</li>
               </ul>
-              <button type="button" className="btn solid" onClick={() => choosePlan('growth')} style={{ width: '100%', justifyContent: 'center' }}>Try Growth Free</button>
+              <button type="button" className="btn solid" onClick={() => openBuilder('growth')} style={{ width: '100%', justifyContent: 'center' }}>Try Growth Free</button>
             </div>
           </div>
 
           <div className="reveal d3" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '24px', borderRadius: '12px', textAlign: 'center', marginTop: '32px' }}>
             <p style={{ color: 'var(--bone-dim)' }}>Already on the <Link to="/hair-salon-bot" style={{ color: 'var(--brass-light)' }}>Hair Salon Bot</Link>? Add Review Automation for <strong style={{ color: 'var(--brass)' }}>$49/month</strong>. It runs on the same system, nothing new to set up.</p>
           </div>
-          <p className="reveal d3" style={{ textAlign: 'center', marginTop: '20px', color: 'var(--bone-dimmer)', fontSize: '0.9rem' }}>First month free, then month to month. Cancel before your free month ends and you pay nothing more. A one-time $35 covers text message carrier registration. Multiple locations? <a href="#contact" onClick={() => setSelectedPlan('notsure')} style={{ color: 'var(--brass-light)' }}>Talk to us</a> about bundle pricing.</p>
+          <p className="reveal d3" style={{ textAlign: 'center', marginTop: '20px', color: 'var(--bone-dimmer)', fontSize: '0.9rem' }}>Sign up online in minutes. Your free month starts when you go live; cancel before it ends and you pay nothing more. A one-time $35 covers text message carrier registration. Multiple locations? <a href="#contact" onClick={() => setSelectedPlan('notsure')} style={{ color: 'var(--brass-light)' }}>Talk to us</a> about bundle pricing.</p>
         </div>
       </section>
 
@@ -476,6 +478,13 @@ const ReviewAutomation = () => {
           )}
         </div>
       </section>
+
+      <ReviewsCheckout
+        open={builder.open}
+        onOpenChange={(open) => setBuilder((b) => ({ ...b, open }))}
+        initialPlan={builder.plan}
+        onTalkToUs={talkToUs}
+      />
 
       <footer>
         <div className="wrap foot-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '24px' }}>
