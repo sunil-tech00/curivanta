@@ -75,7 +75,7 @@ export function ReviewsCheckout({ open, onOpenChange, initialPlan }: {
           <div className="pb-line"><span>Due today: text message registration</span><strong>${REGISTRATION}</strong></div>
           <div className="pb-line"><span>First month</span><strong>Free</strong></div>
           <div className="pb-line"><span>Then monthly, first charge {firstCharge}</span><strong>${p.monthly}/mo</strong></div>
-          <p className="pb-fine">Your free month starts when you go live, after a setup period of up to {SETUP_DAYS} days. Cancel before {firstCharge} and you won't be charged again. Cancel before you go live and your ${REGISTRATION} is refunded in full.</p>
+          <p className="pb-fine">Your free month starts when you go live, after a setup period of up to {SETUP_DAYS} days. Cancel before {firstCharge} and you won't be charged again. The ${REGISTRATION} registration fee is non-refundable, as it's paid to the carriers.</p>
           {error && <p className="form-error" role="alert">{error}</p>}
           <button type="button" className="btn solid full-width" onClick={checkout} disabled={busy}>
             {busy ? 'Opening secure checkout…' : 'Continue to secure checkout →'}

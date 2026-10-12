@@ -39,7 +39,7 @@ const faqs = [
   },
   {
     q: "How does the free month work?",
-    a: "You get the full service free for your first month. Sign up online with a card. The only charge today is a one-time $35 that covers text message carrier registration, and your free month starts when you go live. If it isn't for you, cancel before the month ends and you won't be charged. Every review you earned stays on your Google profile."
+    a: "You get the full service free for your first month. Sign up online with a card. The only charge today is a one-time, non-refundable $35 that covers text message carrier registration, and your free month starts when you go live. If it isn't for you, cancel before the month ends and you won't be charged. Every review you earned stays on your Google profile."
   },
   {
     q: "Is there a contract?",

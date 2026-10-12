@@ -80,7 +80,7 @@ const ReviewsWelcome = () => {
               </ol>
 
               <p style={{ marginTop: '32px', fontSize: '0.9rem', color: 'var(--bone-dimmer)' }}>
-                No contract: cancel anytime by emailing hello@curivanta.com. Cancel before your first charge and you won't be billed. Cancel before you go live and your registration fee is refunded in full.
+                No contract: cancel anytime by emailing hello@curivanta.com. Cancel before your first charge and you won't be billed. The registration fee is non-refundable, as it's paid to the carriers.
               </p>
             </>
           )}
