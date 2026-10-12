@@ -60,8 +60,8 @@ function ReviewMock() {
   return (
     <div style={{ position: 'relative', width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
       <div style={card}>
-        <p style={{ fontSize: '0.75rem', color: 'var(--bone-dimmer)', marginBottom: '8px' }}>Text message · 2 hours after the visit</p>
-        <p style={{ color: 'var(--bone)', fontSize: '0.95rem', lineHeight: 1.5 }}>Hi Maria! Thanks for bringing Leo in for his first haircut today. If you have a minute, a quick Google review would mean a lot to our team: <span style={{ color: 'var(--brass-light)' }}>g.page/r/curivanta-cuts</span></p>
+        <p style={{ fontSize: '0.75rem', color: 'var(--bone-dimmer)', marginBottom: '8px' }}>Text message</p>
+        <p style={{ color: 'var(--bone)', fontSize: '0.95rem', lineHeight: 1.5 }}>Hi Maria! Thanks for bringing Leo in for his first haircut with Jess today. If you have a minute, a quick Google review would mean a lot to our team: <span style={{ color: 'var(--brass-light)' }}>g.page/r/curivanta-cuts</span></p>
       </div>
       <div style={{ ...card, marginLeft: '24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
