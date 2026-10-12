@@ -66,7 +66,7 @@ const ReviewsWelcome = () => {
 
               <div className="welcome-card">
                 <div className="pb-line"><span>Plan</span><strong>{summary.planName}</strong></div>
-                <div className="pb-line"><span>Booking software</span><strong>{summary.software}</strong></div>
+                {summary.software && <div className="pb-line"><span>Booking software</span><strong>{summary.software}</strong></div>}
                 <div className="pb-line"><span>Paid today (registration)</span><strong>${(summary.paidToday / 100).toFixed(2)}</strong></div>
                 <div className="pb-line"><span>First month</span><strong>Free</strong></div>
                 <div className="pb-line"><span>Monthly{starts ? `, first charge ${starts}` : ''}</span><strong>${(summary.monthly / 100).toFixed(0)}/mo</strong></div>
@@ -74,13 +74,13 @@ const ReviewsWelcome = () => {
 
               <ol className="welcome-steps">
                 <li><strong>We'll email you within one business day</strong> to book a short setup call.</li>
-                <li><strong>We connect {summary.software}</strong> and your Google review link, and write your messages with you.</li>
+                <li><strong>We connect your client list</strong>, straight from your booking software where we can or through a simple daily export, and write your messages with you.</li>
                 <li><strong>We register your text messaging</strong> with the carriers. Email requests can start sooner.</li>
                 <li><strong>You go live</strong> and your free month begins. Every visit after that gets asked for a review.</li>
               </ol>
 
               <p style={{ marginTop: '32px', fontSize: '0.9rem', color: 'var(--bone-dimmer)' }}>
-                No contract: cancel anytime by emailing hello@curivanta.com. Cancel before your first charge and you won't be billed. If we can't connect your booking software, your registration fee is refunded in full.
+                No contract: cancel anytime by emailing hello@curivanta.com. Cancel before your first charge and you won't be billed. Cancel before you go live and your registration fee is refunded in full.
               </p>
             </>
           )}

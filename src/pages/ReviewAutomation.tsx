@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: "Do I need new software?",
-    a: "No. We connect to Salon Ultimate or Vagaro, or work from a simple client export. Your front desk does nothing different."
+    a: "No. Whatever booking software you use, we connect to it directly where we can. If we can't, a simple daily export of that day's clients is all we need. Your front desk does nothing different."
   },
   {
     q: "How often is a client asked?",
@@ -279,8 +279,8 @@ const ReviewAutomation = () => {
             <div className="step reveal">
               <span className="step-num">Step 01</span>
               <div>
-                <h3>We connect your appointment book</h3>
-                <p>We link Salon Ultimate or Vagaro, so we know the moment each client's visit is done.</p>
+                <h3>We connect your client list</h3>
+                <p>We link the booking software you already use, or set up a simple daily export, so we know who visited each day.</p>
               </div>
             </div>
             <div className="step reveal d1">
@@ -320,7 +320,7 @@ const ReviewAutomation = () => {
             <div className="service-card reveal d1">
               <p className="step-num" style={{ marginBottom: '12px' }}>Day 1</p>
               <h3>Sign up and connect</h3>
-              <p>A short setup call. We connect your appointment book and write your messages with you.</p>
+              <p>A short setup call. We connect your client list and write your messages with you.</p>
             </div>
             <div className="service-card reveal d2">
               <p className="step-num" style={{ marginBottom: '12px' }}>Day 3</p>
@@ -539,7 +539,6 @@ const ReviewAutomation = () => {
         open={builder.open}
         onOpenChange={(open) => setBuilder((b) => ({ ...b, open }))}
         initialPlan={builder.plan}
-        onTalkToUs={talkToUs}
       />
 
       <footer>

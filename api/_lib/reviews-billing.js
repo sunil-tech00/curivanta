@@ -1,6 +1,5 @@
 import { getStripe, exposed } from "./payments.js";
 import { notifyGhl } from "./ghl.js";
-import { SOFTWARE } from "./salon-billing.js";
 
 // Review Automation subscriptions, sold per location through Stripe Checkout. Amounts in cents.
 // $35 carrier registration is charged at checkout. The free month starts at go-live, so the
@@ -19,16 +18,14 @@ const CUSTOMER_WEBHOOK_URL = process.env.REVIEWS_CUSTOMER_WEBHOOK_URL || process
 export function normalizeOrder(body) {
   const plan = PLANS[body?.plan] ? body.plan : null;
   if (!plan) throw exposed(400, "Choose Starter or Growth.");
-  const software = SOFTWARE[body?.software] ? body.software : null;
-  if (!software) throw exposed(400, "Online checkout is for Salon Ultimate and Vagaro. For other software, talk to us first.");
-  return { plan, software };
+  return { plan };
 }
 
 const money = (cents) => ({ currency: "usd", unit_amount: cents });
 
-export async function createReviewsCheckout({ plan, software }, origin) {
+export async function createReviewsCheckout({ plan }, origin) {
   const p = PLANS[plan];
-  const metadata = { product: PRODUCT, plan, software };
+  const metadata = { product: PRODUCT, plan };
   const session = await getStripe().checkout.sessions.create({
     mode: "subscription",
     line_items: [
@@ -40,7 +37,10 @@ export async function createReviewsCheckout({ plan, software }, origin) {
     metadata,
     allow_promotion_codes: true,
     phone_number_collection: { enabled: true },
-    custom_fields: [{ key: "salon_name", label: { type: "custom", custom: "Salon name and city" }, type: "text" }],
+    custom_fields: [
+      { key: "salon_name", label: { type: "custom", custom: "Salon or shop name and city" }, type: "text" },
+      { key: "booking_software", label: { type: "custom", custom: "Booking software you use" }, type: "text", optional: true }
+    ],
     consent_collection: { terms_of_service: "required" },
     success_url: `${origin}/reviewautomation/welcome?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/reviewautomation?checkout=canceled#pricing`
@@ -70,7 +70,7 @@ export async function loadReviewsSession(sessionId) {
     summary: {
       plan: m.plan,
       planName: p?.name || m.plan,
-      software: SOFTWARE[m.software] || m.software,
+      software: session.custom_fields?.find((f) => f.key === "booking_software")?.text?.value || "",
       monthly: p?.monthly || 0,
       paidToday: session.amount_total ?? 0,
       billingStarts: sub?.trial_end ? new Date(sub.trial_end * 1000).toISOString() : null,
