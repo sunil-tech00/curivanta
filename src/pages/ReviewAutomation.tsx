@@ -55,7 +55,7 @@ const PLAN_OPTIONS = [
 
 const VALUE = [
   { icon: MapPin, title: 'Show up first on Google Maps', text: "Fresh reviews tell Google your salon is active and trusted. That helps you rank higher in local search and on the map, right where new clients are looking." },
-  { icon: Handshake, title: 'Build trust before they walk in', text: "New clients read reviews before they ever call. A steady stream of recent five-star reviews tells a parent you're the right choice for their family." },
+  { icon: Handshake, title: 'Build trust before they walk in', text: "New clients read reviews before they ever call. A steady stream of recent five-star reviews tells them you're the right place for their next cut." },
   { icon: Star, title: 'Win the side-by-side comparison', text: "When two salons look alike, the one with more reviews and a higher rating gets the call. Every review widens the gap between you and the shop down the street." },
   { icon: CalendarCheck, title: 'Fill more chairs', text: "Higher rankings and more trust add up to more calls, more bookings, and more new clients who keep coming back." }
 ];
@@ -68,25 +68,37 @@ const listStyle = { listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1
 const track = (name: string, data?: Record<string, string | number | boolean>) =>
   (window as Window & { cvTrack?: (name: string, data?: Record<string, string | number | boolean>) => void }).cvTrack?.(name, data);
 
-// Hero visual: the text a client gets after their visit, the review it turns into, and the AI reply.
+// Hero visual: the email and text a client gets after their visit, the review they lead to, and the AI reply.
 function ReviewMock() {
-  const card = { background: 'var(--ink-soft)', border: '1px solid var(--line)', borderRadius: '16px', padding: '18px 20px', textAlign: 'left' as const };
+  const card = { background: 'var(--ink-soft)', border: '1px solid var(--line)', borderRadius: '16px', padding: '16px 18px', textAlign: 'left' as const };
+  const label = { fontSize: '0.72rem', color: 'var(--bone-dimmer)', marginBottom: '8px', fontFamily: 'var(--mono)', letterSpacing: '0.08em', textTransform: 'uppercase' as const };
+  const arrow = <div style={{ textAlign: 'center', color: 'var(--brass-light)', fontSize: '1.1rem', lineHeight: 1 }}>↓</div>;
   return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-      <div style={card}>
-        <p style={{ fontSize: '0.75rem', color: 'var(--bone-dimmer)', marginBottom: '8px' }}>Text message</p>
-        <p style={{ color: 'var(--bone)', fontSize: '0.95rem', lineHeight: 1.5 }}>Hi Maria! Thanks for bringing Leo in for his first haircut with Jess today. If you have a minute, a quick Google review would mean a lot to our team: <span style={{ color: 'var(--brass-light)' }}>g.page/r/curivanta-cuts</span></p>
+    <div style={{ position: 'relative', width: '100%', maxWidth: '460px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
+        <div style={card}>
+          <p style={label}>Email</p>
+          <p style={{ color: 'var(--bone)', fontSize: '0.92rem', fontWeight: 600, marginBottom: '6px' }}>How was your cut with Marcus?</p>
+          <p style={{ color: 'var(--bone-dim)', fontSize: '0.85rem', lineHeight: 1.5, marginBottom: '12px' }}>Thanks for visiting today, Daniel. Your review helps others find us.</p>
+          <span style={{ display: 'inline-block', background: 'var(--brass)', color: '#fff', fontSize: '0.8rem', fontWeight: 600, padding: '7px 12px', borderRadius: '999px' }}>★ Leave a Google review</span>
+        </div>
+        <div style={card}>
+          <p style={label}>Text message</p>
+          <p style={{ color: 'var(--bone)', fontSize: '0.88rem', lineHeight: 1.5 }}>Hi Daniel! Thanks for coming in to see Marcus today. Got a minute for a quick Google review? <span style={{ color: 'var(--brass-light)' }}>g.page/r/curivanta-studio</span></p>
+        </div>
       </div>
-      <div style={{ ...card, marginLeft: '24px' }}>
+      {arrow}
+      <div style={card}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-          <strong style={{ color: 'var(--bone)', fontSize: '0.95rem' }}>Maria G.</strong>
+          <strong style={{ color: 'var(--bone)', fontSize: '0.95rem' }}>Daniel R.</strong>
           <span style={{ color: '#f5b301', letterSpacing: '2px' }}>★★★★★</span>
         </div>
-        <p style={{ color: 'var(--bone-dim)', fontSize: '0.9rem', lineHeight: 1.5 }}>Jess was so patient with my son's first haircut. He actually smiled the whole time. We'll be back!</p>
+        <p style={{ color: 'var(--bone-dim)', fontSize: '0.9rem', lineHeight: 1.5 }}>Marcus gave me the best cut I've had in years. Easy to book, on time, great vibe. I'll be back!</p>
       </div>
-      <div style={{ ...card, marginLeft: '48px', borderLeft: '3px solid var(--brass)' }}>
-        <p style={{ fontSize: '0.75rem', color: 'var(--bone-dimmer)', marginBottom: '6px' }}>Reply from the owner · posted by AI</p>
-        <p style={{ color: 'var(--bone-dim)', fontSize: '0.9rem', lineHeight: 1.5 }}>Thank you, Maria! First haircuts are our favorite. Jess will be thrilled to hear it. See you and Leo next time!</p>
+      {arrow}
+      <div style={{ ...card, borderLeft: '3px solid var(--brass)' }}>
+        <p style={label}>Reply from the owner · posted by AI</p>
+        <p style={{ color: 'var(--bone-dim)', fontSize: '0.9rem', lineHeight: 1.5 }}>Thanks, Daniel! Marcus will be glad to hear it. See you at your next cut!</p>
       </div>
     </div>
   );
@@ -94,7 +106,7 @@ function ReviewMock() {
 
 const ReviewAutomation = () => {
   useEffect(() => {
-    document.title = 'Review Automation for Salons | Curivanta';
+    document.title = 'Review Automation for Salons & Barbershops | Curivanta';
     const robots = document.createElement('meta');
     robots.name = 'robots';
     robots.content = 'noindex, nofollow';
@@ -183,7 +195,7 @@ const ReviewAutomation = () => {
               <svg className="spark" viewBox="0 0 16 16" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 1l1.2 4.3L13.5 6.5l-4.3 1.2L8 12l-1.2-4.3L2.5 6.5l4.3-1.2L8 1z" fill="currentColor"/>
               </svg>
-              Review Automation for Salons
+              Review Automation for Salons & Barbershops
             </p>
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Happy clients.<br />Now on <em>Google</em>.</h1>
             <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Every client gets a friendly text and email asking for a Google review after their visit, with gentle follow-ups. Every review gets a thoughtful reply from AI. Your salon climbs in local search and new clients pick you over the shop down the street.</p>
@@ -209,7 +221,7 @@ const ReviewAutomation = () => {
         <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '40px', textAlign: 'center' }}>
           <div className="reveal d1">
             <h3 style={{ fontSize: '1.6rem', color: 'var(--bone)', marginBottom: '8px' }}>Plenty of happy clients</h3>
-            <p style={{ color: 'var(--bone-dim)', margin: '0 auto', maxWidth: '260px' }}>but only a handful of reviews, so new families can't tell you're the good one.</p>
+            <p style={{ color: 'var(--bone-dim)', margin: '0 auto', maxWidth: '260px' }}>but only a handful of reviews, so new clients can't tell you're the good one.</p>
           </div>
           <div className="reveal d2">
             <h3 style={{ fontSize: '1.6rem', color: 'var(--bone)', marginBottom: '8px' }}>No time to ask</h3>
@@ -230,7 +242,7 @@ const ReviewAutomation = () => {
             <p className="eyebrow">Why it matters</p>
             <h2>More reviews. More clients in your chair.</h2>
           </div>
-          <p className="reveal d1" style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '720px', margin: '0 auto 56px', textAlign: 'center' }}>When a parent searches "kids haircut near me", Google shows a handful of salons on the map. The ones with more recent, well-answered reviews get the tap, the call and the booking. Reviews are one of the biggest growth levers a salon has, and most leave it to chance. We make sure every happy client gets asked, so you never have to think about it.</p>
+          <p className="reveal d1" style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '720px', margin: '0 auto 56px', textAlign: 'center' }}>When someone searches "haircut near me" or "barber near me", Google shows a handful of shops on the map. The ones with more recent, well-answered reviews get the tap, the call and the booking. Reviews are one of the biggest growth levers a salon or barbershop has, and most leave it to chance. We make sure every happy client gets asked, so you never have to think about it.</p>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {VALUE.map(({ icon: Icon, title, text }, i) => (
               <div key={title} className={`reveal d${(i % 3) + 1}`} style={{ display: 'grid', gridTemplateColumns: '56px 1fr', gap: '20px', alignItems: 'start', padding: '28px 0', borderTop: i ? '1px solid var(--line)' : 'none' }}>
@@ -440,8 +452,8 @@ const ReviewAutomation = () => {
             <p className="eyebrow" style={{ marginBottom: '16px' }}>Built by an Owner</p>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '32px' }}>Made by a salon owner, not a software vendor.</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>
-              <p>I own and operate two franchise hair salon locations. I know how many happy families walk out the door every Saturday, and how few of them ever think to leave a review.</p>
-              <p>Curivanta asks them for you, the same way every time, and makes sure every review gets a reply. It's the same system behind our Hair Salon Bot, built and tested in real salons first.</p>
+              <p>I own and operate two franchise hair salon locations. I know how many happy clients walk out the door every Saturday, and how few of them ever think to leave a review.</p>
+              <p>Curivanta asks them for you, the same way every time, and makes sure every review gets a reply. It's the same system behind our Hair Salon Bot, built and tested in real salons first, and it works the same for any salon or barbershop.</p>
             </div>
           </div>
         </div>
