@@ -44,6 +44,10 @@
       "destination": "/hair-salon-bot/index.html"
     },
     {
+      "source": "/reviewautomation",
+      "destination": "/reviewautomation/index.html"
+    },
+    {
       "source": "/((?!solar/|api/).*)",
       "destination": "/index.html"
     }

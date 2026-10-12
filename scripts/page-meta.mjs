@@ -14,6 +14,13 @@ const PAGES = [
     description: "An AI front desk that answers your salon's calls, texts and WhatsApp 24/7 and books straight into Salon Ultimate or Vagaro. No contracts, live in about a week.",
     image: "/brand/og-hair-salon-bot.jpg",
     imageAlt: "Curivanta Hair Salon Bot: never miss a call, text or appointment again"
+  },
+  {
+    route: "/reviewautomation",
+    title: "Review Automation for Salons & Barbershops | Curivanta",
+    description: "Every client gets a friendly text and email asking for a Google review, and every review gets a reply from AI. Works with any booking software. First month free.",
+    image: "/brand/og-review-automation.jpg",
+    imageAlt: "Curivanta Review Automation: happy clients, now on Google"
   }
 ];
 
