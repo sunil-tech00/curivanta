@@ -443,7 +443,7 @@ const ReviewAutomation = () => {
           </div>
 
           <div className="reveal d3" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '24px', borderRadius: '12px', textAlign: 'center', marginTop: '32px' }}>
-            <p style={{ color: 'var(--bone-dim)' }}>💡 If better reviews bring in just <strong>3 new clients a month</strong>, at a $36 haircut that's <strong style={{ color: 'var(--brass)' }}>$108</strong> in their first visit alone, more than Starter costs. And happy clients keep coming back.</p>
+            <p style={{ color: 'var(--bone-dim)' }}>💡 If better reviews bring in just <strong>3 new clients a month</strong>, at a $30 haircut that's <strong style={{ color: 'var(--brass)' }}>$90</strong> in their first visit alone, more than Starter costs. And happy clients keep coming back.</p>
           </div>
           <div className="reveal d3" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '24px', borderRadius: '12px', textAlign: 'center', marginTop: '16px' }}>
             <p style={{ color: 'var(--bone-dim)' }}>Already on the <Link to="/hair-salon-bot" style={{ color: 'var(--brass-light)' }}>Hair Salon Bot</Link>? Add Review Automation for <strong style={{ color: 'var(--brass)' }}>$49/month</strong>. It runs on the same system, nothing new to set up.</p>
