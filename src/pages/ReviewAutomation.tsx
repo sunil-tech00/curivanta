@@ -25,7 +25,7 @@ const faqs = [
   },
   {
     q: "How long until I see reviews?",
-    a: "Most salons see the first new reviews within days of the past-client campaign going out. After that, reviews come in steadily from new visits."
+    a: "Most salons see the first new reviews within days of going live, from clients who visited that week. After that, reviews come in steadily with every new visit."
   },
   {
     q: "Who writes the replies to my reviews?",
@@ -224,15 +224,15 @@ const ReviewAutomation = () => {
             <div className="step reveal">
               <span className="step-num">Step 01</span>
               <div>
-                <h3>We connect your client list</h3>
-                <p>We link Salon Ultimate or Vagaro, or import your client list, and set up the messages in your salon's voice with your Google review link.</p>
+                <h3>We connect your appointment book</h3>
+                <p>We link Salon Ultimate or Vagaro, so we know the moment each client's visit is done.</p>
               </div>
             </div>
             <div className="step reveal d1">
               <span className="step-num">Step 02</span>
               <div>
-                <h3>We wake up past clients</h3>
-                <p>Clients who loved you but never left a review get a friendly request, sent in small batches so your reviews grow naturally.</p>
+                <h3>We write your messages</h3>
+                <p>Review requests in your salon's voice, with your Google review link. You approve the wording before anything goes out.</p>
               </div>
             </div>
             <div className="step reveal d2">
@@ -265,12 +265,12 @@ const ReviewAutomation = () => {
             <div className="service-card reveal d1">
               <p className="step-num" style={{ marginBottom: '12px' }}>Day 1</p>
               <h3>Sign up and connect</h3>
-              <p>A short setup call. We connect your client list and write your messages with you.</p>
+              <p>A short setup call. We connect your appointment book and write your messages with you.</p>
             </div>
             <div className="service-card reveal d2">
               <p className="step-num" style={{ marginBottom: '12px' }}>Day 3</p>
-              <h3>Past clients start reviewing</h3>
-              <p>The first batch goes out. Reviews start landing and the AI replies to each one.</p>
+              <h3>First requests go out</h3>
+              <p>Clients from that day's visits get asked. Reviews start landing and the AI replies to each one.</p>
             </div>
             <div className="service-card reveal d3">
               <p className="step-num" style={{ marginBottom: '12px' }}>Day 7</p>
@@ -299,8 +299,8 @@ const ReviewAutomation = () => {
               <p>Up to two gentle reminders, and they stop the moment the client leaves a review.</p>
             </div>
             <div className="service-card reveal d3">
-              <h3>Past-client campaign</h3>
-              <p>Turns years of happy clients who never got around to it into fresh Google reviews.</p>
+              <h3>One tap to Google</h3>
+              <p>Requests open straight to your Google review form. No searching, no app to download.</p>
             </div>
             <div className="service-card reveal d1">
               <h3>AI review replies</h3>
@@ -350,11 +350,10 @@ const ReviewAutomation = () => {
                 <span style={{ fontSize: '3.5rem', fontWeight: 'bold' }}>$79</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
               </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '24px' }}>Up to 50 review requests a month</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '24px' }}>Up to 100 review requests a month</p>
               <ul style={listStyle}>
                 <li style={liStyle}>{CHECK} Automatic text and email requests after every visit</li>
                 <li style={liStyle}>{CHECK} Up to two gentle reminders</li>
-                <li style={liStyle}>{CHECK} One past-client campaign</li>
                 <li style={liStyle}>{CHECK} AI replies to every Google review</li>
                 <li style={liStyle}>{CHECK} New review alerts</li>
               </ul>
