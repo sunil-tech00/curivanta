@@ -15,9 +15,19 @@ const FORMS = {
       "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/438SYRCvHCyb9HEuHQ4a",
     source: "hair_salon_bot_form",
     page: "https://curivanta.com/hair-salon-bot#contact"
+  },
+  // Until review automation has its own GHL workflow, leads go to the salon webhook, tagged by source.
+  reviews: {
+    url: process.env.REVIEWS_WEBHOOK_URL ||
+      "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/438SYRCvHCyb9HEuHQ4a",
+    source: "review_automation_form",
+    page: "https://curivanta.com/reviewautomation#contact"
   }
 };
-const PLANS = { starter: "Starter", autopilot: "Autopilot", notsure: "Not sure" };
+const PLANS = {
+  salon: { starter: "Starter", autopilot: "Autopilot", notsure: "Not sure" },
+  reviews: { starter: "Reviews Starter", growth: "Reviews Growth", notsure: "Not sure" }
+};
 
 const SMS_CONSENT_TEXT = "By checking this box, I agree to receive SMS text messages regarding my inquiry and service updates. Message and data rates may apply.";
 
@@ -56,7 +66,7 @@ export default async function handler(req, res) {
     consent_at: new Date().toISOString(),
     source: form.source,
     page: form.page,
-    ...(form === FORMS.salon ? { plan: PLANS[body.plan] || PLANS.notsure } : {})
+    ...(PLANS[body.form] ? { plan: PLANS[body.form][body.plan] || "Not sure" } : {})
   };
 
   try {
