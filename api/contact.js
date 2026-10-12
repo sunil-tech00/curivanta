@@ -16,10 +16,9 @@ const FORMS = {
     source: "hair_salon_bot_form",
     page: "https://curivanta.com/hair-salon-bot#contact"
   },
-  // Until review automation has its own GHL workflow, leads go to the salon webhook, tagged by source.
   reviews: {
     url: process.env.REVIEWS_WEBHOOK_URL ||
-      "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/438SYRCvHCyb9HEuHQ4a",
+      "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/136a850c-6faf-4dca-8eef-e43be24f6c8e",
     source: "review_automation_form",
     page: "https://curivanta.com/reviewautomation#contact"
   }
