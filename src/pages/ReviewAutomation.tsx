@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { Link } from 'react-router-dom';
+import { MapPin, Handshake, Star, CalendarCheck } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ReviewsCheckout, type ReviewsPlanId } from '../components/ReviewsCheckout';
 
@@ -51,6 +52,14 @@ const PLAN_OPTIONS = [
   { id: 'growth', name: 'Growth', desc: 'Busy salon' },
   { id: 'notsure', name: 'Not Sure', desc: 'Talk first' }
 ];
+
+const VALUE = [
+  { icon: MapPin, title: 'Show up first on Google Maps', text: "Fresh reviews tell Google your salon is active and trusted. That helps you rank higher in local search and on the map, right where new clients are looking." },
+  { icon: Handshake, title: 'Build trust before they walk in', text: "New clients read reviews before they ever call. A steady stream of recent five-star reviews tells a parent you're the right choice for their family." },
+  { icon: Star, title: 'Win the side-by-side comparison', text: "When two salons look alike, the one with more reviews and a higher rating gets the call. Every review widens the gap between you and the shop down the street." },
+  { icon: CalendarCheck, title: 'Fill more chairs', text: "Higher rankings and more trust add up to more calls, more bookings, and more new clients who keep coming back." }
+];
+const FLOW = ['Happy client', 'Google review', 'Higher ranking', 'More new clients'];
 
 const CHECK = <span style={{ color: 'var(--brass)' }}>✓</span>;
 const liStyle = { display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' };
@@ -214,6 +223,38 @@ const ReviewAutomation = () => {
       </section>
 
       <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
+
+      <section id="why-reviews" style={{ padding: '100px 0' }}>
+        <div className="wrap" style={{ maxWidth: '900px' }}>
+          <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 24px' }}>
+            <p className="eyebrow">Why it matters</p>
+            <h2>More reviews. More clients in your chair.</h2>
+          </div>
+          <p className="reveal d1" style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '720px', margin: '0 auto 56px', textAlign: 'center' }}>When a parent searches "kids haircut near me", Google shows a handful of salons on the map. The ones with more recent, well-answered reviews get the tap, the call and the booking. Reviews are one of the biggest growth levers a salon has, and most leave it to chance. We make sure every happy client gets asked, so you never have to think about it.</p>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {VALUE.map(({ icon: Icon, title, text }, i) => (
+              <div key={title} className={`reveal d${(i % 3) + 1}`} style={{ display: 'grid', gridTemplateColumns: '56px 1fr', gap: '20px', alignItems: 'start', padding: '28px 0', borderTop: i ? '1px solid var(--line)' : 'none' }}>
+                <span style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'rgba(77,107,246,0.12)', color: 'var(--brass-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Icon size={26} strokeWidth={1.8} />
+                </span>
+                <div>
+                  <h3 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>{title}</h3>
+                  <p style={{ color: 'var(--bone-dim)', lineHeight: 1.7 }}>{text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="reveal d2" style={{ marginTop: '40px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+            {FLOW.map((step, i) => (
+              <span key={step} style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ padding: '10px 16px', borderRadius: '999px', border: `1px solid ${i === FLOW.length - 1 ? 'var(--brass)' : 'var(--line)'}`, background: i === FLOW.length - 1 ? 'rgba(77,107,246,0.12)' : 'var(--ink-soft)', color: 'var(--bone)', fontSize: '0.95rem', fontWeight: i === FLOW.length - 1 ? 700 : 500 }}>{step}</span>
+                {i < FLOW.length - 1 && <span style={{ color: 'var(--brass-light)' }}>→</span>}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       <section className="approach" id="how-it-works">
         <div className="wrap">
@@ -382,6 +423,9 @@ const ReviewAutomation = () => {
           </div>
 
           <div className="reveal d3" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '24px', borderRadius: '12px', textAlign: 'center', marginTop: '32px' }}>
+            <p style={{ color: 'var(--bone-dim)' }}>💡 If better reviews bring in just <strong>3 new clients a month</strong>, at a $36 haircut that's <strong style={{ color: 'var(--brass)' }}>$108</strong> in their first visit alone, more than Starter costs. And happy clients keep coming back.</p>
+          </div>
+          <div className="reveal d3" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '24px', borderRadius: '12px', textAlign: 'center', marginTop: '16px' }}>
             <p style={{ color: 'var(--bone-dim)' }}>Already on the <Link to="/hair-salon-bot" style={{ color: 'var(--brass-light)' }}>Hair Salon Bot</Link>? Add Review Automation for <strong style={{ color: 'var(--brass)' }}>$49/month</strong>. It runs on the same system, nothing new to set up.</p>
           </div>
           <p className="reveal d3" style={{ textAlign: 'center', marginTop: '20px', color: 'var(--bone-dimmer)', fontSize: '0.9rem' }}>Sign up online in minutes. Your free month starts when you go live; cancel before it ends and you pay nothing more. A one-time $35 covers text message carrier registration. Multiple locations? <a href="#contact" onClick={() => setSelectedPlan('notsure')} style={{ color: 'var(--brass-light)' }}>Talk to us</a> about bundle pricing.</p>
