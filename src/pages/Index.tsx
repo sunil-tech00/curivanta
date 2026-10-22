@@ -139,33 +139,37 @@ const Index = () => {
         <div className="wrap">
           <div className="section-head reveal">
             <p className="eyebrow">What we build</p>
-            <h2 className="md:whitespace-nowrap">Six ways to take manual work off your plate.</h2>
-            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Two products ready to switch on, and four services built around your business.</p>
+            <h2>Your front desk and back office, minus the manual work.</h2>
+            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Customer-facing AI that answers, books, and follows up, plus the builds and integrations behind it. Every engagement is scoped around your business: your tools, your workflows, your customers.</p>
           </div>
-          <div className="service-grid">
-            <div className="service-card reveal d1" style={{ borderColor: 'var(--brass)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <svg viewBox="0 0 34 34" fill="none">
-                  <path d="M9 13v8a1 1 0 0 0 1 1h1l3 4v-4h9a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H10a1 1 0 0 0-1 1z" stroke="#4d6bf6" strokeWidth="1.6" strokeLinejoin="round"/>
-                  <path d="M14 17v.01M17 17v.01M20 17v.01" stroke="#7c93ff" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-                <span className="svc-tag">Ready to switch on</span>
-              </div>
-              <h3>Hair Salon Bot</h3>
-              <p>Missed-call text-back and conversational booking for salons. When a call goes unanswered, the AI texts back within seconds, answers questions, and books the appointment straight into Salon Ultimate: not a link, not a separate calendar. Voice answering available when you want every call picked up live.</p>
-              <Link className="svc-link" to="/hair-salon-bot" data-umami-event="home_product" data-umami-event-product="hair_salon_bot">See the Hair Salon Bot →</Link>
+          <div className="service-grid three">
+            <div className="service-card reveal d1" style={{ display: 'flex', flexDirection: 'column' }}>
+              <svg viewBox="0 0 34 34" fill="none">
+                <path d="M8 22c-2.5-1.8-4-4.5-4-7.5C4 9.3 9.8 5 17 5s13 4.3 13 9.5S24.2 24 17 24c-1.4 0-2.7-.2-4-.5L8 26z" stroke="#4d6bf6" strokeWidth="1.6" strokeLinejoin="round"/>
+                <path d="M12 14.5v.01M17 14.5v.01M22 14.5v.01" stroke="#7c93ff" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+              <h3>Conversational Booking</h3>
+              <p>Missed-call text-back, built in. When a call goes unanswered, the AI texts the caller within seconds, answers their questions, and books the appointment over SMS, WhatsApp, or web chat, straight into your calendar.</p>
+              <Link className="svc-link" to="/hair-salon-bot" data-umami-event="home_product" data-umami-event-product="conversational_booking">See it for salons →</Link>
             </div>
-            <div className="service-card reveal d2" style={{ borderColor: 'var(--brass)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <svg viewBox="0 0 34 34" fill="none">
-                  <path d="M17 5l3.6 7.3 8 1.2-5.8 5.6 1.4 8L17 23.3l-7.2 3.8 1.4-8-5.8-5.6 8-1.2z" stroke="#4d6bf6" strokeWidth="1.6" strokeLinejoin="round"/>
-                </svg>
-                <span className="svc-tag">Ready to switch on</span>
-              </div>
-              <h3>Review Automation</h3>
-              <p>More reviews, every one answered. Review requests go out automatically after each visit, every Google review gets an AI-written reply, and negatives are routed to you first. No review gating, in line with Google's rules.</p>
+            <div className="service-card reveal d2" style={{ display: 'flex', flexDirection: 'column' }}>
+              <svg viewBox="0 0 34 34" fill="none">
+                <path d="M27 22.5v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 6.5 9.2 2 2 0 0 1 8.5 7h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1l-1.3 1.3a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" stroke="#4d6bf6" strokeWidth="1.6" strokeLinejoin="round"/>
+              </svg>
+              <h3>AI Voice Answering</h3>
+              <p>A phone line that never goes to voicemail. The AI answers every call in your business's own voice, day, night, and during your busiest hour, and books real appointments on the spot.</p>
+              <Link className="svc-link" to="/hair-salon-bot" data-umami-event="home_product" data-umami-event-product="voice_answering">See it for salons →</Link>
+            </div>
+            <div className="service-card reveal d3" style={{ display: 'flex', flexDirection: 'column' }}>
+              <svg viewBox="0 0 34 34" fill="none">
+                <path d="M17 5l3.6 7.3 8 1.2-5.8 5.6 1.4 8L17 23.3l-7.2 3.8 1.4-8-5.8-5.6 8-1.2z" stroke="#4d6bf6" strokeWidth="1.6" strokeLinejoin="round"/>
+              </svg>
+              <h3>Review &amp; Reputation Automation</h3>
+              <p>More reviews, every one answered. Review requests go out automatically after each visit, every Google review gets a considered reply, and a negative review is routed to you first. No gating, fully in line with Google's rules.</p>
               <Link className="svc-link" to="/reviewautomation" data-umami-event="home_product" data-umami-event-product="review_automation">See Review Automation →</Link>
             </div>
+          </div>
+          <div className="service-grid" style={{ marginTop: '28px' }}>
             <div className="service-card reveal d1">
               <svg viewBox="0 0 34 34" fill="none">
                 <path d="M6 17h9M15 17l-3-3M15 17l-3 3" stroke="#4d6bf6" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
