@@ -6,9 +6,9 @@ import { notifyGhl } from "./ghl.js";
 // The setup fee is charged at checkout; the monthly fee starts after a 14-day setup period.
 // Text-Back: missed-call text-back plus inbound text booking. Voice / Voice Pro: AI answers calls live instead
 // (text-back and voice can't run together). Clients can text to book on Text-Back and Voice Pro, and on Voice with
-// the Text Booking add-on; each comes with 500 texts a month. Ids starter/autopilot are kept for existing subscriptions.
+// the Text Booking add-on. Text booking comes with 500 texts a month; Text-Back adds 500 more for missed calls. Ids starter/autopilot are kept for existing subscriptions.
 export const PLANS = {
-  textback: { name: "Hair Salon Bot: Text-Back", monthly: 9900, setup: 4900, minutes: 0, includes: "Missed-call text-back and text booking, 500 texts" },
+  textback: { name: "Hair Salon Bot: Text-Back", monthly: 9900, setup: 4900, minutes: 0, includes: "Missed-call text-back (up to 150 missed calls) and text booking (about 50 bookings), 1,000 texts" },
   starter: { name: "Hair Salon Bot: Voice", monthly: 14900, setup: 4900, minutes: 300, includes: "300 AI voice minutes" },
   autopilot: { name: "Hair Salon Bot: Voice Pro", monthly: 24900, setup: 14900, minutes: 1000, includes: "1,000 AI voice minutes and text booking, 500 texts" }
 };

@@ -41,8 +41,8 @@ const faqs = [
     a: "It doesn't guess, and it never strands a client. It captures the details and alerts you or your manager instantly so you can follow up within minutes. You set the rules for what gets escalated."
   },
   {
-    q: "How many missed calls does Text-Back cover?",
-    a: "Up to 150 missed calls a month (500 texts), which is more than most salons use. If you ever go over, extra texts are $20 per 500."
+    q: "How much does Text-Back cover?",
+    a: "Up to 150 missed calls a month, plus up to about 50 text bookings from clients who text you first. That's 1,000 texts in all, more than most salons use. If you ever go over, extra texts are $20 per 500."
   },
   {
     q: "How long does setup take?",
@@ -377,7 +377,7 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Up to 150 missed calls handled a month
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Clients can also text you any time to book
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Clients can also text you to book: up to 50 text bookings a month
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Every conversation in one inbox. Step in any time
