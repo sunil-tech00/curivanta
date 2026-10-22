@@ -8,7 +8,7 @@ export type AddonId = 'whatsapp' | 'textbooking';
 type Software = 'salon_ultimate' | 'other';
 
 const PLANS: Record<PlanId, { label: string; monthly: number; setup: number; setupWas: number; detail: string }> = {
-  textback: { label: 'Text-Back', monthly: 99, setup: 49, setupWas: 99, detail: 'Missed-call text-back + clients can text to book. Up to 150 missed calls a month' },
+  textback: { label: 'Text-Back', monthly: 99, setup: 49, setupWas: 99, detail: 'Missed-call text-back + clients can text to book. Up to 150 missed calls and 50 text bookings a month' },
   starter: { label: 'Voice', monthly: 149, setup: 49, setupWas: 99, detail: 'AI answers your calls live. 300 voice minutes a month' },
   autopilot: { label: 'Voice Pro', monthly: 249, setup: 149, setupWas: 199, detail: 'AI answers your calls live + clients can text to book. 1,000 voice minutes a month' }
 };
