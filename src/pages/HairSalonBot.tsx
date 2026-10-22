@@ -255,7 +255,7 @@ const HairSalonBot = () => {
               <span className="step-num">Step 02</span>
               <div>
                 <h3>We text them back in seconds</h3>
-                <p>The AI texts from your salon's number and answers questions about services, prices and hours, in English or Spanish.</p>
+                <p>The AI texts the caller and answers questions about services, prices and hours, in English or Spanish.</p>
               </div>
             </div>
             <div className="step reveal d2">
@@ -364,7 +364,7 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> AI answers questions and books straight into Salon Ultimate
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Two-way texting from your salon's number
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Two-way texting
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Bilingual English &amp; Spanish
