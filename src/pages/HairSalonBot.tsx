@@ -199,7 +199,7 @@ const HairSalonBot = () => {
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Every missed call is a lost booking. <em>We text them back</em> and book them.</h1>
             <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>When you can't pick up, Curivanta texts the caller within seconds, answers their questions, and books the appointment straight into Salon Ultimate. No voicemail, no lost clients, no extra work for your front desk.</p>
             <div className="cta-row reveal is-visible">
-              <a className="btn solid" href="#contact" onClick={openChatDemo} data-where="hero_demo">Try the Text Demo</a>
+              <a className="btn solid" href="#contact" onClick={openChatDemo} data-where="hero_demo">Try the Demo: Chat or Talk</a>
               <a className="btn ghost" href="#pricing" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">See Pricing</a>
             </div>
             <p className="hero-demo-line reveal is-visible">Want the AI to answer calls too? Hear it live: <a href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hero">{DEMO_PHONE}</a></p>
