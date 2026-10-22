@@ -3,9 +3,9 @@ import { useEffect, useState, useRef } from 'react';
 // Missed call → instant text-back → AI books the appointment.
 const messages = [
   { text: "Missed call · 2:14 PM", type: 'system' },
-  { text: "Hi, this is Curivanta Cuts! Sorry we missed your call. I can book you right here by text. What can I help you with?", type: 'ai' },
-  { text: "Can I get a haircut Saturday?", type: 'user' },
-  { text: "Of course! Is that for you or a child, and do you have a stylist preference?", type: 'ai' },
+  { text: "Hi this is Curivanta Cuts. Sorry we missed your call. Want to book a haircut? Just reply with the day you'd like and we'll find a time.", type: 'ai' },
+  { text: "Saturday please", type: 'user' },
+  { text: "Great! Is the haircut for you or a child, and do you have a stylist preference?", type: 'ai' },
   { text: "Just me, anyone is fine", type: 'user' },
   { text: "Saturday I have 10:00 AM, 11:30 AM or 2:00 PM open. Which works best?", type: 'ai' },
   { text: "11:30", type: 'user' },
