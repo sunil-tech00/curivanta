@@ -198,10 +198,10 @@ const HairSalonBot = () => {
               <svg className="spark" viewBox="0 0 16 16" width="14" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 1l1.2 4.3L13.5 6.5l-4.3 1.2L8 12l-1.2-4.3L2.5 6.5l4.3-1.2L8 1z" fill="currentColor"/>
               </svg> 
-              Proven and Working at multiple locations
+              The AI front desk built for Salon Ultimate
             </p>
             <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Every missed call is a lost booking. <em>We text them back</em> and book them.</h1>
-            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>When you can't pick up, Curivanta texts the caller within seconds, answers their questions, and books the appointment straight into Salon Ultimate. No voicemail, no lost clients, no extra work for your front desk.</p>
+            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>When you can't pick up, Curivanta texts the caller within seconds, answers their questions, and books the appointment directly into your Salon Ultimate appointment book. Not a link, not a separate calendar. No voicemail, no lost clients, no extra work for your front desk.</p>
             <div className="cta-row reveal is-visible">
               <a className="btn solid" href="#contact" onClick={openChatDemo} data-where="hero_demo">Try the Demo: Chat or Talk</a>
               <a className="btn ghost" href="#pricing" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">See Pricing</a>
@@ -209,7 +209,7 @@ const HairSalonBot = () => {
             <p className="hero-demo-line reveal is-visible">Prefer the AI to answer your calls? Hear it live: <a href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hero">{DEMO_PHONE}</a></p>
             <ul className="hero-highlights reveal is-visible">
               <li>No contracts, month to month</li>
-              <li>Done-for-you setup, 100% remote. Live in days</li>
+              <li>$49 setup, done for you. Live in about a week</li>
               <li>Built for Salon Ultimate</li>
             </ul>
           </div>
@@ -278,8 +278,8 @@ const HairSalonBot = () => {
       <section id="integrations" style={{ padding: '100px 0' }}>
         <div className="wrap" style={{ maxWidth: '1000px' }}>
           <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 40px' }}>
-            <p className="eyebrow">Built for Salon Ultimate</p>
-            <h2>Books straight into your Salon Ultimate appointment book.</h2>
+            <p className="eyebrow">Your booking software</p>
+            <h2>Built for Salon Ultimate. Running in our own salons today.</h2>
           </div>
           <p className="reveal d1" style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '760px', margin: '0 auto 48px', textAlign: 'center' }}>No new system. No double entry. No retraining your staff, and no behavior change for your clients. Curivanta reads your real availability in Salon Ultimate and writes confirmed bookings into it, whether the booking starts as a text or a phone call. We handle the connection, the phone number, and the carrier registration. You change nothing about how you run your salon.</p>
           <div className="service-grid" style={{ gridTemplateColumns: '1fr', maxWidth: '640px', margin: '0 auto' }}>
@@ -288,7 +288,8 @@ const HairSalonBot = () => {
               <p>Live availability checked on every conversation, confirmed appointments written back automatically. This is the exact setup running in my own salons today.</p>
             </div>
           </div>
-          <p className="reveal d2" style={{ textAlign: 'center', marginTop: '24px', color: 'var(--bone-dimmer)', fontSize: '0.95rem' }}>Using different booking software? <a href="#contact" onClick={(e) => { e.preventDefault(); talkToUs(); }} style={{ color: 'var(--brass-light)' }}>Talk to us first</a>.</p>
+          <p className="reveal d2" style={{ textAlign: 'center', marginTop: '24px', color: 'var(--bone-dim)', fontSize: '1rem', maxWidth: '640px', marginLeft: 'auto', marginRight: 'auto' }}>Running a Salon Ultimate franchise? We set up every location the same way. <a href="#contact" onClick={(e) => { e.preventDefault(); talkToUs(); }} style={{ color: 'var(--brass-light)' }}>Talk to us</a> about multi-location pricing.</p>
+          <p className="reveal d2" style={{ textAlign: 'center', marginTop: '12px', color: 'var(--bone-dimmer)', fontSize: '0.95rem' }}>Using different booking software? <a href="#contact" onClick={(e) => { e.preventDefault(); talkToUs(); }} style={{ color: 'var(--brass-light)' }}>Talk to us first</a>.</p>
         </div>
       </section>
 
@@ -338,6 +339,34 @@ const HairSalonBot = () => {
         </div>
       </section>
 
+      <section id="difference" style={{ padding: '100px 0' }}>
+        <div className="wrap" style={{ maxWidth: '1000px' }}>
+          <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 48px' }}>
+            <p className="eyebrow">Not all text-back is the same</p>
+            <h2>A booking in your calendar, not a link.</h2>
+            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Most text-back tools send a link and hope the client clicks. Curivanta finishes the job.</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+            <div className="service-card reveal d1">
+              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)', marginBottom: '20px' }}>Typical text-back app</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {['Sends a booking link and hopes they click', 'Books into its own calendar, or not at all', 'Your front desk re-enters the booking', 'Scripted replies, often English only'].map((t) => (
+                  <li key={t} style={{ display: 'flex', gap: '12px', fontSize: '0.95rem', color: 'var(--bone-dimmer)' }}><span aria-hidden="true">✕</span> {t}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="service-card reveal d2" style={{ borderColor: 'var(--brass)' }}>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '20px' }}>Curivanta</h3>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {['Has the conversation and books the slot', 'Checks live availability in Salon Ultimate', 'Writes the booking into your appointment book', 'Answers questions in English or Spanish'].map((t) => (
+                  <li key={t} style={{ display: 'flex', gap: '12px', fontSize: '0.95rem', color: 'var(--bone)' }}><span style={{ color: 'var(--brass)' }} aria-hidden="true">✓</span> {t}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
 
       <section id="pricing" style={{ padding: '100px 0' }}>
@@ -345,7 +374,7 @@ const HairSalonBot = () => {
           <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 60px' }}>
             <p className="eyebrow">Pricing</p>
             <h2>Simple plans. No contracts.</h2>
-            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Month to month, cancel anytime. Built and priced by an operator, not a software vendor.</p>
+            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Month to month, cancel anytime. Setup from $49, done for you, while many AI receptionists charge hundreds of dollars just to get started.</p>
           </div>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '24px' }}>
@@ -365,7 +394,7 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Every missed call gets a text back within seconds
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> AI answers questions and books straight into Salon Ultimate
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Books straight into Salon Ultimate, not just a link
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Two-way texting
@@ -378,6 +407,9 @@ const HairSalonBot = () => {
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Clients can also text you to book: up to 50 text bookings a month
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> 1,000 texts a month included. Extra texts $20 per 500
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Every conversation in one inbox. Step in any time
@@ -407,7 +439,10 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Works during peak hours and closed hours
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> 300 AI voice minutes a month included
+                  <span style={{ color: 'var(--brass)' }}>✓</span> 300 AI voice minutes a month (about 150 booking calls)
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Voice overage billed at cost, no markup
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Add Text Booking: +$49/mo
@@ -431,7 +466,7 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Everything in Voice
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> 1,000 AI voice minutes a month included
+                  <span style={{ color: 'var(--brass)' }}>✓</span> 1,000 AI voice minutes a month (about 500 booking calls)
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Clients can also text to book (500 texts a month)
