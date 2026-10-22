@@ -24,7 +24,7 @@ const FORMS = {
   }
 };
 const PLANS = {
-  salon: { starter: "Starter", autopilot: "Autopilot", notsure: "Not sure" },
+  salon: { textback: "Text-Back", starter: "Voice", autopilot: "Voice Pro", notsure: "Not sure" },
   reviews: { starter: "Reviews Starter", growth: "Reviews Growth", notsure: "Not sure" }
 };
 

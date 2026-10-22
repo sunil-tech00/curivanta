@@ -4,15 +4,19 @@ import { notifyGhl } from "./ghl.js";
 // Hair Salon Bot subscriptions, sold per location through Stripe Checkout.
 // Prices live here (not in Stripe) so the page and checkout can't disagree; amounts in cents.
 // The setup fee is charged at checkout; the monthly fee starts after a 14-day setup period.
+// Every plan includes missed-call text-back with AI text booking (500 texts a month);
+// the Voice plans add AI call answering. Ids starter/autopilot are kept for existing subscriptions.
 export const PLANS = {
-  starter: { name: "Hair Salon Bot: Starter (AI Voice)", monthly: 14900, setup: 4900, minutes: 300 },
-  autopilot: { name: "Hair Salon Bot: Autopilot (Fully Automated Booking)", monthly: 24900, setup: 14900, minutes: 1000 }
+  textback: { name: "Hair Salon Bot: Text-Back", monthly: 9900, setup: 4900, minutes: 0 },
+  starter: { name: "Hair Salon Bot: Voice", monthly: 14900, setup: 4900, minutes: 300 },
+  autopilot: { name: "Hair Salon Bot: Voice Pro", monthly: 24900, setup: 14900, minutes: 1000 }
 };
+export const TEXTS = 500;
 export const ADDONS = {
-  whatsapp: { name: "WhatsApp Add-On", monthly: 4900, setup: 0, plans: ["starter", "autopilot"] },
-  sms: { name: "SMS Add-On", monthly: 4900, setup: 3500, plans: ["starter"] } // Autopilot already includes SMS
+  whatsapp: { name: "WhatsApp Add-On", monthly: 4900, setup: 0, plans: ["textback", "starter", "autopilot"] },
+  sms: { name: "SMS Add-On", monthly: 4900, setup: 3500, plans: [] } // retired: texting is in every plan; kept so older orders still read correctly
 };
-export const SOFTWARE = { salon_ultimate: "Salon Ultimate", vagaro: "Vagaro" };
+export const SOFTWARE = { salon_ultimate: "Salon Ultimate" };
 export const SETUP_DAYS = 14;
 const PRODUCT = "hair_salon_bot";
 
@@ -23,9 +27,9 @@ export const onboardingEnabled = () => Boolean(CUSTOMER_WEBHOOK_URL);
 
 export function normalizeOrder(body) {
   const plan = PLANS[body?.plan] ? body.plan : null;
-  if (!plan) throw exposed(400, "Choose Starter or Autopilot.");
+  if (!plan) throw exposed(400, "Choose Text-Back, Voice or Voice Pro.");
   const software = SOFTWARE[body?.software] ? body.software : null;
-  if (!software) throw exposed(400, "Online checkout is for Salon Ultimate and Vagaro. For other software, talk to us first.");
+  if (!software) throw exposed(400, "Online checkout is for Salon Ultimate. For other software, talk to us first.");
   const addons = [...new Set(Array.isArray(body?.addons) ? body.addons : [])]
     .filter((a) => ADDONS[a] && ADDONS[a].plans.includes(plan));
   return { plan, addons, software };
@@ -38,8 +42,8 @@ export async function createSalonCheckout(order, origin) {
   const p = PLANS[plan];
   const line_items = [
     { quantity: 1, price_data: { ...money(p.monthly), recurring: { interval: "month" },
-      product_data: { name: p.name, description: `${p.minutes.toLocaleString("en-US")} AI minutes a month included. One salon location. No contract.` } } },
-    { quantity: 1, price_data: { ...money(p.setup), product_data: { name: `${plan === "starter" ? "Starter" : "Autopilot"} setup (one-time)` } } }
+      product_data: { name: p.name, description: `${p.minutes ? `${p.minutes.toLocaleString("en-US")} AI voice minutes and ` : ""}${TEXTS} texts a month included. One salon location. No contract.` } } },
+    { quantity: 1, price_data: { ...money(p.setup), product_data: { name: `${p.name.replace("Hair Salon Bot: ", "")} setup (one-time)` } } }
   ];
   for (const a of addons) {
     const x = ADDONS[a];

@@ -9,32 +9,44 @@ import { SalonPlanBuilder, type PlanId, type AddonId } from '../components/Salon
 
 const faqs = [
   {
-    q: "Will customers know they're talking to an AI?",
-    a: "It greets callers with your salon's name and gets them helped in seconds. Most callers never ask. They're just glad someone picked up. And you see a summary of every conversation, so nothing happens out of sight."
+    q: "What if the caller doesn't reply to the text?",
+    a: "Then nothing is lost compared with today's missed call, except they now have a text from your salon ready whenever they want to book. Every missed call and text shows up in one inbox, so you can follow up yourself any time."
   },
   {
-    q: "What happens if the AI can't handle a request?",
-    a: "It doesn't guess, and it never strands a caller. It captures the details and alerts you or your manager instantly so you can call back within minutes. You set the rules for what gets escalated."
+    q: "Is it OK to text people who called us?",
+    a: "We only text people who just called your salon, never a purchased list. Every first message tells them how to opt out (reply STOP), and we register your number with the carriers as part of setup."
   },
   {
-    q: "I already use Salon Ultimate / Vagaro. Do I need new software?",
-    a: "No. That's the point. Curivanta connects to the software you already run. Your staff keeps using the same calendar; the AI just makes sure it stays full."
+    q: "Which booking software do you work with?",
+    a: "Salon Ultimate. The AI reads your live availability and writes confirmed bookings straight into your appointment book, so your staff keeps using the same calendar. Using something else? Talk to us first."
+  },
+  {
+    q: "Can I add voice answering?",
+    a: "Yes. With the Voice plans, the AI picks up every call live, in English or Spanish, and books it on the spot. Missed-call text-back is included in every plan."
+  },
+  {
+    q: "What happens after hours?",
+    a: "The same as during the day: if a call isn't answered, the caller gets a text within seconds and can book right there. After hours it books into your next open slots, so you can open the salon to new appointments."
+  },
+  {
+    q: "Will clients know they're texting an AI?",
+    a: "It replies as your salon, by name, and gets them helped in seconds. Most clients never ask. They're just glad someone got back to them. You see every conversation, so nothing happens out of sight."
+  },
+  {
+    q: "What if the AI can't handle a request?",
+    a: "It doesn't guess, and it never strands a client. It captures the details and alerts you or your manager instantly so you can follow up within minutes. You set the rules for what gets escalated."
+  },
+  {
+    q: "How many missed calls does Text-Back cover?",
+    a: "Up to 150 missed calls a month (500 texts), which is more than most salons use. If you ever go over, extra texts are $20 per 500."
   },
   {
     q: "How long does setup take?",
-    a: "We handle everything remotely: your number, the integration, the greeting, your services and FAQs. Most salons are live within about a week."
-  },
-  {
-    q: "What does it cost after the included minutes?",
-    a: "Starter includes 300 AI minutes, Autopilot 1,000. Anything beyond that is billed at cost. No markup, no surprises."
-  },
-  {
-    q: "Can customers book by text instead of calling?",
-    a: "Yes. The same AI that answers your phone also handles two-way texting. A customer can text to book, reschedule, or ask a question, and it checks the same live calendar. WhatsApp works too. However your customers reach out, they reach the same front desk."
+    a: "We handle everything remotely: your number, the Salon Ultimate connection, carrier registration, your services and FAQs. Most salons are live within about a week."
   },
   {
     q: "Can it speak Spanish?",
-    a: "Yes. English and Spanish."
+    a: "Yes. English and Spanish, by text and by voice."
   }
 ];
 
@@ -43,8 +55,8 @@ const DEMO_PHONE = "(949) 821-0811";
 const DEMO_PHONE_TEL = "tel:+19498210811";
 
 const PLAN_OPTIONS = [
-  { id: 'starter', name: 'Starter', desc: 'AI Voice' },
-  { id: 'autopilot', name: 'Autopilot', desc: 'Fully Automated' },
+  { id: 'textback', name: 'Text-Back', desc: 'Missed calls' },
+  { id: 'starter', name: 'Voice', desc: 'Answer calls' },
   { id: 'notsure', name: 'Not Sure', desc: 'Need a demo' }
 ];
 
@@ -55,9 +67,9 @@ const track = (name: string, data?: Record<string, string | number | boolean>) =
 const HairSalonBot = () => {
   // Tab title for in-site navigation; link previews come from dist/hair-salon-bot/index.html
   // (scripts/page-meta.mjs), since crawlers don't run JavaScript.
-  useEffect(() => { document.title = 'Hair Salon Bot: AI Front Desk for Salons | Curivanta'; }, []);
+  useEffect(() => { document.title = 'Hair Salon Bot: Missed-Call Text-Back for Salons | Curivanta'; }, []);
   const [selectedPlan, setSelectedPlan] = useState('notsure');
-  const [builder, setBuilder] = useState<{ open: boolean; plan: PlanId; addon: AddonId | null }>({ open: false, plan: 'autopilot', addon: null });
+  const [builder, setBuilder] = useState<{ open: boolean; plan: PlanId; addon: AddonId | null }>({ open: false, plan: 'textback', addon: null });
   const openBuilder = (plan: PlanId, addon: AddonId | null = null) => setBuilder({ open: true, plan, addon });
   const talkToUs = () => {
     setSelectedPlan('notsure');
@@ -184,17 +196,17 @@ const HairSalonBot = () => {
               </svg> 
               Proven and Working at multiple locations
             </p>
-            <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Never miss a call, text or<br /><em>appointment</em> again.</h1>
-            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>Your AI-powered front desk answers your phone and text/WhatsApp messages 24/7, checks live availability, and books appointments straight into Salon Ultimate or Vagaro, so clients can book however they reach out, and no one ever hits voicemail.</p>
+            <h1 className="reveal is-visible" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Every missed call is a lost booking. <em>We text them back</em> and book them.</h1>
+            <p className="sub reveal is-visible" style={{ maxWidth: '600px' }}>When you can't pick up, Curivanta texts the caller within seconds, answers their questions, and books the appointment straight into Salon Ultimate. No voicemail, no lost clients, no extra work for your front desk.</p>
             <div className="cta-row reveal is-visible">
               <a className="btn solid" href="#contact" onClick={openChatDemo} data-where="hero_demo">Try the Demo: Chat or Talk</a>
-              <a className="btn ghost" href="#pricing" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">Get Started</a>
+              <a className="btn ghost" href="#pricing" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">See Pricing</a>
             </div>
-            <p className="hero-demo-line reveal is-visible">Or call our demo salon now: <a href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hero">{DEMO_PHONE}</a></p>
+            <p className="hero-demo-line reveal is-visible">Want the AI to answer calls too? Hear it live: <a href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hero">{DEMO_PHONE}</a></p>
             <ul className="hero-highlights reveal is-visible">
               <li>No contracts, month to month</li>
               <li>Done-for-you setup, 100% remote. Live in days</li>
-              <li>Works with the software you already use</li>
+              <li>Built for Salon Ultimate</li>
             </ul>
           </div>
           
@@ -217,7 +229,7 @@ const HairSalonBot = () => {
           </div>
           <div className="reveal d3">
             <h3 style={{ fontSize: '3.5rem', color: 'var(--bone)', marginBottom: '8px' }}>24/7</h3>
-            <p style={{ color: 'var(--bone-dim)', margin: '0 auto', maxWidth: '240px' }}>Your AI answers calls and texts, even after close.</p>
+            <p style={{ color: 'var(--bone-dim)', margin: '0 auto', maxWidth: '240px' }}>Missed callers get a text back and can book, even after close.</p>
           </div>
         </div>
       </section>
@@ -228,36 +240,29 @@ const HairSalonBot = () => {
         <div className="wrap">
           <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 60px' }}>
             <p className="eyebrow">How It Works</p>
-            <h2>Set up once. Capture every lead after that.</h2>
+            <h2>Set up once. Every missed call gets a second chance.</h2>
             <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>No new software to learn, no changes to how you run your salon. It sits on top of what you already use.</p>
           </div>
           <div className="steps">
             <div className="step reveal">
               <span className="step-num">Step 01</span>
               <div>
-                <h3>We configure your AI</h3>
-                <p>Your hours, services, prices, and FAQs get loaded in. The AI speaks in your salon's voice, and knows what it can and can't answer.</p>
+                <h3>A call goes unanswered</h3>
+                <p>Busy at the chair, on another line, or after hours. Your voicemail greeting lets the caller know a text is on its way.</p>
               </div>
             </div>
             <div className="step reveal d1">
               <span className="step-num">Step 02</span>
               <div>
-                <h3>It handles every channel</h3>
-                <p>Inbound calls, SMS and WhatsApp messages get answered instantly.</p>
+                <h3>We text them back in seconds</h3>
+                <p>The AI texts the caller and answers questions about services, prices and hours, in English or Spanish.</p>
               </div>
             </div>
             <div className="step reveal d2">
               <span className="step-num">Step 03</span>
               <div>
-                <h3>It books into your calendar</h3>
-                <p>The AI checks live availability in Salon Ultimate or Vagaro, offers open slots, books the appointment, and sends the customer a confirmation.</p>
-              </div>
-            </div>
-            <div className="step reveal d3">
-              <span className="step-num">Step 04</span>
-              <div>
-                <h3>You stay in the loop</h3>
-                <p>Full conversation history in one inbox. Step in and take over any chat, any time. And if a caller ever needs a human, you or your manager is alerted instantly - no dead ends, no lost bookings.</p>
+                <h3>It books the appointment</h3>
+                <p>The AI checks live availability in Salon Ultimate, offers open slots, books the appointment, and sends a confirmation. Every conversation lands in one inbox, and you can step in any time.</p>
               </div>
             </div>
           </div>
@@ -269,20 +274,17 @@ const HairSalonBot = () => {
       <section id="integrations" style={{ padding: '100px 0' }}>
         <div className="wrap" style={{ maxWidth: '1000px' }}>
           <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 40px' }}>
-            <p className="eyebrow">Built for the software you already run</p>
-            <h2>Plugs into Salon Ultimate and Vagaro. Nothing new to learn.</h2>
+            <p className="eyebrow">Built for Salon Ultimate</p>
+            <h2>Books straight into your Salon Ultimate appointment book.</h2>
           </div>
-          <p className="reveal d1" style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '760px', margin: '0 auto 48px', textAlign: 'center' }}>No new system. No double entry. No retraining your staff, and no behavior change for your customers. Curivanta connects directly to the appointment book you already use. It reads your real availability and writes confirmed bookings into it. Whether a booking starts as a phone call or a text message, it lands in the same place: your appointment book. We handle the connection, the phone number, and the carrier registration. You change nothing about how you run your salon.</p>
-          <div className="service-grid">
+          <p className="reveal d1" style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8, maxWidth: '760px', margin: '0 auto 48px', textAlign: 'center' }}>No new system. No double entry. No retraining your staff, and no behavior change for your clients. Curivanta reads your real availability in Salon Ultimate and writes confirmed bookings into it, whether the booking starts as a text or a phone call. We handle the connection, the phone number, and the carrier registration. You change nothing about how you run your salon.</p>
+          <div className="service-grid" style={{ gridTemplateColumns: '1fr', maxWidth: '640px', margin: '0 auto' }}>
             <div className="service-card reveal d1">
               <h3>Salon Ultimate</h3>
-              <p>Books directly into your Salon Ultimate appointment book. Live availability checked on every call, confirmed appointments written back automatically. This is the exact setup running in my own salons today.</p>
-            </div>
-            <div className="service-card reveal d2">
-              <h3>Vagaro</h3>
-              <p>Connects through Vagaro's official developer API. Availability and bookings synced in real time, with your salon's approval handled as part of setup.</p>
+              <p>Live availability checked on every conversation, confirmed appointments written back automatically. This is the exact setup running in my own salons today.</p>
             </div>
           </div>
+          <p className="reveal d2" style={{ textAlign: 'center', marginTop: '24px', color: 'var(--bone-dimmer)', fontSize: '0.95rem' }}>Using different booking software? <a href="#contact" onClick={(e) => { e.preventDefault(); talkToUs(); }} style={{ color: 'var(--brass-light)' }}>Talk to us first</a>.</p>
         </div>
       </section>
 
@@ -292,9 +294,9 @@ const HairSalonBot = () => {
       <section id="hear-it" style={{ padding: '100px 0' }}>
         <div className="wrap" style={{ maxWidth: '800px', textAlign: 'center' }}>
           <div className="reveal">
-            <p className="eyebrow" style={{ marginBottom: '16px' }}>Hear it yourself</p>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '24px' }}>This isn't a script reading.</h2>
-            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>The Curivanta AI runs the front desk at my own two salons. Call our demo salon and try it yourself, any time.</p>
+            <p className="eyebrow" style={{ marginBottom: '16px' }}>Want us to answer the phone too?</p>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '24px' }}>Add Voice AI.</h2>
+            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>With a Voice plan, the AI picks up every call live, answers questions and books the appointment on the spot, 24/7, in English or Spanish. Missed-call text-back is included. This isn't a script reading: call our demo salon and hear it yourself.</p>
           </div>
           <div className="demo-call reveal d1">
             <p className="demo-call-label">Call the demo salon</p>
@@ -323,8 +325,8 @@ const HairSalonBot = () => {
         <div className="wrap" style={{ maxWidth: '800px' }}>
           <div className="reveal">
             <p className="eyebrow" style={{ marginBottom: '16px' }}>When the AI needs a human</p>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '32px' }}>It never guesses. It never dead-ends a caller.</h2>
-            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>Curivanta handles the everyday calls - bookings, hours, prices, directions, reschedules. When a caller needs something outside that playbook, it takes the details and alerts you or your manager instantly, so you can call or text back within minutes. Your customer always reaches a resolution; you always know what happened.</p>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '32px' }}>It never guesses. It never dead-ends a client.</h2>
+            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>Curivanta handles the everyday conversations - bookings, hours, prices, directions, reschedules. When a client needs something outside that playbook, it takes the details and alerts you or your manager instantly, so you can call or text back within minutes. Your client always reaches a resolution; you always know what happened.</p>
           </div>
           <div className="reveal d1" style={{ marginTop: '40px', padding: '32px 36px', background: 'var(--ink-soft)', border: '1px solid var(--line)', borderLeft: '3px solid var(--brass)', borderRadius: '12px' }}>
             <p style={{ fontSize: '1.15rem', color: 'var(--bone)', lineHeight: 1.7 }}>This is the part most AI receptionists skip. It's the part we watch closest - because a clean handoff isn't a failure. It's the feature.</p>
@@ -339,13 +341,46 @@ const HairSalonBot = () => {
           <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 60px' }}>
             <p className="eyebrow">Pricing</p>
             <h2>Simple plans. No contracts.</h2>
-            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Month to month, cancel anytime. Built and priced by an operator, not a software vendor.</p>
+            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Month to month, cancel anytime. Texting is included in every plan. Built and priced by an operator, not a software vendor.</p>
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '24px' }}>
-            {/* Starter Plan */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '24px' }}>
+            <div className="service-card reveal d1" style={{ display: 'flex', flexDirection: 'column', borderColor: 'var(--brass)', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: 0, right: 0, width: '200px', height: '200px', background: 'var(--brass)', filter: 'blur(100px)', opacity: 0.1, borderRadius: '50%' }}></div>
+              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)' }}>Text-Back: Most Popular</h3>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', margin: '16px 0' }}>
+                <span style={{ fontSize: '3.5rem', fontWeight: 'bold' }}>$99</span>
+                <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
+              </div>
+              <div style={{ fontSize: '0.85rem', marginBottom: '24px', display: 'flex', gap: '8px' }}>
+                <span style={{ textDecoration: 'line-through', color: 'var(--bone-dimmer)' }}>$99 setup</span>
+                <span style={{ color: 'var(--brass)' }}>$49 for new customers</span>
+              </div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Every missed call gets a text back within seconds
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> AI answers questions and books straight into Salon Ultimate
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Two-way texting
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Bilingual English &amp; Spanish
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Up to 150 missed calls handled a month
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Every conversation in one inbox. Step in any time
+                </li>
+              </ul>
+              <button type="button" className="btn solid" onClick={() => openBuilder('textback')} style={{ width: '100%', justifyContent: 'center' }}>Start with Text-Back</button>
+            </div>
+
             <div className="service-card reveal d1" style={{ display: 'flex', flexDirection: 'column' }}>
-              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)' }}>Starter: AI Voice</h3>
+              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)' }}>Voice: AI Answers Your Calls</h3>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', margin: '16px 0' }}>
                 <span style={{ fontSize: '3.5rem', fontWeight: 'bold' }}>$149</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
@@ -356,31 +391,26 @@ const HairSalonBot = () => {
               </div>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Every call answered, 24/7. No dead ends, no voicemail
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Everything in Text-Back
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> AI handles the full call: answers questions, checks availability, captures booking requests, no staff needed to pick up
+                  <span style={{ color: 'var(--brass)' }}>✓</span> AI picks up every call live, 24/7
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Bilingual English &amp; Spanish
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Answers questions and books on the call
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Works during peak hours and closed hours
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> 300 AI minutes a month included
-                </li>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Clean booking notification sent to your team
+                  <span style={{ color: 'var(--brass)' }}>✓</span> 300 AI voice minutes a month included
                 </li>
               </ul>
-              <button type="button" className="btn ghost" onClick={() => openBuilder('starter')} style={{ width: '100%', justifyContent: 'center' }}>Start with Starter</button>
+              <button type="button" className="btn ghost" onClick={() => openBuilder('starter')} style={{ width: '100%', justifyContent: 'center' }}>Start with Voice</button>
             </div>
 
-            {/* Autopilot Plan */}
-            <div className="service-card reveal d2" style={{ display: 'flex', flexDirection: 'column', borderColor: 'var(--brass)', position: 'relative', overflow: 'hidden' }}>
-              <div style={{ position: 'absolute', top: 0, right: 0, width: '200px', height: '200px', background: 'var(--brass)', filter: 'blur(100px)', opacity: 0.1, borderRadius: '50%' }}></div>
-              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)' }}>Autopilot: Fully Automated Booking</h3>
+            <div className="service-card reveal d1" style={{ display: 'flex', flexDirection: 'column' }}>
+              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)' }}>Voice Pro: For Busy Salons</h3>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', margin: '16px 0' }}>
                 <span style={{ fontSize: '3.5rem', fontWeight: 'bold' }}>$249</span>
                 <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
@@ -391,97 +421,36 @@ const HairSalonBot = () => {
               </div>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Voice + two-way SMS included, so customers can call or text to book
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Everything in Voice
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Fully hands-free, with zero manual action from the owner
-                </li>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Books appointments 24/7, even when closed
-                </li>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Eliminates booking errors and missed notifications
-                </li>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Owner/Manager/Receptionist completely freed from phone management
+                  <span style={{ color: 'var(--brass)' }}>✓</span> 1,000 AI voice minutes a month included
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Scales during Saturday rush without missing a booking
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> 1,000 AI minutes a month included
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Owner and front desk freed from phone management
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Usage overage billed at cost, no markup
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Voice overage billed at cost, no markup
                 </li>
               </ul>
-              <button type="button" className="btn solid" onClick={() => openBuilder('autopilot')} style={{ width: '100%', justifyContent: 'center' }}>Start with Autopilot</button>
+              <button type="button" className="btn ghost" onClick={() => openBuilder('autopilot')} style={{ width: '100%', justifyContent: 'center' }}>Start with Voice Pro</button>
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-            {/* WhatsApp Add-On */}
-            <div className="service-card reveal d1" style={{ display: 'flex', flexDirection: 'column' }}>
-              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ background: 'var(--brass)', color: 'var(--ink)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>W</span>
-                WhatsApp Add-On
-              </h3>
-              <div style={{ fontSize: '0.85rem', margin: '16px 0', display: 'flex', gap: '8px' }}>
-                <span style={{ textDecoration: 'line-through', color: 'var(--bone-dimmer)' }}>$49 setup</span>
-                <span style={{ color: 'var(--brass)' }}>FREE Setup</span>
-              </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '16px' }}>Add to Starter or Autopilot</p>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Untapped channel: competitors aren't using it
-                </li>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Immediate differentiation in Latino and Asian-dense markets
-                </li>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Meets families where they already communicate
-                </li>
-              </ul>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '16px' }}>
-                <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>$49</span>
-                <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
-              </div>
-              <button type="button" className="btn ghost" onClick={() => openBuilder('autopilot', 'whatsapp')} style={{ width: '100%', justifyContent: 'center' }}>Add WhatsApp</button>
+          <div className="service-card reveal d2" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '20px', marginTop: '24px' }}>
+            <span style={{ background: 'var(--brass)', color: 'var(--ink)', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 700, flex: 'none' }}>W</span>
+            <div style={{ flex: '1 1 280px' }}>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '6px' }}>WhatsApp Add-On: +$49/mo, free setup</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--bone-dim)' }}>Add to any plan. The same AI books over WhatsApp, an untapped channel that meets families where they already message.</p>
             </div>
-
-            {/* SMS Add-On */}
-            <div className="service-card reveal d2" style={{ display: 'flex', flexDirection: 'column' }}>
-              <h3 style={{ fontSize: '1.2rem', color: 'var(--bone-dim)', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ background: 'var(--brass)', color: 'var(--ink)', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>S</span>
-                SMS Add-On
-              </h3>
-              <div style={{ fontSize: '0.85rem', margin: '16px 0', display: 'flex', gap: '8px' }}>
-                <span style={{ textDecoration: 'line-through', color: 'var(--bone-dimmer)' }}>$49 setup</span>
-                <span style={{ color: 'var(--brass)' }}>$35 for new customers</span>
-              </div>
-              <p style={{ fontSize: '0.8rem', color: 'var(--bone-dimmer)', marginBottom: '8px' }}>Covers required SMS carrier/A2P registration.</p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--brass)', marginBottom: '16px' }}>Available on Starter only. Autopilot already includes SMS.</p>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Two-way text booking, so customers can text instead of call
-                </li>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Works alongside your existing Salon Ultimate reminders
-                </li>
-                <li style={{ display: 'flex', gap: '12px', fontSize: '0.85rem', color: 'var(--bone-dim)' }}>
-                  <span style={{ color: 'var(--brass)' }}>✓</span> Same AI, same inbox: one more way clients reach you
-                </li>
-              </ul>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '16px' }}>
-                <span style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>$49</span>
-                <span style={{ color: 'var(--bone-dim)' }}>/mo</span>
-              </div>
-              <button type="button" className="btn ghost" onClick={() => openBuilder('starter', 'sms')} style={{ width: '100%', justifyContent: 'center' }}>Add SMS</button>
-            </div>
+            <button type="button" className="btn ghost" onClick={() => openBuilder('textback', 'whatsapp')} style={{ flex: 'none' }}>Add WhatsApp</button>
           </div>
 
           <div className="reveal d3" style={{ background: 'var(--ink-soft)', border: '1px solid var(--line)', padding: '24px', borderRadius: '12px', textAlign: 'center', marginTop: '32px' }}>
-            <p style={{ color: 'var(--bone-dim)' }}>💡 If this system books just <strong>1 extra appointment per day</strong>, that's <strong style={{ color: 'var(--brass)' }}>$300–400/month</strong> in added revenue against a $149 cost.</p>
+            <p style={{ color: 'var(--bone-dim)' }}>💡 If text-back saves just <strong>1 booking a week</strong>, at a $30 haircut that's <strong style={{ color: 'var(--brass)' }}>$120/month</strong> back against a $99 cost. Most salons miss far more than one call a week.</p>
           </div>
           <p className="reveal d3" style={{ textAlign: 'center', marginTop: '20px', color: 'var(--bone-dimmer)', fontSize: '0.9rem' }}>Sign up online in minutes: no contract, cancel anytime, live in about a week. Not sure which plan? <a href="#contact" onClick={(e) => { e.preventDefault(); talkToUs(); }} style={{ color: 'var(--brass-light)' }}>Talk to us first</a>.</p>
         </div>
@@ -536,7 +505,7 @@ const HairSalonBot = () => {
           {status === 'sent' ? (
             <div className="reveal d2 is-visible form-success" role="status" style={{ background: 'var(--ink)', padding: '40px', borderRadius: '12px', border: '1px solid var(--line)' }}>
               <h3>Thanks, we've got it.</h3>
-              <p>We'll reach out within one business day to get your Hair Salon Bot set up.</p>
+              <p>We'll reach out within one business day to answer your questions and get you set up.</p>
             </div>
           ) : (
           <form
