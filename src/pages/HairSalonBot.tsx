@@ -21,8 +21,8 @@ const faqs = [
     a: "Salon Ultimate. The AI reads your live availability and writes confirmed bookings straight into your appointment book, so your staff keeps using the same calendar. Using something else? Talk to us first."
   },
   {
-    q: "Can I add voice answering?",
-    a: "Yes. With the Voice plans, the AI picks up every call live, in English or Spanish, and books it on the spot. Missed-call text-back is included in every plan."
+    q: "Can the AI answer the phone instead?",
+    a: "Yes. With the Voice plans, the AI picks up every call live, in English or Spanish, and books it on the spot, so callers never reach voicemail. Voice plans answer calls instead of texting back missed ones."
   },
   {
     q: "What happens after hours?",
@@ -202,7 +202,7 @@ const HairSalonBot = () => {
               <a className="btn solid" href="#contact" onClick={openChatDemo} data-where="hero_demo">Try the Demo: Chat or Talk</a>
               <a className="btn ghost" href="#pricing" data-umami-event="salon_cta" data-umami-event-where="hero_get_started">See Pricing</a>
             </div>
-            <p className="hero-demo-line reveal is-visible">Want the AI to answer calls too? Hear it live: <a href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hero">{DEMO_PHONE}</a></p>
+            <p className="hero-demo-line reveal is-visible">Prefer the AI to answer your calls? Hear it live: <a href={DEMO_PHONE_TEL} data-umami-event="salon_demo_call" data-umami-event-where="hero">{DEMO_PHONE}</a></p>
             <ul className="hero-highlights reveal is-visible">
               <li>No contracts, month to month</li>
               <li>Done-for-you setup, 100% remote. Live in days</li>
@@ -294,9 +294,9 @@ const HairSalonBot = () => {
       <section id="hear-it" style={{ padding: '100px 0' }}>
         <div className="wrap" style={{ maxWidth: '800px', textAlign: 'center' }}>
           <div className="reveal">
-            <p className="eyebrow" style={{ marginBottom: '16px' }}>Want us to answer the phone too?</p>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '24px' }}>Add Voice AI.</h2>
-            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>With a Voice plan, the AI picks up every call live, answers questions and books the appointment on the spot, 24/7, in English or Spanish. Missed-call text-back is included. This isn't a script reading: call our demo salon and hear it yourself.</p>
+            <p className="eyebrow" style={{ marginBottom: '16px' }}>Rather have every call answered?</p>
+            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '24px' }}>Choose Voice AI.</h2>
+            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>With a Voice plan, the AI picks up every call live, answers questions and books the appointment on the spot, 24/7, in English or Spanish, so no caller ever reaches voicemail. This isn't a script reading: call our demo salon and hear it yourself.</p>
           </div>
           <div className="demo-call reveal d1">
             <p className="demo-call-label">Call the demo salon</p>
@@ -341,7 +341,7 @@ const HairSalonBot = () => {
           <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 60px' }}>
             <p className="eyebrow">Pricing</p>
             <h2>Simple plans. No contracts.</h2>
-            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Month to month, cancel anytime. Texting is included in every plan. Built and priced by an operator, not a software vendor.</p>
+            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Month to month, cancel anytime. Built and priced by an operator, not a software vendor.</p>
           </div>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: '24px' }}>

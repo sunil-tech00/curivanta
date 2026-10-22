@@ -9,8 +9,8 @@ type Software = 'salon_ultimate' | 'other';
 
 const PLANS: Record<PlanId, { label: string; monthly: number; setup: number; setupWas: number; detail: string }> = {
   textback: { label: 'Text-Back', monthly: 99, setup: 49, setupWas: 99, detail: 'Missed-call text-back + AI text booking. Up to 150 missed calls a month' },
-  starter: { label: 'Voice', monthly: 149, setup: 49, setupWas: 99, detail: 'Text-Back + AI answers your calls. 300 voice minutes a month' },
-  autopilot: { label: 'Voice Pro', monthly: 249, setup: 149, setupWas: 199, detail: 'Text-Back + AI answers your calls. 1,000 voice minutes a month' }
+  starter: { label: 'Voice', monthly: 149, setup: 49, setupWas: 99, detail: 'AI answers your calls live. 300 voice minutes a month' },
+  autopilot: { label: 'Voice Pro', monthly: 249, setup: 149, setupWas: 199, detail: 'AI answers your calls live. 1,000 voice minutes a month' }
 };
 const ADDONS: Record<AddonId, { label: string; monthly: number; setup: number; note: string; plans: PlanId[] }> = {
   whatsapp: { label: 'WhatsApp Add-On', monthly: 49, setup: 0, note: 'Free setup', plans: ['textback', 'starter', 'autopilot'] }
@@ -95,7 +95,6 @@ export function SalonPlanBuilder({ open, onOpenChange, initialPlan, initialAddon
               <span className="pb-opt-price">+${ADDONS[id].monthly}<small>/mo</small></span>
             </label>
           ))}
-          <p className="pb-note">Two-way texting is included in every plan.</p>
         </fieldset>
 
         <fieldset className="pb-group">
