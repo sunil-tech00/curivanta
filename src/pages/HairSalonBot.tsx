@@ -25,6 +25,10 @@ const faqs = [
     a: "Yes. With the Voice plans, the AI picks up every call live, in English or Spanish, and books it on the spot, so callers never reach voicemail. Voice plans answer calls instead of texting back missed ones."
   },
   {
+    q: "Can clients text to book instead of calling?",
+    a: "Yes. Clients can text your number any time and the same AI books them. It's included in Text-Back and Voice Pro, and available on Voice with the Text Booking add-on ($49/mo). Each includes 500 texts a month, about 50 text bookings."
+  },
+  {
     q: "What happens after hours?",
     a: "The same as during the day: if a call isn't answered, the caller gets a text within seconds and can book right there. After hours it books into your next open slots, so you can open the salon to new appointments."
   },
@@ -296,7 +300,7 @@ const HairSalonBot = () => {
           <div className="reveal">
             <p className="eyebrow" style={{ marginBottom: '16px' }}>Rather have every call answered?</p>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '24px' }}>Choose Voice AI.</h2>
-            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>With a Voice plan, the AI picks up every call live, answers questions and books the appointment on the spot, 24/7, in English or Spanish, so no caller ever reaches voicemail. This isn't a script reading: call our demo salon and hear it yourself.</p>
+            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>With a Voice plan, the AI picks up every call live, answers questions and books the appointment on the spot, 24/7, in English or Spanish, so no caller ever reaches voicemail. Want clients to text you too? It's included in Voice Pro and a $49 add-on for Voice. This isn't a script reading: call our demo salon and hear it yourself.</p>
           </div>
           <div className="demo-call reveal d1">
             <p className="demo-call-label">Call the demo salon</p>
@@ -373,6 +377,9 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> Up to 150 missed calls handled a month
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Clients can also text you any time to book
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Every conversation in one inbox. Step in any time
                 </li>
               </ul>
@@ -402,6 +409,9 @@ const HairSalonBot = () => {
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> 300 AI voice minutes a month included
                 </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Add Text Booking: +$49/mo
+                </li>
               </ul>
               <button type="button" className="btn ghost" onClick={() => openBuilder('starter')} style={{ width: '100%', justifyContent: 'center' }}>Start with Voice</button>
             </div>
@@ -424,6 +434,9 @@ const HairSalonBot = () => {
                   <span style={{ color: 'var(--brass)' }}>✓</span> 1,000 AI voice minutes a month included
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
+                  <span style={{ color: 'var(--brass)' }}>✓</span> Clients can also text to book (500 texts a month)
+                </li>
+                <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
                   <span style={{ color: 'var(--brass)' }}>✓</span> Scales during Saturday rush without missing a booking
                 </li>
                 <li style={{ display: 'flex', gap: '12px', fontSize: '0.9rem', color: 'var(--bone-dim)' }}>
@@ -435,6 +448,15 @@ const HairSalonBot = () => {
               </ul>
               <button type="button" className="btn ghost" onClick={() => openBuilder('autopilot')} style={{ width: '100%', justifyContent: 'center' }}>Start with Voice Pro</button>
             </div>
+          </div>
+
+          <div className="service-card reveal d2" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '20px', marginTop: '24px' }}>
+            <span style={{ background: 'var(--brass)', color: 'var(--ink)', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 700, flex: 'none' }}>T</span>
+            <div style={{ flex: '1 1 280px' }}>
+              <h3 style={{ fontSize: '1.2rem', marginBottom: '6px' }}>Text Booking Add-On: +$49/mo, $35 setup</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--bone-dim)' }}>For the Voice plan. Clients can text your number to book and the same AI handles it. Up to 500 texts a month (about 50 text bookings). Already included in Text-Back and Voice Pro.</p>
+            </div>
+            <button type="button" className="btn ghost" onClick={() => openBuilder('starter', 'textbooking')} style={{ flex: 'none' }}>Add Text Booking</button>
           </div>
 
           <div className="service-card reveal d2" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '20px', marginTop: '24px' }}>

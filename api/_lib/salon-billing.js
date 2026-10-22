@@ -4,16 +4,17 @@ import { notifyGhl } from "./ghl.js";
 // Hair Salon Bot subscriptions, sold per location through Stripe Checkout.
 // Prices live here (not in Stripe) so the page and checkout can't disagree; amounts in cents.
 // The setup fee is charged at checkout; the monthly fee starts after a 14-day setup period.
-// Text-Back: missed-call text-back with AI text booking (500 texts a month). Voice / Voice Pro: AI answers
-// calls live instead (text-back and voice can't run together). Ids starter/autopilot are kept for existing subscriptions.
+// Text-Back: missed-call text-back plus inbound text booking. Voice / Voice Pro: AI answers calls live instead
+// (text-back and voice can't run together). Clients can text to book on Text-Back and Voice Pro, and on Voice with
+// the Text Booking add-on; each comes with 500 texts a month. Ids starter/autopilot are kept for existing subscriptions.
 export const PLANS = {
-  textback: { name: "Hair Salon Bot: Text-Back", monthly: 9900, setup: 4900, minutes: 0 },
-  starter: { name: "Hair Salon Bot: Voice", monthly: 14900, setup: 4900, minutes: 300 },
-  autopilot: { name: "Hair Salon Bot: Voice Pro", monthly: 24900, setup: 14900, minutes: 1000 }
+  textback: { name: "Hair Salon Bot: Text-Back", monthly: 9900, setup: 4900, minutes: 0, includes: "Missed-call text-back and text booking, 500 texts" },
+  starter: { name: "Hair Salon Bot: Voice", monthly: 14900, setup: 4900, minutes: 300, includes: "300 AI voice minutes" },
+  autopilot: { name: "Hair Salon Bot: Voice Pro", monthly: 24900, setup: 14900, minutes: 1000, includes: "1,000 AI voice minutes and text booking, 500 texts" }
 };
-export const TEXTS = 500;
 export const ADDONS = {
   whatsapp: { name: "WhatsApp Add-On", monthly: 4900, setup: 0, plans: ["textback", "starter", "autopilot"] },
+  textbooking: { name: "Text Booking Add-On (500 texts a month)", monthly: 4900, setup: 3500, plans: ["starter"] }, // Voice only: Text-Back and Voice Pro include it
   sms: { name: "SMS Add-On", monthly: 4900, setup: 3500, plans: [] } // retired; kept so older orders still read correctly
 };
 export const SOFTWARE = { salon_ultimate: "Salon Ultimate" };
@@ -42,7 +43,7 @@ export async function createSalonCheckout(order, origin) {
   const p = PLANS[plan];
   const line_items = [
     { quantity: 1, price_data: { ...money(p.monthly), recurring: { interval: "month" },
-      product_data: { name: p.name, description: `${p.minutes ? `${p.minutes.toLocaleString("en-US")} AI voice minutes` : `Missed-call text-back, ${TEXTS} texts`} a month included. One salon location. No contract.` } } },
+      product_data: { name: p.name, description: `${p.includes} a month included. One salon location. No contract.` } } },
     { quantity: 1, price_data: { ...money(p.setup), product_data: { name: `${p.name.replace("Hair Salon Bot: ", "")} setup (one-time)` } } }
   ];
   for (const a of addons) {

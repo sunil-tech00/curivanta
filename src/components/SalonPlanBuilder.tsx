@@ -4,16 +4,17 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 // Plan builder for buying the Hair Salon Bot directly (one location per checkout).
 // Prices mirror api/_lib/salon-billing.js, which is what Stripe actually charges.
 export type PlanId = 'textback' | 'starter' | 'autopilot';
-export type AddonId = 'whatsapp';
+export type AddonId = 'whatsapp' | 'textbooking';
 type Software = 'salon_ultimate' | 'other';
 
 const PLANS: Record<PlanId, { label: string; monthly: number; setup: number; setupWas: number; detail: string }> = {
-  textback: { label: 'Text-Back', monthly: 99, setup: 49, setupWas: 99, detail: 'Missed-call text-back + AI text booking. Up to 150 missed calls a month' },
+  textback: { label: 'Text-Back', monthly: 99, setup: 49, setupWas: 99, detail: 'Missed-call text-back + clients can text to book. Up to 150 missed calls a month' },
   starter: { label: 'Voice', monthly: 149, setup: 49, setupWas: 99, detail: 'AI answers your calls live. 300 voice minutes a month' },
-  autopilot: { label: 'Voice Pro', monthly: 249, setup: 149, setupWas: 199, detail: 'AI answers your calls live. 1,000 voice minutes a month' }
+  autopilot: { label: 'Voice Pro', monthly: 249, setup: 149, setupWas: 199, detail: 'AI answers your calls live + clients can text to book. 1,000 voice minutes a month' }
 };
 const ADDONS: Record<AddonId, { label: string; monthly: number; setup: number; note: string; plans: PlanId[] }> = {
-  whatsapp: { label: 'WhatsApp Add-On', monthly: 49, setup: 0, note: 'Free setup', plans: ['textback', 'starter', 'autopilot'] }
+  whatsapp: { label: 'WhatsApp Add-On', monthly: 49, setup: 0, note: 'Free setup', plans: ['textback', 'starter', 'autopilot'] },
+  textbooking: { label: 'Text Booking Add-On', monthly: 49, setup: 35, note: 'Clients can text to book. 500 texts a month. $35 setup covers carrier registration', plans: ['starter'] }
 };
 const SETUP_DAYS = 14;
 
@@ -88,6 +89,7 @@ export function SalonPlanBuilder({ open, onOpenChange, initialPlan, initialAddon
 
         <fieldset className="pb-group">
           <legend>Add-ons</legend>
+          {plan !== 'starter' && <p className="pb-note">Text booking is already included in {p.label}.</p>}
           {available.map((id) => (
             <label key={id} className={`pb-option${chosen.includes(id) ? ' on' : ''}`}>
               <input type="checkbox" checked={chosen.includes(id)} onChange={() => toggle(id)} />
@@ -116,7 +118,7 @@ export function SalonPlanBuilder({ open, onOpenChange, initialPlan, initialAddon
           </div>
         ) : (
           <div className="pb-summary">
-            <div className="pb-line"><span>Due today: {p.label} setup</span><strong>${dueToday}</strong></div>
+            <div className="pb-line"><span>Due today: {p.label} setup{chosen.includes('textbooking') ? ' + Text Booking setup' : ''}</span><strong>${dueToday}</strong></div>
             <div className="pb-line"><span>Then monthly, starting {startDate}</span><strong>${monthly}/mo</strong></div>
             <p className="pb-fine">Setup is ${p.setup} for new customers (normally ${p.setupWas}) and covers your Salon Ultimate connection and text message carrier registration. Your monthly fee starts after a {SETUP_DAYS}-day setup period. If we can't connect your booking software, or you cancel before go-live, your setup fee is refunded in full.</p>
             {error && <p className="form-error" role="alert">{error}</p>}
