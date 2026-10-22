@@ -3,17 +3,17 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/compone
 
 // Plan builder for buying the Hair Salon Bot directly (one location per checkout).
 // Prices mirror api/_lib/salon-billing.js, which is what Stripe actually charges.
-export type PlanId = 'starter' | 'autopilot';
-export type AddonId = 'whatsapp' | 'sms';
-type Software = 'salon_ultimate' | 'vagaro' | 'other';
+export type PlanId = 'textback' | 'starter' | 'autopilot';
+export type AddonId = 'whatsapp';
+type Software = 'salon_ultimate' | 'other';
 
-const PLANS: Record<PlanId, { label: string; monthly: number; setup: number; setupWas: number; minutes: string }> = {
-  starter: { label: 'Starter: AI Voice', monthly: 149, setup: 49, setupWas: 99, minutes: '300' },
-  autopilot: { label: 'Autopilot: Fully Automated Booking', monthly: 249, setup: 149, setupWas: 199, minutes: '1,000' }
+const PLANS: Record<PlanId, { label: string; monthly: number; setup: number; setupWas: number; detail: string }> = {
+  textback: { label: 'Text-Back', monthly: 99, setup: 49, setupWas: 99, detail: 'Missed-call text-back + AI text booking. Up to 150 missed calls a month' },
+  starter: { label: 'Voice', monthly: 149, setup: 49, setupWas: 99, detail: 'Text-Back + AI answers your calls. 300 voice minutes a month' },
+  autopilot: { label: 'Voice Pro', monthly: 249, setup: 149, setupWas: 199, detail: 'Text-Back + AI answers your calls. 1,000 voice minutes a month' }
 };
 const ADDONS: Record<AddonId, { label: string; monthly: number; setup: number; note: string; plans: PlanId[] }> = {
-  whatsapp: { label: 'WhatsApp Add-On', monthly: 49, setup: 0, note: 'Free setup', plans: ['starter', 'autopilot'] },
-  sms: { label: 'SMS Add-On', monthly: 49, setup: 35, note: '$35 setup, covers carrier registration', plans: ['starter'] }
+  whatsapp: { label: 'WhatsApp Add-On', monthly: 49, setup: 0, note: 'Free setup', plans: ['textback', 'starter', 'autopilot'] }
 };
 const SETUP_DAYS = 14;
 
@@ -80,7 +80,7 @@ export function SalonPlanBuilder({ open, onOpenChange, initialPlan, initialAddon
           {(Object.keys(PLANS) as PlanId[]).map((id) => (
             <label key={id} className={`pb-option${plan === id ? ' on' : ''}`}>
               <input type="radio" name="pb-plan" checked={plan === id} onChange={() => setPlan(id)} />
-              <span className="pb-opt-main">{PLANS[id].label}<small>{PLANS[id].minutes} AI minutes a month included</small></span>
+              <span className="pb-opt-main">{PLANS[id].label}<small>{PLANS[id].detail}</small></span>
               <span className="pb-opt-price">${PLANS[id].monthly}<small>/mo</small></span>
             </label>
           ))}
@@ -95,13 +95,13 @@ export function SalonPlanBuilder({ open, onOpenChange, initialPlan, initialAddon
               <span className="pb-opt-price">+${ADDONS[id].monthly}<small>/mo</small></span>
             </label>
           ))}
-          {plan === 'autopilot' && <p className="pb-note">Two-way SMS is already included in Autopilot.</p>}
+          <p className="pb-note">Two-way texting is included in every plan.</p>
         </fieldset>
 
         <fieldset className="pb-group">
           <legend>Your booking software</legend>
           <div className="pb-software">
-            {([['salon_ultimate', 'Salon Ultimate'], ['vagaro', 'Vagaro'], ['other', 'Something else']] as [Software, string][]).map(([id, label]) => (
+            {([['salon_ultimate', 'Salon Ultimate'], ['other', 'Something else']] as [Software, string][]).map(([id, label]) => (
               <label key={id} className={`pb-chip${software === id ? ' on' : ''}`}>
                 <input type="radio" name="pb-software" checked={software === id} onChange={() => setSoftware(id)} />
                 {label}
@@ -112,14 +112,14 @@ export function SalonPlanBuilder({ open, onOpenChange, initialPlan, initialAddon
 
         {software === 'other' ? (
           <div className="pb-summary">
-            <p>We connect to Salon Ultimate and Vagaro today. Tell us what you use and we'll let you know if we can set you up.</p>
+            <p>We connect to Salon Ultimate today. Tell us what you use and we'll let you know if we can set you up.</p>
             <button type="button" className="btn solid full-width" onClick={() => { onOpenChange(false); onTalkToUs(); }}>Talk to us first</button>
           </div>
         ) : (
           <div className="pb-summary">
-            <div className="pb-line"><span>Due today: {p.label.split(':')[0]} setup{chosen.some((a) => ADDONS[a].setup) ? ' + SMS setup' : ''}</span><strong>${dueToday}</strong></div>
+            <div className="pb-line"><span>Due today: {p.label} setup</span><strong>${dueToday}</strong></div>
             <div className="pb-line"><span>Then monthly, starting {startDate}</span><strong>${monthly}/mo</strong></div>
-            <p className="pb-fine">Setup is ${p.setup} for new customers (normally ${p.setupWas}). Your monthly fee starts after a {SETUP_DAYS}-day setup period. If we can't connect your booking software, or you cancel before go-live, your setup fee is refunded in full.</p>
+            <p className="pb-fine">Setup is ${p.setup} for new customers (normally ${p.setupWas}) and covers your Salon Ultimate connection and text message carrier registration. Your monthly fee starts after a {SETUP_DAYS}-day setup period. If we can't connect your booking software, or you cancel before go-live, your setup fee is refunded in full.</p>
             {error && <p className="form-error" role="alert">{error}</p>}
             <button type="button" className="btn solid full-width" onClick={checkout} disabled={busy}>
               {busy ? 'Opening secure checkout…' : 'Continue to secure checkout →'}

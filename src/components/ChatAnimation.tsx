@@ -1,19 +1,17 @@
 import { useEffect, useState, useRef } from 'react';
 
+// Missed call → instant text-back → AI books the appointment.
 const messages = [
-  { text: "It's a great day at Curivanta Cuts. How can I help you today? Are you looking to book an appointment or have questions about our services?", type: 'ai' },
-  { text: "Book", type: 'user' },
-  { text: "Great! What date would you like to schedule your appointment for?", type: 'ai' },
-  { text: "July 2", type: 'user' },
-  { text: "Thanks! What type of service would you like to book? (For example: boys haircut, girls haircut, first haircut, buzz cut, bang trim, or minicure)", type: 'ai' },
-  { text: "Boys cut", type: 'user' },
-  { text: "Do you have a stylist preference, or should I select \"any\" available stylist for you?", type: 'ai' },
-  { text: "Any", type: 'user' },
-  { text: "Great! Here are the available times for July 2: 10:00 AM, 11:30 AM, 2:00 PM, 4:00 PM. Which time works best for you?", type: 'ai' },
-  { text: "2:00 PM", type: 'user' },
-  { text: "Thank you! Can you please provide the name for the appointment?", type: 'ai' },
+  { text: "Missed call · 2:14 PM", type: 'system' },
+  { text: "Hi, this is Curivanta Cuts! Sorry we missed your call. I can book you right here by text. What can I help you with?", type: 'ai' },
+  { text: "Can I get a haircut Saturday?", type: 'user' },
+  { text: "Of course! Is that for you or a child, and do you have a stylist preference?", type: 'ai' },
+  { text: "Just me, anyone is fine", type: 'user' },
+  { text: "Saturday I have 10:00 AM, 11:30 AM or 2:00 PM open. Which works best?", type: 'ai' },
+  { text: "11:30", type: 'user' },
+  { text: "Great. What name should I put the appointment under?", type: 'ai' },
   { text: "Andrea Smith", type: 'user' },
-  { text: "Perfect! We have you down for July 2 at 2:00 PM for a Boys cut with any available stylist. We will send a confirmation text shortly. See you then!", type: 'ai' }
+  { text: "You're booked, Andrea: haircut on Saturday at 11:30 AM. A confirmation is on its way. See you then!", type: 'ai' }
 ];
 
 export const ChatAnimation = () => {
@@ -76,7 +74,11 @@ export const ChatAnimation = () => {
       </div>
       
       <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-4 pb-20 flex flex-col scrollbar-hide" style={{ background: 'var(--ink)' }}>
-        {messages.slice(0, visibleMessages).map((msg, idx) => (
+        {messages.slice(0, visibleMessages).map((msg, idx) => msg.type === 'system' ? (
+          <div key={idx} style={{ alignSelf: 'center', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: '#ef7b6e', background: 'rgba(239,123,110,0.1)', padding: '6px 12px', borderRadius: '999px', animation: 'fadeUp 0.3s ease forwards' }}>
+            <span aria-hidden="true">📞</span> {msg.text}
+          </div>
+        ) : (
           <div key={idx} style={{ 
             background: msg.type === 'ai' ? 'var(--ink-soft)' : 'var(--brass)', 
             color: msg.type === 'ai' ? 'var(--bone)' : '#ffffff',

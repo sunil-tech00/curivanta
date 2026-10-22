@@ -10,10 +10,10 @@ const SITE = "https://curivanta.com";
 const PAGES = [
   {
     route: "/hair-salon-bot",
-    title: "Hair Salon Bot: AI Front Desk for Salons | Curivanta",
-    description: "An AI front desk that answers your salon's calls, texts and WhatsApp 24/7 and books straight into Salon Ultimate or Vagaro. No contracts, live in about a week.",
+    title: "Hair Salon Bot: Missed-Call Text-Back for Salons | Curivanta",
+    description: "Every missed call gets a text back within seconds, and AI books the appointment straight into Salon Ultimate. From $99/month, no contracts, live in about a week.",
     image: "/brand/og-hair-salon-bot.jpg",
-    imageAlt: "Curivanta Hair Salon Bot: never miss a call, text or appointment again"
+    imageAlt: "Curivanta Hair Salon Bot: missed a call? We text them back and book them"
   },
   {
     route: "/reviewautomation",
