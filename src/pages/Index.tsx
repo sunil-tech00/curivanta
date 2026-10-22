@@ -139,9 +139,33 @@ const Index = () => {
         <div className="wrap">
           <div className="section-head reveal">
             <p className="eyebrow">What we build</p>
-            <h2 className="md:whitespace-nowrap">Four ways to take manual work off your plate.</h2>
+            <h2 className="md:whitespace-nowrap">Six ways to take manual work off your plate.</h2>
+            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Two products ready to switch on, and four services built around your business.</p>
           </div>
           <div className="service-grid">
+            <div className="service-card reveal d1" style={{ borderColor: 'var(--brass)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <svg viewBox="0 0 34 34" fill="none">
+                  <path d="M9 13v8a1 1 0 0 0 1 1h1l3 4v-4h9a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H10a1 1 0 0 0-1 1z" stroke="#4d6bf6" strokeWidth="1.6" strokeLinejoin="round"/>
+                  <path d="M14 17v.01M17 17v.01M20 17v.01" stroke="#7c93ff" strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+                <span className="svc-tag">Ready to switch on</span>
+              </div>
+              <h3>Hair Salon Bot</h3>
+              <p>Missed-call text-back and conversational booking for salons. When a call goes unanswered, the AI texts back within seconds, answers questions, and books the appointment straight into Salon Ultimate: not a link, not a separate calendar. Voice answering available when you want every call picked up live.</p>
+              <Link className="svc-link" to="/hair-salon-bot" data-umami-event="home_product" data-umami-event-product="hair_salon_bot">See the Hair Salon Bot →</Link>
+            </div>
+            <div className="service-card reveal d2" style={{ borderColor: 'var(--brass)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <svg viewBox="0 0 34 34" fill="none">
+                  <path d="M17 5l3.6 7.3 8 1.2-5.8 5.6 1.4 8L17 23.3l-7.2 3.8 1.4-8-5.8-5.6 8-1.2z" stroke="#4d6bf6" strokeWidth="1.6" strokeLinejoin="round"/>
+                </svg>
+                <span className="svc-tag">Ready to switch on</span>
+              </div>
+              <h3>Review Automation</h3>
+              <p>More reviews, every one answered. Review requests go out automatically after each visit, every Google review gets an AI-written reply, and negatives are routed to you first. No review gating, in line with Google's rules.</p>
+              <Link className="svc-link" to="/reviewautomation" data-umami-event="home_product" data-umami-event-product="review_automation">See Review Automation →</Link>
+            </div>
             <div className="service-card reveal d1">
               <svg viewBox="0 0 34 34" fill="none">
                 <path d="M6 17h9M15 17l-3-3M15 17l-3 3" stroke="#4d6bf6" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -149,7 +173,7 @@ const Index = () => {
                 <circle cx="17" cy="17" r="15" stroke="#4d6bf6" strokeWidth="1" opacity="0.4"/>
               </svg>
               <h3>AI Workflow Automation</h3>
-              <p>The busywork that eats your week - lead follow-up, appointment reminders, review requests, internal reporting; rebuilt as automated workflows that run without you touching them.</p>
+              <p>The busywork that eats your week: lead follow-up, appointment reminders, rebooking nudges, internal reporting. Rebuilt as automated workflows that run without you touching them.</p>
             </div>
             <div className="service-card reveal d2">
               <svg viewBox="0 0 34 34" fill="none">
@@ -163,18 +187,21 @@ const Index = () => {
             </div>
             <div className="service-card reveal d1">
               <svg viewBox="0 0 34 34" fill="none">
-                <path d="M9 13v8a1 1 0 0 0 1 1h1l3 4v-4h9a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1H10a1 1 0 0 0-1 1z" stroke="#4d6bf6" strokeWidth="1.6" strokeLinejoin="round"/>
-                <path d="M14 17v.01M17 17v.01M20 17v.01" stroke="#7c93ff" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M12 10l-7 7 7 7M22 10l7 7-7 7" stroke="#4d6bf6" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M19 7l-4 20" stroke="#7c93ff" strokeWidth="1.6" strokeLinecap="round"/>
               </svg>
-              <h3>Voice Bots</h3>
-              <p>A phone line that never goes to voicemail. Answers calls in your business's own voice, books real appointments, day or night.</p>
+              <h3>Custom Application Development</h3>
+              <p>When no off-the-shelf tool fits, we build the one that does: quoting and sizing tools, internal dashboards, customer portals. Scoped to the one problem you're solving, built on infrastructure you own, with no per-seat rent on your own tool.</p>
             </div>
             <div className="service-card reveal d2">
               <svg viewBox="0 0 34 34" fill="none">
-                <path d="M8 22c-2.5-1.8-4-4.5-4-7.5C4 9.3 9.8 5 17 5s13 4.3 13 9.5S24.2 24 17 24c-1.4 0-2.7-.2-4-.5L8 26z" stroke="#4d6bf6" strokeWidth="1.6" strokeLinejoin="round"/>
+                <circle cx="8" cy="17" r="4" stroke="#4d6bf6" strokeWidth="1.6"/>
+                <circle cx="26" cy="9" r="4" stroke="#4d6bf6" strokeWidth="1.6"/>
+                <circle cx="26" cy="25" r="4" stroke="#4d6bf6" strokeWidth="1.6"/>
+                <path d="M12 15.5l10-4.5M12 18.5l10 4.5" stroke="#7c93ff" strokeWidth="1.6" strokeLinecap="round"/>
               </svg>
-              <h3>Conversation Bots</h3>
-              <p>SMS, WhatsApp, and web chat that qualifies leads and books meetings while you're with a customer; not stuck answering your phone.</p>
+              <h3>Custom Integrations</h3>
+              <p>Your phone, booking software, CRM, and inbox don't talk to each other, so your staff re-types everything. We build the connections: APIs and middleware that move calls, bookings, and customer data between the tools you already use, in real time. Our salon bots book through exactly this kind of bridge.</p>
             </div>
           </div>
         </div>
