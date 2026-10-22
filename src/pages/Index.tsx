@@ -121,7 +121,7 @@ const Index = () => {
               AI consulting &amp; automation for small business
             </p>
             <h1 className="reveal is-visible">Turn every customer interaction<br />into something that<br /><em>runs itself.</em></h1>
-            <p className="sub reveal is-visible">Curivanta helps small businesses win more customers with AI workflows, websites, voice agents, and chat automation. Built by an owner who was tired of doing everything by hand.</p>
+            <p className="sub reveal is-visible">Curivanta helps small businesses answer every call, book every appointment, and answer every review, with AI workflows, websites, and custom builds wired into the tools you already use. Built by an owner who was tired of doing everything by hand.</p>
             <div className="cta-row reveal is-visible">
               <a className="btn solid" href="#contact" data-umami-event="cta_book_audit" data-umami-event-where="hero">Book a free automation audit</a>
               <a className="btn ghost" href="#services" data-umami-event="cta_see_services" data-umami-event-where="hero">See what we build</a>
