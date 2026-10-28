@@ -603,10 +603,6 @@ footer .foot-services { display: flex; flex-wrap: wrap; justify-content: center;
   .ws-step-num { margin-bottom: 0; }
 }
 
-/* Bio */
-.ws-bio { display: grid; grid-template-columns: 120px 1fr; gap: 36px; align-items: start; }
-.ws-avatar { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--brass); background: rgba(77,107,246,0.12); color: var(--brass-light); font-family: var(--serif); font-size: 2.6rem; display: flex; align-items: center; justify-content: center; }
-@media (max-width: 640px) { .ws-bio { grid-template-columns: 1fr; gap: 20px; } .ws-avatar { width: 88px; height: 88px; font-size: 2rem; } }
 
 /* Concept request form */
 .ws-form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; background: var(--ink); padding: 36px; border-radius: 12px; border: 1px solid var(--line); text-align: left; }

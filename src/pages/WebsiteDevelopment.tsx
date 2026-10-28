@@ -17,8 +17,7 @@ const SITE = {
   CONCEPT_DAYS: '5 business days',
   LAUNCH_WEEKS: '2–3 weeks',
   CONCEPTS_PER_MONTH: '3',
-  CONTACT_EMAIL: 'hello@curivanta.com',
-  BIO_YEARS: '' // e.g. '20+'. While empty, the bio opens without a number.
+  CONTACT_EMAIL: 'hello@curivanta.com'
 };
 
 const TITLE = 'Website Design for Local Practices & Service Businesses | Curivanta';
@@ -547,25 +546,6 @@ const WebsiteDevelopment = () => {
               </li>
             ))}
           </ol>
-        </div>
-      </section>
-
-      <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
-
-      <section id="about" style={{ padding: '100px 0' }}>
-        <div className="wrap" style={{ maxWidth: '860px' }}>
-          <div className="section-head reveal" style={{ margin: '0 0 36px' }}>
-            <p className="eyebrow">Your builder</p>
-            <h2>Who's building your site.</h2>
-          </div>
-          <div className="ws-bio reveal d1">
-            <div className="ws-avatar" aria-hidden="true">SN</div>
-            <div>
-              <p style={{ color: 'var(--bone)', fontWeight: 600, fontSize: '1.1rem', marginBottom: '12px' }}>Sunil Nair, Founder, Curivanta</p>
-              <p className="ws-lead">{SITE.BIO_YEARS ? `${SITE.BIO_YEARS} years` : 'A career'} in technology leadership, including serving as a chief technology officer and leading AI and automation for a global data company. I also own and operate two local service businesses, so I know what it takes to turn a search into a booked appointment. You work with me directly: no sales team, no support queue.</p>
-              <div style={{ marginTop: '28px' }}><ConceptCta where="bio" /></div>
-            </div>
-          </div>
         </div>
       </section>
 
