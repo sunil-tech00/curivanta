@@ -21,6 +21,14 @@ const PAGES = [
     description: "Every client gets a friendly text and email asking for a Google review, and every review gets a reply from AI. Works with any booking software. First month free.",
     image: "/brand/og-review-automation.jpg",
     imageAlt: "Curivanta Review Automation: happy clients, now on Google"
+  },
+  {
+    route: "/website-development",
+    title: "Website Design for Local Practices & Service Businesses | Curivanta",
+    description: "Websites that get local businesses found on Google and booked online. Free homepage concept, fixed pricing, and you own everything. Serving Orange County and nationwide.",
+    // TODO: swap for a dedicated 1200x630 og-websites.jpg once one exists.
+    image: "/brand/og-home.jpg",
+    imageAlt: "Curivanta: turn every customer interaction into something that runs itself"
   }
 ];
 

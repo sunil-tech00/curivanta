@@ -12,6 +12,7 @@ import TermsOfService from "./pages/TermsOfService";
 import SalonWelcome from "./pages/SalonWelcome";
 import ReviewAutomation from "./pages/ReviewAutomation";
 import ReviewsWelcome from "./pages/ReviewsWelcome";
+import WebsiteDevelopment from "./pages/WebsiteDevelopment";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/hair-salon-bot/welcome" element={<SalonWelcome />} />
           <Route path="/reviewautomation" element={<ReviewAutomation />} />
           <Route path="/reviewautomation/welcome" element={<ReviewsWelcome />} />
+          <Route path="/website-development" element={<WebsiteDevelopment />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

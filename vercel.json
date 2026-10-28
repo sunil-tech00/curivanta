@@ -48,6 +48,10 @@
       "destination": "/reviewautomation/index.html"
     },
     {
+      "source": "/website-development",
+      "destination": "/website-development/index.html"
+    },
+    {
       "source": "/((?!solar/|api/).*)",
       "destination": "/index.html"
     }

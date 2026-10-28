@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { SiteFooter } from '../components/SiteFooter';
 import { Link } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
@@ -170,6 +171,7 @@ const HairSalonBot = () => {
             </Link>
           </div>
           <nav className="links">
+            <Link className="navlink" to="/website-development">Websites</Link>
             <Link className="navlink" to="/hair-salon-bot">Hair Salon Bot</Link>
             <Link className="navlink" to="/reviewautomation">Review Automation</Link>
             <ThemeToggle />
@@ -182,6 +184,7 @@ const HairSalonBot = () => {
                   </button>
                 </SheetTrigger>
                 <SheetContent side="right" className="flex flex-col gap-6 pt-16 bg-background border-border">
+                  <SheetClose asChild><Link className="text-xl font-medium" to="/website-development">Websites</Link></SheetClose>
                   <SheetClose asChild><Link className="text-xl font-medium" to="/hair-salon-bot">Hair Salon Bot</Link></SheetClose>
                   <SheetClose asChild><Link className="text-xl font-medium" to="/reviewautomation">Review Automation</Link></SheetClose>
                 </SheetContent>
@@ -617,26 +620,7 @@ const HairSalonBot = () => {
         onTalkToUs={talkToUs}
       />
 
-      <footer>
-        <div className="wrap foot-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, minWidth: '200px' }}>
-            <Link to="/">
-              <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '28px', width: 'auto' }} />
-              <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '28px', width: 'auto' }} />
-            </Link>
-          </div>
-          <div style={{ flex: 1, textAlign: 'center', minWidth: '200px' }}>
-            <span className="foot-meta">© 2026 Curivanta. All rights reserved.</span>
-          </div>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', flex: 1, justifyContent: 'flex-end', minWidth: '200px' }}>
-            <span className="foot-meta" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-              <Link className="foot-link" to="/privacy">Privacy Policy</Link>
-              <span style={{ opacity: 0.3 }}>|</span>
-              <Link className="foot-link" to="/terms">Terms of Service</Link>
-            </span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };
