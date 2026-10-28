@@ -14,6 +14,7 @@ const SITE = {
   CARE_PRICE: '$199',
   PAGES: 'up to 8',
   CONCEPT_DAYS: '5 business days',
+  REVIEW_DAYS: '7 days',
   LAUNCH_WEEKS: '2–3 weeks',
   CONCEPTS_PER_MONTH: '3',
   CONTACT_EMAIL: 'hello@curivanta.com'
@@ -84,7 +85,7 @@ const CARE_PLAN = [
 
 const STEPS = [
   { title: 'Free homepage concept', text: `Tell us about your business. Within ${SITE.CONCEPT_DAYS}, you'll see a redesigned homepage built with your real content.` },
-  { title: 'Strategy call (30 minutes)', text: 'We walk through the concept, confirm your services, locations, and booking system, and agree on scope.' },
+  { title: 'Review & confirm', text: `Reply to the concept with your corrections and confirm your services, locations, and booking system. We lock the scope and price in writing. No meetings needed. Send all corrections in one reply within ${SITE.REVIEW_DAYS}. If we don't hear back, the project pauses until you approve it.` },
   { title: 'Build & revise', text: 'We build the full site and you get one complete round of revisions.' },
   { title: 'Launch', text: `Your site goes live, Google Business Profile connected, analytics on. Typically ${SITE.LAUNCH_WEEKS} after you approve the design.` },
   { title: 'Care plan begins', text: 'Ongoing updates, listing upkeep, and a monthly report.' }
