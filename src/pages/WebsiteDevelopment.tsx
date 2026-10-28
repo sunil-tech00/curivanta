@@ -91,8 +91,6 @@ const STEPS = [
   { title: 'Care plan begins', text: 'Ongoing updates, listing upkeep, and a monthly report.' }
 ];
 
-const BUSINESS_TYPES = ['Therapy or wellness practice', 'Salon or personal service', 'Home or local service', 'Other'];
-
 const SCHEMA = [
   {
     '@context': 'https://schema.org',
@@ -221,7 +219,6 @@ const WebsiteDevelopment = () => {
           city: data.get('city'),
           email: data.get('email'),
           phone: data.get('phone'),
-          businessType: data.get('businessType'),
           message: data.get('message'),
           website: data.get('website')
         })
@@ -230,7 +227,7 @@ const WebsiteDevelopment = () => {
       // Validation and rate-limit messages (4xx) are written for the visitor; anything else gets the fallback.
       if (!res.ok) throw new Error(res.status < 500 && json.error ? json.error : ERROR_MSG);
       setStatus('sent');
-      track('websites_form_submitted', { type: String(data.get('businessType') || 'none') });
+      track('websites_form_submitted');
     } catch (err) {
       track('websites_form_error');
       setError(err instanceof Error && err.message !== 'Failed to fetch' ? err.message : ERROR_MSG);
@@ -617,18 +614,12 @@ const WebsiteDevelopment = () => {
             <label className="welcome-field">Phone
               <input className="form-input" type="tel" name="phone" autoComplete="tel" required />
             </label>
-            <label className="welcome-field"><span>Current website URL <span className="opt">(optional)</span></span>
+            <label className="welcome-field full"><span>Current website URL <span className="opt">(optional)</span></span>
               <input
                 className="form-input" type="url" name="siteUrl" autoComplete="url" placeholder="https://"
                 // Visitors usually type "mysite.com"; add the scheme so the browser's URL check passes.
                 onBlur={(e) => { const v = e.target.value.trim(); if (v && !/^https?:\/\//i.test(v)) e.target.value = `https://${v}`; }}
               />
-            </label>
-            <label className="welcome-field"><span>Business type <span className="opt">(optional)</span></span>
-              <select className="form-input" name="businessType" defaultValue="">
-                <option value="">Choose one</option>
-                {BUSINESS_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
-              </select>
             </label>
             <label className="welcome-field full"><span>What's not working on your website today? <span className="opt">(optional)</span></span>
               <textarea className="form-input" name="message" rows={4} />

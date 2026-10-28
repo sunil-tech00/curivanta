@@ -42,7 +42,6 @@ const EXTRA = {
   websites: (b) => ({
     city: clean(b.city, 120),
     website_url: clean(b.siteUrl, 300),
-    business_type: clean(b.businessType, 60),
     message: String(b.message ?? "").trim().slice(0, 2000)
   })
 };
