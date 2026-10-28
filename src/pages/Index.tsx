@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { DeviceAnimation } from '../components/DeviceAnimation';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { SiteFooter } from '../components/SiteFooter';
 import { Link } from 'react-router-dom';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
@@ -90,6 +91,7 @@ const Index = () => {
             <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
           </div>
           <nav className="links">
+            <Link className="navlink" to="/website-development" data-umami-event="nav_websites" data-umami-event-where="nav">Websites</Link>
             <Link className="navlink" to="/hair-salon-bot" data-umami-event="nav_hair_salon_bot" data-umami-event-where="nav">Hair Salon Bot</Link>
             <Link className="navlink" to="/reviewautomation" data-umami-event="nav_review_automation" data-umami-event-where="nav">Review Automation</Link>
             <ThemeToggle />
@@ -102,6 +104,7 @@ const Index = () => {
                   </button>
                 </SheetTrigger>
                 <SheetContent side="right" className="flex flex-col gap-6 pt-16 bg-background border-border">
+                  <SheetClose asChild><Link className="text-xl font-medium" to="/website-development" data-umami-event="nav_websites" data-umami-event-where="mobile_menu">Websites</Link></SheetClose>
                   <SheetClose asChild><Link className="text-xl font-medium" to="/hair-salon-bot" data-umami-event="nav_hair_salon_bot" data-umami-event-where="mobile_menu">Hair Salon Bot</Link></SheetClose>
                   <SheetClose asChild><Link className="text-xl font-medium" to="/reviewautomation" data-umami-event="nav_review_automation" data-umami-event-where="mobile_menu">Review Automation</Link></SheetClose>
                 </SheetContent>
@@ -179,7 +182,7 @@ const Index = () => {
               <h3>AI Workflow Automation</h3>
               <p>The busywork that eats your week: lead follow-up, appointment reminders, rebooking nudges, internal reporting. Rebuilt as automated workflows that run without you touching them.</p>
             </div>
-            <div className="service-card reveal d2">
+            <div className="service-card reveal d2" style={{ display: 'flex', flexDirection: 'column' }}>
               <svg viewBox="0 0 34 34" fill="none">
                 <rect x="4" y="7" width="26" height="20" rx="1.5" stroke="#4d6bf6" strokeWidth="1.6"/>
                 <path d="M4 12h26" stroke="#4d6bf6" strokeWidth="1.6"/>
@@ -188,6 +191,7 @@ const Index = () => {
               </svg>
               <h3>AI Websites</h3>
               <p>A site that does more than sit there. Booking, lead capture, and AI chat wired in from day one; not bolted on six months after launch.</p>
+              <Link className="svc-link" to="/website-development" data-umami-event="home_product" data-umami-event-product="websites">See Websites →</Link>
             </div>
             <div className="service-card reveal d1">
               <svg viewBox="0 0 34 34" fill="none">
@@ -290,24 +294,7 @@ const Index = () => {
         </div>
       </section>
 
-      <footer>
-        <div className="wrap foot-inner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, minWidth: '200px' }}>
-            <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '28px', width: 'auto' }} />
-            <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '28px', width: 'auto' }} />
-          </div>
-          <div style={{ flex: 1, textAlign: 'center', minWidth: '200px' }}>
-            <span className="foot-meta">© 2026 Curivanta. All rights reserved.</span>
-          </div>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', flex: 1, justifyContent: 'flex-end', minWidth: '200px' }}>
-            <span className="foot-meta" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-              <Link className="foot-link" to="/privacy" data-umami-event="footer_privacy">Privacy Policy</Link>
-              <span style={{ opacity: 0.3 }}>|</span>
-              <Link className="foot-link" to="/terms" data-umami-event="footer_terms">Terms of Service</Link>
-            </span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };

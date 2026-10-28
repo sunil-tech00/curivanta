@@ -21,11 +21,30 @@ const FORMS = {
       "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/136a850c-6faf-4dca-8eef-e43be24f6c8e",
     source: "review_automation_form",
     page: "https://curivanta.com/reviewautomation#contact"
+  },
+  // Free homepage concept requests. Until a dedicated GHL workflow exists (WEBSITES_WEBHOOK_URL),
+  // these go to the audit workflow; `source` tells them apart. No SMS opt-in on this form.
+  websites: {
+    url: process.env.WEBSITES_WEBHOOK_URL || process.env.CONTACT_WEBHOOK_URL ||
+      "https://services.leadconnectorhq.com/hooks/s6TIfFHOzZj6rBEEWpBG/webhook-trigger/CsP3zaWSLWOlpf14hrEj",
+    source: "website_concept_form",
+    page: "https://curivanta.com/website-development#concept",
+    noSms: true
   }
 };
 const PLANS = {
   salon: { textback: "Text-Back", starter: "Voice", autopilot: "Voice Pro", notsure: "Not sure" },
   reviews: { starter: "Reviews Starter", growth: "Reviews Growth", notsure: "Not sure" }
+};
+
+// Form-specific fields passed through to GHL as-is.
+const EXTRA = {
+  websites: (b) => ({
+    city: clean(b.city, 120),
+    website_url: clean(b.siteUrl, 300),
+    business_type: clean(b.businessType, 60),
+    message: String(b.message ?? "").trim().slice(0, 2000)
+  })
 };
 
 const SMS_CONSENT_TEXT = "By checking this box, I agree to receive SMS text messages regarding my inquiry and service updates. Message and data rates may apply.";
@@ -41,31 +60,37 @@ export default async function handler(req, res) {
   if (clean(body.website, 200)) return res.status(200).json({ ok: true });
   if (!allow(req, "contact", 5, 10 * 60 * 1000)) return tooMany(res);
 
-  const name = clean(body.name, 120);
+  const name = clean(body.name, 120) || clean(`${body.firstName ?? ""} ${body.lastName ?? ""}`, 120);
   const business = clean(body.business, 200);
   const phone = clean(body.phone, 40);
   const email = clean(body.email, 200).toLowerCase();
   if (!name || !business || !phone || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phone.replace(/\D/g, "").length < 7) {
     return res.status(400).json({ error: "Please fill in every field with a valid email and mobile number." });
   }
-  if (body.smsConsent !== true) {
+  const extra = EXTRA[body.form]?.(body) ?? {};
+  if (body.form === "websites" && !extra.city) {
+    return res.status(400).json({ error: "Please fill in every required field." });
+  }
+  if (!form.noSms && body.smsConsent !== true) {
     return res.status(400).json({ error: "Please tick the consent box to continue." });
   }
 
   const [firstName, ...rest] = name.split(" ");
   const payload = {
     name,
-    first_name: firstName,
-    last_name: rest.join(" "),
+    first_name: clean(body.firstName, 60) || firstName,
+    last_name: body.firstName ? clean(body.lastName, 60) : rest.join(" "),
     business,
     phone,
     email,
-    sms_consent: true,
-    sms_consent_text: SMS_CONSENT_TEXT,
+    ...(form.noSms
+      ? { sms_consent: false }
+      : { sms_consent: true, sms_consent_text: SMS_CONSENT_TEXT }),
     consent_at: new Date().toISOString(),
     source: form.source,
     page: form.page,
-    ...(PLANS[body.form] ? { plan: PLANS[body.form][body.plan] || "Not sure" } : {})
+    ...(PLANS[body.form] ? { plan: PLANS[body.form][body.plan] || "Not sure" } : {}),
+    ...extra
   };
 
   try {
