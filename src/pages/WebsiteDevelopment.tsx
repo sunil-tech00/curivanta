@@ -12,7 +12,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const SITE = {
   BUILD_PRICE: '$1,500',
   CARE_PRICE: '$199',
-  MIN_TERM: '6 months',
   PAGES: 'up to 8',
   CONCEPT_DAYS: '5 business days',
   LAUNCH_WEEKS: '2–3 weeks',
@@ -34,8 +33,7 @@ const faqs = [
   { q: "How long does it take?", a: `You'll see a free homepage concept within ${SITE.CONCEPT_DAYS}. Most sites launch ${SITE.LAUNCH_WEEKS} after you approve the design.` },
   { q: "What do I need to provide?", a: "Your logo, a few photos (or we'll help you get them), your services, and about an hour of your time across the project." },
   { q: "Is the AI front desk required?", a: "No. Automation add-ons are optional and priced separately." },
-  { q: "Is the free concept really free?", a: `Yes, with no obligation. We take on ${SITE.CONCEPTS_PER_MONTH} new concepts per month so each one gets real attention.` },
-  { q: "Do you work outside Orange County?", a: "Yes. We work with businesses across the U.S." }
+  { q: "Is the free concept really free?", a: `Yes, with no obligation. We take on ${SITE.CONCEPTS_PER_MONTH} new concepts per month so each one gets real attention.` }
 ];
 
 const AUDIENCES = [
@@ -361,7 +359,6 @@ const WebsiteDevelopment = () => {
               </div>
             ))}
           </div>
-          <p className="ws-lead reveal" style={{ textAlign: 'center', marginTop: '40px' }}>I own and run two kids' hair salons myself, so I build the site I'd want for my own business.</p>
         </div>
       </section>
 
@@ -471,7 +468,6 @@ const WebsiteDevelopment = () => {
             </div>
           </div>
           <ul className="ws-terms ws-small reveal d3">
-            <li>{cap(SITE.MIN_TERM)} minimum on the care plan, then cancel anytime.</li>
             <li>Larger changes are quoted before any work starts.</li>
             <li>Unused monthly updates don't roll over.</li>
           </ul>

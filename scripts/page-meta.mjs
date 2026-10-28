@@ -25,7 +25,7 @@ const PAGES = [
   {
     route: "/website-development",
     title: "Website Design for Local Practices & Service Businesses | Curivanta",
-    description: "Websites that get local businesses found on Google and booked online. Free homepage concept, fixed pricing, and you own everything. Serving Orange County and nationwide.",
+    description: "Websites that get local businesses found on Google and booked online. Free homepage concept, fixed pricing, and you own everything.",
     // TODO: swap for a dedicated 1200x630 og-websites.jpg once one exists.
     image: "/brand/og-home.jpg",
     imageAlt: "Curivanta: turn every customer interaction into something that runs itself"
