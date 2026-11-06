@@ -542,20 +542,6 @@ const ReviewAutomation = () => {
 
       <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
 
-      <section id="the-right-way" style={{ padding: '100px 0' }}>
-        <div className="wrap" style={{ maxWidth: '800px' }}>
-          <div className="reveal">
-            <p className="eyebrow" style={{ marginBottom: '16px' }}>Done the right way</p>
-            <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '32px' }}>Real reviews from real clients. Nothing that puts your profile at risk.</h2>
-            <p style={{ color: 'var(--bone-dim)', fontSize: '1.1rem', lineHeight: 1.8 }}>Some review tools only send happy clients to Google and hide the rest, or offer discounts for five stars. Google calls that review gating and incentivized reviews, and it can remove reviews or flag your profile for it. We ask every client the same way, at the right moment, and let your service speak for itself.</p>
-          </div>
-          <div className="reveal d1" style={{ marginTop: '40px', padding: '32px 36px', background: 'var(--ink-soft)', border: '1px solid var(--line)', borderLeft: '3px solid var(--brass)', borderRadius: '12px' }}>
-            <p style={{ fontSize: '1.15rem', color: 'var(--bone)', lineHeight: 1.7 }}>The fastest way to more five-star reviews isn't a trick. It's asking every happy client, every time, without your staff having to remember.</p>
-          </div>
-        </div>
-      </section>
-
-      <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
 
       <section id="pricing" style={{ padding: '100px 0' }}>
         <div className="wrap">
