@@ -39,10 +39,6 @@ const faqs = [
     a: "Yes. Every morning you get an email with yesterday's feedback: ratings and replies for each stylist and each location, plus any client who had a poor visit and should get a call back. It's included in both plans, and it's built for owners who can't be in the salon every day."
   },
   {
-    q: "Does it work with the Hair Salon Bot?",
-    a: "Yes. They run on the same system, so bundling both is simple and costs less."
-  },
-  {
     q: "How does the free month work?",
     a: "You get the full service free for your first month. Sign up online with a card. The only charge today is a one-time, non-refundable $35 that covers text message carrier registration, and your free month starts when you go live. If it isn't for you, cancel before the month ends and you won't be charged. Every review you earned stays on your Google profile."
   },
