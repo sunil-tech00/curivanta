@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { SiteFooter } from '../components/SiteFooter';
 import { Link } from 'react-router-dom';
-import { MapPin, Handshake, Star, CalendarCheck } from 'lucide-react';
+import { MapPin, Handshake, Star, CalendarCheck, Sun, PhoneCall, Users, Building2 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -33,6 +33,10 @@ const faqs = [
   {
     q: "Who writes the replies to my reviews?",
     a: "The AI drafts a reply in your salon's voice for every review. You can let it post automatically or approve each one first. Negative reviews always come to you before anything is posted."
+  },
+  {
+    q: "Can I see how each stylist is doing?",
+    a: "Yes. Every morning you get an email with yesterday's feedback: ratings and replies for each stylist and each location, plus any client who had a poor visit and should get a call back. It's included in both plans, and it's built for owners who can't be in the salon every day."
   },
   {
     q: "Does it work with the Hair Salon Bot?",
@@ -104,6 +108,115 @@ function ReviewMock() {
     </div>
   );
 }
+
+// Owner report showcase: an anonymized copy of the daily feedback email owners get.
+// Data mirrors the illustrative sample report (not real customers).
+const STARS = (n: number, on = '#D97706') => (
+  <span style={{ letterSpacing: '1px' }}>
+    <span style={{ color: on }}>{'★'.repeat(n)}</span>
+    <span style={{ color: '#CBD5E1' }}>{'★'.repeat(5 - n)}</span>
+  </span>
+);
+const OR_TILES = [
+  { v: '29', l: 'Surveys sent', c: '#0F172A' },
+  { v: '28%', l: 'Reply rate', c: '#0F172A' },
+  { v: '4.2', l: 'Avg rating ★', c: '#D97706' },
+  { v: '2', l: 'Low ratings', c: '#DC2626' }
+];
+const OR_ATTENTION = [
+  { stars: 2, meta: 'Location 1 · Stylist G · replied 4:30 PM', quote: 'Waited 25 minutes past my appointment time.' },
+  { stars: 3, meta: 'Location 2 · Stylist D · replied 4:30 PM', quote: 'Cut came out uneven on the left side.' }
+];
+const OR_STYLISTS = [
+  { name: 'Stylist A', loc: 'Location 2', rating: 4.8, replies: '6/23', low: 0 },
+  { name: 'Stylist B', loc: 'Location 2', rating: 4.8, replies: '10/28', low: 0 },
+  { name: 'Stylist D', loc: 'Location 2', rating: 4.6, replies: '7/16', low: 1 },
+  { name: 'Stylist E', loc: 'Location 1', rating: 4.5, replies: '19/43', low: 1 },
+  { name: 'Stylist G', loc: 'Location 1', rating: 4.4, replies: '17/52', low: 2 }
+];
+const OR_WEEK = [
+  { d: 'Fri', r: 9, s: 19 }, { d: 'Sat', r: 7, s: 22 }, { d: 'Sun', r: 8, s: 17 }, { d: 'Mon', r: 6, s: 21 },
+  { d: 'Tue', r: 9, s: 24 }, { d: 'Wed', r: 6, s: 19 }, { d: 'Thu', r: 4, s: 16 }
+];
+
+function OwnerReportMock() {
+  const maxSent = Math.max(...OR_WEEK.map((w) => w.s));
+  return (
+    <figure className="or-mail" aria-label="Sample daily feedback report email" style={{ margin: 0 }}>
+      <div className="or-mail-inner">
+        <div className="or-head">
+          <div>
+            <div className="or-kicker">DAILY CUSTOMER FEEDBACK</div>
+            <div style={{ fontSize: '20px', fontWeight: 700, color: '#fff', marginTop: '4px' }}>Your Salon</div>
+            <div style={{ fontSize: '13px', color: '#CBD5E1', marginTop: '2px' }}>Thursday, November 5</div>
+          </div>
+          <div style={{ fontSize: '10px', color: '#94A3B8', textAlign: 'right' }}>
+            Powered by
+            <img src="/brand/logo-dark.png" alt="Curivanta" width={92} height={28} style={{ display: 'block', marginTop: '4px', height: '28px', width: 'auto' }} />
+          </div>
+        </div>
+        <div className="or-body">
+          <div className="or-alert">
+            <div style={{ fontSize: '15px', fontWeight: 700, color: '#B91C1C' }}>2 customers need a follow-up</div>
+            <div style={{ fontSize: '13px', color: '#7F1D1D', marginTop: '2px' }}>A quick call today often turns a low rating around.</div>
+          </div>
+          <div style={{ fontSize: '11px', letterSpacing: '1.5px', color: '#64748B', fontWeight: 600, margin: '0 2px 6px' }}>YESTERDAY · BOTH LOCATIONS</div>
+          <div className="or-tiles">
+            {OR_TILES.map((t) => (
+              <div key={t.l} className="or-tile"><b style={{ color: t.c }}>{t.v}</b><span>{t.l}</span></div>
+            ))}
+          </div>
+
+          <div className="or-h">Needs attention</div>
+          {OR_ATTENTION.map((a) => (
+            <div key={a.meta} className="or-card">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '12px', color: '#64748B' }}>{a.meta}</span>
+                <span style={{ fontSize: '13px', whiteSpace: 'nowrap' }}>{STARS(a.stars, '#DC2626')}</span>
+              </div>
+              <div style={{ fontSize: '14px', fontStyle: 'italic', marginTop: '6px' }}>“{a.quote}”</div>
+            </div>
+          ))}
+
+          <div className="or-h">Ratings by stylist</div>
+          <table className="or-table">
+            <thead><tr><th>STYLIST</th><th>RATING</th><th>REPLIES</th><th>LOW</th></tr></thead>
+            <tbody>
+              {OR_STYLISTS.map((s) => (
+                <tr key={s.name}>
+                  <td><b style={{ color: '#0F172A' }}>{s.name}</b><br /><span style={{ fontSize: '11px', color: '#64748B' }}>{s.loc}</span></td>
+                  <td><span style={{ fontSize: '12px' }}>{STARS(Math.round(s.rating))}</span><br /><span style={{ fontSize: '11px', color: '#64748B' }}>{s.rating.toFixed(1)}</span></td>
+                  <td>{s.replies}</td>
+                  <td style={{ color: s.low ? '#DC2626' : '#64748B', fontWeight: s.low ? 700 : 400 }}>{s.low}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div className="or-h" style={{ marginBottom: '2px' }}>Location 1 · last 7 days</div>
+          <div style={{ fontSize: '11px', color: '#64748B', margin: '0 2px' }}>Replies out of texts sent</div>
+          <div className="or-bars" aria-hidden="true">
+            {OR_WEEK.map((w, i) => (
+              <div key={w.d} className="or-bar">
+                <i style={{ height: `${((w.s - w.r) / maxSent) * 62}px`, background: '#E2E8F0', borderRadius: '3px 3px 0 0' }} />
+                <i style={{ height: `${(w.r / maxSent) * 62}px`, background: i === OR_WEEK.length - 1 ? '#4D6BF6' : '#64748B' }} />
+                <span style={{ fontSize: '10px', color: '#64748B', marginTop: '4px' }}>{w.d}</span>
+                <span style={{ fontSize: '10px', fontWeight: 600 }}>{Math.round((w.r / w.s) * 100)}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </figure>
+  );
+}
+
+const OR_POINTS = [
+  { icon: Sun, title: 'Yesterday, in one glance', text: 'How many clients were asked, how many replied and the average rating, compared with the day before.' },
+  { icon: PhoneCall, title: 'Who needs a call back today', text: "Every low rating shows the stylist, the location and the client's own words, so you can make it right while the visit is still fresh." },
+  { icon: Users, title: 'How each stylist is really doing', text: 'Ratings, replies and low scores for every stylist, so you know who to praise and who needs coaching, without standing behind the chair.' },
+  { icon: Building2, title: 'Every location side by side', text: 'One email covers all your salons, with a 7-day trend for each. Spot a slipping location before it shows up on Google.' }
+];
 
 const ReviewAutomation = () => {
   useEffect(() => { document.title = 'Review Automation for Salons & Barbershops | Curivanta'; }, []);
@@ -218,6 +331,7 @@ const ReviewAutomation = () => {
               <li>First month free. No contracts, month to month</li>
               <li>Done-for-you setup, 100% remote. Live in days</li>
               <li>Works with the software you already use</li>
+              <li>A morning report on every stylist, so you know how the day went from anywhere</li>
             </ul>
           </div>
 
@@ -386,6 +500,48 @@ const ReviewAutomation = () => {
 
       <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
 
+      <section id="owner-report" style={{ padding: '100px 0' }}>
+        <div className="wrap" style={{ maxWidth: '1100px' }}>
+          <div className="section-head reveal" style={{ textAlign: 'center', margin: '0 auto 56px', maxWidth: '760px' }}>
+            <p className="eyebrow">For owners who can't be there every day</p>
+            <h2>Know how every stylist did yesterday, before your first coffee.</h2>
+            <p className="sub" style={{ color: 'var(--bone-dim)', marginTop: '16px' }}>Run your salon from another location, another job or another city? Every morning you get one email that shows how yesterday went: who was asked, how they rated their visit, which clients need a call back, and how each stylist is trending.</p>
+          </div>
+
+          <div className="or-grid">
+            <div className="reveal d1">
+              <OwnerReportMock />
+              <p style={{ fontSize: '0.8rem', color: 'var(--bone-dimmer)', textAlign: 'center', marginTop: '14px' }}>Sample report. Names and numbers are illustrative.</p>
+            </div>
+            <ul className="or-points reveal d2">
+              {OR_POINTS.map(({ icon: Icon, title, text }) => (
+                <li key={title}>
+                  <span className="or-icon"><Icon size={20} strokeWidth={1.8} /></span>
+                  <div><h3>{title}</h3><p>{text}</p></div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="or-result reveal">
+            <div>
+              <p className="eyebrow" style={{ marginBottom: '10px' }}>From one of my own salons</p>
+              <div className="or-rating" aria-label="Google rating went from 4.3 to 4.5 stars">
+                <span className="from">4.3<span className="star">★</span></span>
+                <span style={{ color: 'var(--brass-light)', fontSize: '2rem' }}>→</span>
+                <span className="to">4.5<span className="star">★</span></span>
+              </div>
+            </div>
+            <div>
+              <h3 style={{ fontSize: '1.4rem', marginBottom: '8px' }}>Google rating up in one month.</h3>
+              <p style={{ color: 'var(--bone-dim)', lineHeight: 1.7, margin: 0 }}>Asking every client brought in a steady stream of new reviews, and the morning report showed me exactly which visits needed a follow-up call. Same system, same report you get.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider wrap" style={{ maxWidth: '1140px' }}></div>
+
       <section id="the-right-way" style={{ padding: '100px 0' }}>
         <div className="wrap" style={{ maxWidth: '800px' }}>
           <div className="reveal">
@@ -422,6 +578,7 @@ const ReviewAutomation = () => {
                 <li style={liStyle}>{CHECK} Up to two gentle reminders</li>
                 <li style={liStyle}>{CHECK} AI replies to every Google review</li>
                 <li style={liStyle}>{CHECK} New review alerts</li>
+                <li style={liStyle}>{CHECK} Daily feedback report on every stylist</li>
               </ul>
               <button type="button" className="btn ghost" onClick={() => openBuilder('starter')} style={{ width: '100%', justifyContent: 'center' }}>Try Starter Free</button>
             </div>
