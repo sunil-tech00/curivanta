@@ -11,10 +11,6 @@ import { ReviewsCheckout, type ReviewsPlanId } from '../components/ReviewsChecko
 
 const faqs = [
   {
-    q: "Is this allowed by Google?",
-    a: "Yes. We ask every client the same way and send them straight to Google. We never filter out unhappy clients or offer anything in exchange for a review. Both break Google's rules and can get reviews removed. Asking everyone, at the right moment, is what works."
-  },
-  {
     q: "Can you remove bad reviews?",
     a: "No one can do that honestly. What we can do is make sure your happy clients outnumber them, and reply to every review, good or bad, quickly and professionally."
   },
