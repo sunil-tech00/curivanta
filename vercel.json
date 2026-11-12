@@ -52,6 +52,10 @@
       "destination": "/website-development/index.html"
     },
     {
+      "source": "/home-preview",
+      "destination": "/home-preview/index.html"
+    },
+    {
       "source": "/((?!solar/|api/).*)",
       "destination": "/index.html"
     }
@@ -63,6 +67,15 @@
     }
   ],
   "headers": [
+    {
+      "source": "/home-preview",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
     {
       "source": "/reviewautomation/welcome",
       "headers": [

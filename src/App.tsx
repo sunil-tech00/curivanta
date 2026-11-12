@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
+import { lazy, Suspense } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import HairSalonBot from "./pages/HairSalonBot";
@@ -13,6 +14,9 @@ import SalonWelcome from "./pages/SalonWelcome";
 import ReviewAutomation from "./pages/ReviewAutomation";
 import ReviewsWelcome from "./pages/ReviewsWelcome";
 import WebsiteDevelopment from "./pages/WebsiteDevelopment";
+
+// Lazy so its styles and fonts only load on /home-preview.
+const HomePreview = lazy(() => import("./pages/HomePreview"));
 
 const queryClient = new QueryClient();
 
@@ -25,6 +29,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/home-preview" element={<Suspense fallback={null}><HomePreview /></Suspense>} />
           <Route path="/hair-salon-bot" element={<HairSalonBot />} />
           <Route path="/hair-salon-bot/welcome" element={<SalonWelcome />} />
           <Route path="/reviewautomation" element={<ReviewAutomation />} />

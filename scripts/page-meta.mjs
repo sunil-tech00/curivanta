@@ -9,6 +9,14 @@ const SITE = "https://curivanta.com";
 
 const PAGES = [
   {
+    // Preview of the new homepage for sharing; noindex (see vercel.json).
+    route: "/home-preview",
+    title: "Curivanta | Never miss a call, a booking, or a review",
+    description: "The AI front desk for salons and solo stylists: missed-call text-back, AI texting that answers questions and books appointments, and Google review requests for every client. From $49/month.",
+    image: "/brand/og-home.jpg",
+    imageAlt: "Curivanta: the AI front desk for salons and solo stylists"
+  },
+  {
     route: "/hair-salon-bot",
     title: "Hair Salon Bot: Missed-Call Text-Back for Salons | Curivanta",
     description: "Every missed call gets a text back within seconds, and AI books the appointment straight into Salon Ultimate. From $99/month, no contracts, live in about a week.",
