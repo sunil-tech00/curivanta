@@ -206,7 +206,6 @@ const HomePreview = () => {
               </div>
               <div className="h-float f1 h-call" aria-label="Sample call answered by the AI assistant">
                 <div className="h-call-top"><span className="h-call-dot"></span><b>Assistant on a call</b><span className="h-call-time">0:48</span></div>
-                <div className="h-wave" aria-hidden="true">{Array.from({ length: 22 }, (_, i) => <i key={i} style={{ animationDelay: `${(i % 7) * 0.12}s` }} />)}</div>
                 <div className="h-bub them">Can Maya do a trim Saturday morning?<small>Dana · calling while you're with a client</small></div>
                 <div className="h-bub us">She has ten or eleven thirty. Which works?<small>Assistant</small></div>
                 <div className="h-call-done"><span className="h-pill p-green">Booked</span>Sat 10:00 with Maya · confirmation texted</div>
