@@ -408,10 +408,14 @@ const HomePreview = () => {
           <div className="h-wrap">
             <div className="h-owner">
               <div className="h-owner-copy">
-                <div className="h-kicker">Why I built it</div>
-                <h2>I own salons. I can't stand behind every front desk.</h2>
-                <p>I kept losing bookings to missed calls and watching great work go unreviewed. The tools I tried were built for every business at once: menus inside menus, prices hidden behind a demo.</p>
-                <p>So I built the front desk I wanted. It runs my own salon first, it speaks plain salon language, and the price is on this page.</p>
+                <div className="h-owner-head">
+                  <div className="h-kicker">Why I built it</div>
+                  <h2>I own salons. I can't stand behind every front desk.</h2>
+                </div>
+                <div className="h-owner-text">
+                  <p>I kept losing bookings to missed calls and watching great work go unreviewed. The tools I tried were built for every business at once: menus inside menus, prices hidden behind a demo.</p>
+                  <p>So I built the front desk I wanted. It runs my own salon first, it speaks plain salon language, and the price is on this page.</p>
+                </div>
               </div>
             </div>
           </div>

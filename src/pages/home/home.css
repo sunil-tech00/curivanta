@@ -243,7 +243,11 @@
 @media (max-width:860px) { .cvh .h-owner { grid-template-columns:1fr; } }
 .cvh .h-photo { min-height:300px; background:linear-gradient(160deg,var(--accent-soft),var(--soft)); display:grid; place-items:center; color:var(--ink3); font-weight:700; font-size:14px; text-align:center; padding:20px; }
 .cvh .h-photo img { width:100%; height:100%; object-fit:cover; }
-.cvh .h-owner-copy { padding:38px; max-width:760px; display:grid; gap:14px; align-content:center; }
+.cvh .h-owner-copy { padding:38px; display:grid; grid-template-columns:1fr 1.15fr; gap:32px; align-items:start; }
+.cvh .h-owner-copy > * { min-width:0; }
+@media (max-width:860px) { .cvh .h-owner-copy { grid-template-columns:1fr; gap:14px; padding:26px; } }
+.cvh .h-owner-text { display:grid; gap:14px; padding-top:28px; }
+@media (max-width:860px) { .cvh .h-owner-text { padding-top:0; } }
 .cvh .h-owner-copy h2 { font-size:clamp(25px,3vw,32px); }
 .cvh .h-owner-copy p { color:var(--ink2); }
 .cvh .h-owner-copy .sig { font-family:var(--display); font-weight:600; color:var(--ink); }
