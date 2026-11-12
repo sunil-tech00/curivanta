@@ -137,11 +137,12 @@
 .cvh .h-block { padding-block:78px; }
 .cvh .h-block.flush { padding-top:0; }
 @media (max-width:700px) { .cvh .h-block { padding-block:54px; } }
-.cvh .h-head { max-width:700px; margin-bottom:34px; }
+.cvh .h-head { max-width:1040px; margin-bottom:34px; }
 .cvh .h-head.center { margin-inline:auto; text-align:center; }
 .cvh .h-kicker { font-family:var(--mono); font-weight:500; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-bottom:10px; }
 .cvh .h-head h2 { font-size:clamp(28px,3.5vw,40px); margin-bottom:12px; }
-.cvh .h-head p { color:var(--ink2); font-size:18px; }
+.cvh .h-head p { color:var(--ink2); font-size:18px; max-width:720px; }
+.cvh .h-head.center p { margin-inline:auto; }
 
 /* calculator */
 .cvh .h-calc { display:grid; grid-template-columns:1.1fr 1fr; background:var(--surface); border:1px solid var(--line); border-radius:20px; overflow:hidden; }
