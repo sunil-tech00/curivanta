@@ -479,7 +479,7 @@ const HomePreview = () => {
                 <div className="h-pname">Light <span className="h-badge">For salons</span></div>
                 <p className="h-for">For salons with a team</p>
                 <div className="h-price">$99<small> /month</small></div>
-                <p className="h-psub">+ $149 one-time setup.</p>
+                <p className="h-psub">+ $99 one-time setup.</p>
                 <div className="h-allow"><b>Includes 1,000 texts and 300 call minutes a month.</b> Need more? $10 per extra 100 texts, or per 100 minutes. We let you know at 80%.</div>
                 <ul>
                   <li>Keep your salon number; missed calls forward to Curivanta</li>
