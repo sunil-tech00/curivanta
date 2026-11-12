@@ -37,16 +37,16 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
       <div className="h-bub us">Booked: Sat 10:00 AM, Kids Cut with Maya.<small>In SalonUltimate</small></div></>),
   },
   reviews: {
-    tab: 'Reviews', hint: 'Requests and Google replies',
-    title: 'Review requests & Google replies',
+    tab: 'Reviews', hint: 'Requests and review responses',
+    title: 'Review requests & review responses',
     lede: "After a visit, clients get a text asking how it went, with your Google link. They can reply with a number from 1 to 5, or tap stars. Ratings are saved by stylist.",
-    ticks: ['Every client gets the Google link, as Google requires', 'Low ratings and notes also come to you privately, so you can make it right', 'A daily limit, picked at random across the day, so it never feels spammy', 'Connect Google in one click, and AI drafts replies for you to approve'],
+    ticks: ['Every client gets the Google link, as Google requires', 'Low ratings and notes also come to you privately, so you can make it right', 'A daily limit, picked at random across the day, so it never feels spammy', 'Connect Google in one click, and AI drafts review responses for you to approve'],
     mini: (<><div className="h">After the visit</div>
       <div className="h-bub us">Hi Priya, thanks for coming in today! How was your balayage with Maya? Reply 1 to 5, or leave us a Google review here.<small>Review request</small></div>
       <div className="h-bub them">5!! Love it<small>Client</small></div>
-      <div className="h" style={{ marginTop: 12 }}>Reply draft for her Google review</div>
+      <div className="h" style={{ marginTop: 12 }}>AI drafts a response for you to approve</div>
       <div className="h-draft"><span className="h-stars">★★★★★</span> "Thank you, Priya! Maya loved doing your balayage. See you at your next visit."
-        <div className="h-acts"><span className="a-ok">Post reply</span><span className="a-ed">Edit first</span></div></div></>),
+        <div className="h-acts"><span className="a-ok">Approve and post</span><span className="a-ed">Edit first</span></div></div></>),
   },
   phone: {
     tab: 'Phone', hint: 'Calls ring your app first',
@@ -170,7 +170,7 @@ const HomePreview = () => {
                 </div>
                 <div className="h-feed">
                   <div className="h-row"><span><span className="h-pill p-green">Booked</span>Dana L. · Women's cut, Sat 10:00 with Maya</span><time>4m</time></div>
-                  <div className="h-row"><span><span className="h-pill p-blue">New review</span><span className="h-stars">★★★★★</span> "Maya nailed my color" · reply drafted</span><time>21m</time></div>
+                  <div className="h-row"><span><span className="h-pill p-blue">New review</span><span className="h-stars">★★★★★</span> "Maya nailed my color" · response drafted for you to approve</span><time>21m</time></div>
                   <div className="h-row"><span><span className="h-pill p-amber">Needs you</span>Client asked about a refund · handed to you</span><time>38m</time></div>
                 </div>
               </div>
@@ -439,7 +439,8 @@ const HomePreview = () => {
                   <li>Calls ring your cell and the app during your hours</li>
                   <li>Missed-call text-back, with voicemails as text</li>
                   <li>AI texting that answers questions and sends your booking link</li>
-                  <li>Review requests (3 a day to start) and AI Google replies</li>
+                  <li>Review requests (3 a day to start)</li>
+                  <li>AI drafts Google review responses for you to approve</li>
                   <li>Owner app with phone alerts</li>
                   <li>Move up to Light any time</li>
                 </ul>
@@ -454,7 +455,8 @@ const HomePreview = () => {
                 <ul>
                   <li>Keep your salon number; missed calls forward to Curivanta</li>
                   <li>AI texting that books straight into SalonUltimate</li>
-                  <li>Review requests (10 a day to start) and AI Google replies</li>
+                  <li>Review requests (10 a day to start)</li>
+                  <li>AI drafts Google review responses for you to approve</li>
                   <li>Team logins for owner, manager and front desk</li>
                   <li>Call from the app; your salon name shows on caller ID</li>
                   <li>Ratings and reviews by stylist</li>
