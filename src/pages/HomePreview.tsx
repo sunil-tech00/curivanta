@@ -165,7 +165,13 @@ const HomePreview = () => {
             <div>
               <p className="h-rating"><span className="h-stars" aria-hidden="true">★★★★★</span> <b>4.3 → 4.5 on Google</b> in one month at my own salon</p>
               <h1>Never miss a <em>call</em>, a <em>booking</em>, or a <em>review</em>.</h1>
-              <p className="h-sub">When you're mid-cut, Curivanta texts the caller back, answers their questions, books them in, and asks every client for a Google review. On Pro, an AI assistant even answers the call. Built for salons and solo stylists, and you see all of it from your phone.</p>
+              <p className="h-sub">Your AI front desk, on 24/7. When you're with a client, it answers the call (Pro) or texts the caller back, answers their questions, books them in, and asks every client for a Google review. You see all of it from your phone.</p>
+              <ul className="h-does">
+                <li>Answers calls</li>
+                <li>Texts back</li>
+                <li>Books appointments</li>
+                <li>Gets reviews</li>
+              </ul>
               <div className="h-ctas">
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where="hero">Get started</a>
                 <a className="h-btn h-btn-ghost" href="#product" data-umami-event="cta_see_how" data-umami-event-where="hero">See how it works</a>
@@ -182,13 +188,13 @@ const HomePreview = () => {
                 <div className="h-app-top"><b>Today</b><span className="h-loc">Glow Studio · Main St</span><span className="h-live"><i></i>LIVE</span></div>
                 <div className="h-tabsrow"><span className="on">Today</span><span>Messages</span><span>Reviews</span><span>Calls</span><span>Bookings</span></div>
                 <div className="h-kpis">
+                  <div className="h-kpi"><div className="n">5</div><div className="l">calls answered by the assistant</div></div>
                   <div className="h-kpi"><div className="n">7</div><div className="l">missed calls texted back</div></div>
-                  <div className="h-kpi"><div className="n">4</div><div className="l">booked by text</div></div>
+                  <div className="h-kpi"><div className="n">6</div><div className="l">booked for you</div></div>
                   <div className="h-kpi"><div className="n">22</div><div className="l">review requests</div></div>
-                  <div className="h-kpi"><div className="n">2</div><div className="l">need you</div></div>
                 </div>
                 <div className="h-feed">
-                  <div className="h-row"><span><span className="h-pill p-green">Booked</span>Dana L. · Women's cut, Sat 10:00 with Maya</span><time>4m</time></div>
+                  <div className="h-row"><span><span className="h-pill p-green">Booked by phone</span>Dana L. · Trim, Sat 10:00 with Maya</span><time>4m</time></div>
                   <div className="h-row"><span><span className="h-pill p-blue">New review</span><span className="h-stars">★★★★★</span> "Maya nailed my color" · response drafted for you to approve</span><time>21m</time></div>
                   <div className="h-row"><span><span className="h-pill p-amber">Needs you</span>Client asked about a refund · handed to you</span><time>38m</time></div>
                 </div>
@@ -198,11 +204,12 @@ const HomePreview = () => {
                 <span className="h-stars">★★★★★</span>
                 <div style={{ marginTop: 4 }}>"Jordan is the only one I trust with my fade."</div>
               </div>
-              <div className="h-float f1">
-                <div className="h">Missed call · 6:42 PM</div>
-                <div className="h-bub us">Hi, this is Glow Studio. Sorry we missed your call! How can we help?<small>38 seconds later</small></div>
-                <div className="h-bub them">Anything Saturday morning?<small>Client</small></div>
-                <div className="h-bub us">Booked: Sat 10:00 AM with Maya. See you then!<small>In SalonUltimate</small></div>
+              <div className="h-float f1 h-call" aria-label="Sample call answered by the AI assistant">
+                <div className="h-call-top"><span className="h-call-dot"></span><b>Assistant on a call</b><span className="h-call-time">0:48</span></div>
+                <div className="h-wave" aria-hidden="true">{Array.from({ length: 22 }, (_, i) => <i key={i} style={{ animationDelay: `${(i % 7) * 0.12}s` }} />)}</div>
+                <div className="h-bub them">Can Maya do a trim Saturday morning?<small>Dana · calling while you're with a client</small></div>
+                <div className="h-bub us">She has ten or eleven thirty. Which works?<small>Assistant</small></div>
+                <div className="h-call-done"><span className="h-pill p-green">Booked</span>Sat 10:00 with Maya · confirmation texted</div>
               </div>
             </div>
           </div>
