@@ -291,17 +291,17 @@ const HomePreview = () => {
             <div className="h-spot">
               <div className="h-spot-chat">
                 <div className="h">Text conversation · 8:47 PM</div>
-                <div className="h-bub them">hi can i get my roots done this saturday?<small>Sarah</small></div>
-                <div className="h-bub us">Hi Sarah! Another root touch-up with Jess? She has 10:00 or 1:30 on Saturday. Which works?<small>Curivanta</small></div>
+                <div className="h-bub them">Hi, do you have any availability for Saturday?<small>Sarah</small></div>
+                <div className="h-bub us">Hi Sarah! Is it for another root touch-up with Jess, like last time? She has 10:00 or 1:30 on Saturday. Which works?<small>Curivanta</small></div>
                 <div className="h-bub them">10 please<small>Sarah</small></div>
                 <div className="h-bub us">You're booked: Saturday at 10:00 AM, root touch-up with Jess. See you then!<small>Curivanta</small></div>
               </div>
               <div className="h-spot-work">
                 <div className="h">What happened behind the scenes</div>
                 <ul>
-                  <li>Recognized Sarah and what she had last time</li>
-                  <li>Matched "roots done" to Root touch-up on your menu</li>
-                  <li>Turned "this Saturday" into the right date</li>
+                  <li>Recognized Sarah from her phone number</li>
+                  <li>Remembered her last visit: root touch-up with Jess</li>
+                  <li>Turned "Saturday" into the right date</li>
                   <li>Checked Jess's real openings, and offered only free times</li>
                   <li>Booked it and sent you an alert</li>
                 </ul>
