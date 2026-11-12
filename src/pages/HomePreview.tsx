@@ -11,6 +11,7 @@ const track = (name: string, data?: Record<string, string | number | boolean>) =
 
 const START_URL = 'https://app.curivanta.com/start';
 const START_STARTER_URL = 'https://app.curivanta.com/start?plan=starter';
+const START_PRO_URL = 'https://app.curivanta.com/start?plan=pro';
 const SIGNIN_URL = 'https://app.curivanta.com/login';
 
 type Job = { title: string; lede: string; ticks: string[]; mini: JSX.Element };
@@ -36,6 +37,24 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
       <div className="h-bub them">10 please</div>
       <div className="h-bub us">Booked: Sat 10:00 AM, Kids Cut with Maya.<small>In SalonUltimate</small></div></>),
   },
+  voice: {
+    tab: 'AI phone answering', hint: "Pro: answers when you can't",
+    title: 'AI phone answering',
+    lede: "On Pro, when nobody can pick up, your assistant answers the call. It talks like a friendly front desk, answers questions from your own menu and policies, and books real open times.",
+    ticks: [
+      'Answers questions about services, prices, hours and parking',
+      'Checks real openings, books into SalonUltimate, and texts a confirmation',
+      'Knows returning clients by name and offers their usual',
+      'Callers can ask for a person or leave a voicemail any time',
+      'You see every call it took, with what was said',
+    ],
+    mini: (<><div className="h">On the phone</div>
+      <div className="h-bub us">Hi Dana, thanks for calling Glow Studio. This is the salon's automated assistant. How can I help?<small>Assistant</small></div>
+      <div className="h-bub them">Can Maya do a trim Saturday morning?<small>Caller</small></div>
+      <div className="h-bub us">Maya has ten or eleven thirty on Saturday. Which works?<small>Live openings</small></div>
+      <div className="h-bub them">Ten, please.</div>
+      <div className="h-bub us">You're booked for ten on Saturday with Maya. I'll text you the details.<small>In SalonUltimate</small></div></>),
+  },
   reviews: {
     tab: 'Reviews', hint: 'Requests and review responses',
     title: 'Review requests & review responses',
@@ -54,7 +73,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
     lede: 'Salons keep their number and forward the calls they miss. Solo stylists get a separate business number, so your personal cell stays private.',
     ticks: ['Make and take calls in the app; clients see your business number, not your cell', 'Solo: calls ring your own cell during your hours (press 1 to answer)', 'Salons: calls ring whoever has the app open, and your salon name shows on caller ID'],
     mini: (<><div className="h">Incoming call</div>
-      <div className="h-bub them">Ringing your app · Dana L.<small>20 seconds, then greeting and text-back</small></div>
+      <div className="h-bub them">Ringing your app · Dana L.<small>20 seconds, then the assistant (Pro) or greeting and text-back</small></div>
       <div className="h-bub us">Answered by Maya<small>3 min 12 s</small></div></>),
   },
   app: {
@@ -146,7 +165,7 @@ const HomePreview = () => {
             <div>
               <p className="h-rating"><span className="h-stars" aria-hidden="true">★★★★★</span> <b>4.3 → 4.5 on Google</b> in one month at my own salon</p>
               <h1>Never miss a <em>call</em>, a <em>booking</em>, or a <em>review</em>.</h1>
-              <p className="h-sub">When you're mid-cut, Curivanta texts the caller back, answers their questions, books them in, and asks every client for a Google review. Built for salons and solo stylists, and you see all of it from your phone.</p>
+              <p className="h-sub">When you're mid-cut, Curivanta texts the caller back, answers their questions, books them in, and asks every client for a Google review. On Pro, an AI assistant even answers the call. Built for salons and solo stylists, and you see all of it from your phone.</p>
               <div className="h-ctas">
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where="hero">Get started</a>
                 <a className="h-btn h-btn-ghost" href="#product" data-umami-event="cta_see_how" data-umami-event-where="hero">See how it works</a>
@@ -238,7 +257,7 @@ const HomePreview = () => {
           <div className="h-wrap">
             <div className="h-head">
               <div className="h-kicker">What it does</div>
-              <h2>Five front-desk jobs, handled in one place.</h2>
+              <h2>Six front-desk jobs, handled in one place.</h2>
               <p>Each one works on its own and they share one inbox, so nothing falls between apps.</p>
             </div>
             <div className="h-jobs">
@@ -406,12 +425,12 @@ const HomePreview = () => {
                   <li>You run a salon on SalonUltimate, or you're a stylist with an online booking link</li>
                   <li>You want more Google reviews without asking every client yourself</li>
                   <li>Your clients would rather text than play phone tag</li>
+                  <li>You'd like every call answered, even when you're with a client (Pro)</li>
                 </ul>
               </div>
               <div className="h-fit-col no">
                 <h3>Not the right fit yet if</h3>
                 <ul>
-                  <li>You want an AI that answers the phone by voice. Curivanta texts.</li>
                   <li>You want to send promotions or marketing blasts</li>
                   <li>You need bookings to land in software other than SalonUltimate. You can still use your booking link.</li>
                 </ul>
@@ -424,7 +443,7 @@ const HomePreview = () => {
           <div className="h-wrap">
             <div className="h-head center">
               <div className="h-kicker">Pricing</div>
-              <h2>Two plans. Both priced right here.</h2>
+              <h2>Three plans. All priced right here.</h2>
               <p>Per location. No contract, no demo needed to find out what it costs.</p>
             </div>
             <div className="h-prices">
@@ -442,7 +461,7 @@ const HomePreview = () => {
                   <li>Review requests (3 a day to start)</li>
                   <li>AI drafts Google review responses for you to approve</li>
                   <li>Owner app with phone alerts</li>
-                  <li>Move up to Light any time</li>
+                  <li>Move up to Light or Pro any time</li>
                 </ul>
                 <a className="h-btn h-btn-ghost" href={START_STARTER_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_starter">Start with Starter</a>
               </div>
@@ -461,8 +480,26 @@ const HomePreview = () => {
                   <li>Call from the app; your salon name shows on caller ID</li>
                   <li>Ratings and reviews by stylist</li>
                   <li>One login for several salons</li>
+                  <li>Move up to Pro any time</li>
                 </ul>
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_light">Start with Light</a>
+              </div>
+              <div className="h-card">
+                <div className="h-pname">Pro <span className="h-badge">New</span></div>
+                <p className="h-for">For salons that want every call answered</p>
+                <div className="h-price">$149<small> /month</small></div>
+                <p className="h-psub">+ $149 one-time setup.</p>
+                <div className="h-allow"><b>Everything in Light, plus 200 assistant minutes a month.</b> Extra assistant minutes are $10 per 50. We let you know at 80%.</div>
+                <ul>
+                  <li>Everything in Light</li>
+                  <li>When nobody picks up, the AI assistant answers the call</li>
+                  <li>Answers questions, books appointments and texts a confirmation</li>
+                  <li>Knows returning clients and what they usually book</li>
+                  <li>Takes messages, or asks you to call back</li>
+                  <li>Every call it takes, with what was said, in your app</li>
+                  <li>You choose when it answers: always, or only when you're closed</li>
+                </ul>
+                <a className="h-btn h-btn-ghost" href={START_PRO_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_pro">Start with Pro</a>
               </div>
             </div>
             <p className="h-pfoot">Setup is paid at sign-up. Your monthly charge starts only when texting goes live, usually 3 to 4 weeks later. Month to month after that: cancel any time and it ends at the end of the month you've paid for.</p>
@@ -497,6 +534,7 @@ const HomePreview = () => {
                 <tbody>
                   <tr><td>Price shown up front</td><td className="nn">n/a</td><td className="nn">Usually "book a demo"</td><td className="us"><span className="y">✓</span> From $49/mo</td></tr>
                   <tr><td>Missed calls after hours</td><td className="nn">Voicemail</td><td><span className="y">✓</span></td><td className="us"><span className="y">✓</span> Text in a minute</td></tr>
+                  <tr><td>Calls answered when you can't pick up</td><td className="nn">Voicemail</td><td className="nn">Sometimes, as an add-on</td><td className="us"><span className="y">✓</span> On Pro</td></tr>
                   <tr><td>Books into SalonUltimate</td><td>By hand</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span> Straight in</td></tr>
                   <tr><td>Remembers returning clients</td><td>If they remember</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span> By name, with their usual</td></tr>
                   <tr><td>Reviews name the stylist</td><td className="nn">No</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span></td></tr>
@@ -515,11 +553,12 @@ const HomePreview = () => {
               <details><summary>Do I need a new booking system?</summary><p>No. Salons on SalonUltimate get bookings straight into their calendar: Curivanta reads your real openings and books the time. Solo stylists can use any online booking link, and the AI sends it when a client wants to book.</p></details>
               <details><summary>Can I keep my phone number?</summary><p>Salons keep their number: you forward the calls you miss to Curivanta, and we text those callers back. Solo stylists get a new business number that rings their own cell, so their personal number stays private.</p></details>
               <details><summary>I'm a solo stylist or booth renter. Is this for me?</summary><p>Yes, that's what Starter is for: $49 a month and $49 setup. You get a business number that rings your cell, missed-call text-back, AI texting that sends your booking link, and review requests. You can move up to Light any time.</p></details>
-              <details><summary>Does an AI answer my phone?</summary><p>No. Curivanta texts. When you can't pick up, callers hear your greeting, can leave a voicemail, and get a text right away. The AI takes it from there by text.</p></details>
+              <details><summary>Does an AI answer my phone?</summary><p>On Pro, yes. When nobody can pick up, your assistant answers the call, tells the caller it's the salon's automated assistant, answers questions and books appointments, and texts a confirmation. Callers can ask for a person or leave a voicemail any time. On Starter and Light, callers hear your greeting, can leave a voicemail, and get a text right away.</p></details>
+              <details><summary>How many calls does Pro cover?</summary><p>200 minutes of the assistant on the phone each month, which is around 100 typical booking calls. Extra minutes are $10 per 50, and we let you know at 80%. You can also set it to answer only when you're closed.</p></details>
               <details><summary>Who gets asked for a review?</summary><p>Clients get a text after their visit asking how it went, with your Google link. They can reply 1 to 5 or leave a review. Low ratings and notes also come to you privately so you can make it right. Everyone gets the Google link, which keeps you within Google's rules.</p></details>
               <details><summary>What if a client asks something the AI can't handle?</summary><p>Refunds, complaints and anything unclear get handed to you with the full conversation. The AI never guesses and never makes up a booking.</p></details>
               <details><summary>Why does texting take 3 to 4 weeks to go live?</summary><p>US phone carriers have to approve every business that texts customers (it's called A2P 10DLC registration). We prepare and submit the paperwork for you. Your monthly charge doesn't start until approval comes through.</p></details>
-              <details><summary>Can my front desk use it too?</summary><p>Yes, on Light. Add team members by email. Front-desk logins see messages, calls and reviews, but not billing or settings, and replies show who sent them.</p></details>
+              <details><summary>Can my front desk use it too?</summary><p>Yes, on Light and Pro. Add team members by email. Front-desk logins see messages, calls and reviews, but not billing or settings, and replies show who sent them.</p></details>
             </div>
           </div>
         </section>
