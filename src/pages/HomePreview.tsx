@@ -89,17 +89,17 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
 
 const DASH = {
   today: {
-    k: [['7', 'missed calls texted back'], ['4', 'booked by text'], ['22', 'review requests'], ['4.9', 'avg new rating']],
+    k: [['5', 'calls answered by the assistant'], ['7', 'missed calls texted back'], ['6', 'booked for you'], ['4.9', 'avg new rating']],
     s: [['MR', 'Maya R.', '9 clients · 5 reviews', '5.0'], ['JT', 'Jordan T.', '7 clients · 3 reviews', '4.9'], ['AK', 'Aisha K.', '6 clients · 4 reviews', '4.8']],
-    n: [['p-amber', 'Refund question', 'Kim B. · 38m'], ['p-blue', 'Voicemail', '(949) 555-0142 · 1h']],
+    n: [['p-amber', 'Call back: asked the assistant for you', 'Kim B. · 12m'], ['p-amber', 'Refund question', 'Lena P. · 38m'], ['p-blue', 'Voicemail', '(949) 555-0142 · 1h']],
   },
   yesterday: {
-    k: [['9', 'missed calls texted back'], ['6', 'booked by text'], ['31', 'review requests'], ['4.8', 'avg new rating']],
+    k: [['8', 'calls answered by the assistant'], ['9', 'missed calls texted back'], ['10', 'booked for you'], ['4.8', 'avg new rating']],
     s: [['MR', 'Maya R.', '11 clients · 7 reviews', '4.9'], ['JT', 'Jordan T.', '9 clients · 5 reviews', '4.9'], ['AK', 'Aisha K.', '8 clients · 4 reviews', '4.7']],
-    n: [['p-amber', "Wants a stylist who's off", 'Lena P. · yesterday']],
+    n: [['p-amber', "Wants a stylist who's off", 'Lena P. · yesterday'], ['p-blue', 'Message taken by the assistant', 'Rosa M. · yesterday']],
   },
   week: {
-    k: [['41', 'missed calls texted back'], ['27', 'booked by text'], ['164', 'review requests'], ['4.9', 'avg new rating']],
+    k: [['38', 'calls answered by the assistant'], ['41', 'missed calls texted back'], ['46', 'booked for you'], ['4.9', 'avg new rating']],
     s: [['MR', 'Maya R.', '58 clients · 33 reviews', '4.9'], ['JT', 'Jordan T.', '49 clients · 26 reviews', '4.9'], ['AK', 'Aisha K.', '44 clients · 21 reviews', '4.8']],
     n: [['p-green', 'All caught up', 'Nothing waiting on you']],
   },
@@ -328,7 +328,7 @@ const HomePreview = () => {
             <div className="h-head">
               <div className="h-kicker">Owner app</div>
               <h2>Know how your salon did today, not at the end of the month.</h2>
-              <p>Open it any time. See what happened, which stylist clients are praising, and exactly what you've used this month.</p>
+              <p>Open it any time. See the calls your assistant answered and what it booked, which stylist clients are praising, and exactly what you've used this month.</p>
             </div>
             <div className="h-app">
               <div className="h-app-top"><b>Glow Studio</b><span className="h-loc">Main St · sample data</span><span className="h-live"><i></i>LIVE</span></div>
@@ -355,6 +355,7 @@ const HomePreview = () => {
               <div className="h-usage">
                 <div><b>Texts this month:</b> 412 of 1,000<div className="h-meter"><i style={{ width: '41%' }}></i></div></div>
                 <div><b>Call minutes:</b> 96 of 300<div className="h-meter"><i style={{ width: '32%' }}></i></div></div>
+                <div><b>Assistant minutes:</b> 64 of 200<div className="h-meter"><i style={{ width: '32%' }}></i></div></div>
               </div>
             </div>
             <div className="h-points">
@@ -412,7 +413,6 @@ const HomePreview = () => {
                 <h2>I own salons. I can't stand behind every front desk.</h2>
                 <p>I kept losing bookings to missed calls and watching great work go unreviewed. The tools I tried were built for every business at once: menus inside menus, prices hidden behind a demo.</p>
                 <p>So I built the front desk I wanted. It runs my own salon first, it speaks plain salon language, and the price is on this page.</p>
-                <p className="sig">Sunil · owner, Sharkey's Lake Forest</p>
               </div>
             </div>
           </div>
