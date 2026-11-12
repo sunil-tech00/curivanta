@@ -32,10 +32,10 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
     lede: "Clients text the questions they'd otherwise call with. The AI answers from your own menu, prices and policies, and books real open times, day or night.",
     ticks: ['Learns your services, prices, hours and policies from your website', 'Only offers times that are actually free, and confirms before booking', 'Salons: books into SalonUltimate. Solo stylists: sends your own booking link', 'Complaints and anything unclear go to you, with the whole thread'],
     mini: (<><div className="h">Straight into your calendar</div>
-      <div className="h-bub them">Can my son get a kids cut this weekend?<small>Client</small></div>
+      <div className="h-bub them">Can I get a trim and blowout this weekend?<small>Client</small></div>
       <div className="h-bub us">Yes! Saturday at 10:00 or 11:30 with Maya. Which works?<small>Live openings</small></div>
       <div className="h-bub them">10 please</div>
-      <div className="h-bub us">Booked: Sat 10:00 AM, Kids Cut with Maya.<small>In SalonUltimate</small></div></>),
+      <div className="h-bub us">Booked: Sat 10:00 AM, Trim &amp; Blowout with Maya.<small>In SalonUltimate</small></div></>),
   },
   voice: {
     tab: 'AI phone answering', hint: "Pro: answers when you can't",
@@ -291,16 +291,16 @@ const HomePreview = () => {
             <div className="h-spot">
               <div className="h-spot-chat">
                 <div className="h">Text conversation · 8:47 PM</div>
-                <div className="h-bub them">hi can leo get a boys cut this saturday?<small>Dana</small></div>
-                <div className="h-bub us">Hi Dana! Another kids cut with Jess for Leo? She has 10:00 or 11:30 on Saturday. Which works?<small>Curivanta</small></div>
-                <div className="h-bub them">10 please<small>Dana</small></div>
-                <div className="h-bub us">You're booked: Saturday at 10:00 AM, kids cut with Jess. See you then!<small>Curivanta</small></div>
+                <div className="h-bub them">hi can i get my roots done this saturday?<small>Sarah</small></div>
+                <div className="h-bub us">Hi Sarah! Another root touch-up with Jess? She has 10:00 or 1:30 on Saturday. Which works?<small>Curivanta</small></div>
+                <div className="h-bub them">10 please<small>Sarah</small></div>
+                <div className="h-bub us">You're booked: Saturday at 10:00 AM, root touch-up with Jess. See you then!<small>Curivanta</small></div>
               </div>
               <div className="h-spot-work">
                 <div className="h">What happened behind the scenes</div>
                 <ul>
-                  <li>Recognized Dana and Leo from their last visit</li>
-                  <li>Matched "boys cut" to Kids cut on your menu</li>
+                  <li>Recognized Sarah and what she had last time</li>
+                  <li>Matched "roots done" to Root touch-up on your menu</li>
                   <li>Turned "this Saturday" into the right date</li>
                   <li>Checked Jess's real openings, and offered only free times</li>
                   <li>Booked it and sent you an alert</li>
@@ -311,7 +311,7 @@ const HomePreview = () => {
             <div className="h-points">
               <div className="h-pt"><h3>Knows your salon</h3><p>Learns your services, prices, hours, parking and policies from your website. Add anything else in plain words.</p></div>
               <div className="h-pt"><h3>Knows when to stop</h3><p>Complaints, unusual requests and anything it isn't sure of go to you, with a phone alert.</p></div>
-              <div className="h-pt"><h3>Plays by the rules</h3><p>If a sibling shares the phone, it asks who the appointment is for. STOP always works.</p></div>
+              <div className="h-pt"><h3>Plays by the rules</h3><p>If two people share a phone, it asks who the appointment is for. STOP always works.</p></div>
             </div>
           </div>
         </section>
