@@ -616,7 +616,7 @@ const HomePreview = () => {
                 <p className="h-for">For solo stylists and booth renters</p>
                 <div className="h-price">$49<small> /month</small></div>
                 <p className="h-psub">+ $49 one-time setup.</p>
-                <div className="h-allow"><b>Includes 200 texts and 200 call minutes a month.</b> Need more? $10 per extra 100 texts, or per 100 minutes. We let you know at 80%.</div>
+                <div className="h-allow"><b>Includes 400 texts and 300 call minutes a month.</b> Need more? $10 per extra 100 texts, or per 100 minutes. We let you know at 80%.</div>
                 <ul>
                   <li>A separate business number, so your cell stays private</li>
                   <li>Calls ring your cell and the app during your hours</li>
@@ -653,10 +653,11 @@ const HomePreview = () => {
                 <p className="h-for">For salons that want every call answered</p>
                 <div className="h-price">$149<small> /month</small></div>
                 <p className="h-psub">+ $149 one-time setup.</p>
-                <div className="h-allow"><b>Everything in Light, plus 200 assistant minutes a month.</b> Extra assistant minutes are $10 per 50. We let you know at 80%.</div>
+                <div className="h-allow"><b>Includes 1,500 texts, 300 call minutes and 200 assistant minutes a month.</b> Need more? $10 per extra 100 texts or minutes, and $10 per 50 assistant minutes. We let you know at 80%.</div>
                 <ul>
                   <li>Everything in Light</li>
                   <li>When nobody picks up, the AI assistant answers the call</li>
+                  <li>Review requests (20 a day to start)</li>
                   <li>Answers questions, books appointments and texts a confirmation</li>
                   <li>Knows returning clients and what they usually book</li>
                   <li>Takes messages, or asks you to call back</li>
