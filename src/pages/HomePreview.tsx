@@ -627,13 +627,13 @@ const HomePreview = () => {
                 <p className="h-for">For solo stylists and booth renters</p>
                 <div className="h-price">$49<small> /month</small></div>
                 <p className="h-psub">+ $49 one-time setup.</p>
-                <div className="h-allow"><b>Includes 400 texts and 300 call minutes a month.</b> Need more? $10 per extra 100 texts, or per 100 minutes. We let you know at 80%.</div>
+                <div className="h-allow"><b>Includes 400 texts and 300 call minutes a month.</b> Need more? $10 per extra 100 texts, and $10 per extra 100 minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
                   <li>A separate business number, so your cell stays private</li>
                   <li>Calls ring your cell and the app during your hours</li>
                   <li>Missed-call text-back, with voicemails as text</li>
                   <li>AI texting that answers questions and books into SalonUltimate, or sends your booking link</li>
-                  <li>Review requests (3 a day to start)</li>
+                  <li>Review requests: 3 a day (change it any time)</li>
                   <li>AI drafts Google review responses for you to approve</li>
                   <li>Owner app with phone alerts</li>
                   <li>Move up to Light or Pro any time</li>
@@ -645,11 +645,11 @@ const HomePreview = () => {
                 <p className="h-for">For salons with a team</p>
                 <div className="h-price">$99<small> /month</small></div>
                 <p className="h-psub">+ $99 one-time setup.</p>
-                <div className="h-allow"><b>Includes 1,000 texts and 300 call minutes a month.</b> Need more? $10 per extra 100 texts, or per 100 minutes. We let you know at 80%.</div>
+                <div className="h-allow"><b>Includes 1,000 texts and 300 call minutes a month.</b> Need more? $10 per extra 100 texts, and $10 per extra 100 minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
-                  <li>Keep your salon number; missed calls forward to Curivanta</li>
+                  <li>Everything in Starter, except you keep your salon number: missed calls forward to Curivanta</li>
                   <li>AI texting that books straight into SalonUltimate</li>
-                  <li>Review requests (10 a day to start)</li>
+                  <li>Review requests: 10 a day (change it any time)</li>
                   <li>AI drafts Google review responses for you to approve</li>
                   <li>Team logins for owner, manager and front desk</li>
                   <li>Call from the app; your salon name shows on caller ID</li>
@@ -664,16 +664,16 @@ const HomePreview = () => {
                 <p className="h-for">For salons that want every call answered</p>
                 <div className="h-price">$149<small> /month</small></div>
                 <p className="h-psub">+ $149 one-time setup.</p>
-                <div className="h-allow"><b>Includes 1,500 texts, 300 call minutes and 200 assistant minutes a month.</b> Need more? $10 per extra 100 texts or minutes, and $10 per 50 assistant minutes. We let you know at 80%.</div>
+                <div className="h-allow"><b>Includes 1,500 texts, 300 call minutes and 200 assistant minutes a month.</b> Need more? $10 per extra 100 texts, $10 per extra 100 minutes, and $10 per extra 50 assistant minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
-                  <li>Everything in Light</li>
+                  <li>Everything in Light, plus:</li>
                   <li>When nobody picks up, the AI assistant answers the call</li>
-                  <li>Review requests (20 a day to start)</li>
                   <li>Answers questions, books appointments and texts a confirmation</li>
                   <li>Knows returning clients and what they usually book</li>
                   <li>Takes messages, or asks you to call back</li>
                   <li>Every call it takes, with what was said, in your app</li>
                   <li>You choose when it answers: always, or only when you're closed</li>
+                  <li>More texts, and review requests: 20 a day (change it any time)</li>
                 </ul>
                 <a className="h-btn h-btn-ghost" href={START_PRO_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_pro">Start with Pro</a>
               </div>
