@@ -387,10 +387,9 @@ const HomePreview = () => {
                     <div><b>Jess</b><span>usual stylist</span></div>
                     <div><b>Sat 10:00</b><span>next visit</span></div>
                   </div>
-                  <div className="h-cacts"><span>Call</span><span>Mark done</span><span className="soft">Notes</span></div>
+                  <div className="h-cacts"><span>Call</span></div>
                 </div>
                 <div className="h-cbody">
-                  <div className="h-cnote">Sensitive scalp. Likes her toner a little cooler.</div>
                   <div className="h-cfilters"><span className="on">Everything</span><span>Texts</span><span>Calls</span><span>Visits</span><span>Reviews</span></div>
                   <div className="h-cday">Sat Oct 4</div>
                   <div className="h-cev"><span className="h-cic g">✂</span><div><b>Visit: Root touch-up with Jess</b><span>10:00 AM</span></div></div>
@@ -409,7 +408,6 @@ const HomePreview = () => {
                   <li><span><b>One timeline.</b> Calls, voicemails, texts, visits, review requests and Google reviews, in the order they happened.</span></li>
                   <li><span><b>The basics at a glance.</b> How many visits, their usual stylist, and when they're booked next.</span></li>
                   <li><span><b>Google reviews matched to the client.</b> See who wrote it, which visit it was about, and your reply.</span></li>
-                  <li><span><b>Notes for your team.</b> Allergies and preferences everyone at the desk can see.</span></li>
                   <li><span><b>Reply or call from the same page.</b> Your salon number shows, not your cell.</span></li>
                 </ul>
                 <p className="h-c360-why">This is also why the AI can say "another root touch-up with Jess, like last time?" It reads the same history you do.</p>

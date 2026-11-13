@@ -368,7 +368,7 @@
 .cvh .h-cstats div { background:rgba(255,255,255,.1); border-radius:10px; padding:7px 9px; }
 .cvh .h-cstats b { display:block; color:#fff; font-size:14px; white-space:nowrap; }
 .cvh .h-cstats span { font-size:11px; color:var(--on-deep2); }
-.cvh .h-cacts { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:10px; }
+.cvh .h-cacts { display:grid; grid-template-columns:1fr; gap:6px; margin-top:10px; }
 .cvh .h-cacts span { text-align:center; padding:7px 0; border-radius:999px; background:#fff; color:var(--deep); font-weight:700; font-size:12.5px; }
 .cvh .h-cacts span.soft { background:rgba(255,255,255,.14); color:#fff; }
 .cvh .h-cbody { padding:12px; display:flex; flex-direction:column; gap:7px; }
