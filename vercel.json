@@ -12,6 +12,26 @@
       "source": "/widget/:path*",
       "destination": "https://link.curivanta.com/widget/:path*",
       "permanent": false
+    },
+    {
+      "source": "/home-preview",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/hair-salon-bot",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/reviewautomation",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/website-development",
+      "destination": "/",
+      "permanent": false
     }
   ],
   "rewrites": [
@@ -40,22 +60,6 @@
       "destination": "/solar/guides/:slug/index.html"
     },
     {
-      "source": "/hair-salon-bot",
-      "destination": "/hair-salon-bot/index.html"
-    },
-    {
-      "source": "/reviewautomation",
-      "destination": "/reviewautomation/index.html"
-    },
-    {
-      "source": "/website-development",
-      "destination": "/website-development/index.html"
-    },
-    {
-      "source": "/home-preview",
-      "destination": "/home-preview/index.html"
-    },
-    {
       "source": "/((?!solar/|api/).*)",
       "destination": "/index.html"
     }
@@ -67,15 +71,6 @@
     }
   ],
   "headers": [
-    {
-      "source": "/home-preview",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
-    },
     {
       "source": "/reviewautomation/welcome",
       "headers": [

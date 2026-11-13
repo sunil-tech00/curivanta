@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { ThemeToggle } from '../components/ThemeToggle';
 import './home/home.css';
 
-// Preview of the new homepage (Curivanta for salons), served at /home-preview and kept out of
-// search (noindex header in vercel.json). Becomes Index.tsx once approved.
+// The homepage (Curivanta for salons), served at /. Launched 2026-11-13; the old homepage is
+// archived in git (tag old-site-2026-11-13). /home-preview redirects here.
 // Analytics (see public/analytics.js). Clicks on elements with data-umami-event are tracked by Umami itself.
 const track = (name: string, data?: Record<string, string | number | boolean>) =>
   (window as Window & { cvTrack?: (name: string, data?: Record<string, string | number | boolean>) => void }).cvTrack?.(name, data);

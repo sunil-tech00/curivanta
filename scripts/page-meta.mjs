@@ -7,38 +7,9 @@ import path from "node:path";
 const DIST = "dist";
 const SITE = "https://curivanta.com";
 
-const PAGES = [
-  {
-    // Preview of the new homepage for sharing; noindex (see vercel.json).
-    route: "/home-preview",
-    title: "Curivanta | Never miss a call, a booking, or a review",
-    description: "The AI front desk for salons and solo stylists: missed-call text-back, AI texting that answers questions and books appointments, and Google review requests for every client. From $49/month.",
-    image: "/brand/og-home.jpg",
-    imageAlt: "Curivanta: the AI front desk for salons and solo stylists"
-  },
-  {
-    route: "/hair-salon-bot",
-    title: "Hair Salon Bot: Missed-Call Text-Back for Salons | Curivanta",
-    description: "Every missed call gets a text back within seconds, and AI books the appointment straight into Salon Ultimate. From $99/month, no contracts, live in about a week.",
-    image: "/brand/og-hair-salon-bot.jpg",
-    imageAlt: "Curivanta Hair Salon Bot: missed a call? We text them back and book them"
-  },
-  {
-    route: "/reviewautomation",
-    title: "Review Automation for Salons & Barbershops | Curivanta",
-    description: "Every client gets a friendly text and email asking for a Google review, and every review gets a reply from AI. Works with any booking software. First month free.",
-    image: "/brand/og-review-automation.jpg",
-    imageAlt: "Curivanta Review Automation: happy clients, now on Google"
-  },
-  {
-    route: "/website-development",
-    title: "Website Design for Local Practices & Service Businesses | Curivanta",
-    description: "Websites that get local businesses found on Google and booked online. Free homepage concept, fixed pricing, and you own everything.",
-    // TODO: swap for a dedicated 1200x630 og-websites.jpg once one exists.
-    image: "/brand/og-home.jpg",
-    imageAlt: "Curivanta: turn every customer interaction into something that runs itself"
-  }
-];
+// Pages that need their own link preview. Empty since the 2026-11-13 launch: the homepage's
+// tags are in index.html, and the old product pages are archived (they redirect to /).
+const PAGES = [];
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 const base = fs.readFileSync(path.join(DIST, "index.html"), "utf8");

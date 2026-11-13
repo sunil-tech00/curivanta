@@ -22,10 +22,10 @@ export function SiteFooter() {
           </span>
         </div>
       </div>
-      <nav className="wrap foot-services" aria-label="Services">
-        <Link className="foot-link" to="/website-development" data-umami-event="footer_websites">Websites</Link>
-        <Link className="foot-link" to="/hair-salon-bot" data-umami-event="footer_hair_salon_bot">Hair Salon Bot</Link>
-        <Link className="foot-link" to="/reviewautomation" data-umami-event="footer_review_automation">Review Automation</Link>
+      <nav className="wrap foot-services" aria-label="Curivanta">
+        <Link className="foot-link" to="/" data-umami-event="footer_home">Curivanta for salons</Link>
+        <a className="foot-link" href="/#pricing" data-umami-event="footer_pricing">Pricing</a>
+        <a className="foot-link" href="https://app.curivanta.com/login" data-umami-event="footer_sign_in">Sign in</a>
       </nav>
     </footer>
   );
