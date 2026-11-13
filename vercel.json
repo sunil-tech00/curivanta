@@ -4,6 +4,17 @@
   "outputDirectory": "dist",
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.curivanta.com"
+        }
+      ],
+      "destination": "https://curivanta.com/:path*",
+      "permanent": true
+    },
+    {
       "source": "/book",
       "destination": "https://link.curivanta.com/widget/bookings/solar-consulting-calendar",
       "permanent": false
