@@ -627,7 +627,7 @@ const HomePreview = () => {
                 <p className="h-for">For solo stylists and booth renters</p>
                 <div className="h-price">$49<small> /month</small></div>
                 <p className="h-psub">+ $49 one-time setup.</p>
-                <div className="h-allow"><b>Includes 400 texts and 300 call minutes a month.</b> Need more? $10 per extra 500 texts, and $10 per extra 500 minutes. We email you when you reach 80% of any of them.</div>
+                <div className="h-allow"><b>Includes 400 texts and 300 call minutes a month.</b> Need more? $10 per extra 250 texts, and $10 per extra 250 minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
                   <li>A separate business number, so your cell stays private</li>
                   <li>Calls ring your cell and the app during your hours</li>
@@ -645,7 +645,7 @@ const HomePreview = () => {
                 <p className="h-for">For salons with a team</p>
                 <div className="h-price">$99<small> /month</small></div>
                 <p className="h-psub">+ $99 one-time setup.</p>
-                <div className="h-allow"><b>Includes 1,000 texts and 300 call minutes a month.</b> Need more? $10 per extra 500 texts, and $10 per extra 500 minutes. We email you when you reach 80% of any of them.</div>
+                <div className="h-allow"><b>Includes 1,000 texts and 300 call minutes a month.</b> Need more? $10 per extra 250 texts, and $10 per extra 250 minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
                   <li>Everything in Starter, except you keep your salon number: missed calls forward to Curivanta</li>
                   <li>AI texting that books straight into SalonUltimate</li>
@@ -664,7 +664,7 @@ const HomePreview = () => {
                 <p className="h-for">For salons that want every call answered</p>
                 <div className="h-price">$149<small> /month</small></div>
                 <p className="h-psub">+ $149 one-time setup.</p>
-                <div className="h-allow"><b>Includes 1,500 texts, 300 call minutes and 200 assistant minutes a month.</b> Need more? $10 per extra 500 texts, $10 per extra 500 minutes, and $10 per extra 50 assistant minutes. We email you when you reach 80% of any of them.</div>
+                <div className="h-allow"><b>Includes 1,500 texts, 300 call minutes and 200 assistant minutes a month.</b> Need more? $10 per extra 250 texts, $10 per extra 250 minutes, and $10 per extra 50 assistant minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
                   <li>Everything in Light, plus:</li>
                   <li>When nobody picks up, the AI assistant answers the call</li>
