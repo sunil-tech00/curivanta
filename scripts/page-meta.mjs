@@ -14,14 +14,14 @@ const PAGES = [
     route: "/privacy",
     title: "Privacy Policy | Curivanta",
     description: "How Curivanta handles salon owners' and clients' information: texts, calls, recordings, AI, who we share with, and your choices.",
-    image: "/brand/og-home.jpg",
+    image: "/brand/og-salon.jpg",
     imageAlt: "Curivanta: the AI front desk for salons and solo stylists"
   },
   {
     route: "/terms",
     title: "Terms of Service | Curivanta",
     description: "The terms for Curivanta's Starter, Light and Pro plans: billing, included usage, cancelling, and how the AI front desk works.",
-    image: "/brand/og-home.jpg",
+    image: "/brand/og-salon.jpg",
     imageAlt: "Curivanta: the AI front desk for salons and solo stylists"
   }
 ];
