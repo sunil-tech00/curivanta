@@ -30,7 +30,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
     tab: 'AI texting & booking', hint: 'Answers and books',
     title: 'AI texting & booking',
     lede: "Clients text the questions they'd otherwise call with. The AI answers from your own menu, prices and policies, and books real open times, day or night.",
-    ticks: ['Learns your services, prices, hours and policies from your website', 'Only offers times that are actually free, and confirms before booking', 'Salons: books into SalonUltimate. Solo stylists: sends your own booking link', 'Complaints and anything unclear go to you, with the whole thread'],
+    ticks: ['Learns your services, prices, hours and policies from your website', 'Only offers times that are actually free, and confirms before booking', 'On SalonUltimate, it books straight in, solo or salon. Otherwise it sends your own booking link', 'Complaints and anything unclear go to you, with the whole thread'],
     mini: (<><div className="h">Straight into your calendar</div>
       <div className="h-bub them">Can I get a trim and blowout this weekend?<small>Client</small></div>
       <div className="h-bub us">Yes! Saturday at 10:00 or 11:30 with Maya. Which works?<small>Live openings</small></div>
@@ -316,8 +316,8 @@ const HomePreview = () => {
               <p>You've heard a lot about AI. Here's the plain version: it handles the phone and texts so you can stay with the client in your chair.</p>
             </div>
             <ol className="h-day">
-              <li><time>10:20 AM</time><div><b>You're mid-color and a client calls.</b><p>You can't answer. Within a minute she gets a text from your business number. She asks how much a gloss is, and the AI answers from your menu and sends your booking link.</p></div></li>
-              <li><time>2:05 PM</time><div><b>A new client texts: "Do you do curly cuts?"</b><p>The AI answers from your services and prices, and sends your booking link. You're never interrupted.</p></div></li>
+              <li><time>10:20 AM</time><div><b>You're mid-color and a client calls.</b><p>You can't answer. Within a minute she gets a text from your business number. She asks how much a gloss is, and the AI answers from your menu and books her in, or sends your booking link.</p></div></li>
+              <li><time>2:05 PM</time><div><b>A new client texts: "Do you do curly cuts?"</b><p>The AI answers from your services and prices, and helps them book. You're never interrupted.</p></div></li>
               <li><time>9:40 PM</time><div><b>Someone calls after hours.</b><p>Your phone doesn't ring. They hear your greeting and leave a voicemail, which arrives in the app as text, ready for the morning.</p></div></li>
               <li><time>Next morning</time><div><b>Coffee, then two taps.</b><p>Review requests have gone out to your clients, and a new Google review has a reply drafted for you. Read it and tap approve.</p></div></li>
             </ol>
@@ -531,7 +531,7 @@ const HomePreview = () => {
             </div>
             <div className="h-steps">
               <div className="h-step"><div className="n">1</div><h3>Pick a plan and paste one link</h3><p>Paste your website, booking page or Google listing. We read it and fill in your services, prices, hours and stylists.</p><span className="t">About 5 minutes</span></div>
-              <div className="h-step"><div className="n">2</div><h3>Connect your booking</h3><p>Salons add help@curivanta.com as a Receptionist in SalonUltimate. Solo stylists just share their online booking link.</p><span className="t">About 5 minutes</span></div>
+              <div className="h-step"><div className="n">2</div><h3>Connect your booking</h3><p>On SalonUltimate, add help@curivanta.com as a Receptionist. On anything else, just share your online booking link.</p><span className="t">About 5 minutes</span></div>
               <div className="h-step"><div className="n">3</div><h3>Pick your number and you're done</h3><p>Choose your number and enter your legal name and EIN. No EIN? Solo stylists can register as a sole proprietor with one text reply.</p><span className="t">About 5 minutes</span></div>
             </div>
             <div className="h-timeline">
@@ -589,7 +589,7 @@ const HomePreview = () => {
                 <h3>A good fit if</h3>
                 <ul>
                   <li>You miss calls while you're with a client</li>
-                  <li>You run a salon on SalonUltimate, or you're a stylist with an online booking link</li>
+                  <li>You book on SalonUltimate (salon or solo), or you have an online booking link</li>
                   <li>You want more Google reviews without asking every client yourself</li>
                   <li>Your clients would rather text than play phone tag</li>
                   <li>You'd like every call answered, even when you're with a client (Pro)</li>
@@ -624,7 +624,7 @@ const HomePreview = () => {
                   <li>A separate business number, so your cell stays private</li>
                   <li>Calls ring your cell and the app during your hours</li>
                   <li>Missed-call text-back, with voicemails as text</li>
-                  <li>AI texting that answers questions and sends your booking link</li>
+                  <li>AI texting that answers questions and books into SalonUltimate, or sends your booking link</li>
                   <li>Review requests (3 a day to start)</li>
                   <li>AI drafts Google review responses for you to approve</li>
                   <li>Owner app with phone alerts</li>
@@ -718,9 +718,9 @@ const HomePreview = () => {
           <div className="h-wrap">
             <div className="h-head center"><div className="h-kicker">Questions</div><h2>Asked by owners like you</h2></div>
             <div className="h-faq">
-              <details><summary>Do I need a new booking system?</summary><p>No. Salons on SalonUltimate get bookings straight into their calendar: Curivanta reads your real openings and books the time. Solo stylists can use any online booking link, and the AI sends it when a client wants to book.</p></details>
+              <details><summary>Do I need a new booking system?</summary><p>No. If you're on SalonUltimate, salon or solo, bookings go straight into your calendar: Curivanta reads your real openings and books the time. On any other system, the AI sends your online booking link when a client wants to book.</p></details>
               <details><summary>Can I keep my phone number?</summary><p>Salons keep their number: you forward the calls you miss to Curivanta, and we text those callers back. Solo stylists get a new business number that rings their own cell, so their personal number stays private.</p></details>
-              <details><summary>I'm a solo stylist or booth renter. Is this for me?</summary><p>Yes, that's what Starter is for: $49 a month and $49 setup. You get a business number that rings your cell, missed-call text-back, AI texting that sends your booking link, and review requests. You can move up to Light any time.</p></details>
+              <details><summary>I'm a solo stylist or booth renter. Is this for me?</summary><p>Yes, that's what Starter is for: $49 a month and $49 setup. You get a business number that rings your cell, missed-call text-back, AI texting that books into SalonUltimate or sends your booking link, and review requests. You can move up to Light any time.</p></details>
               <details><summary>Does an AI answer my phone?</summary><p>On Pro, yes. When nobody can pick up, your assistant answers the call, tells the caller it's the salon's automated assistant, answers questions and books appointments, and texts a confirmation. Callers can ask for a person or leave a voicemail any time. On Starter and Light, callers hear your greeting, can leave a voicemail, and get a text right away.</p></details>
               <details><summary>How many calls does Pro cover?</summary><p>200 minutes of the assistant on the phone each month, which is around 100 typical booking calls. Extra minutes are $10 per 50, and we let you know at 80%. You can also set it to answer only when you're closed.</p></details>
               <details><summary>Who gets asked for a review?</summary><p>Clients get a text after their visit asking how it went, with your Google link. They can reply 1 to 5 or leave a review. Low ratings and notes also come to you privately so you can make it right. Everyone gets the Google link, which keeps you within Google's rules.</p></details>
