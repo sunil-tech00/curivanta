@@ -229,6 +229,7 @@ const HomePreview = () => {
               <span className="h-chip">Your online booking link</span>
               <span className="h-chip">Google Business Profile</span>
               <span className="h-chip">Your current number</span>
+              <span className="h-chip">Or a new business number</span>
             </div>
           </div>
         </div>
@@ -274,9 +275,55 @@ const HomePreview = () => {
               </div>
             </div>
             <div className="h-points">
-              <div className="h-pt"><h3>Solo stylist?</h3><p>The receptionist you never had to hire. Stay with your client while Curivanta handles the phone.</p></div>
+              <div className="h-pt"><h3>Solo stylist?</h3><p>The receptionist you never had to hire, and a business number so your cell stays private. <a href="#solo">See how</a></p></div>
               <div className="h-pt"><h3>Small salon?</h3><p>Cover the desk without adding a hire. Your stylists stop running to the phone between clients.</p></div>
               <div className="h-pt"><h3>Already have a front desk?</h3><p>Keep them. Curivanta takes lunch breaks, the second line, busy Saturdays and after hours.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="h-block flush" id="solo" data-track-view="solo">
+          <div className="h-wrap">
+            <div className="h-head">
+              <div className="h-kicker">For solo stylists</div>
+              <h2>Take your personal number off your business cards.</h2>
+              <p>Most solo stylists run their whole business from their own cell. Clients text at 10 PM, call on your day off, and keep your number forever. Starter gives you a separate business number, and an AI that looks after it for you.</p>
+            </div>
+            <div className="h-fit">
+              <div className="h-fit-col no">
+                <h3>Your cell today</h3>
+                <ul>
+                  <li>Clients text your personal number at all hours</li>
+                  <li>Client texts mixed in with family and friends</li>
+                  <li>Every client you've ever had keeps your cell</li>
+                  <li>A call you miss while you're foiling is a booking gone</li>
+                </ul>
+              </div>
+              <div className="h-fit-col yes">
+                <h3>With a Curivanta number</h3>
+                <ul>
+                  <li>One business number for your cards, Instagram and booking page</li>
+                  <li>Calls ring your cell only during your hours (press 1 to answer)</li>
+                  <li>After hours, callers get your greeting and voicemail, and your phone stays quiet</li>
+                  <li>Text and call clients from the app: they see the business number, never your cell</li>
+                  <li>Work lives in one app. Your cell goes back to being yours</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="h-head h-solo-sub">
+              <h3>AI without the hype: what it actually does in your day</h3>
+              <p>You've heard a lot about AI. Here's the plain version: it handles the phone and texts so you can stay with the client in your chair.</p>
+            </div>
+            <ol className="h-day">
+              <li><time>10:20 AM</time><div><b>You're mid-color and a client calls.</b><p>You can't answer. Within a minute she gets a text from your business number. She asks how much a gloss is, and the AI answers from your menu and sends your booking link.</p></div></li>
+              <li><time>2:05 PM</time><div><b>A new client texts: "Do you do curly cuts?"</b><p>The AI answers from your services and prices, and sends your booking link. You're never interrupted.</p></div></li>
+              <li><time>9:40 PM</time><div><b>Someone calls after hours.</b><p>Your phone doesn't ring. They hear your greeting and leave a voicemail, which arrives in the app as text, ready for the morning.</p></div></li>
+              <li><time>Next morning</time><div><b>Coffee, then two taps.</b><p>Review requests have gone out to your clients, and a new Google review has a reply drafted for you. Read it and tap approve.</p></div></li>
+            </ol>
+            <div className="h-solo-foot">
+              <p><b>Your part:</b> nothing during appointments, and a couple of minutes over coffee.</p>
+              <a className="h-btn h-btn-primary" href={START_STARTER_URL} data-umami-event="cta_get_started" data-umami-event-where="solo">Start with Starter, $49/mo</a>
             </div>
           </div>
         </section>
