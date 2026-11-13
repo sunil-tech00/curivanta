@@ -161,6 +161,18 @@ const AppToday = ({ range, setRange, full }: { range: Range; setRange?: (r: Rang
 
 const HomePreview = () => {
   useEffect(() => { document.title = 'Curivanta | The salon front desk that books, not just answers'; }, []);
+  // Links to the app carry the theme picked here, so sign-up and sign-in look the same (light by default).
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as Element | null)?.closest?.('a[href^="https://app.curivanta.com"]') as HTMLAnchorElement | null;
+      if (!a) return;
+      const url = new URL(a.href);
+      url.searchParams.set('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      a.href = url.toString();
+    };
+    document.addEventListener('click', onClick, true);
+    return () => document.removeEventListener('click', onClick, true);
+  }, []);
 
   // Scroll funnel: how far down the page visitors get (once per section per visit).
   useEffect(() => {
