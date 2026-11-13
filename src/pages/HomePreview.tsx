@@ -277,7 +277,7 @@ const HomePreview = () => {
             <div className="h-points">
               <div className="h-pt"><h3>Solo stylist?</h3><p>The receptionist you never had to hire, and a business number so your cell stays private. <a href="#solo">See how</a></p></div>
               <div className="h-pt"><h3>Small salon?</h3><p>Cover the desk without adding a hire. Your stylists stop running to the phone between clients.</p></div>
-              <div className="h-pt"><h3>Already have a front desk?</h3><p>Keep them. Curivanta takes lunch breaks, the second line, busy Saturdays and after hours.</p></div>
+              <div className="h-pt"><h3>Already have a front desk?</h3><p>Keep them. Curivanta picks up the calls they can't get to: during their lunch break, while they're on another call, on busy Saturdays and after hours.</p></div>
             </div>
           </div>
         </section>
