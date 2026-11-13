@@ -198,7 +198,7 @@ const HomePreview = () => {
                   <div className="h-kpi"><div className="n">5</div><div className="l">calls answered by the assistant</div></div>
                   <div className="h-kpi"><div className="n">7</div><div className="l">missed calls texted back</div></div>
                   <div className="h-kpi"><div className="n">6</div><div className="l">booked for you</div></div>
-                  <div className="h-kpi"><div className="n">22</div><div className="l">review requests</div></div>
+                  <div className="h-kpi"><div className="n">4.9</div><div className="l">avg new rating</div></div>
                 </div>
                 <div className="h-feed">
                   <div className="h-row"><span><span className="h-pill p-green">Booked by phone</span>Dana L. · Trim, Sat 10:00 with Maya</span><time>4m</time></div>
@@ -485,7 +485,8 @@ const HomePreview = () => {
               <p>Open it any time. See the calls your assistant answered and what it booked, which stylist clients are praising, and exactly what you've used this month.</p>
             </div>
             <div className="h-app">
-              <div className="h-app-top"><b>Glow Studio</b><span className="h-loc">Main St · sample data</span><span className="h-live"><i></i>LIVE</span></div>
+              <div className="h-app-top"><b>{range === 'today' ? 'Today' : range === 'yesterday' ? 'Yesterday' : 'Last 7 days'}</b><span className="h-loc">Glow Studio · Main St</span><span className="h-live"><i></i>LIVE</span></div>
+              <div className="h-tabsrow"><span className="on">Today</span><span>Messages</span><span>Reviews</span><span>Calls</span><span>Bookings</span></div>
               <div className="h-range" role="group" aria-label="Date range">
                 {([['today', 'Today'], ['yesterday', 'Yesterday'], ['week', 'Last 7 days']] as [Range, string][]).map(([r, label]) => (
                   <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange(r)}>{label}</button>
