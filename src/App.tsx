@@ -8,12 +8,9 @@ import Home from "./pages/HomePreview";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
-import SalonWelcome from "./pages/SalonWelcome";
-import ReviewsWelcome from "./pages/ReviewsWelcome";
 
 // The old homepage, Hair Salon Bot, Review Automation and Website Development pages are archived
 // (git tag old-site-2026-11-13, branch archive/old-site); their URLs redirect to / (vercel.json).
-// The welcome pages stay for customers who signed up on those plans.
 
 const queryClient = new QueryClient();
 
@@ -26,8 +23,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/hair-salon-bot/welcome" element={<SalonWelcome />} />
-          <Route path="/reviewautomation/welcome" element={<ReviewsWelcome />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

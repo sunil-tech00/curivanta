@@ -32,6 +32,16 @@
       "source": "/website-development",
       "destination": "/",
       "permanent": false
+    },
+    {
+      "source": "/hair-salon-bot/welcome",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/reviewautomation/welcome",
+      "destination": "/",
+      "permanent": false
     }
   ],
   "rewrites": [
@@ -60,6 +70,14 @@
       "destination": "/solar/guides/:slug/index.html"
     },
     {
+      "source": "/privacy",
+      "destination": "/privacy/index.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms/index.html"
+    },
+    {
       "source": "/((?!solar/|api/).*)",
       "destination": "/index.html"
     }
@@ -71,24 +89,6 @@
     }
   ],
   "headers": [
-    {
-      "source": "/reviewautomation/welcome",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
-    },
-    {
-      "source": "/hair-salon-bot/welcome",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
-    },
     {
       "source": "/solar/report/:id",
       "headers": [

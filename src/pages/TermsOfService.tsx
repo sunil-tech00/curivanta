@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { SiteFooter } from '../components/SiteFooter';
@@ -13,6 +14,7 @@ const H = ({ children }: { children: React.ReactNode }) => (
 const mail = <a href="mailto:hello@curivanta.com" style={{ color: 'var(--brass)' }}>hello@curivanta.com</a>;
 
 const TermsOfService = () => {
+  useEffect(() => { document.title = 'Terms of Service | Curivanta'; }, []);
   return (
     <div className="curivanta-theme">
       <header className="nav">

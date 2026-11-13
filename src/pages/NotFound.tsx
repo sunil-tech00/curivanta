@@ -5,6 +5,15 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
+    // Unknown URLs get the site's index.html with a 200, so tell search engines not to index them.
+    const tag = document.createElement("meta");
+    tag.name = "robots";
+    tag.content = "noindex";
+    document.head.appendChild(tag);
+    return () => tag.remove();
+  }, []);
+
+  useEffect(() => {
     console.error(
       "404 Error: User attempted to access non-existent route:",
       location.pathname
