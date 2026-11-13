@@ -171,13 +171,13 @@ const HomePreview = () => {
             <div>
               <p className="h-rating"><span className="h-stars" aria-hidden="true">★★★★★</span> <b>4.3 → 4.5 on Google</b> in one month at my own salon</p>
               <h1>The front desk that <em>books</em>, not just answers.</h1>
-              <p className="h-sub">Curivanta answers calls and texts 24/7, books into your real calendar, remembers every client, and asks each one for a Google review. All for less than a week of a receptionist's pay.</p>
+              <p className="h-sub">Curivanta answers your clients' texts around the clock, texts back every missed call, and on Pro, picks up the phone when you can't. It remembers every client and books them into your real calendar, with every call, text, visit and review on one page. All for less than a week of a receptionist's pay.</p>
               <ul className="h-does">
-                <li>Answers calls</li>
                 <li>Texts back</li>
                 <li>Books into your calendar</li>
                 <li>Knows every client</li>
                 <li>Gets reviews</li>
+                <li>Answers calls <span className="h-pro">Pro</span></li>
               </ul>
               <div className="h-ctas">
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where="hero">Get started</a>
@@ -212,7 +212,7 @@ const HomePreview = () => {
                 <div style={{ marginTop: 4 }}>"Jordan is the only one I trust with my fade."</div>
               </div>
               <div className="h-float f1 h-call" aria-label="Sample call answered by the AI assistant">
-                <div className="h-call-top"><span className="h-call-dot"></span><b>Assistant on a call</b><span className="h-call-time">0:48</span></div>
+                <div className="h-call-top"><span className="h-call-dot"></span><b>Assistant on a call</b><span className="h-pro">Pro</span><span className="h-call-time">0:48</span></div>
                 <div className="h-bub them">Can Maya do a trim Saturday morning?<small>Dana · calling while you're with a client</small></div>
                 <div className="h-bub us">She has ten or eleven thirty. Which works?<small>Assistant</small></div>
                 <div className="h-call-done"><span className="h-pill p-green">Booked</span>Sat 10:00 with Maya · confirmation texted</div>
@@ -332,8 +332,8 @@ const HomePreview = () => {
           <div className="h-wrap">
             <div className="h-head">
               <div className="h-kicker">The AI front desk</div>
-              <h2>It remembers your regulars.</h2>
-              <p>Clients text the way they talk. Curivanta keeps up, greets returning clients by name, and books their usual in a few messages.</p>
+              <h2>You know your clients. Now your AI does too.</h2>
+              <p>A generic AI receptionist asks every caller for their name, what they want and who they usually see. Curivanta already knows, so a returning client books in a few messages, by text or, on Pro, by phone.</p>
             </div>
             <div className="h-spot">
               <div className="h-spot-chat">
@@ -344,10 +344,16 @@ const HomePreview = () => {
                 <div className="h-bub us">You're booked: Saturday at 10:00 AM, root touch-up with Jess. See you then!<small>Curivanta</small></div>
               </div>
               <div className="h-spot-work">
-                <div className="h">What happened behind the scenes</div>
+                <div className="h">What Curivanta knew before it replied</div>
                 <ul>
-                  <li>Recognized Sarah from her phone number</li>
-                  <li>Remembered her last visit: root touch-up with Jess</li>
+                  <li>Who she is: Sarah, from her phone number</li>
+                  <li>Her usual stylist: Jess</li>
+                  <li>Her usual service: root touch-up</li>
+                  <li>Her last visit: Saturday, October 4</li>
+                  <li>Nothing booked yet, so she needs a time</li>
+                </ul>
+                <div className="h" style={{ marginTop: 16 }}>Then it did the work</div>
+                <ul>
                   <li>Turned "Saturday" into the right date</li>
                   <li>Checked Jess's real openings, and offered only free times</li>
                   <li>Booked it and sent you an alert</li>
@@ -355,9 +361,10 @@ const HomePreview = () => {
                 <p className="h-spot-total"><b>0 minutes</b> of your time, after the salon had closed.</p>
               </div>
             </div>
-            <div className="h-points">
+            <div className="h-points h-points4">
               <div className="h-pt"><h3>Knows your salon</h3><p>Learns your services, prices, hours, parking and policies from your website. Add anything else in plain words.</p></div>
               <div className="h-pt"><h3>Knows when to stop</h3><p>Complaints, unusual requests and anything it isn't sure of go to you, with a phone alert.</p></div>
+              <div className="h-pt"><h3>Learns from day one</h3><p>Visit history builds from the day you connect: every checkout and booking adds to it. The more clients come back, the more it knows.</p></div>
               <div className="h-pt"><h3>Plays by the rules</h3><p>If two people share a phone, it asks who the appointment is for. STOP always works.</p></div>
             </div>
           </div>

@@ -408,3 +408,8 @@
 .cvh .h-pt a { color:var(--accent); font-weight:600; }
 .cvh #solo .h-fit { max-width:none; }
 .cvh .h-solo-sub h3 { margin-bottom:8px; }
+.cvh .h-points4 { grid-template-columns:repeat(4,1fr); }
+@media (max-width:1000px) { .cvh .h-points4 { grid-template-columns:1fr 1fr; } }
+@media (max-width:600px) { .cvh .h-points4 { grid-template-columns:1fr; } }
+.cvh .h-pro { display:inline-block; margin-left:6px; padding:1px 7px; border-radius:999px; background:var(--accent); color:var(--btn-ink); font-size:10.5px; font-weight:700; letter-spacing:.03em; vertical-align:1px; }
+.cvh .h-call-top .h-pro { margin-left:0; }
