@@ -107,7 +107,7 @@ const DASH = {
 type Range = keyof typeof DASH;
 
 const HomePreview = () => {
-  useEffect(() => { document.title = 'Curivanta | Never miss a call, a booking, or a review'; }, []);
+  useEffect(() => { document.title = 'Curivanta | The salon front desk that books, not just answers'; }, []);
 
   // Scroll funnel: how far down the page visitors get (once per section per visit).
   useEffect(() => {
@@ -132,6 +132,11 @@ const HomePreview = () => {
   const bookings = Math.round(calls * (rate / 100) * 4.33);
   const lost = Math.round((bookings * ticket) / 10) * 10;
 
+  // Front-desk cost: BLS May 2024 median receptionist pay is $17.90/hr (bls.gov/ooh). Weeks = 4.33/month.
+  const [deskHours, setDeskHours] = useState(30);
+  const [deskRate, setDeskRate] = useState(18);
+  const deskCost = Math.round((deskHours * deskRate * 4.33) / 10) * 10;
+
   const [job, setJob] = useState<keyof typeof JOBS>('textback');
   const [range, setRange] = useState<Range>('today');
   const d = DASH[range];
@@ -146,6 +151,7 @@ const HomePreview = () => {
             <img src="/brand/logo-dark.png" alt="" className="h-logo-ondark" />
           </a>
           <nav className="h-links" aria-label="Page">
+            <a href="#desk" data-umami-event="nav_desk">Why Curivanta</a>
             <a href="#product" data-umami-event="nav_product">Product</a>
             <a href="#how" data-umami-event="nav_how">How it works</a>
             <a href="#pricing" data-umami-event="nav_pricing">Pricing</a>
@@ -164,12 +170,13 @@ const HomePreview = () => {
           <div className="h-wrap h-hero-grid">
             <div>
               <p className="h-rating"><span className="h-stars" aria-hidden="true">★★★★★</span> <b>4.3 → 4.5 on Google</b> in one month at my own salon</p>
-              <h1>Never miss a <em>call</em>, a <em>booking</em>, or a <em>review</em>.</h1>
-              <p className="h-sub">Your AI front desk, on 24/7. When you're with a client, it answers the call (Pro) or texts the caller back, answers their questions, books them in, and asks every client for a Google review. You see all of it from your phone.</p>
+              <h1>The front desk that <em>books</em>, not just answers.</h1>
+              <p className="h-sub">Curivanta answers calls and texts 24/7, books into your real calendar, remembers every client, and asks each one for a Google review. All for less than a week of a receptionist's pay.</p>
               <ul className="h-does">
                 <li>Answers calls</li>
                 <li>Texts back</li>
-                <li>Books appointments</li>
+                <li>Books into your calendar</li>
+                <li>Knows every client</li>
                 <li>Gets reviews</li>
               </ul>
               <div className="h-ctas">
@@ -225,6 +232,137 @@ const HomePreview = () => {
             </div>
           </div>
         </div>
+
+        <section className="h-block" id="desk" data-track-view="desk">
+          <div className="h-wrap">
+            <div className="h-head">
+              <div className="h-kicker">Your front desk, for less</div>
+              <h2>A full front desk for less than a week of a receptionist's pay.</h2>
+              <p>A receptionist is great when they're at the desk. Curivanta covers every hour they aren't, and does it for the price of a few shifts.</p>
+            </div>
+            <div className="h-desk">
+              <div className="h-calc h-desk-calc">
+                <div className="h-calc-in">
+                  <div className="h-field">
+                    <label htmlFor="d-hours">Front-desk hours a week <output>{deskHours}</output></label>
+                    <input id="d-hours" type="range" min={10} max={60} step={5} value={deskHours} onChange={e => setDeskHours(+e.target.value)} />
+                  </div>
+                  <div className="h-field">
+                    <label htmlFor="d-rate">Hourly pay <output>${deskRate}</output></label>
+                    <input id="d-rate" type="range" min={14} max={30} value={deskRate} onChange={e => setDeskRate(+e.target.value)} />
+                    <small>The US median for receptionists is about $18 an hour (US Bureau of Labor Statistics), before payroll taxes.</small>
+                  </div>
+                </div>
+                <div className="h-calc-out" aria-live="polite">
+                  <span className="lbl">A front-desk hire costs about</span>
+                  <span className="amt">${deskCost.toLocaleString('en-US')}<small>/mo</small></span>
+                  <p>For {deskHours} hours a week, before taxes, breaks and sick days.</p>
+                  <p className="vs">Curivanta Pro: $149 a month, every hour of every day.</p>
+                </div>
+              </div>
+              <div className="h-tablewrap h-desk-table">
+                <table>
+                  <thead><tr><th></th><th>Front-desk hire</th><th className="us">Curivanta</th></tr></thead>
+                  <tbody>
+                    <tr><td>Hours</td><td>Their shift</td><td className="us">24/7, including Sundays</td></tr>
+                    <tr><td>Two calls at once</td><td className="nn">One waits</td><td className="us"><span className="y">✓</span> Every call</td></tr>
+                    <tr><td>Remembers every client</td><td>The regulars</td><td className="us"><span className="y">✓</span> Every visit, every stylist</td></tr>
+                    <tr><td>Asks every client for a review</td><td>When they remember</td><td className="us"><span className="y">✓</span> After every visit</td></tr>
+                    <tr><td>Greets walk-ins, checks clients out</td><td><span className="y">✓</span></td><td className="us nn">No, that's still you</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="h-points">
+              <div className="h-pt"><h3>Solo stylist?</h3><p>The receptionist you never had to hire. Stay with your client while Curivanta handles the phone.</p></div>
+              <div className="h-pt"><h3>Small salon?</h3><p>Cover the desk without adding a hire. Your stylists stop running to the phone between clients.</p></div>
+              <div className="h-pt"><h3>Already have a front desk?</h3><p>Keep them. Curivanta takes lunch breaks, the second line, busy Saturdays and after hours.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="h-block flush" id="ai" data-track-view="ai">
+          <div className="h-wrap">
+            <div className="h-head">
+              <div className="h-kicker">The AI front desk</div>
+              <h2>It remembers your regulars.</h2>
+              <p>Clients text the way they talk. Curivanta keeps up, greets returning clients by name, and books their usual in a few messages.</p>
+            </div>
+            <div className="h-spot">
+              <div className="h-spot-chat">
+                <div className="h">Text conversation · 8:47 PM</div>
+                <div className="h-bub them">Hi, do you have any availability for Saturday?<small>Sarah</small></div>
+                <div className="h-bub us">Hi Sarah! Is it for another root touch-up with Jess, like last time? She has 10:00 or 1:30 on Saturday. Which works?<small>Curivanta</small></div>
+                <div className="h-bub them">10 please<small>Sarah</small></div>
+                <div className="h-bub us">You're booked: Saturday at 10:00 AM, root touch-up with Jess. See you then!<small>Curivanta</small></div>
+              </div>
+              <div className="h-spot-work">
+                <div className="h">What happened behind the scenes</div>
+                <ul>
+                  <li>Recognized Sarah from her phone number</li>
+                  <li>Remembered her last visit: root touch-up with Jess</li>
+                  <li>Turned "Saturday" into the right date</li>
+                  <li>Checked Jess's real openings, and offered only free times</li>
+                  <li>Booked it and sent you an alert</li>
+                </ul>
+                <p className="h-spot-total"><b>0 minutes</b> of your time, after the salon had closed.</p>
+              </div>
+            </div>
+            <div className="h-points">
+              <div className="h-pt"><h3>Knows your salon</h3><p>Learns your services, prices, hours, parking and policies from your website. Add anything else in plain words.</p></div>
+              <div className="h-pt"><h3>Knows when to stop</h3><p>Complaints, unusual requests and anything it isn't sure of go to you, with a phone alert.</p></div>
+              <div className="h-pt"><h3>Plays by the rules</h3><p>If two people share a phone, it asks who the appointment is for. STOP always works.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section className="h-block flush" id="clients" data-track-view="clients">
+          <div className="h-wrap">
+            <div className="h-head">
+              <div className="h-kicker">Every client, one place</div>
+              <h2>Every call, text, visit and review, on one page per client.</h2>
+              <p>Most salons keep these in separate places: texts on one phone, reviews in Google, bookings in the calendar. Curivanta puts each client's whole story on one timeline, so you and the AI both know who you're talking to.</p>
+            </div>
+            <div className="h-c360">
+              <div className="h-cphone" aria-label="Sample client page in the Curivanta app">
+                <div className="h-chero">
+                  <span className="h-cback">‹ Clients</span>
+                  <div className="h-cwho"><span className="h-cav">SW</span><div><b>Sarah Whitman</b><span>(949) 555-0187 · client since 2023</span></div></div>
+                  <div className="h-cstats">
+                    <div><b>14</b><span>visits</span></div>
+                    <div><b>Jess</b><span>usual stylist</span></div>
+                    <div><b>Sat 10:00</b><span>next visit</span></div>
+                  </div>
+                  <div className="h-cacts"><span>Call</span><span>Mark done</span><span className="soft">Notes</span></div>
+                </div>
+                <div className="h-cbody">
+                  <div className="h-cnote">Sensitive scalp. Likes her toner a little cooler.</div>
+                  <div className="h-cfilters"><span className="on">Everything</span><span>Texts</span><span>Calls</span><span>Visits</span><span>Reviews</span></div>
+                  <div className="h-cday">Sat Oct 4</div>
+                  <div className="h-cev"><span className="h-cic g">✂</span><div><b>Visit: Root touch-up with Jess</b><span>10:00 AM</span></div></div>
+                  <div className="h-cev"><span className="h-cic a">★</span><div><b>Review request: rated 5 ★</b><span>4:12 PM · Jess · opened the Google review link</span></div></div>
+                  <div className="h-cev"><span className="h-cic v">G</span><div><b>Google review: ★★★★★</b><span>"Jess is the only one I trust with my color."</span><span>Your reply: Thank you, Sarah! See you next time.</span></div></div>
+                  <div className="h-cday">Today</div>
+                  <div className="h-cev"><span className="h-cic r">↙</span><div><b>Missed call, texted back</b><span>8:44 PM</span></div></div>
+                  <div className="h-cbub in">Hi, do you have any availability for Saturday?</div>
+                  <div className="h-cbub out">Hi Sarah! Is it for another root touch-up with Jess, like last time? She has 10:00 or 1:30.</div>
+                  <div className="h-cbub in">10 please</div>
+                  <div className="h-cev"><span className="h-cic g">▦</span><div><b>Booked: Root touch-up with Jess</b><span>For Sat 10:00 AM · booked by the assistant</span></div></div>
+                </div>
+              </div>
+              <div className="h-c360-copy">
+                <ul className="h-ticks">
+                  <li><span><b>One timeline.</b> Calls, voicemails, texts, visits, review requests and Google reviews, in the order they happened.</span></li>
+                  <li><span><b>The basics at a glance.</b> How many visits, their usual stylist, and when they're booked next.</span></li>
+                  <li><span><b>Google reviews matched to the client.</b> See who wrote it, which visit it was about, and your reply.</span></li>
+                  <li><span><b>Notes for your team.</b> Allergies and preferences everyone at the desk can see.</span></li>
+                  <li><span><b>Reply or call from the same page.</b> Your salon number shows, not your cell.</span></li>
+                </ul>
+                <p className="h-c360-why">This is also why the AI can say "another root touch-up with Jess, like last time?" It reads the same history you do.</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="h-block" id="cost" data-track-view="calculator">
           <div className="h-wrap">
@@ -283,41 +421,6 @@ const HomePreview = () => {
                   <div className="h-mini">{j.mini}</div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="h-block flush" id="ai" data-track-view="ai">
-          <div className="h-wrap">
-            <div className="h-head">
-              <div className="h-kicker">The AI front desk</div>
-              <h2>It remembers your regulars.</h2>
-              <p>Clients text the way they talk. Curivanta keeps up, greets returning clients by name, and books their usual in a few messages.</p>
-            </div>
-            <div className="h-spot">
-              <div className="h-spot-chat">
-                <div className="h">Text conversation · 8:47 PM</div>
-                <div className="h-bub them">Hi, do you have any availability for Saturday?<small>Sarah</small></div>
-                <div className="h-bub us">Hi Sarah! Is it for another root touch-up with Jess, like last time? She has 10:00 or 1:30 on Saturday. Which works?<small>Curivanta</small></div>
-                <div className="h-bub them">10 please<small>Sarah</small></div>
-                <div className="h-bub us">You're booked: Saturday at 10:00 AM, root touch-up with Jess. See you then!<small>Curivanta</small></div>
-              </div>
-              <div className="h-spot-work">
-                <div className="h">What happened behind the scenes</div>
-                <ul>
-                  <li>Recognized Sarah from her phone number</li>
-                  <li>Remembered her last visit: root touch-up with Jess</li>
-                  <li>Turned "Saturday" into the right date</li>
-                  <li>Checked Jess's real openings, and offered only free times</li>
-                  <li>Booked it and sent you an alert</li>
-                </ul>
-                <p className="h-spot-total"><b>0 minutes</b> of your time, after the salon had closed.</p>
-              </div>
-            </div>
-            <div className="h-points">
-              <div className="h-pt"><h3>Knows your salon</h3><p>Learns your services, prices, hours, parking and policies from your website. Add anything else in plain words.</p></div>
-              <div className="h-pt"><h3>Knows when to stop</h3><p>Complaints, unusual requests and anything it isn't sure of go to you, with a phone alert.</p></div>
-              <div className="h-pt"><h3>Plays by the rules</h3><p>If two people share a phone, it asks who the appointment is for. STOP always works.</p></div>
             </div>
           </div>
         </section>
@@ -536,20 +639,21 @@ const HomePreview = () => {
           <div className="h-wrap">
             <div className="h-head center">
               <div className="h-kicker">Compare</div>
-              <h2>Built for salons, priced for small shops.</h2>
+              <h2>Not another AI receptionist. A salon front desk.</h2>
             </div>
             <div className="h-tablewrap">
               <table>
-                <thead><tr><th></th><th>Front desk alone</th><th>All-in-one platforms</th><th className="us">Curivanta</th></tr></thead>
+                <thead><tr><th></th><th>Front desk alone</th><th>Generic AI receptionists</th><th>All-in-one platforms</th><th className="us">Curivanta</th></tr></thead>
                 <tbody>
-                  <tr><td>Price shown up front</td><td className="nn">n/a</td><td className="nn">Usually "book a demo"</td><td className="us"><span className="y">✓</span> From $49/mo</td></tr>
-                  <tr><td>Missed calls after hours</td><td className="nn">Voicemail</td><td><span className="y">✓</span></td><td className="us"><span className="y">✓</span> Text in a minute</td></tr>
-                  <tr><td>Calls answered when you can't pick up</td><td className="nn">Voicemail</td><td className="nn">Sometimes, as an add-on</td><td className="us"><span className="y">✓</span> On Pro</td></tr>
-                  <tr><td>Books into SalonUltimate</td><td>By hand</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span> Straight in</td></tr>
-                  <tr><td>Remembers returning clients</td><td>If they remember</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span> By name, with their usual</td></tr>
-                  <tr><td>Reviews name the stylist</td><td className="nn">No</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span></td></tr>
-                  <tr><td>Setup</td><td className="nn">n/a</td><td>Weeks of training</td><td className="us">15 minutes, we do the rest</td></tr>
-                  <tr><td>Contract</td><td className="nn">n/a</td><td>Often annual</td><td className="us">Month to month</td></tr>
+                  <tr><td>Price shown up front</td><td className="nn">n/a</td><td><span className="y">✓</span> Often</td><td className="nn">Usually "book a demo"</td><td className="us"><span className="y">✓</span> From $49/mo</td></tr>
+                  <tr><td>Missed calls after hours</td><td className="nn">Voicemail</td><td><span className="y">✓</span> By voice</td><td><span className="y">✓</span></td><td className="us"><span className="y">✓</span> Text in a minute</td></tr>
+                  <tr><td>Calls answered when you can't pick up</td><td className="nn">Voicemail</td><td><span className="y">✓</span></td><td className="nn">Sometimes, as an add-on</td><td className="us"><span className="y">✓</span> On Pro</td></tr>
+                  <tr><td>Books into SalonUltimate</td><td>By hand</td><td className="nn">Takes a message</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span> Straight in</td></tr>
+                  <tr><td>Remembers returning clients</td><td>If they remember</td><td className="nn">Rarely</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span> By name, with their usual</td></tr>
+                  <tr><td>Reviews name the stylist</td><td className="nn">No</td><td className="nn">No</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span></td></tr>
+                  <tr><td>Setup</td><td className="nn">n/a</td><td>Varies</td><td>Weeks of training</td><td className="us">15 minutes, we do the rest</td></tr>
+                  <tr><td>One page per client: calls, texts, visits, reviews</td><td className="nn">No</td><td className="nn">Calls only</td><td className="nn">Sometimes</td><td className="us"><span className="y">✓</span></td></tr>
+                  <tr><td>Contract</td><td className="nn">n/a</td><td>Varies</td><td>Often annual</td><td className="us">Month to month</td></tr>
                 </tbody>
               </table>
             </div>
