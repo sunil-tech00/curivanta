@@ -639,7 +639,7 @@ const HomePreview = () => {
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_light">Start with Light</a>
               </div>
               <div className="h-card">
-                <div className="h-pname">Pro <span className="h-badge">New</span></div>
+                <div className="h-pname">Pro</div>
                 <p className="h-for">For salons that want every call answered</p>
                 <div className="h-price">$149<small> /month</small></div>
                 <p className="h-psub">+ $149 one-time setup.</p>

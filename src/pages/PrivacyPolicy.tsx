@@ -4,7 +4,7 @@ import { ThemeToggle } from '../components/ThemeToggle';
 import { SiteFooter } from '../components/SiteFooter';
 
 // Covers the Curivanta app (app.curivanta.com) for salons and solo stylists, the texts and calls
-// we handle for them, this website, and the AI Solar Quote Review. Keep in step with the app
+// we handle for them, and this website. The solar quote review has its own page (public/solar/privacy). Keep in step with the app
 // (curivanta-app/docs/curivanta-features.md) and with the SMS wording carriers require.
 const UPDATED = 'November 13, 2026';
 
@@ -78,10 +78,6 @@ const PrivacyPolicy = () => {
 
             <H>Children</H>
             <p>Curivanta is a service for businesses and is not directed at children under 13.</p>
-
-            <H>AI Solar Quote Review</H>
-            <p>When you use the AI Solar Quote Review at curivanta.com/solar/review, the documents you upload (solar quotes and utility bills) are sent to our AI provider, Anthropic, to read the numbers, and are then deleted. We do not keep your uploaded files: larger files are held briefly in private storage only while they are read, and any leftovers are removed within a day. We ask the AI not to extract names, street addresses, account numbers, or phone numbers.</p>
-            <p>Your finished report, with the numbers you confirmed and the written review, is stored privately and is viewable by anyone who has its unique link. Reports are automatically deleted 12 months after they are created. Payments are processed by Stripe; we never see or store your card details. When you buy a review, we share your email address, report link and verdict with our customer-management system (GoHighLevel) so we can email you your report. To have a report deleted sooner, email us.</p>
 
             <H>Changes to this policy</H>
             <p>If we change this policy, we will update the date at the top. If a change is significant, we will tell salon owners by email or in the app before it takes effect.</p>

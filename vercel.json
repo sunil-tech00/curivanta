@@ -61,6 +61,10 @@
       "destination": "/solar/index.html"
     },
     {
+      "source": "/solar/privacy",
+      "destination": "/solar/privacy/index.html"
+    },
+    {
       "source": "/solar/review",
       "destination": "/solar/review/index.html"
     },

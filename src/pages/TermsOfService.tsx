@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { SiteFooter } from '../components/SiteFooter';
 
-// Terms for the Curivanta app (Starter and Light plans). The "Earlier plans" section keeps the
-// terms for Hair Salon Bot and Review Automation customers until those pages are retired.
+// Terms for the Curivanta app (Starter, Light and Pro plans).
 // Keep plan facts in step with curivanta-app (app/plans.py, app/config.py).
 const UPDATED = 'November 13, 2026';
 
@@ -80,11 +79,6 @@ const TermsOfService = () => {
 
             <H>Website content</H>
             <p>The content on curivanta.com and in the app, including text, design and software, belongs to AUM SL LLC or its licensors. Curivanta is a trade name of AUM SL LLC.</p>
-
-            <H>Earlier plans</H>
-            <p>If you signed up for Hair Salon Bot or Review Automation before the Starter and Light plans, the terms you agreed to at sign-up continue to apply to that plan until you move to a current plan or cancel:</p>
-            <p><strong>Hair Salon Bot.</strong> A one-time setup fee is charged at sign-up, and the monthly fee starts after a 14-day setup period and is billed monthly through Stripe. Text-Back includes up to 1,000 text messages a month; extra texts are billed at $20 per 500 on a later invoice. Voice and Voice Pro include 300 and 1,000 AI voice minutes a month; extra voice usage is billed at our cost on a later invoice. Plans are month to month; cancelling takes effect at the end of the billing month. If we are unable to connect the service to your booking software, or you cancel before your service goes live, we refund your setup fee in full.</p>
-            <p><strong>Review Automation.</strong> A one-time, non-refundable carrier registration fee is charged at sign-up. The first month after your service goes live is free; after that the monthly fee is billed monthly through Stripe. Starter includes up to 100 review requests a month and Growth up to 200; follow-up reminders do not count. Plans are month to month; if you cancel before your first charge, you are not billed, and otherwise cancelling takes effect at the end of the billing month.</p>
 
             <H>Contact us</H>
             <p>Questions about these terms: {mail}.</p>
