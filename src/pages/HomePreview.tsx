@@ -593,34 +593,6 @@ const HomePreview = () => {
           </div>
         </section>
 
-        <section className="h-block flush" id="fit" data-track-view="fit">
-          <div className="h-wrap">
-            <div className="h-head center">
-              <div className="h-kicker">Is it right for you?</div>
-              <h2>Built for salons and solo stylists. Not for everyone.</h2>
-            </div>
-            <div className="h-fit">
-              <div className="h-fit-col yes">
-                <h3>A good fit if</h3>
-                <ul>
-                  <li>You miss calls while you're with a client</li>
-                  <li>You book on SalonUltimate (salon or solo), or you have an online booking link</li>
-                  <li>You want more Google reviews without asking every client yourself</li>
-                  <li>Your clients would rather text than play phone tag</li>
-                  <li>You'd like every call answered, even when you're with a client (Pro)</li>
-                </ul>
-              </div>
-              <div className="h-fit-col no">
-                <h3>Not the right fit yet if</h3>
-                <ul>
-                  <li>You want to send promotions or marketing blasts</li>
-                  <li>You need bookings to land in software other than SalonUltimate. You can still use your booking link.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section className="h-block flush" id="pricing" data-track-view="pricing">
           <div className="h-wrap">
             <div className="h-head center">
