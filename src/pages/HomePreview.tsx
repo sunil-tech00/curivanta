@@ -533,8 +533,8 @@ const HomePreview = () => {
               <div className="h-step"><div className="n">3</div><h3>Pick your number and you're done</h3><p>Choose your number and enter your legal name and EIN. No EIN? Solo stylists can register as a sole proprietor with one text reply.</p><span className="t">About 5 minutes</span></div>
             </div>
             <div className="h-timeline">
-              <span><b>Day 1:</b> setup done, your number is ready</span>
-              <span><b>Weeks 3 to 4:</b> carriers approve texting and you go live</span>
+              <span><b>Day 1:</b> your number works for calls: answer in the app, voicemails as text</span>
+              <span><b>Weeks 3 to 4:</b> carriers approve texting, and text-back, AI texting and reviews go live</span>
               <span><b>Go-live:</b> your monthly plan starts</span>
             </div>
           </div>
