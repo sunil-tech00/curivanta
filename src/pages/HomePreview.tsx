@@ -550,10 +550,9 @@ const HomePreview = () => {
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where="switch">Get started</a>
               </div>
               <ul className="h-switch-list">
-                <li><span><b>Salons keep their number.</b> Nothing to port. You just forward the calls you miss, and you can undo that any time.</span></li>
+                <li><span><b>Salons keep their number.</b> No need to move it. You just forward the calls you miss, and you can undo that any time.</span></li>
                 <li><span><b>We do the setup.</b> Carrier registration, your greeting, your services and stylists. You answer a few questions.</span></li>
-                <li><span><b>Run both side by side.</b> Your current tool keeps working while carriers approve your texting, so nothing goes quiet.</span></li>
-                <li><span><b>Switch when you're ready.</b> Once you're live, turn the old tool off. Your monthly charge only starts then.</span></li>
+                <li><span><b>Run both side by side.</b> Your current tool keeps working while carriers approve your texting, so nothing goes quiet. Your Curivanta monthly charge doesn't start until then.</span></li>
               </ul>
             </div>
           </div>
