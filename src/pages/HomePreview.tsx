@@ -423,7 +423,7 @@ const HomePreview = () => {
                   <div className="h-cstats">
                     <div><b>14</b><span>visits</span></div>
                     <div><b>Jess</b><span>usual stylist</span></div>
-                    <div><b>Sat 10:00</b><span>next visit</span></div>
+                    <div><b>Sat Oct 11</b><span>next visit</span></div>
                   </div>
                   <div className="h-cacts"><span>Call</span></div>
                 </div>
@@ -432,13 +432,20 @@ const HomePreview = () => {
                   <div className="h-cday">Sat Oct 4</div>
                   <div className="h-cev"><span className="h-cic g">✂</span><div><b>Visit: Root touch-up with Jess</b><span>10:00 AM</span></div></div>
                   <div className="h-cev"><span className="h-cic a">★</span><div><b>Review request: rated 5 ★</b><span>4:12 PM · Jess · opened the Google review link</span></div></div>
-                  <div className="h-cev"><span className="h-cic v">G</span><div><b>Google review: ★★★★★</b><span>"Jess is the only one I trust with my color."</span><span>Your reply: Thank you, Sarah! See you next time.</span></div></div>
+                  <div className="h-cev"><span className="h-cic v">G</span><div><b>Google review: ★★★★★</b><span>6:30 PM · as "Sarah W." · matched by name</span><span className="h-cq">"Jess is the only one I trust with my color."</span><span>Your reply: Thank you, Sarah! See you next time.</span><span className="h-cnot">Not this client</span></div></div>
                   <div className="h-cday">Today</div>
                   <div className="h-cev"><span className="h-cic r">↙</span><div><b>Missed call, texted back</b><span>8:44 PM</span></div></div>
                   <div className="h-cbub in">Hi, do you have any availability for Saturday?</div>
+                  <div className="h-cstamp in">8:45 PM</div>
                   <div className="h-cbub out">Hi Sarah! Is it for another root touch-up with Jess, like last time? She has 10:00 or 1:30.</div>
+                  <div className="h-cstamp out">Assistant · 8:45 PM</div>
                   <div className="h-cbub in">10 please</div>
-                  <div className="h-cev"><span className="h-cic g">▦</span><div><b>Booked: Root touch-up with Jess</b><span>For Sat 10:00 AM · booked by the assistant</span></div></div>
+                  <div className="h-cstamp in">8:47 PM</div>
+                  <div className="h-cev"><span className="h-cic g">▦</span><div><b>Booked: Root touch-up with Jess</b><span>For Sat Oct 11, 10:00 AM · booked by the assistant</span></div></div>
+                  <div className="h-cbub out">You're booked: root touch-up with Jess, Sat Oct 11 at 10:00 AM. See you then!</div>
+                  <div className="h-cstamp out">Assistant · 8:47 PM</div>
+                </div>
+                <div className="h-ccompose"><span>Text Sarah</span><i aria-hidden="true">➤</i>
                 </div>
               </div>
               <div className="h-c360-copy">
