@@ -415,3 +415,31 @@
 .cvh .h-call-top .h-pro { margin-left:0; }
 .cvh .h-desk-table { display:flex; }
 .cvh .h-desk-table table { height:100%; }
+
+/* Owner app Today page (mirrors curivanta-app home.html) */
+.cvh .h-at { display:flex; flex-direction:column; }
+.cvh .h-at-top { background:var(--deep); color:var(--on-deep); padding:14px 16px 12px; }
+.cvh .h-at-name { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.cvh .h-at-name b { font-family:var(--display); font-size:19px; color:#fff; }
+.cvh .h-at-ranges { display:inline-flex; max-width:100%; overflow-x:auto; scrollbar-width:none; gap:2px; margin-top:10px; padding:3px; border-radius:999px; background:rgba(255,255,255,.1); }
+.cvh .h-at-ranges::-webkit-scrollbar { display:none; }
+.cvh .h-at-ranges button { border:0; background:transparent; color:var(--on-deep2); font:inherit; font-size:12.5px; font-weight:600; padding:6px 12px; border-radius:999px; cursor:pointer; white-space:nowrap; }
+.cvh .h-at-ranges button[aria-pressed="true"] { background:#fff; color:var(--deep); }
+.cvh .h-at-body { padding:12px; display:flex; flex-direction:column; gap:10px; }
+.cvh .h-at-wins { background:linear-gradient(135deg,var(--deep),color-mix(in srgb,var(--deep) 70%,var(--accent))); color:#fff; border-radius:14px; padding:12px 14px; }
+.cvh .h-at-wins span { display:block; font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--on-deep2); margin-bottom:4px; }
+.cvh .h-at-wins p { font-family:var(--display); font-size:15.5px; line-height:1.35; font-weight:600; margin:0; }
+.cvh .h-at-tiles { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.cvh .h-at-tile { background:var(--soft); border-radius:12px; padding:10px; display:flex; flex-direction:column; gap:2px; min-width:0; }
+.cvh .h-at-tile b { font-family:var(--display); font-size:24px; line-height:1.05; color:var(--ink); }
+.cvh .h-at-tile span { font-size:11.5px; color:var(--ink3); }
+.cvh .h-at-tile small { font-size:10.5px; font-weight:600; color:var(--good); line-height:1.3; margin-top:2px; }
+@media (max-width:560px) { .cvh .h-at-tiles { grid-template-columns:1fr 1fr; } }
+.cvh .h-at-st { width:100%; border-collapse:collapse; font-size:13px; }
+.cvh .h-at-st th { text-align:left; font-weight:600; color:var(--ink3); font-size:11.5px; padding:4px 6px 6px 0; }
+.cvh .h-at-st td { padding:7px 6px 7px 0; border-top:1px solid var(--line); color:var(--ink2); }
+.cvh .h-at-st td:first-child { color:var(--ink); font-weight:600; }
+.cvh .h-at-st td.low { color:#d14343; font-weight:700; }
+.cvh .h-at-tabs { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); background:var(--surface); }
+.cvh .h-at-tabs span { text-align:center; padding:10px 0 11px; font-size:12px; font-weight:600; color:var(--ink3); }
+.cvh .h-at-tabs span.on { color:var(--accent); }

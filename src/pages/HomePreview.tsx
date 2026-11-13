@@ -87,24 +87,77 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
   },
 };
 
+// Mirrors the app's Today page (curivanta-app app/owner/templates/app/home.html): salon name, range
+// chips, the "wins" line, four tiles, Needs you, By stylist, Usage, and the bottom tabs.
 const DASH = {
   today: {
-    k: [['5', 'calls answered by the assistant'], ['7', 'missed calls texted back'], ['6', 'booked for you'], ['4.9', 'avg new rating']],
-    s: [['MR', 'Maya R.', '9 clients · 5 reviews', '5.0'], ['JT', 'Jordan T.', '7 clients · 3 reviews', '4.9'], ['AK', 'Aisha K.', '6 clients · 4 reviews', '4.8']],
+    wins: ['5 calls answered by the assistant', '7 missed calls caught', '6 booked', '$540 in bookings', '2 new Google reviews (5★)'],
+    tiles: [['21', 'calls', ['5 answered by the assistant', '7 missed, 7 texted back']], ['6', 'booked by Curivanta', ['2 from missed calls']],
+            ['9', 'review requests', ['4.9 ★ average']], ['2', 'new Google reviews', ['1 reply to approve']]],
+    s: [['Maya R.', '5.0 ★', '4/5', '0'], ['Jordan T.', '4.9 ★', '3/3', '0'], ['Aisha K.', '4.8 ★', '1/1', '0']],
     n: [['p-amber', 'Call back: asked the assistant for you', 'Kim B. · 12m'], ['p-amber', 'Refund question', 'Lena P. · 38m'], ['p-blue', 'Voicemail', '(949) 555-0142 · 1h']],
   },
   yesterday: {
-    k: [['8', 'calls answered by the assistant'], ['9', 'missed calls texted back'], ['10', 'booked for you'], ['4.8', 'avg new rating']],
-    s: [['MR', 'Maya R.', '11 clients · 7 reviews', '4.9'], ['JT', 'Jordan T.', '9 clients · 5 reviews', '4.9'], ['AK', 'Aisha K.', '8 clients · 4 reviews', '4.7']],
+    wins: ['8 calls answered by the assistant', '9 missed calls caught', '10 booked', '$860 in bookings', '3 new Google reviews (4.7★)'],
+    tiles: [['27', 'calls', ['8 answered by the assistant', '9 missed, 9 texted back']], ['10', 'booked by Curivanta', ['3 from missed calls']],
+            ['10', 'review requests', ['4.8 ★ average']], ['3', 'new Google reviews', []]],
+    s: [['Maya R.', '4.9 ★', '4/4', '0'], ['Jordan T.', '4.9 ★', '3/4', '0'], ['Aisha K.', '4.7 ★', '2/2', '1']],
     n: [['p-amber', "Wants a stylist who's off", 'Lena P. · yesterday'], ['p-blue', 'Message taken by the assistant', 'Rosa M. · yesterday']],
   },
   week: {
-    k: [['38', 'calls answered by the assistant'], ['41', 'missed calls texted back'], ['46', 'booked for you'], ['4.9', 'avg new rating']],
-    s: [['MR', 'Maya R.', '58 clients · 33 reviews', '4.9'], ['JT', 'Jordan T.', '49 clients · 26 reviews', '4.9'], ['AK', 'Aisha K.', '44 clients · 21 reviews', '4.8']],
+    wins: ['38 calls answered by the assistant', '41 missed calls caught', '46 booked', '$3,920 in bookings', '11 new Google reviews (4.9★)'],
+    tiles: [['152', 'calls', ['38 answered by the assistant', '41 missed, 41 texted back']], ['46', 'booked by Curivanta', ['12 from missed calls']],
+            ['58', 'review requests', ['4.9 ★ average']], ['11', 'new Google reviews', ['2 replies to approve']]],
+    s: [['Maya R.', '4.9 ★', '21/26', '0'], ['Jordan T.', '4.9 ★', '15/18', '0'], ['Aisha K.', '4.8 ★', '12/14', '1']],
     n: [['p-green', 'All caught up', 'Nothing waiting on you']],
   },
 } as const;
 type Range = keyof typeof DASH;
+const RANGE_LABEL: Record<Range, string> = { today: 'Today', yesterday: 'Yesterday', week: 'This week' };
+
+// One sample of the owner app's Today page, used in the hero (compact) and the Owner app section (full).
+const AppToday = ({ range, setRange, full }: { range: Range; setRange?: (r: Range) => void; full?: boolean }) => {
+  const d = DASH[range];
+  return (
+    <div className="h-app h-at">
+      <div className="h-at-top">
+        <div className="h-at-name"><b>Glow Studio</b><span className="h-live"><i></i>LIVE</span></div>
+        <div className="h-at-ranges" role="group" aria-label="Date range">
+          {(Object.keys(RANGE_LABEL) as Range[]).map(r => (
+            <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange?.(r)} tabIndex={setRange ? 0 : -1}>{RANGE_LABEL[r]}</button>
+          ))}
+        </div>
+      </div>
+      <div className="h-at-body">
+        <div className="h-at-wins"><span>{RANGE_LABEL[range]}</span><p>{d.wins.join(' · ')}</p></div>
+        <div className="h-at-tiles">
+          {d.tiles.map(([n, l, subs]) => (
+            <div className="h-at-tile" key={l}><b>{n}</b><span>{l}</span>{subs.map(x => <small key={x}>{x}</small>)}</div>
+          ))}
+        </div>
+        {full && (<>
+          <div className="h-dgrid">
+            <div className="h-dcol"><h4>Needs you</h4>
+              {d.n.map(([cls, label, when]) => (
+                <div className="h-row" key={label}><span><span className={'h-pill ' + cls}>{label}</span></span><time>{when}</time></div>
+              ))}
+            </div>
+            <div className="h-dcol"><h4>By stylist · {RANGE_LABEL[range].toLowerCase()}</h4>
+              <table className="h-at-st"><thead><tr><th>Stylist</th><th>Rating</th><th>Replies</th><th>Low</th></tr></thead>
+                <tbody>{d.s.map(([name, avg, rep, low]) => <tr key={name}><td>{name}</td><td>{avg}</td><td>{rep}</td><td className={low !== '0' ? 'low' : ''}>{low}</td></tr>)}</tbody></table>
+            </div>
+          </div>
+          <div className="h-usage">
+            <div><b>Texts this month:</b> 612 of 1,500<div className="h-meter"><i style={{ width: '41%' }}></i></div></div>
+            <div><b>Call minutes:</b> 96 of 300<div className="h-meter"><i style={{ width: '32%' }}></i></div></div>
+            <div><b>Assistant minutes:</b> 64 of 200<div className="h-meter"><i style={{ width: '32%' }}></i></div></div>
+          </div>
+        </>)}
+      </div>
+      <div className="h-at-tabs" aria-hidden="true"><span className="on">Today</span><span>Clients</span><span>Reviews</span><span>Calls</span></div>
+    </div>
+  );
+};
 
 const HomePreview = () => {
   useEffect(() => { document.title = 'Curivanta | The salon front desk that books, not just answers'; }, []);
@@ -139,7 +192,6 @@ const HomePreview = () => {
 
   const [job, setJob] = useState<keyof typeof JOBS>('textback');
   const [range, setRange] = useState<Range>('today');
-  const d = DASH[range];
   const j = JOBS[job];
 
   return (
@@ -191,21 +243,7 @@ const HomePreview = () => {
             </div>
 
             <div className="h-shot" aria-label="Sample of the Curivanta owner app">
-              <div className="h-app">
-                <div className="h-app-top"><b>Today</b><span className="h-loc">Glow Studio · Main St</span><span className="h-live"><i></i>LIVE</span></div>
-                <div className="h-tabsrow"><span className="on">Today</span><span>Messages</span><span>Reviews</span><span>Calls</span><span>Bookings</span></div>
-                <div className="h-kpis">
-                  <div className="h-kpi"><div className="n">5</div><div className="l">calls answered by the assistant</div></div>
-                  <div className="h-kpi"><div className="n">7</div><div className="l">missed calls texted back</div></div>
-                  <div className="h-kpi"><div className="n">6</div><div className="l">booked for you</div></div>
-                  <div className="h-kpi"><div className="n">4.9</div><div className="l">avg new rating</div></div>
-                </div>
-                <div className="h-feed">
-                  <div className="h-row"><span><span className="h-pill p-green">Booked by phone</span>Dana L. · Trim, Sat 10:00 with Maya</span><time>4m</time></div>
-                  <div className="h-row"><span><span className="h-pill p-blue">New review</span><span className="h-stars">★★★★★</span> "Maya nailed my color" · response drafted for you to approve</span><time>21m</time></div>
-                  <div className="h-row"><span><span className="h-pill p-amber">Needs you</span>Client asked about a refund · handed to you</span><time>38m</time></div>
-                </div>
-              </div>
+              <AppToday range="today" />
               <div className="h-float f2">
                 <div className="h">Google review</div>
                 <span className="h-stars">★★★★★</span>
@@ -484,35 +522,7 @@ const HomePreview = () => {
               <h2>Know how your salon did today, not at the end of the month.</h2>
               <p>Open it any time. See the calls your assistant answered and what it booked, which stylist clients are praising, and exactly what you've used this month.</p>
             </div>
-            <div className="h-app">
-              <div className="h-app-top"><b>{range === 'today' ? 'Today' : range === 'yesterday' ? 'Yesterday' : 'Last 7 days'}</b><span className="h-loc">Glow Studio · Main St</span><span className="h-live"><i></i>LIVE</span></div>
-              <div className="h-tabsrow"><span className="on">Today</span><span>Messages</span><span>Reviews</span><span>Calls</span><span>Bookings</span></div>
-              <div className="h-range" role="group" aria-label="Date range">
-                {([['today', 'Today'], ['yesterday', 'Yesterday'], ['week', 'Last 7 days']] as [Range, string][]).map(([r, label]) => (
-                  <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange(r)}>{label}</button>
-                ))}
-              </div>
-              <div className="h-kpis">
-                {d.k.map(([n, l]) => <div className="h-kpi" key={l}><div className="n">{n}</div><div className="l">{l}</div></div>)}
-              </div>
-              <div className="h-dgrid">
-                <div className="h-dcol"><h4>By stylist</h4>
-                  {d.s.map(([av, name, meta, avg]) => (
-                    <div className="h-sty" key={name}><span className="h-av">{av}</span><span className="who"><b>{name}</b><span>{meta}</span></span><span className="h-stars">★</span><span className="avg">{avg}</span></div>
-                  ))}
-                </div>
-                <div className="h-dcol"><h4>Needs you</h4>
-                  {d.n.map(([cls, label, when]) => (
-                    <div className="h-row" key={label}><span><span className={'h-pill ' + cls}>{label}</span></span><time>{when}</time></div>
-                  ))}
-                </div>
-              </div>
-              <div className="h-usage">
-                <div><b>Texts this month:</b> 412 of 1,000<div className="h-meter"><i style={{ width: '41%' }}></i></div></div>
-                <div><b>Call minutes:</b> 96 of 300<div className="h-meter"><i style={{ width: '32%' }}></i></div></div>
-                <div><b>Assistant minutes:</b> 64 of 200<div className="h-meter"><i style={{ width: '32%' }}></i></div></div>
-              </div>
-            </div>
+            <AppToday range={range} setRange={setRange} full />
             <div className="h-points">
               <div className="h-pt"><h3>Plain words, big numbers</h3><p>No charts that need a tutorial. If you can read a weather app, you can read this.</p></div>
               <div className="h-pt"><h3>Per stylist</h3><p>Reviews name the stylist, so you see who's getting praised and for what.</p></div>
