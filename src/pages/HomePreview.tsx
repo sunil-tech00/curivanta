@@ -559,7 +559,7 @@ const HomePreview = () => {
             </div>
             <div className="h-steps">
               <div className="h-step"><div className="n">1</div><h3>Pick a plan and paste one link</h3><p>Paste your website, booking page or Google listing. We read it and fill in your services, prices, hours and stylists.</p><span className="t">About 5 minutes</span></div>
-              <div className="h-step"><div className="n">2</div><h3>Connect your booking</h3><p>On SalonUltimate, add help@curivanta.com as a Receptionist. On anything else, just share your online booking link.</p><span className="t">About 5 minutes</span></div>
+              <div className="h-step"><div className="n">2</div><h3>Connect your booking</h3><p>On SalonUltimate, add hello@curivanta.com as a Receptionist. On anything else, just share your online booking link.</p><span className="t">About 5 minutes</span></div>
               <div className="h-step"><div className="n">3</div><h3>Pick your number and you're done</h3><p>Choose your number and enter your legal name and EIN. No EIN? Solo stylists can register as a sole proprietor with one text reply.</p><span className="t">About 5 minutes</span></div>
             </div>
             <div className="h-timeline">
