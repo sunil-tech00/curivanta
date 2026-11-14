@@ -37,9 +37,10 @@
 
 /* nav */
 .cvh .h-nav { position:sticky; top:0; z-index:50; background:color-mix(in srgb,var(--bg) 90%,transparent); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
-.cvh .h-nav-in { display:flex; align-items:center; gap:22px; height:64px; }
+.cvh .h-nav-in { display:flex; align-items:center; gap:22px; height:76px; }
 .cvh .h-brand { display:flex; align-items:center; }
-.cvh .h-brand img { height:30px; width:auto; display:block; }
+.cvh .h-brand img { height:46px; width:auto; display:block; margin-left:-6px; }
+.cvh .h-logo-onlight { mix-blend-mode:multiply; } /* the logo file has a white background: let the header show through */
 .cvh .h-logo-ondark { display:none !important; }
 .dark .cvh .h-logo-ondark { display:block !important; }
 .dark .cvh .h-logo-onlight { display:none !important; }
