@@ -617,7 +617,7 @@ const HomePreview = () => {
                 <div className="h-pname">Starter <span className="h-badge soft">Just you</span></div>
                 <p className="h-for">For solo stylists and booth renters</p>
                 <div className="h-price">$49<small> /month</small></div>
-                <p className="h-psub">+ $49 one-time setup.</p>
+                <p className="h-psub">$49 to get started, counted toward your first month.</p>
                 <div className="h-allow"><b>Includes 400 texts and 300 call minutes a month.</b> Need more? $10 per extra 250 texts, and $10 per extra 250 minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
                   <li>A separate business number, so your cell stays private</li>
@@ -635,7 +635,7 @@ const HomePreview = () => {
                 <div className="h-pname">Light <span className="h-badge">For salons</span></div>
                 <p className="h-for">For salons with a team</p>
                 <div className="h-price">$99<small> /month</small></div>
-                <p className="h-psub">+ $99 one-time setup.</p>
+                <p className="h-psub">$49 to get started, counted toward your first month.</p>
                 <div className="h-allow"><b>Includes 1,000 texts and 300 call minutes a month.</b> Need more? $10 per extra 250 texts, and $10 per extra 250 minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
                   <li>Everything in Starter, except you keep your salon number: missed calls forward to Curivanta</li>
@@ -654,7 +654,7 @@ const HomePreview = () => {
                 <div className="h-pname">Pro</div>
                 <p className="h-for">For salons that want every call answered</p>
                 <div className="h-price">$149<small> /month</small></div>
-                <p className="h-psub">+ $149 one-time setup.</p>
+                <p className="h-psub">$49 to get started, counted toward your first month.</p>
                 <div className="h-allow"><b>Includes 1,500 texts, 300 call minutes and 200 assistant minutes a month.</b> Need more? $10 per extra 250 texts, $10 per extra 250 minutes, and $10 per extra 50 assistant minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
                   <li>Everything in Light, plus:</li>
@@ -669,7 +669,7 @@ const HomePreview = () => {
                 <a className="h-btn h-btn-ghost" href={START_PRO_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_pro">Start with Pro</a>
               </div>
             </div>
-            <p className="h-pfoot">Setup is paid at sign-up. Your monthly charge starts only when texting goes live, usually a few days later. Month to month after that: cancel any time and it ends at the end of the month you've paid for.</p>
+            <p className="h-pfoot">$49 setup at sign-up on every plan, credited to your first month. Your monthly charge starts only when texting goes live, usually a few days later. Month to month after that: cancel any time and it ends at the end of the month you've paid for.</p>
           </div>
         </section>
 
@@ -721,7 +721,7 @@ const HomePreview = () => {
               <details><summary>Do I need a new booking system?</summary><p>No. If you're on SalonUltimate, salon or solo, bookings go straight into your calendar: Curivanta reads your real openings and books the time. On any other system, the AI sends your online booking link when a client wants to book.</p></details>
               <details><summary>Can I keep my phone number?</summary><p>Salons keep their number: you forward the calls you miss to Curivanta, and we text those callers back. Solo stylists get a new business number that rings their own cell, so their personal number stays private.</p></details>
               <details><summary>Can I move my existing number to Curivanta?</summary><p>Not yet, but it's coming soon. For now, salons keep their number and forward the calls they miss to Curivanta, and you can undo that any time. Solo stylists get a new business number, so their personal cell stays private.</p></details>
-              <details><summary>I'm a solo stylist or booth renter. Is this for me?</summary><p>Yes, that's what Starter is for: $49 a month and $49 setup. You get a business number that rings your cell, missed-call text-back, AI texting that books into SalonUltimate or sends your booking link, and review requests. You can move up to Light any time.</p></details>
+              <details><summary>I'm a solo stylist or booth renter. Is this for me?</summary><p>Yes, that's what Starter is for: $49 a month, and the $49 setup counts toward your first month. You get a business number that rings your cell, missed-call text-back, AI texting that books into SalonUltimate or sends your booking link, and review requests. You can move up to Light any time.</p></details>
               <details><summary>Does an AI answer my phone?</summary><p>On Pro, yes. When nobody can pick up, your assistant answers the call, tells the caller it's the salon's automated assistant, answers questions and books appointments, and texts a confirmation. Callers can ask for a person or leave a voicemail any time. On Starter and Light, callers hear your greeting, can leave a voicemail, and get a text right away.</p></details>
               <details><summary>What counts as a text or a call minute?</summary><p>Texts are the messages Curivanta sends for you: replies, text-backs, confirmations and review requests. Call minutes are the time calls spend on your Curivanta number: calls you answer or make in the app (or on your cell with Starter), and calls that go to your greeting and voicemail. Calls you pick up on your own salon phone don't count. On Pro, time the AI assistant is on a call uses assistant minutes instead. Unused texts and minutes don't carry over.</p></details>
               <details><summary>How many calls does Pro cover?</summary><p>200 minutes of the assistant on the phone each month, which is around 100 typical booking calls. Extra minutes are $10 per 50, and we let you know at 80%. You can also set it to answer only when you're closed.</p></details>
