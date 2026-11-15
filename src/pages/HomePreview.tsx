@@ -30,7 +30,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
     tab: 'AI texting & booking', hint: 'Answers and books',
     title: 'AI texting & booking',
     lede: "Clients text the questions they'd otherwise call with. The AI answers from your own menu, prices and policies, and books real open times, day or night.",
-    ticks: ['Learns your services, prices, hours and policies from your website', 'Only offers times that are actually free, and confirms before booking', 'On SalonUltimate, it books straight in, solo or salon. Otherwise it sends your own booking link', 'Complaints and anything unclear go to you, with the whole thread'],
+    ticks: ['Learns your services, prices, hours and policies from your website', 'Only offers times that are actually free, and confirms before booking', 'On SalonUltimate, it books straight in, solo or salon. Otherwise it sends your own booking link', 'Speaks Spanish too: clients who text in Spanish get answered in Spanish', 'Complaints and anything unclear go to you, with the whole thread'],
     mini: (<><div className="h">Straight into your calendar</div>
       <div className="h-bub them">Can I get a trim and blowout this weekend?<small>Client</small></div>
       <div className="h-bub us">Yes! Saturday at 10:00 or 11:30 with Maya. Which works?<small>Live openings</small></div>
@@ -46,6 +46,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
       'Checks real openings, books into SalonUltimate, and texts a confirmation',
       'Knows returning clients by name and offers their usual',
       'Callers can ask for a person or leave a voicemail any time',
+      'Switches to Spanish when the caller speaks Spanish',
       'You see every call it took, with what was said',
     ],
     mini: (<><div className="h">On the phone</div>
@@ -564,7 +565,7 @@ const HomePreview = () => {
             </div>
             <div className="h-timeline">
               <span><b>Day 1:</b> your number works for calls: answer in the app, voicemails as text</span>
-              <span><b>Weeks 1 to 2:</b> carriers approve texting, and text-back, AI texting and reviews go live</span>
+              <span><b>A few days later:</b> carriers approve texting, and text-back, AI texting and reviews go live</span>
               <span><b>Go-live:</b> your monthly plan starts</span>
             </div>
           </div>
@@ -624,6 +625,7 @@ const HomePreview = () => {
                   <li>Calls ring your cell and the app during your hours</li>
                   <li>Missed-call text-back, with voicemails as text</li>
                   <li>AI texting that answers questions and books into SalonUltimate, or sends your booking link</li>
+                  <li>Answers in English or Spanish</li>
                   <li>Review requests: 3 a day (change it any time)</li>
                   <li>AI drafts Google review responses for you to approve</li>
                   <li>Owner app with phone alerts</li>
@@ -662,6 +664,7 @@ const HomePreview = () => {
                   <li>Answers questions, books appointments and texts a confirmation</li>
                   <li>Knows returning clients and what they usually book</li>
                   <li>Takes messages, or asks you to call back</li>
+                  <li>Talks with callers in English or Spanish</li>
                   <li>Every call it takes, with what was said, in your app</li>
                   <li>You choose when it answers: always, or only when you're closed</li>
                   <li>More texts, and review requests: 20 a day (change it any time)</li>
@@ -728,6 +731,7 @@ const HomePreview = () => {
               <details><summary>Who gets asked for a review?</summary><p>Clients get a text after their visit asking how it went, with your Google link. They can reply 1 to 5 or leave a review. Low ratings and notes also come to you privately so you can make it right. Everyone gets the Google link, which keeps you within Google's rules.</p></details>
               <details><summary>What if a client asks something the AI can't handle?</summary><p>Refunds, complaints and anything unclear get handed to you with the full conversation. The AI never guesses and never makes up a booking.</p></details>
               <details><summary>Why does texting take a few days to go live?</summary><p>US phone carriers have to approve every business that texts customers (it's called A2P 10DLC registration). We prepare and submit the paperwork for you. Your monthly charge doesn't start until approval comes through.</p></details>
+              <details><summary>Does it speak Spanish?</summary><p>Yes. When a client texts in Spanish, the AI answers in Spanish, and remembers it for next time. On Pro, when a caller speaks Spanish, the assistant switches to Spanish for the rest of the call and sends the booking confirmation in Spanish. Notes and alerts for you stay in English. Missed-call text-backs and review requests are sent in English.</p></details>
               <details><summary>Can my front desk use it too?</summary><p>Yes, on Light and Pro. Add team members by email. Front-desk logins see messages, calls and reviews, but not billing or settings, and replies show who sent them.</p></details>
             </div>
           </div>
