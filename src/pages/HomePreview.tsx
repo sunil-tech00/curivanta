@@ -30,7 +30,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
     tab: 'AI texting & booking', hint: 'Answers and books',
     title: 'AI texting & booking',
     lede: "Clients text the questions they'd otherwise call with. The AI answers from your own menu, prices and policies, and books real open times, day or night.",
-    ticks: ['Learns your services, prices, hours and policies from your website', 'Only offers times that are actually free, and confirms before booking', 'On SalonUltimate, it books straight in, solo or salon. Otherwise it sends your own booking link', 'Speaks Spanish too: clients who text in Spanish get answered in Spanish', 'Complaints and anything unclear go to you, with the whole thread'],
+    ticks: ['Learns your services, prices and policies from your website, and your hours, holidays included, from your Google profile', 'Only offers times that are actually free, and confirms before booking', 'On SalonUltimate, it books straight in, solo or salon. Otherwise it sends your own booking link', 'Speaks Spanish too: clients who text in Spanish get answered in Spanish', 'Teach it once: save one of your replies with a tap and it answers that question next time', 'Complaints and anything unclear go to you, with the whole thread'],
     mini: (<><div className="h">Straight into your calendar</div>
       <div className="h-bub them">Can I get a trim and blowout this weekend?<small>Client</small></div>
       <div className="h-bub us">Yes! Saturday at 10:00 or 11:30 with Maya. Which works?<small>Live openings</small></div>
@@ -88,27 +88,31 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
   },
 };
 
-// Mirrors the app's Today page (curivanta-app app/owner/templates/app/home.html): salon name, range
-// chips, the "wins" line, four tiles, Needs you, By stylist, Usage, and the bottom tabs.
+// Mirrors the app's Home page (curivanta-app app/owner/templates/app/home.html): salon name, range
+// chips, the "wins" line, six tiles, Needs you, By stylist, Usage, and the bottom tabs.
+// (The Pro sample: "answered by the assistant" only shows on Pro.)
 const DASH = {
   today: {
     wins: ['5 calls answered by the assistant', '7 missed calls caught', '6 booked', '$540 in bookings', '2 new Google reviews (5★)'],
-    tiles: [['21', 'calls', ['5 answered by the assistant', '7 missed, 7 texted back']], ['6', 'booked by Curivanta', ['2 from missed calls']],
-            ['9', 'review requests', ['4.9 ★ average']], ['2', 'new Google reviews', ['1 reply to approve']]],
+    tiles: [['21', 'calls', []], ['7', 'missed', ['all texted back']], ['5', 'answered by the assistant', []],
+            ['6', 'booked by Curivanta', ['2 from missed calls']], ['9', 'review requests', ['4.9 ★ average']],
+            ['2', 'new Google reviews', ['1 reply to approve']]],
     s: [['Maya R.', '5.0 ★', '4/5', '0'], ['Jordan T.', '4.9 ★', '3/3', '0'], ['Aisha K.', '4.8 ★', '1/1', '0']],
     n: [['p-amber', 'Call back: asked the assistant for you', 'Kim B. · 12m'], ['p-amber', 'Refund question', 'Lena P. · 38m'], ['p-blue', 'Voicemail', '(949) 555-0142 · 1h']],
   },
   yesterday: {
     wins: ['8 calls answered by the assistant', '9 missed calls caught', '10 booked', '$860 in bookings', '3 new Google reviews (4.7★)'],
-    tiles: [['27', 'calls', ['8 answered by the assistant', '9 missed, 9 texted back']], ['10', 'booked by Curivanta', ['3 from missed calls']],
-            ['10', 'review requests', ['4.8 ★ average']], ['3', 'new Google reviews', []]],
+    tiles: [['27', 'calls', []], ['9', 'missed', ['all texted back']], ['8', 'answered by the assistant', []],
+            ['10', 'booked by Curivanta', ['3 from missed calls']], ['10', 'review requests', ['4.8 ★ average']],
+            ['3', 'new Google reviews', []]],
     s: [['Maya R.', '4.9 ★', '4/4', '0'], ['Jordan T.', '4.9 ★', '3/4', '0'], ['Aisha K.', '4.7 ★', '2/2', '1']],
     n: [['p-amber', "Wants a stylist who's off", 'Lena P. · yesterday'], ['p-blue', 'Message taken by the assistant', 'Rosa M. · yesterday']],
   },
   week: {
     wins: ['38 calls answered by the assistant', '41 missed calls caught', '46 booked', '$3,920 in bookings', '11 new Google reviews (4.9★)'],
-    tiles: [['152', 'calls', ['38 answered by the assistant', '41 missed, 41 texted back']], ['46', 'booked by Curivanta', ['12 from missed calls']],
-            ['58', 'review requests', ['4.9 ★ average']], ['11', 'new Google reviews', ['2 replies to approve']]],
+    tiles: [['152', 'calls', []], ['41', 'missed', ['all texted back']], ['38', 'answered by the assistant', []],
+            ['46', 'booked by Curivanta', ['12 from missed calls']], ['58', 'review requests', ['4.9 ★ average']],
+            ['11', 'new Google reviews', ['2 replies to approve']]],
     s: [['Maya R.', '4.9 ★', '21/26', '0'], ['Jordan T.', '4.9 ★', '15/18', '0'], ['Aisha K.', '4.8 ★', '12/14', '1']],
     n: [['p-green', 'All caught up', 'Nothing waiting on you']],
   },
@@ -155,7 +159,7 @@ const AppToday = ({ range, setRange, full }: { range: Range; setRange?: (r: Rang
           </div>
         </>)}
       </div>
-      <div className="h-at-tabs" aria-hidden="true"><span className="on">Today</span><span>Clients</span><span>Reviews</span><span>Calls</span></div>
+      <div className="h-at-tabs" aria-hidden="true"><span className="on">Home</span><span>Clients</span><span>Reviews</span><span>Phone</span><span>More</span></div>
     </div>
   );
 };
@@ -413,8 +417,8 @@ const HomePreview = () => {
               </div>
             </div>
             <div className="h-points h-points4">
-              <div className="h-pt"><h3>Knows your salon</h3><p>Learns your services, prices, hours, parking and policies from your website. Add anything else in plain words.</p></div>
-              <div className="h-pt"><h3>Knows when to stop</h3><p>Complaints, unusual requests and anything it isn't sure of go to you, with a phone alert.</p></div>
+              <div className="h-pt"><h3>Knows your salon</h3><p>Learns your services, prices, parking and policies from your website, and your hours from your Google profile, holiday hours included, so it never books a day you're closed. Add anything else in plain words, or save one of your own replies as an answer with one tap, and it uses it next time.</p></div>
+              <div className="h-pt"><h3>Knows when to stop</h3><p>Complaints, unusual requests and anything it isn't sure of go to you, with a phone alert. When you or your team reply to a client, the AI steps back from that conversation for the rest of the day.</p></div>
               <div className="h-pt"><h3>Learns from day one</h3><p>Visit history builds from the day you connect: every checkout and booking adds to it. The more clients come back, the more it knows.</p></div>
               <div className="h-pt"><h3>Plays by the rules</h3><p>If two people share a phone, it asks who the appointment is for. STOP always works.</p></div>
             </div>
@@ -624,6 +628,7 @@ const HomePreview = () => {
                   <li>A separate business number, so your cell stays private</li>
                   <li>Calls ring your cell and the app during your hours</li>
                   <li>Missed-call text-back, with voicemails as text</li>
+                  <li>Your greeting in a natural female or male voice, or your own recording</li>
                   <li>AI texting that answers questions and books into SalonUltimate, or sends your booking link</li>
                   <li>Answers in English or Spanish</li>
                   <li>Review requests: 3 a day (change it any time)</li>
@@ -644,7 +649,7 @@ const HomePreview = () => {
                   <li>AI texting that books straight into SalonUltimate</li>
                   <li>Review requests: 10 a day (change it any time)</li>
                   <li>AI drafts Google review responses for you to approve</li>
-                  <li>Team logins for owner, manager and front desk</li>
+                  <li>Team logins: managers run the salon day to day, front desk handles clients; billing stays with you</li>
                   <li>Call from the app; your salon name shows on caller ID</li>
                   <li>Ratings and reviews by stylist</li>
                   <li>One login for several salons</li>
@@ -728,11 +733,11 @@ const HomePreview = () => {
               <details><summary>Does an AI answer my phone?</summary><p>On Pro, yes. When nobody can pick up, your assistant answers the call, tells the caller it's the salon's automated assistant, answers questions and books appointments, and texts a confirmation. Callers can ask for a person or leave a voicemail any time. On Starter and Light, callers hear your greeting, can leave a voicemail, and get a text right away.</p></details>
               <details><summary>What counts as a text or a call minute?</summary><p>Texts are the messages Curivanta sends for you: replies, text-backs, confirmations and review requests. Call minutes are the time calls spend on your Curivanta number: calls you answer or make in the app (or on your cell with Starter), and calls that go to your greeting and voicemail. Calls you pick up on your own salon phone don't count. On Pro, time the AI assistant is on a call uses assistant minutes instead. Unused texts and minutes don't carry over.</p></details>
               <details><summary>How many calls does Pro cover?</summary><p>200 minutes of the assistant on the phone each month, which is around 100 typical booking calls. Extra minutes are $10 per 50, and we let you know at 80%. You can also set it to answer only when you're closed.</p></details>
-              <details><summary>Who gets asked for a review?</summary><p>Clients get a text after their visit asking how it went, with your Google link. They can reply 1 to 5 or leave a review. Low ratings and notes also come to you privately so you can make it right. Everyone gets the Google link, which keeps you within Google's rules.</p></details>
-              <details><summary>What if a client asks something the AI can't handle?</summary><p>Refunds, complaints and anything unclear get handed to you with the full conversation. The AI never guesses and never makes up a booking.</p></details>
+              <details><summary>Who gets asked for a review?</summary><p>Clients get a text after their visit asking how it went, with your Google link. They can reply 1 to 5 or leave a review. Low ratings and notes also come to you privately so you can make it right. Everyone gets the Google link, which keeps you within Google's rules. You set how many go out a day; clients are picked at random across the day, texts go out only between 9 AM and 8 PM, and nobody is asked more than once in 90 days.</p></details>
+              <details><summary>What if a client asks something the AI can't handle?</summary><p>Refunds, complaints and anything unclear get handed to you with the full conversation. The AI never guesses and never makes up a booking. Once you reply to a client yourself, it stays out of that conversation for the rest of the day.</p></details>
               <details><summary>Why does texting take a few days to go live?</summary><p>US phone carriers have to approve every business that texts customers (it's called A2P 10DLC registration). We prepare and submit the paperwork for you. Your monthly charge doesn't start until approval comes through.</p></details>
               <details><summary>Does it speak Spanish?</summary><p>Yes. When a client texts in Spanish, the AI answers in Spanish, and remembers it for next time. On Pro, when a caller speaks Spanish, the assistant switches to Spanish for the rest of the call and sends the booking confirmation in Spanish. Notes and alerts for you stay in English. Missed-call text-backs and review requests are sent in English.</p></details>
-              <details><summary>Can my front desk use it too?</summary><p>Yes, on Light and Pro. Add team members by email. Front-desk logins see messages, calls and reviews, but not billing or settings, and replies show who sent them.</p></details>
+              <details><summary>Can my front desk use it too?</summary><p>Yes, on Light and Pro. Add team members by email. Managers can do everything except billing and the settings that change your bill. Front-desk logins see clients, messages, calls and reviews, but not usage, billing or settings. Replies show who sent them.</p></details>
             </div>
           </div>
         </section>
