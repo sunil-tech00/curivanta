@@ -5,7 +5,7 @@ import { SiteFooter } from '../components/SiteFooter';
 
 // Terms for the Curivanta app (Starter, Light and Pro plans).
 // Keep plan facts in step with curivanta-app (app/plans.py, app/config.py).
-const UPDATED = 'November 13, 2026';
+const UPDATED = 'November 14, 2026';
 
 const H = ({ children }: { children: React.ReactNode }) => (
   <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>{children}</h3>
@@ -64,6 +64,7 @@ const TermsOfService = () => {
             <H>AI and the service</H>
             <p>The AI answers from the information about your salon that you and your website provide, only offers appointment times that are open in your booking system, and hands conversations it is unsure about to you. Like any person or software, it can make mistakes. You remain responsible for your appointments, prices, policies and client relationships, and should review conversations the app flags for you. Review replies are posted only after you approve them. On Pro, you can see every call the assistant answered, with a summary and what was said, and listen to its recording for 90 days; speech recognition can mishear, so check calls the app flags.</p>
             <p>We work to keep Curivanta running at all times, but it depends on phone carriers, our providers and your connected accounts, and may sometimes be unavailable or delayed. We may update and improve features over time.</p>
+            <p><strong>Support access.</strong> To help you and to fix problems, Curivanta's team can view your salon's account the way you see it, including messages, calls, call recordings and transcripts. We do this only to run, support and improve the service, and we keep what we see confidential.</p>
             <p><strong>No emergency calls.</strong> Curivanta is not a replacement for a regular phone line and cannot be used to call 911 or other emergency services.</p>
 
             <H>Your data</H>

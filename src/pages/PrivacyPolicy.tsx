@@ -6,7 +6,7 @@ import { SiteFooter } from '../components/SiteFooter';
 // Covers the Curivanta app (app.curivanta.com) for salons and solo stylists, the texts and calls
 // we handle for them, and this website. The solar quote review has its own page (public/solar/privacy). Keep in step with the app
 // (curivanta-app/docs/curivanta-features.md) and with the SMS wording carriers require.
-const UPDATED = 'November 13, 2026';
+const UPDATED = 'November 14, 2026';
 
 const H = ({ children }: { children: React.ReactNode }) => (
   <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>{children}</h3>
@@ -68,7 +68,7 @@ const PrivacyPolicy = () => {
             <p>We may also share information if the law requires it, to protect people's safety or our rights, or as part of a sale or merger of our business, in which case this policy continues to apply.</p>
 
             <H>How we protect information</H>
-            <p>Each salon's information is kept separate from every other salon's. Sign-in details for connected accounts, tax IDs and similar sensitive details are stored encrypted. Access is limited to the people who need it to run the service. Owners sign in with a one-time email link, and front-desk logins cannot see billing or settings. No system is perfectly secure, but we work to protect what you share with us.</p>
+            <p>Each salon's information is kept separate from every other salon's. Sign-in details for connected accounts, tax IDs and similar sensitive details are stored encrypted. Access is limited to the people who need it to run the service: Curivanta's own team can view a salon's account, including messages, calls, recordings and transcripts, only to support that salon or fix a problem. Owners sign in with a one-time email link, and front-desk logins cannot see billing or settings. No system is perfectly secure, but we work to protect what you share with us.</p>
 
             <H>How long we keep information</H>
             <p>We keep a salon's information while its Curivanta account is open, so the service can work and owners can look back at past calls, messages and reviews. After an account is closed, we delete the salon's information when asked, and we may keep billing records and opt-out records as long as the law requires.</p>
