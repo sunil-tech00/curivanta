@@ -11,6 +11,20 @@ const SITE = "https://curivanta.com";
 // are in index.html (its canonical is added below); the old product pages are archived.
 const PAGES = [
   {
+    route: "/square",
+    title: "AI front desk for Square salons: books into Square Appointments | Curivanta",
+    description: "Curivanta texts back missed calls, answers clients by text 24/7 and books them into Square Appointments, on Square's free plan too. Google review requests after every checkout. From $49/month.",
+    image: "/brand/og-salon.jpg",
+    imageAlt: "Curivanta: the AI front desk for Square salons"
+  },
+  {
+    route: "/salonultimate",
+    title: "AI front desk for SalonUltimate salons: books into your appointment book | Curivanta",
+    description: "Curivanta texts back missed calls, answers clients by text 24/7 and books them straight into SalonUltimate using your live online booking openings. Review requests after checkout. From $49/month.",
+    image: "/brand/og-salon.jpg",
+    imageAlt: "Curivanta: the AI front desk for SalonUltimate salons"
+  },
+  {
     route: "/privacy",
     title: "Privacy Policy | Curivanta",
     description: "How Curivanta handles salon owners' and clients' information: texts, calls, recordings, AI, who we share with, and your choices.",

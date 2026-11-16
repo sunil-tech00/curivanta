@@ -6,8 +6,11 @@ import { MemoryRouter } from "react-router-dom";
 import Home from "./pages/HomePreview";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import SquarePage from "./pages/SquarePage";
+import SalonUltimatePage from "./pages/SalonUltimatePage";
 
-const PAGES: Record<string, () => JSX.Element> = { "/": Home, "/privacy": PrivacyPolicy, "/terms": TermsOfService };
+const PAGES: Record<string, () => JSX.Element> = { "/": Home, "/privacy": PrivacyPolicy, "/terms": TermsOfService,
+  "/square": SquarePage, "/salonultimate": SalonUltimatePage };
 
 export function render(route: string): string {
   const Page = PAGES[route];

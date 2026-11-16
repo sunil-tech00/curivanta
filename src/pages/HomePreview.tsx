@@ -280,8 +280,8 @@ const HomePreview = () => {
           <div className="h-wrap h-strip-in">
             <div className="h-works">
               <b>Works with</b>
-              <span className="h-chip">SalonUltimate</span>
-              <span className="h-chip">Square</span>
+              <Link className="h-chip" to="/salonultimate" style={{ color: 'inherit', textDecoration: 'none' }} data-umami-event="works_with_salonultimate">SalonUltimate</Link>
+              <Link className="h-chip" to="/square" style={{ color: 'inherit', textDecoration: 'none' }} data-umami-event="works_with_square">Square</Link>
               <span className="h-chip">Your online booking link</span>
               <span className="h-chip">Google Business Profile</span>
               <span className="h-chip">Your current number</span>
@@ -762,6 +762,8 @@ const HomePreview = () => {
           <span>© 2026 Curivanta</span>
           <a href="#pricing">Pricing</a>
           <a href="#faq">FAQ</a>
+          <Link to="/square" data-umami-event="footer_square">Square</Link>
+          <Link to="/salonultimate" data-umami-event="footer_salonultimate">SalonUltimate</Link>
           <Link to="/privacy" data-umami-event="footer_privacy">Privacy</Link>
           <Link to="/terms" data-umami-event="footer_terms">Terms</Link>
           <a href={SIGNIN_URL} data-umami-event="footer_sign_in">Sign in</a>

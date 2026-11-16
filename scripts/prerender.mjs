@@ -6,6 +6,8 @@ import { createServer } from "vite";
 
 const DIST = "dist";
 const SITE = "https://curivanta.com";
+// Booking-system pages (/square, /salonultimate) get FAQ structured data too.
+const FAQ_PAGES = { "/square": "Square", "/salonultimate": "SalonUltimate" };
 
 const vite = await createServer({ server: { middlewareMode: true, hmr: false }, appType: "custom", logLevel: "error" });
 try {
@@ -17,6 +19,7 @@ try {
     if (!html.includes('<div id="root"></div>')) throw new Error(`prerender: no empty root in ${file}`);
     html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
     if (route === "/") html = html.replace("</head>", `${jsonLd(body)}\n  </head>`);
+    else if (FAQ_PAGES[route]) html = html.replace("</head>", `${faqLd(body, route)}\n  </head>`);
     fs.writeFileSync(file, html);
     console.log(`prerender: ${route} (${Math.round(body.length / 1024)} KB)`);
   }
@@ -32,6 +35,25 @@ function text(s) {
 }
 
 // FAQ answers come from the rendered page, so the structured data always matches what's shown.
+function faqOf(body) {
+  return [...body.matchAll(/<details><summary>(.*?)<\/summary><p>(.*?)<\/p><\/details>/g)]
+    .map(([, q, a]) => ({ "@type": "Question", name: text(q), acceptedAnswer: { "@type": "Answer", text: text(a) } }));
+}
+
+// The booking-system pages: their FAQ, and what the page is about.
+function faqLd(body, route) {
+  const faq = faqOf(body);
+  if (faq.length < 5) throw new Error(`prerender: found only ${faq.length} FAQ entries on ${route}`);
+  const graph = [
+    { "@type": "WebPage", "@id": `${SITE}${route}`, url: `${SITE}${route}`, name: `Curivanta for ${FAQ_PAGES[route]}`,
+      isPartOf: { "@id": `${SITE}/#site` }, about: { "@type": "SoftwareApplication", name: "Curivanta", url: `${SITE}/` },
+      mentions: { "@type": "SoftwareApplication", name: FAQ_PAGES[route] } },
+    { "@type": "FAQPage", mainEntity: faq },
+  ];
+  const json = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c");
+  return `    <script type="application/ld+json">${json}</script>`;
+}
+
 function jsonLd(body) {
   const faq = [...body.matchAll(/<details><summary>(.*?)<\/summary><p>(.*?)<\/p><\/details>/g)]
     .map(([, q, a]) => ({ "@type": "Question", name: text(q), acceptedAnswer: { "@type": "Answer", text: text(a) } }));
@@ -45,10 +67,10 @@ function jsonLd(body) {
     { "@type": "WebSite", "@id": `${SITE}/#site`, url: `${SITE}/`, name: "Curivanta", publisher: { "@id": `${SITE}/#org` } },
     { "@type": "SoftwareApplication", name: "Curivanta", applicationCategory: "BusinessApplication",
       operatingSystem: "Web, iOS, Android", url: `${SITE}/`, publisher: { "@id": `${SITE}/#org` },
-      description: "AI front desk for hair salons and solo stylists: missed-call text-back, AI texting that answers clients and books appointments, Google review requests, and AI phone answering on Pro.",
-      offers: [plan("Starter", "49", "For solo stylists: 400 texts and 300 call minutes a month, $49 setup."),
-               plan("Light", "99", "For salons with a team: 1,000 texts and 300 call minutes a month, $99 setup."),
-               plan("Pro", "149", "AI answers calls: 1,500 texts, 300 call minutes and 200 assistant minutes a month, $149 setup.")] },
+      description: "AI front desk for hair salons and solo stylists: missed-call text-back, AI texting that answers clients and books appointments into SalonUltimate or Square, Google review requests, and AI phone answering on Pro.",
+      offers: [plan("Starter", "49", "For solo stylists: 400 texts and 300 call minutes a month, $49 setup counted toward the first month."),
+               plan("Light", "99", "For salons with a team: 1,000 texts and 300 call minutes a month, $49 setup counted toward the first month."),
+               plan("Pro", "149", "AI answers calls: 1,500 texts, 300 call minutes and 200 assistant minutes a month, $49 setup counted toward the first month.")] },
     { "@type": "FAQPage", mainEntity: faq },
   ];
   const json = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c");

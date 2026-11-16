@@ -8,6 +8,8 @@ import Home from "./pages/HomePreview";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import SquarePage from "./pages/SquarePage";
+import SalonUltimatePage from "./pages/SalonUltimatePage";
 
 // The old homepage, Hair Salon Bot, Review Automation and Website Development pages are archived
 // (git tag old-site-2026-11-13, branch archive/old-site); their URLs redirect to / (vercel.json).
@@ -25,6 +27,8 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/square" element={<SquarePage />} />
+          <Route path="/salonultimate" element={<SalonUltimatePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
