@@ -6,7 +6,7 @@ import { SiteFooter } from '../components/SiteFooter';
 // Covers the Curivanta app (app.curivanta.com) for salons and solo stylists, the texts and calls
 // we handle for them, and this website. The solar quote review has its own page (public/solar/privacy). Keep in step with the app
 // (curivanta-app/docs/curivanta-features.md) and with the SMS wording carriers require.
-const UPDATED = 'November 14, 2026';
+const UPDATED = 'November 15, 2026';
 
 const H = ({ children }: { children: React.ReactNode }) => (
   <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>{children}</h3>
@@ -42,7 +42,7 @@ const PrivacyPolicy = () => {
 
             <H>Information we collect</H>
             <p><strong>From salon owners and their team.</strong> Your name, email address and phone number; your salon's details, such as its name, legal name, tax ID (EIN), address, website, hours, services, prices and stylists; the business information phone carriers require to approve texting; and how you use the app. When you connect your booking software (such as SalonUltimate) or your Google Business Profile, we store the sign-in details or access you give us so Curivanta can work with those accounts. Payments are handled by Stripe; we never see or store your full card number.</p>
-            <p><strong>From salon clients.</strong> When a client calls or texts a salon that uses Curivanta, or is sent a review request, we handle: their phone number and name; the text messages exchanged; call details such as time, length and outcome; voicemails they leave, including the recording and a written transcript; on the Pro plan, a recording, a written transcript and a short summary of calls the AI assistant answers; appointment details such as service, stylist and time; the rating and any private note they give about a visit; and whether they have opted in or out of texts. Calls answered by a person in the app are not recorded. When the AI assistant answers a call, it tells the caller at the start that it is the salon's automated assistant and that the call is recorded and transcribed. The recording is kept for 90 days, so the salon can check what was said, and is then deleted; the transcript and summary are kept with the salon's other call history.</p>
+            <p><strong>From salon clients.</strong> When a client calls or texts a salon that uses Curivanta, visits a salon whose booking software is connected (we save each checkout: the client's name and phone number, the service, the stylist and the time), or is sent a review request, we handle: their phone number and name; the text messages exchanged; call details such as time, length and outcome; voicemails they leave, including the recording and a written transcript; on the Pro plan, a recording, a written transcript and a short summary of calls the AI assistant answers; appointment details such as service, stylist and time; the rating and any private note they give about a visit; and whether they have opted in or out of texts. Calls answered by a person in the app are not recorded. When the AI assistant answers a call, it tells the caller at the start that it is the salon's automated assistant and that the call is recorded and transcribed. The recording is kept for 90 days, so the salon can check what was said, and is then deleted; the transcript and summary are kept with the salon's other call history.</p>
             <p><strong>From website visitors.</strong> We use Umami, a privacy-focused analytics service, to count page visits and actions such as clicking a button or starting a checkout. Umami does not use cookies, does not track you across other websites, and reports visits only in aggregate. If you fill in a form on our website, we receive what you enter.</p>
 
             <H>How we use information</H>
@@ -63,7 +63,7 @@ const PrivacyPolicy = () => {
               <li>Stripe, for payments</li>
               <li>Brevo, for sending email</li>
               <li>Supabase, Render and Vercel, for storing data and hosting the app and website</li>
-              <li>Google, SalonUltimate and BookedBy, only when a salon connects those accounts, to post review replies and to check openings and book appointments</li>
+              <li>Google, SalonUltimate, BookedBy and Square, only when a salon connects those accounts, to post review replies, to check openings and book appointments, and to read the salon's checkouts</li>
             </ul>
             <p>We may also share information if the law requires it, to protect people's safety or our rights, or as part of a sale or merger of our business, in which case this policy continues to apply.</p>
 

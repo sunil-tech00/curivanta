@@ -5,7 +5,7 @@ import { SiteFooter } from '../components/SiteFooter';
 
 // Terms for the Curivanta app (Starter, Light and Pro plans).
 // Keep plan facts in step with curivanta-app (app/plans.py, app/config.py).
-const UPDATED = 'November 14, 2026';
+const UPDATED = 'November 15, 2026';
 
 const H = ({ children }: { children: React.ReactNode }) => (
   <h3 style={{ color: 'var(--bone)', marginTop: '16px' }}>{children}</h3>
@@ -40,7 +40,7 @@ const TermsOfService = () => {
 
             <H>The service</H>
             <p>Curivanta helps salons and solo stylists answer missed calls and clients' texts. It texts back missed callers, answers clients' questions and books appointments by text using AI (and, on Pro, by phone), asks clients for Google reviews, drafts replies to Google reviews for you to approve, and shows you everything in the app. Each plan covers one salon location.</p>
-            <p><strong>Starter</strong> is for one person, such as a solo stylist or booth renter. It includes a Curivanta business number, and when a client wants to book, the AI books into SalonUltimate if you use it, or sends your own online booking link. <strong>Light</strong> is for salons with a team. You keep your salon's number and forward missed calls to Curivanta, your team can have their own sign-ins, and the AI books straight into your booking software (currently SalonUltimate). <strong>Pro</strong> includes everything in Light, and when nobody can pick up, an AI assistant answers the call: it tells the caller it is the salon's automated assistant and that the call is recorded and transcribed, answers questions, books appointments, takes messages, and lets the caller ask for a person or leave a voicemail. You choose when it answers.</p>
+            <p><strong>Starter</strong> is for one person, such as a solo stylist or booth renter. It includes a Curivanta business number, and when a client wants to book, the AI books into SalonUltimate or Square if you use one of them, or sends your own online booking link. <strong>Light</strong> is for salons with a team. You keep your salon's number and forward missed calls to Curivanta, your team can have their own sign-ins, and the AI books straight into your booking software (currently SalonUltimate or Square). <strong>Pro</strong> includes everything in Light, and when nobody can pick up, an AI assistant answers the call: it tells the caller it is the salon's automated assistant and that the call is recorded and transcribed, answers questions, books appointments, takes messages, and lets the caller ask for a person or leave a voicemail. You choose when it answers.</p>
 
             <H>Plans, billing and usage</H>
             <p><strong>Setup fee.</strong> A $49 setup fee is charged when you sign up, on every plan. It covers setting up your account, your number and your carrier registration. When your texting goes live, the $49 is credited toward your first monthly fee. It is not refundable, including if you cancel before going live.</p>

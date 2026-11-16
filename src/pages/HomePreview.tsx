@@ -30,7 +30,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
     tab: 'AI texting & booking', hint: 'Answers and books',
     title: 'AI texting & booking',
     lede: "Clients text the questions they'd otherwise call with. The AI answers from your own menu, prices and policies, and books real open times, day or night.",
-    ticks: ['Learns your services, prices and policies from your website, and your hours, holidays included, from your Google profile', 'Only offers times that are actually free, and confirms before booking', 'On SalonUltimate, it books straight in, solo or salon. Otherwise it sends your own booking link', 'Speaks Spanish too: clients who text in Spanish get answered in Spanish', 'Teach it once: save one of your replies with a tap and it answers that question next time', 'Complaints and anything unclear go to you, with the whole thread'],
+    ticks: ['Learns your services, prices and policies from your website, and your hours, holidays included, from your Google profile', 'Only offers times that are actually free, and confirms before booking', 'On SalonUltimate or Square, it books straight in, solo or salon. Otherwise it sends your own booking link', 'Speaks Spanish too: clients who text in Spanish get answered in Spanish', 'Teach it once: save one of your replies with a tap and it answers that question next time', 'Complaints and anything unclear go to you, with the whole thread'],
     mini: (<><div className="h">Straight into your calendar</div>
       <div className="h-bub them">Can I get a trim and blowout this weekend?<small>Client</small></div>
       <div className="h-bub us">Yes! Saturday at 10:00 or 11:30 with Maya. Which works?<small>Live openings</small></div>
@@ -43,7 +43,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
     lede: "On Pro, when nobody can pick up, your assistant answers the call. It talks like a friendly front desk, answers questions from your own menu and policies, and books real open times.",
     ticks: [
       'Answers questions about services, prices, hours and parking',
-      'Checks real openings, books into SalonUltimate, and texts a confirmation',
+      'Checks real openings, books into SalonUltimate or Square, and texts a confirmation',
       'Knows returning clients by name and offers their usual',
       'Callers can ask for a person or leave a voicemail any time',
       'Switches to Spanish when the caller speaks Spanish',
@@ -54,7 +54,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
       <div className="h-bub them">Can Maya do a trim Saturday morning?<small>Caller</small></div>
       <div className="h-bub us">Maya has ten or eleven thirty on Saturday. Which works?<small>Live openings</small></div>
       <div className="h-bub them">Ten, please.</div>
-      <div className="h-bub us">You're booked for ten on Saturday with Maya. I'll text you the details.<small>In SalonUltimate</small></div></>),
+      <div className="h-bub us">You're booked for ten on Saturday with Maya. I'll text you the details.<small>In Square</small></div></>),
   },
   reviews: {
     tab: 'Reviews', hint: 'Requests and review responses',
@@ -281,6 +281,7 @@ const HomePreview = () => {
             <div className="h-works">
               <b>Works with</b>
               <span className="h-chip">SalonUltimate</span>
+              <span className="h-chip">Square</span>
               <span className="h-chip">Your online booking link</span>
               <span className="h-chip">Google Business Profile</span>
               <span className="h-chip">Your current number</span>
@@ -564,7 +565,7 @@ const HomePreview = () => {
             </div>
             <div className="h-steps">
               <div className="h-step"><div className="n">1</div><h3>Pick a plan and paste one link</h3><p>Paste your website, booking page or Google listing. We read it and fill in your services, prices, hours and stylists.</p><span className="t">About 5 minutes</span></div>
-              <div className="h-step"><div className="n">2</div><h3>Connect your booking</h3><p>On SalonUltimate, add hello@curivanta.com as a Receptionist. On anything else, just share your online booking link.</p><span className="t">About 5 minutes</span></div>
+              <div className="h-step"><div className="n">2</div><h3>Connect your booking</h3><p>On SalonUltimate, add hello@curivanta.com as a Receptionist. On Square, sign in to Square and tap Allow. On anything else, just share your online booking link.</p><span className="t">About 5 minutes</span></div>
               <div className="h-step"><div className="n">3</div><h3>Pick your number and you're done</h3><p>Choose your number and enter your legal name and EIN. No EIN? Solo stylists can register as a sole proprietor with one text reply.</p><span className="t">About 5 minutes</span></div>
             </div>
             <div className="h-timeline">
@@ -629,7 +630,7 @@ const HomePreview = () => {
                   <li>Calls ring your cell and the app during your hours</li>
                   <li>Missed-call text-back, with voicemails as text</li>
                   <li>Your greeting in a natural female or male voice, or your own recording</li>
-                  <li>AI texting that answers questions and books into SalonUltimate, or sends your booking link</li>
+                  <li>AI texting that answers questions and books into SalonUltimate or Square, or sends your booking link</li>
                   <li>Answers in English or Spanish</li>
                   <li>Review requests: 3 a day (change it any time)</li>
                   <li>AI drafts Google review responses for you to approve</li>
@@ -646,7 +647,7 @@ const HomePreview = () => {
                 <div className="h-allow"><b>Includes 1,000 texts and 300 call minutes a month.</b> Need more? $10 per extra 250 texts, and $10 per extra 250 minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
                   <li>Everything in Starter, except you keep your salon number: missed calls forward to Curivanta</li>
-                  <li>AI texting that books straight into SalonUltimate</li>
+                  <li>AI texting that books straight into SalonUltimate or Square</li>
                   <li>Review requests: 10 a day (change it any time)</li>
                   <li>AI drafts Google review responses for you to approve</li>
                   <li>Team logins: managers run the salon day to day, front desk handles clients; billing stays with you</li>
@@ -710,7 +711,7 @@ const HomePreview = () => {
                   <tr><td>Price shown up front</td><td className="nn">n/a</td><td><span className="y">✓</span> Often</td><td className="nn">Usually "book a demo"</td><td className="us"><span className="y">✓</span> From $49/mo</td></tr>
                   <tr><td>Missed calls after hours</td><td className="nn">Voicemail</td><td><span className="y">✓</span> By voice</td><td><span className="y">✓</span></td><td className="us"><span className="y">✓</span> Text in a minute</td></tr>
                   <tr><td>Calls answered when you can't pick up</td><td className="nn">Voicemail</td><td><span className="y">✓</span></td><td className="nn">Sometimes, as an add-on</td><td className="us"><span className="y">✓</span> On Pro</td></tr>
-                  <tr><td>Books into SalonUltimate</td><td>By hand</td><td className="nn">Takes a message</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span> Straight in</td></tr>
+                  <tr><td>Books into SalonUltimate or Square</td><td>By hand</td><td className="nn">Takes a message</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span> Straight in</td></tr>
                   <tr><td>Remembers returning clients</td><td>If they remember</td><td className="nn">Rarely</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span> By name, with their usual</td></tr>
                   <tr><td>Reviews name the stylist</td><td className="nn">No</td><td className="nn">No</td><td className="nn">Rarely</td><td className="us"><span className="y">✓</span></td></tr>
                   <tr><td>Setup</td><td className="nn">n/a</td><td>Varies</td><td>Weeks of training</td><td className="us">15 minutes, we do the rest</td></tr>
@@ -726,10 +727,10 @@ const HomePreview = () => {
           <div className="h-wrap">
             <div className="h-head center"><div className="h-kicker">Questions</div><h2>Asked by owners like you</h2></div>
             <div className="h-faq">
-              <details><summary>Do I need a new booking system?</summary><p>No. If you're on SalonUltimate, salon or solo, bookings go straight into your calendar: Curivanta reads your real openings and books the time. On any other system, the AI sends your online booking link when a client wants to book.</p></details>
+              <details><summary>Do I need a new booking system?</summary><p>No. If you're on SalonUltimate or Square, salon or solo, bookings go straight into your calendar: Curivanta reads your real openings and books the time. On any other system, the AI sends your online booking link when a client wants to book.</p></details>
               <details><summary>Can I keep my phone number?</summary><p>Salons keep their number: you forward the calls you miss to Curivanta, and we text those callers back. Solo stylists get a new business number that rings their own cell, so their personal number stays private.</p></details>
               <details><summary>Can I move my existing number to Curivanta?</summary><p>Not yet, but it's coming soon. For now, salons keep their number and forward the calls they miss to Curivanta, and you can undo that any time. Solo stylists get a new business number, so their personal cell stays private.</p></details>
-              <details><summary>I'm a solo stylist or booth renter. Is this for me?</summary><p>Yes, that's what Starter is for: $49 a month, and the $49 setup counts toward your first month. You get a business number that rings your cell, missed-call text-back, AI texting that books into SalonUltimate or sends your booking link, and review requests. You can move up to Light any time.</p></details>
+              <details><summary>I'm a solo stylist or booth renter. Is this for me?</summary><p>Yes, that's what Starter is for: $49 a month, and the $49 setup counts toward your first month. You get a business number that rings your cell, missed-call text-back, AI texting that books into SalonUltimate or Square or sends your booking link, and review requests. You can move up to Light any time.</p></details>
               <details><summary>Does an AI answer my phone?</summary><p>On Pro, yes. When nobody can pick up, your assistant answers the call, tells the caller it's the salon's automated assistant, answers questions and books appointments, and texts a confirmation. Callers can ask for a person or leave a voicemail any time. On Starter and Light, callers hear your greeting, can leave a voicemail, and get a text right away.</p></details>
               <details><summary>What counts as a text or a call minute?</summary><p>Texts are the messages Curivanta sends for you: replies, text-backs, confirmations and review requests. Call minutes are the time calls spend on your Curivanta number: calls you answer or make in the app (or on your cell with Starter), and calls that go to your greeting and voicemail. Calls you pick up on your own salon phone don't count. On Pro, time the AI assistant is on a call uses assistant minutes instead. Unused texts and minutes don't carry over.</p></details>
               <details><summary>How many calls does Pro cover?</summary><p>200 minutes of the assistant on the phone each month, which is around 100 typical booking calls. Extra minutes are $10 per 50, and we let you know at 80%. You can also set it to answer only when you're closed.</p></details>
