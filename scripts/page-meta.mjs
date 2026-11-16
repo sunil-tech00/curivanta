@@ -32,6 +32,13 @@ const PAGES = [
     imageAlt: "Curivanta: the AI front desk for salons and solo stylists"
   },
   {
+    route: "/delete-account",
+    title: "Delete your account | Curivanta",
+    description: "How to delete your Curivanta account and its data: what we delete, what we keep and for how long.",
+    image: "/brand/og-salon.jpg",
+    imageAlt: "Curivanta: the AI front desk for salons and solo stylists"
+  },
+  {
     route: "/terms",
     title: "Terms of Service | Curivanta",
     description: "The terms for Curivanta's Starter, Light and Pro plans: billing, included usage, cancelling, and how the AI front desk works.",

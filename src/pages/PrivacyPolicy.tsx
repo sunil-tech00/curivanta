@@ -74,7 +74,7 @@ const PrivacyPolicy = () => {
             <p>We keep a salon's information while its Curivanta account is open, so the service can work and owners can look back at past calls, messages and reviews. After an account is closed, we delete the salon's information when asked, and we may keep billing records and opt-out records as long as the law requires.</p>
 
             <H>Your choices</H>
-            <p>Salon owners can view and update their information in the app, and can ask us to export or delete it by emailing {mail}. Salon clients can reply STOP to stop texts, and can ask the salon or us to see, correct or delete their information. If you live in California or another place that gives you privacy rights, you can use those rights by emailing us; we will not treat you differently for doing so.</p>
+            <p>Salon owners can view and update their information in the app, and can ask us to export or delete it by emailing {mail} (see <Link to="/delete-account" style={{ color: 'var(--brass)' }}>how to delete your account</Link>). Salon clients can reply STOP to stop texts, and can ask the salon or us to see, correct or delete their information. If you live in California or another place that gives you privacy rights, you can use those rights by emailing us; we will not treat you differently for doing so.</p>
 
             <H>Children</H>
             <p>Curivanta is a service for businesses and is not directed at children under 13.</p>

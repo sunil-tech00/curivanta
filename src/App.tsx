@@ -8,6 +8,7 @@ import Home from "./pages/HomePreview";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import DeleteAccount from "./pages/DeleteAccount";
 import SquarePage from "./pages/SquarePage";
 import SalonUltimatePage from "./pages/SalonUltimatePage";
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/square" element={<SquarePage />} />
           <Route path="/salonultimate" element={<SalonUltimatePage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
