@@ -26,7 +26,7 @@ The real cost is bigger than one cut, too. A new client who books once and likes
 
 ## Why it happens
 
-Missed calls are not a staffing problem. They happen for ordinary reasons:
+Missed calls don't mean you need more staff. They happen for ordinary reasons:
 
 - **Your stylist is with a client.** Answering the phone mid-cut is rude to the person in the chair, so the call rings out.
 - **The phone is on silent.** The front desk stepped away, or the salon phone lives in a back room nobody hears.
