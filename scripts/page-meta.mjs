@@ -47,6 +47,28 @@ const PAGES = [
   }
 ];
 
+// The blog: /blog and one page per article (src/blog/posts/<slug>.md; same header as src/blog/posts.ts reads).
+const POSTS_DIR = "src/blog/posts";
+const posts = (fs.existsSync(POSTS_DIR) ? fs.readdirSync(POSTS_DIR) : []).filter(f => f.endsWith(".md")).map(f => {
+  const raw = fs.readFileSync(path.join(POSTS_DIR, f), "utf8").replace(/\r\n/g, "\n");
+  const m = raw.match(/^---\n([\s\S]*?)\n---/);
+  if (!m) throw new Error(`page-meta: ${f} has no --- header`);
+  const meta = Object.fromEntries(m[1].split("\n").filter(l => l.indexOf(":") > 0)
+    .map(l => [l.slice(0, l.indexOf(":")).trim(), l.slice(l.indexOf(":") + 1).trim().replace(/^["']|["']$/g, "")]));
+  return { slug: f.replace(/\.md$/, ""), ...meta, draft: meta.draft === "true" };
+}).sort((a, b) => b.date.localeCompare(a.date));
+const listed = posts.filter(p => !p.draft);
+PAGES.push({
+  route: "/blog",
+  title: "Blog: running a salon front desk | Curivanta",
+  description: "Plain advice for salon owners and solo stylists on missed calls, bookings, reviews and the AI tools that help, from someone who runs salons.",
+  image: "/brand/og-salon.jpg",
+  imageAlt: "The Curivanta blog",
+  noindex: listed.length === 0,
+});
+for (const p of posts) PAGES.push({ route: `/blog/${p.slug}`, title: `${p.title} | Curivanta`, description: p.description,
+  image: "/brand/og-salon.jpg", imageAlt: p.title, noindex: p.draft, article: true });
+
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 const base = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 
@@ -69,10 +91,21 @@ for (const p of PAGES) {
   html = set(html, /<meta name="twitter:title" content="[^"]*"\s*\/?>/, `<meta name="twitter:title" content="${esc(p.title)}" />`);
   html = set(html, /<meta name="twitter:description" content="[^"]*"\s*\/?>/, `<meta name="twitter:description" content="${esc(p.description)}" />`);
   html = set(html, /<meta name="twitter:image" content="[^"]*"\s*\/?>/, `<meta name="twitter:image" content="${img}" />`);
+  if (p.article) html = html.replace(/<meta property="og:type" content="[^"]*"\s*\/?>/, '<meta property="og:type" content="article" />');
+  if (p.noindex) html = html.replace("</head>", '    <meta name="robots" content="noindex" />\n  </head>');
   const out = path.join(DIST, p.route.replace(/^\//, ""), "index.html");
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, html);
   console.log(`page-meta: wrote ${out}`);
+}
+
+// The sitemap: public/sitemap.xml plus the blog and its published articles.
+if (listed.length) {
+  const file = path.join(DIST, "sitemap.xml");
+  const urls = [`  <url><loc>${SITE}/blog</loc><lastmod>${listed[0].date}</lastmod></url>`,
+    ...listed.map(p => `  <url><loc>${SITE}/blog/${p.slug}</loc><lastmod>${p.date}</lastmod></url>`)].join("\n");
+  fs.writeFileSync(file, fs.readFileSync(file, "utf8").replace("</urlset>", `${urls}\n</urlset>`));
+  console.log(`page-meta: sitemap + ${listed.length} blog article(s)`);
 }
 
 // The homepage's canonical link. Unknown URLs are served this same file (then show the 404 page,

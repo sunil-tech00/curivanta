@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { POSTS } from '../blog/posts';
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from '../components/ThemeToggle';
 import './home/home.css';
@@ -766,6 +767,7 @@ const HomePreview = () => {
           <a href="#faq">FAQ</a>
           <Link to="/square" data-umami-event="footer_square">Square</Link>
           <Link to="/salonultimate" data-umami-event="footer_salonultimate">SalonUltimate</Link>
+          {POSTS.length > 0 && <Link to="/blog" data-umami-event="footer_blog">Blog</Link>}
           <Link to="/privacy" data-umami-event="footer_privacy">Privacy</Link>
           <Link to="/terms" data-umami-event="footer_terms">Terms</Link>
           <a href={SIGNIN_URL} data-umami-event="footer_sign_in">Sign in</a>

@@ -11,7 +11,7 @@ const FAQ_PAGES = { "/square": "Square", "/salonultimate": "SalonUltimate" };
 
 const vite = await createServer({ server: { middlewareMode: true, hmr: false }, appType: "custom", logLevel: "error" });
 try {
-  const { render, routes } = await vite.ssrLoadModule("/src/prerender.tsx");
+  const { render, routes, posts } = await vite.ssrLoadModule("/src/prerender.tsx");
   for (const route of routes) {
     const file = path.join(DIST, route === "/" ? "" : route.slice(1), "index.html");
     let html = fs.readFileSync(file, "utf8");
@@ -20,6 +20,7 @@ try {
     html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
     if (route === "/") html = html.replace("</head>", `${jsonLd(body)}\n  </head>`);
     else if (FAQ_PAGES[route]) html = html.replace("</head>", `${faqLd(body, route)}\n  </head>`);
+    else if (route.startsWith("/blog/")) html = html.replace("</head>", `${articleLd(posts.find(p => `/blog/${p.slug}` === route))}\n  </head>`);
     fs.writeFileSync(file, html);
     console.log(`prerender: ${route} (${Math.round(body.length / 1024)} KB)`);
   }
@@ -51,6 +52,17 @@ function faqLd(body, route) {
     { "@type": "FAQPage", mainEntity: faq },
   ];
   const json = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c");
+  return `    <script type="application/ld+json">${json}</script>`;
+}
+
+// Each blog article: what it is, who wrote it and when (for search results).
+function articleLd(p) {
+  const url = `${SITE}/blog/${p.slug}`;
+  const json = JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", headline: p.title,
+    description: p.description, datePublished: p.date, url, mainEntityOfPage: url, image: `${SITE}/brand/og-salon.jpg`,
+    author: { "@type": "Organization", name: p.author, url: `${SITE}/` },
+    publisher: { "@type": "Organization", name: "Curivanta", logo: { "@type": "ImageObject", url: `${SITE}/brand/logo-light.png` } } })
+    .replace(/</g, "\\u003c");
   return `    <script type="application/ld+json">${json}</script>`;
 }
 

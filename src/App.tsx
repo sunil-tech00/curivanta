@@ -11,6 +11,7 @@ import TermsOfService from "./pages/TermsOfService";
 import DeleteAccount from "./pages/DeleteAccount";
 import SquarePage from "./pages/SquarePage";
 import SalonUltimatePage from "./pages/SalonUltimatePage";
+import { BlogIndex, BlogPost } from "./pages/Blog";
 
 // The old homepage, Hair Salon Bot, Review Automation and Website Development pages are archived
 // (git tag old-site-2026-11-13, branch archive/old-site); their URLs redirect to / (vercel.json).
@@ -31,6 +32,8 @@ const App = () => (
           <Route path="/delete-account" element={<DeleteAccount />} />
           <Route path="/square" element={<SquarePage />} />
           <Route path="/salonultimate" element={<SalonUltimatePage />} />
+          <Route path="/blog" element={<BlogIndex />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

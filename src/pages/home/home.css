@@ -452,3 +452,32 @@
 .cvh .h-at-tabs { display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--line); background:var(--surface); }
 .cvh .h-at-tabs span { text-align:center; padding:10px 0 11px; font-size:12px; font-weight:600; color:var(--ink3); }
 .cvh .h-at-tabs span.on { color:var(--accent); }
+
+/* blog (/blog, /blog/<slug>) */
+.cvh .h-posts { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px; }
+.cvh .h-post-card { display:flex; flex-direction:column; gap:10px; background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:22px; color:var(--ink); transition:border-color .15s, transform .15s; }
+.cvh .h-post-card:hover { border-color:var(--accent); transform:translateY(-2px); }
+.cvh .h-post-card h2 { font-size:22px; }
+.cvh .h-post-card p { color:var(--ink2); font-size:15.5px; }
+.cvh .h-post-meta { color:var(--ink3); font-size:14px; font-weight:600; }
+.cvh .h-post-more { color:var(--accent); font-weight:600; margin-top:auto; }
+.cvh .h-article { padding:40px 0 56px; }
+.cvh .h-article .h-wrap { max-width:760px; }
+.cvh .h-crumb { margin-bottom:18px; font-weight:600; }
+.cvh .h-article h1 { font-weight:700; font-size:clamp(32px,4.4vw,48px); margin-bottom:12px; }
+.cvh .h-prose { margin-top:30px; font-size:18px; line-height:1.7; color:var(--ink); }
+.cvh .h-prose > * + * { margin-top:1.1em; }
+.cvh .h-prose h2 { font-size:28px; margin-top:1.8em; }
+.cvh .h-prose h3 { font-size:22px; margin-top:1.5em; }
+.cvh .h-prose h4 { font-size:18px; margin-top:1.3em; }
+.cvh .h-prose ul, .cvh .h-prose ol { padding-left:1.4em; margin-bottom:0; }
+.cvh .h-prose ul { list-style:disc; }
+.cvh .h-prose ol { list-style:decimal; }
+.cvh .h-prose li::marker { color:var(--accent); }
+.cvh .h-blog-hero { padding-block:56px 36px; }
+.cvh .h-blog-list { padding-bottom:64px; }
+.cvh .h-prose li + li { margin-top:.4em; }
+.cvh .h-prose a { text-decoration:underline; text-underline-offset:3px; }
+.cvh .h-prose blockquote { margin-left:0; border-left:4px solid var(--accent); padding:4px 0 4px 18px; color:var(--ink2); font-style:italic; }
+.cvh .h-prose code { font-family:var(--mono); font-size:.88em; background:var(--soft); padding:2px 6px; border-radius:6px; }
+.cvh .h-prose hr { border:0; border-top:1px solid var(--line); margin:2em 0; }

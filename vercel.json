@@ -101,6 +101,14 @@
       "destination": "/salonultimate/index.html"
     },
     {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug/index.html"
+    },
+    {
       "source": "/((?!solar/|api/).*)",
       "destination": "/index.html"
     }
