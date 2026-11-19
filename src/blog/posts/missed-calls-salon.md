@@ -63,7 +63,7 @@ If you shop for one, check these five things before price:
 1. It texts back automatically, in about a minute, including after hours.
 2. It books into your real calendar, not a separate list someone has to copy across.
 3. It knows your services, stylists and hours, so the times it offers are real.
-4. It keeps the conversation in one thread, so a client who replies "can I bring my daughter too?" gets an answer, not a dead end.
+4. It keeps the conversation in one thread, so a client who replies "can I add a blowout to that?" gets an answer, not a dead end.
 5. It shows you the log: how many calls were missed, how many got a text back, and how many turned into bookings. If you cannot see the recovery, you cannot tell whether it is working.
 
 Anything that cannot do those five is a voicemail with extra steps.

@@ -4,25 +4,25 @@ description: Ask right after the visit, name the stylist and make it one tap. Ho
 date: 2026-11-25
 draft: true
 ---
-A parent choosing a salon for their kid does two things before they call. They check how close you are, and they read your Google reviews. The star rating decides whether they call at all, and the words inside the reviews decide whether they trust you with their child.
+Someone looking for a new salon does two things before they call. They check how close you are, and they read your Google reviews. The star rating decides whether they call at all, and the words inside the reviews decide whether they trust you with their hair.
 
-That is why reviews matter more for salons than for most local businesses. Nobody picks a haircut for their kid on price alone. They pick the place where other parents say a stylist was patient with a nervous first-timer, gentle with a toddler who would not sit still, or kind enough that the kid asks to go back.
+That is why reviews matter more for salons than for most local businesses. Nobody picks a colorist on price alone. They pick the place where other clients say a stylist listened, fixed a color another salon got wrong, or gave them the best cut they have had in years.
 
-A review that says "Maya gave my daughter the best cut" does that work. A review that says "great salon" does not.
+A review that says "Maya finally got my balayage right" does that work. A review that says "great salon" does not.
 
 ## When to ask: the same day, while it is fresh
 
 Most salons ask for reviews at the wrong time, or never ask at all. A card on the counter gets ignored. An email three days later lands when the visit is already forgotten. A request at the next visit is a month too late.
 
-The time that works is the same day as the visit. The kid is still showing off the cut, and the experience is exactly what the review should describe. Ask then, and the parent can answer in thirty seconds. Ask later, and you are asking them to remember a feeling they have already moved on from.
+The time that works is the same day as the visit. The client is still catching their reflection in shop windows, and the experience is exactly what the review should describe. Ask then, and the client can answer in thirty seconds. Ask later, and you are asking them to remember a feeling they have already moved on from.
 
 That is also why the ask has to be one tap. A link that opens the review form directly, with nothing to download and no account to create first. Every extra step loses people who were perfectly happy to leave a review.
 
 ## What to say: name the stylist
 
-The single biggest difference between a review that helps you and one that does not is whether it names a person. "Great salon" tells a stranger nothing. "Jess was so patient with my son's first haircut" tells them exactly who to ask for and what to expect.
+The single biggest difference between a review that helps you and one that does not is whether it names a person. "Great salon" tells a stranger nothing. "Jess listened to exactly what I wanted and nailed it" tells them exactly who to ask for and what to expect.
 
-So the ask itself should name the stylist from the real visit that just happened: "Thanks for coming in to see Maya today!" not "Thanks for visiting." The parent is not being asked to write a review of a business. They are being asked to say thank you to the person who cut their kid's hair, and the review writes itself from there.
+So the ask itself should name the stylist from the real visit that just happened: "Thanks for coming in to see Maya today!" not "Thanks for visiting." The client is not being asked to write a review of a business. They are being asked to say thank you to the person who did their hair, and the review writes itself from there.
 
 Ask every client. Do not pick who gets asked based on how you think the visit went. The clients you are unsure about are often the ones whose honest review helps you most, and picking only the happy ones is exactly how a salon ends up with a row of identical five-star reviews that nobody believes.
 
@@ -36,9 +36,9 @@ That is a conversation, not a filter. The owner hears about the problem while it
 
 ## How to reply: every review gets an answer
 
-A review is not finished when the client posts it. It is finished when you reply to it, by name, naming the stylist again. A short reply to a five-star review tells the next parent reading it that the owner is paying attention. A calm, specific reply to a critical review tells them even more.
+A review is not finished when the client posts it. It is finished when you reply to it, by name, naming the stylist again. A short reply to a five-star review tells the next person reading it that the owner is paying attention. A calm, specific reply to a critical review tells them even more.
 
-Reply to all of them, not just the good ones. A page full of unanswered reviews reads like a salon that stopped caring. A page where the owner answers every review reads like a salon that will care about your kid too.
+Reply to all of them, not just the good ones. A page full of unanswered reviews reads like a salon that stopped caring. A page where the owner answers every review reads like a salon that will care about you too.
 
 The reply does not need to be long. Thank them, name the stylist, and say one true thing about the visit. That is enough, and it is the part most salons skip entirely.
 
