@@ -5,11 +5,12 @@
 ## What it does
 
 - Missed-call text-back: callers get a text from the salon within about a minute. Salons keep their number and forward missed calls; solo stylists get a business number that rings their cell.
-- AI texting (powered by Claude): answers questions about services, prices, hours and policies, recognizes returning clients, and books real open times. English and Spanish.
+- AI texting (powered by Claude): answers questions about services, prices, hours and policies, recognizes returning clients, and books real open times. If the salon switches it on, clients can move or cancel their own appointment (never within 24 hours). The owner can save a reply so the AI answers that question next time. English and Spanish.
 - Booking: books directly into SalonUltimate (live openings from its BookedBy online booking) and into Square Appointments (works on Square's free Appointments plan; follows the salon's online booking settings). Other booking software: the AI sends the salon's own online booking link.
-- Google review requests: a text about an hour after checkout with the salon's own Google review link, to every client (no review gating), at most once in 90 days; ratings by stylist; AI-drafted replies to Google reviews.
-- AI phone answering (Pro): answers calls nobody picks up, says it is the salon's automated assistant and that the call is recorded, answers questions, books, and texts a confirmation.
-- Owner app (phone first): every client's calls, texts, visits and reviews in one place; team sign-ins with roles.
+- Google review requests: a text after the visit that names the client's stylist and carries the salon's own Google review link (clients can also reply 1 to 5), to every client (no review gating), at most once in 90 days; ratings by stylist; AI-drafted replies to Google reviews.
+- AI phone answering (Pro): answers calls nobody picks up, says it is the salon's automated assistant and that the call is recorded, answers questions, books, and texts a confirmation. On a bad line it offers to finish by text. Owners can play each call's recording and read what was said.
+- Phone: call and take calls from the app with the salon's number showing; hold and transfer. Forwarded calls go straight to the greeting and text-back. Voicemails as text and audio.
+- Owner app (phone first): every client's calls, texts, visits and reviews in one place; team sign-ins with roles; phone alerts; a morning summary email; Help inside the app with a real person behind it. Android and iPhone apps coming soon.
 
 ## Works with
 

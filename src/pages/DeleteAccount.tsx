@@ -34,7 +34,7 @@ const DeleteAccount = () => {
         <div className="wrap" style={{ maxWidth: '800px' }}>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '32px' }}>Delete your Curivanta account</h1>
           <div style={{ color: 'var(--bone-dim)', lineHeight: 1.8, display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <p>This page explains how to delete your account for Curivanta, the app from AUM SL LLC that salons and solo stylists use for missed calls, client texts, bookings and reviews (on the web at app.curivanta.com and on Android and iPhone).</p>
+            <p>This page explains how to delete your account for Curivanta, the app from AUM SL LLC that salons and solo stylists use for missed calls, client texts, bookings and reviews (on the web at app.curivanta.com; apps for Android and iPhone are coming soon).</p>
 
             <H>How to ask</H>
             <ol style={list}>
