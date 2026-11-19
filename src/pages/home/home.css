@@ -481,3 +481,9 @@
 .cvh .h-prose blockquote { margin-left:0; border-left:4px solid var(--accent); padding:4px 0 4px 18px; color:var(--ink2); font-style:italic; }
 .cvh .h-prose code { font-family:var(--mono); font-size:.88em; background:var(--soft); padding:2px 6px; border-radius:6px; }
 .cvh .h-prose hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+.cvh .h-table { overflow-x:auto; }
+.cvh .h-prose table { width:100%; border-collapse:collapse; font-size:16.5px; background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+.cvh .h-prose th, .cvh .h-prose td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); }
+.cvh .h-prose th { font-size:13px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink3); background:var(--soft); }
+.cvh .h-prose td:last-child, .cvh .h-prose th:last-child { text-align:right; }
+.cvh .h-prose tr:last-child td { border-bottom:0; font-weight:700; }

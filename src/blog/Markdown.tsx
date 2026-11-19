@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-// A small Markdown reader for blog articles: ## and ### headings, paragraphs, - and 1. lists, > quotes, ---,
+// A small Markdown reader for blog articles: ## and ### headings, paragraphs, - and 1. lists, > quotes, ---, | tables |,
 // **bold**, *italic*, `code` and [links](url). Builds React elements (no raw HTML), so an article can't break the page.
 
 function inline(text: string, key = ''): ReactNode[] {
@@ -31,7 +31,7 @@ export function Markdown({ source }: { source: string }) {
   const lines = source.replace(/\r\n/g, '\n').split('\n');
   let i = 0;
   const isList = (l: string) => /^\s*([-*]|\d+\.)\s+/.test(l);
-  const special = (l: string) => /^(#{2,4})\s/.test(l) || isList(l) || /^>\s?/.test(l) || /^---+\s*$/.test(l);
+  const special = (l: string) => /^(#{2,4})\s/.test(l) || /^\|/.test(l) || isList(l) || /^>\s?/.test(l) || /^---+\s*$/.test(l);
   while (i < lines.length) {
     const line = lines[i];
     const k = `b${i}`;
@@ -43,6 +43,19 @@ export function Markdown({ source }: { source: string }) {
       i++; continue;
     }
     if (/^---+\s*$/.test(line)) { blocks.push(<hr key={k} />); i++; continue; }
+    if (/^\|/.test(line)) {
+      const rows: string[][] = [];
+      while (i < lines.length && /^\|/.test(lines[i])) {
+        const cells = lines[i++].trim().replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+        if (!cells.every(c => /^:?-+:?$/.test(c))) rows.push(cells);
+      }
+      const [head, ...body] = rows;
+      blocks.push(<div className="h-table" key={k}><table>
+        <thead><tr>{head.map((c, j) => <th key={j}>{inline(c, `${k}h${j}`)}</th>)}</tr></thead>
+        <tbody>{body.map((r, n) => <tr key={n}>{r.map((c, j) => <td key={j}>{inline(c, `${k}-${n}-${j}`)}</td>)}</tr>)}</tbody>
+      </table></div>);
+      continue;
+    }
     if (/^>\s?/.test(line)) {
       const q: string[] = [];
       while (i < lines.length && /^>\s?/.test(lines[i])) q.push(lines[i++].replace(/^>\s?/, ''));

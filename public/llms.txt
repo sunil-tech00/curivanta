@@ -30,6 +30,7 @@
 - [Home](https://curivanta.com/): product, pricing and FAQ
 - [Curivanta for Square](https://curivanta.com/square): booking into Square Appointments, Square FAQ
 - [Curivanta for SalonUltimate](https://curivanta.com/salonultimate): booking into SalonUltimate, SalonUltimate FAQ
+- [Blog](https://curivanta.com/blog): advice for salon owners, starting with [How many clients does your salon lose to missed calls?](https://curivanta.com/blog/missed-calls-salon)
 - [Get started](https://app.curivanta.com/start)
 - [Privacy](https://curivanta.com/privacy) and [Terms](https://curivanta.com/terms)
 
