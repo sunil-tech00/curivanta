@@ -21,7 +21,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
     tab: 'Missed-call text-back', hint: 'A text within a minute',
     title: 'Missed-call text-back',
     lede: 'The moment a call goes unanswered, the caller gets a friendly text from your salon. Most people would rather text than leave a voicemail anyway.',
-    ticks: ['A text within about a minute, every missed call, day or night', 'Callers hear your greeting first: edit the words or record it in your own voice', 'Voicemails arrive as text, and every call is logged'],
+    ticks: ['A text within about a minute, every missed call, day or night', 'Callers hear your greeting first: edit the words or record it in your own voice', 'Voicemails arrive as text you can read and audio you can play, and every call is logged'],
     mini: (<><div className="h">The text a caller gets</div>
       <div className="h-bub us">Hi, this is Glow Studio. Sorry we missed your call! How can we help? You can reply here to book.<small>Sent 38 seconds after the call</small></div>
       <div className="h-bub them">Do you do balayage?<small>Client</small></div></>),
@@ -30,7 +30,7 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
     tab: 'AI texting & booking', hint: 'Answers and books',
     title: 'AI texting & booking',
     lede: "Clients text the questions they'd otherwise call with. The AI answers from your own menu, prices and policies, and books real open times, day or night.",
-    ticks: ['Learns your services, prices and policies from your website, and your hours, holidays included, from your Google profile', 'Only offers times that are actually free, and confirms before booking', 'On SalonUltimate or Square, it books straight in, solo or salon. Otherwise it sends your own booking link', 'Speaks Spanish too: clients who text in Spanish get answered in Spanish', 'Teach it once: save one of your replies with a tap and it answers that question next time', 'Complaints and anything unclear go to you, with the whole thread'],
+    ticks: ['Learns your services, prices and policies from your website, and your hours, holidays included, from your Google profile', 'Only offers times that are actually free, and confirms before booking', 'On SalonUltimate or Square, it books straight in, solo or salon. Otherwise it sends your own booking link', 'Clients can move or cancel their own appointment by text, if you switch it on (never within 24 hours; you get an alert each time)', 'Speaks Spanish too: clients who text in Spanish get answered in Spanish', 'Teach it once: save one of your replies with a tap and it answers that question next time', 'Complaints and anything unclear go to you, with the whole thread'],
     mini: (<><div className="h">Straight into your calendar</div>
       <div className="h-bub them">Can I get a trim and blowout this weekend?<small>Client</small></div>
       <div className="h-bub us">Yes! Saturday at 10:00 or 11:30 with Maya. Which works?<small>Live openings</small></div>
@@ -47,7 +47,8 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
       'Knows returning clients by name and offers their usual',
       'Callers can ask for a person or leave a voicemail any time',
       'Switches to Spanish when the caller speaks Spanish',
-      'You see every call it took, with what was said',
+      'On a bad line, it offers to finish by text and picks up right where the call left off',
+      'Every call it took is in your app: play the recording or read what was said',
     ],
     mini: (<><div className="h">On the phone</div>
       <div className="h-bub us">Hi Dana, thanks for calling Glow Studio. This is the salon's automated assistant. How can I help?<small>Assistant</small></div>
@@ -69,19 +70,19 @@ const JOBS: Record<string, { tab: string; hint: string } & Job> = {
         <div className="h-acts"><span className="a-ok">Approve and post</span><span className="a-ed">Edit first</span></div></div></>),
   },
   phone: {
-    tab: 'Phone', hint: 'Calls ring your app first',
+    tab: 'Phone', hint: 'Calls, hold and transfer',
     title: 'Phone',
     lede: 'Salons keep their number and forward the calls they miss. Solo stylists get a separate business number, so your personal cell stays private.',
-    ticks: ['Make and take calls in the app; clients see your business number, not your cell', 'Solo: calls ring your own cell during your hours (press 1 to answer)', 'Salons: calls ring whoever has the app open, and your salon name shows on caller ID'],
+    ticks: ['Make and take calls in the app; clients see your business number, not your cell', 'Solo: calls ring your own cell during your hours (press 1 to answer)', 'Salons: calls you forward go straight to your greeting and text-back, since your salon phone already rang. Calls to your Curivanta number ring whoever has the app open', 'Put a call on hold so anyone can pick it up, or transfer it to a teammate or a cell', 'Your salon name shows on caller ID'],
     mini: (<><div className="h">Incoming call</div>
-      <div className="h-bub them">Ringing your app · Dana L.<small>20 seconds, then the assistant (Pro) or greeting and text-back</small></div>
+      <div className="h-bub them">Ringing your app · Dana L.<small>A call to your Curivanta number: 20 seconds, then the assistant (Pro) or greeting and text-back</small></div>
       <div className="h-bub us">Answered by Maya<small>3 min 12 s</small></div></>),
   },
   app: {
     tab: 'Owner app', hint: 'Inbox, team, alerts',
     title: 'Owner app',
     lede: 'One inbox for every conversation, call and review. Add your front desk so they can reply too, and get a phone alert when something needs you.',
-    ticks: ['One inbox for texts, calls, voicemails and reviews', 'Phone alerts for bookings, voicemails and hand-offs, quiet from 9 PM to 8 AM', 'Team logins for salons: front desk sees clients and messages, not billing', 'Add it to your Home Screen. Sign in with an email link, no password'],
+    ticks: ['One inbox for texts, calls, voicemails and reviews', 'Phone alerts for bookings, voicemails and hand-offs, quiet from 9 PM to 8 AM', 'Team logins for salons: front desk sees clients and messages, not billing', 'A morning email with yesterday at a glance: calls, bookings, reviews and who needs you', 'Add it to your Home Screen today. Sign in with an email link, no password', 'Coming soon: Curivanta apps for iPhone and Android that ring like a real call, even when closed', 'Stuck? Ask Help in the app any time, and a real person steps in when it matters'],
     mini: (<><div className="h">Alert on your phone</div>
       <div className="h-bub them"><b>Needs you:</b> Kim asked about moving a color appointment.<small>Curivanta · now</small></div>
       <div className="h-bub them"><b>Booked by text:</b> Sat 10:00, Women's cut with Maya.<small>Curivanta · 12 min ago</small></div></>),
@@ -634,7 +635,7 @@ const HomePreview = () => {
                   <li>Answers in English or Spanish</li>
                   <li>Review requests: 3 a day (change it any time)</li>
                   <li>AI drafts Google review responses for you to approve</li>
-                  <li>Owner app with phone alerts</li>
+                  <li>Owner app with phone alerts and a morning summary email</li>
                   <li>Move up to Light or Pro any time</li>
                 </ul>
                 <a className="h-btn h-btn-ghost" href={START_STARTER_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_starter">Start with Starter</a>
@@ -647,11 +648,11 @@ const HomePreview = () => {
                 <div className="h-allow"><b>Includes 1,000 texts and 300 call minutes a month.</b> Need more? $10 per extra 250 texts, and $10 per extra 250 minutes. We email you when you reach 80% of any of them.</div>
                 <ul>
                   <li>Everything in Starter, except you keep your salon number: missed calls forward to Curivanta</li>
-                  <li>AI texting that books straight into SalonUltimate or Square</li>
+                  <li>AI texting that books straight into SalonUltimate or Square, and can let clients move or cancel</li>
                   <li>Review requests: 10 a day (change it any time)</li>
                   <li>AI drafts Google review responses for you to approve</li>
                   <li>Team logins: managers run the salon day to day, front desk handles clients; billing stays with you</li>
-                  <li>Call from the app; your salon name shows on caller ID</li>
+                  <li>Call from the app, put calls on hold or transfer them; your salon name shows on caller ID</li>
                   <li>Ratings and reviews by stylist</li>
                   <li>One login for several salons</li>
                   <li>Move up to Pro any time</li>
@@ -671,7 +672,8 @@ const HomePreview = () => {
                   <li>Knows returning clients and what they usually book</li>
                   <li>Takes messages, or asks you to call back</li>
                   <li>Talks with callers in English or Spanish</li>
-                  <li>Every call it takes, with what was said, in your app</li>
+                  <li>Every call it takes, recorded, with what was said, in your app</li>
+                  <li>On a bad line, it offers to finish by text</li>
                   <li>You choose when it answers: always, or only when you're closed</li>
                   <li>More texts, and review requests: 20 a day (change it any time)</li>
                 </ul>
