@@ -74,6 +74,8 @@ You already paid for those calls. The client found your number, dialed it, and c
 
 Count your missed calls for one week. Multiply by your average cut. That number is what a text-back is worth to your salon, every single month.
 
+Once those callers are booked, the next step is getting them to tell others. Read [how to get more Google reviews for your salon](/blog/salon-google-reviews).
+
 ---
 
 *Curivanta texts your missed callers back within about a minute and books them into your real calendar. Plans start at $49 a month, and the $49 setup counts toward your first month. [See plans and pricing](/#pricing).*

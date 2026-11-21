@@ -1,8 +1,7 @@
 ---
 title: How to Get More Google Reviews for Your Salon (Without Begging)
 description: Ask right after the visit, name the stylist and make it one tap. How salons get more Google reviews without begging.
-date: 2026-11-25
-draft: true
+date: 2026-11-21
 ---
 Someone looking for a new salon does two things before they call. They check how close you are, and they read your Google reviews. The star rating decides whether they call at all, and the words inside the reviews decide whether they trust you with their hair.
 
