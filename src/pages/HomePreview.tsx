@@ -630,6 +630,7 @@ const HomePreview = () => {
                 <ul>
                   <li>A separate business number, so your cell stays private</li>
                   <li>Calls ring your cell and the app during your hours</li>
+                  <li>Call clients from the app with your business number, put calls on hold or transfer them</li>
                   <li>Missed-call text-back, with voicemails as text</li>
                   <li>Your greeting in a natural female or male voice, or your own recording</li>
                   <li>AI texting that answers questions and books into SalonUltimate or Square, or sends your booking link</li>
