@@ -626,7 +626,7 @@ const HomePreview = () => {
                 <p className="h-for">For solo stylists and booth renters</p>
                 <div className="h-price">$49<small> /month</small></div>
                 <p className="h-psub">$49 to get started, counted toward your first month.</p>
-                <div className="h-allow"><b>Includes 400 texts and 300 call minutes a month.</b> Need more? $10 per extra 250 texts, and $10 per extra 250 minutes. We email you when you reach 80% of any of them.</div>
+                <div className="h-allow"><b>Includes 700 texts and call minutes a month, any mix.</b> Need more? $10 per extra 250 texts or minutes. We email you when you reach 80%.</div>
                 <ul>
                   <li>A separate business number, so your cell stays private</li>
                   <li>Calls ring your cell and the app during your hours</li>
@@ -646,7 +646,7 @@ const HomePreview = () => {
                 <p className="h-for">For salons with a team</p>
                 <div className="h-price">$99<small> /month</small></div>
                 <p className="h-psub">$49 to get started, counted toward your first month.</p>
-                <div className="h-allow"><b>Includes 1,000 texts and 300 call minutes a month.</b> Need more? $10 per extra 250 texts, and $10 per extra 250 minutes. We email you when you reach 80% of any of them.</div>
+                <div className="h-allow"><b>Includes 1,300 texts and call minutes a month, any mix, plus 30 minutes of the AI answering calls.</b> Need more? $10 per extra 250 texts or minutes. After the 30 AI minutes, $10 per 40 more, only up to a monthly limit you choose.</div>
                 <ul>
                   <li>Everything in Starter, except you keep your salon number: missed calls forward to Curivanta</li>
                   <li>AI texting that books straight into SalonUltimate or Square, and can let clients move or cancel</li>
@@ -656,6 +656,7 @@ const HomePreview = () => {
                   <li>Call from the app, put calls on hold or transfer them; your salon name shows on caller ID</li>
                   <li>Ratings and reviews by stylist</li>
                   <li>One login for several salons</li>
+                  <li>A taste of the AI answering calls: 30 minutes a month, then keep it going if you like</li>
                   <li>Move up to Pro any time</li>
                 </ul>
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_light">Start with Light</a>
@@ -665,7 +666,7 @@ const HomePreview = () => {
                 <p className="h-for">For salons that want every call answered</p>
                 <div className="h-price">$149<small> /month</small></div>
                 <p className="h-psub">$49 to get started, counted toward your first month.</p>
-                <div className="h-allow"><b>Includes 1,500 texts, 300 call minutes and 200 assistant minutes a month.</b> Need more? $10 per extra 250 texts, $10 per extra 250 minutes, and $10 per extra 50 assistant minutes. We email you when you reach 80% of any of them.</div>
+                <div className="h-allow"><b>Includes 1,800 texts and call minutes a month, any mix, plus 200 minutes of the AI answering calls.</b> Need more? $10 per extra 250 texts or minutes, and $10 per extra 50 AI minutes. We email you when you reach 80%.</div>
                 <ul>
                   <li>Everything in Light, plus:</li>
                   <li>When nobody picks up, the AI assistant answers the call</li>
@@ -735,8 +736,8 @@ const HomePreview = () => {
               <details><summary>Can I move my existing number to Curivanta?</summary><p>Not yet, but it's coming soon. For now, salons keep their number and forward the calls they miss to Curivanta, and you can undo that any time. Solo stylists get a new business number, so their personal cell stays private.</p></details>
               <details><summary>I'm a solo stylist or booth renter. Is this for me?</summary><p>Yes, that's what Starter is for: $49 a month, and the $49 setup counts toward your first month. You get a business number that rings your cell, missed-call text-back, AI texting that books into SalonUltimate or Square or sends your booking link, and review requests. You can move up to Light any time.</p></details>
               <details><summary>Does an AI answer my phone?</summary><p>On Pro, yes. When nobody can pick up, your assistant answers the call, tells the caller it's the salon's automated assistant, answers questions and books appointments, and texts a confirmation. Callers can ask for a person or leave a voicemail any time. On Starter and Light, callers hear your greeting, can leave a voicemail, and get a text right away.</p></details>
-              <details><summary>What counts as a text or a call minute?</summary><p>Texts are the messages Curivanta sends for you: replies, text-backs, confirmations and review requests. Call minutes are the time calls spend on your Curivanta number: calls you answer or make in the app (or on your cell with Starter), and calls that go to your greeting and voicemail. Calls you pick up on your own salon phone don't count. On Pro, time the AI assistant is on a call uses assistant minutes instead. Unused texts and minutes don't carry over.</p></details>
-              <details><summary>How many calls does Pro cover?</summary><p>200 minutes of the assistant on the phone each month, which is around 100 typical booking calls. Extra minutes are $10 per 50, and we let you know at 80%. You can also set it to answer only when you're closed.</p></details>
+              <details><summary>What counts as a text or a call minute?</summary><p>Texts are the messages Curivanta sends for you: replies, text-backs, confirmations and review requests. Call minutes are the time calls spend on your Curivanta number: calls you answer or make in the app (or on your cell with Starter), and calls that go to your greeting and voicemail. Calls you pick up on your own salon phone don't count. Texts and call minutes come out of one shared allowance. Time the AI assistant is on a call (Light and Pro) uses assistant minutes instead. Unused texts and minutes don't carry over.</p></details>
+              <details><summary>How many calls does Pro cover?</summary><p>200 minutes of the assistant on the phone each month, which is around 100 typical booking calls. Extra minutes are $10 per 50, and we let you know at 80%. You can also set it to answer only when you're closed. Light includes 30 minutes a month to try it.</p></details>
               <details><summary>Who gets asked for a review?</summary><p>Clients get a text after their visit asking how it went, with your Google link. They can reply 1 to 5 or leave a review. Low ratings and notes also come to you privately so you can make it right. Everyone gets the Google link, which keeps you within Google's rules. You set how many go out a day; clients are picked at random across the day, texts go out only between 9 AM and 8 PM, and nobody is asked more than once in 90 days.</p></details>
               <details><summary>What if a client asks something the AI can't handle?</summary><p>Refunds, complaints and anything unclear get handed to you with the full conversation. The AI never guesses and never makes up a booking. Once you reply to a client yourself, it stays out of that conversation for the rest of the day.</p></details>
               <details><summary>Why does texting take a few days to go live?</summary><p>US phone carriers have to approve every business that texts customers (it's called A2P 10DLC registration). We prepare and submit the paperwork for you. Your monthly charge doesn't start until approval comes through.</p></details>

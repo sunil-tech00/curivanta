@@ -20,10 +20,10 @@
 
 ## Pricing (monthly, setup $49 counted toward the first month; the monthly plan starts when texting goes live)
 
-- Starter, $49/month: for solo stylists and booth renters; 400 texts and 300 call minutes.
-- Light, $99/month: for salons with a team; 1,000 texts and 300 call minutes; team sign-ins.
-- Pro, $149/month: everything in Light plus AI phone answering; 1,500 texts, 300 call minutes and 200 assistant minutes.
-- Extra: $10 per 250 texts or minutes; $10 per 50 assistant minutes. Month to month, cancel any time.
+- Starter, $49/month: for solo stylists and booth renters; 700 texts and call minutes (shared, any mix).
+- Light, $99/month: for salons with a team; 1,300 texts and call minutes; team sign-ins; 30 minutes a month of AI phone answering, then $10 per 40 up to a monthly limit the owner chooses.
+- Pro, $149/month: everything in Light plus AI phone answering; 1,800 texts and call minutes and 200 assistant minutes.
+- Extra: $10 per 250 texts or minutes; $10 per 50 assistant minutes on Pro. Month to month, cancel any time.
 
 ## Pages
 
