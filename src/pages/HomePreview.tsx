@@ -657,7 +657,7 @@ const HomePreview = () => {
                   <li>Call from the app, put calls on hold or transfer them; your salon name shows on caller ID</li>
                   <li>Ratings and reviews by stylist</li>
                   <li>One login for several salons</li>
-                  <li>A taste of the AI answering calls: 30 minutes a month, then keep it going if you like</li>
+                  <li>Try the AI answering calls: 30 minutes a month of the same AI as Pro, then keep it going if you like</li>
                   <li>Move up to Pro any time</li>
                 </ul>
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_light">Start with Light</a>
@@ -670,15 +670,15 @@ const HomePreview = () => {
                 <div className="h-allow"><b>Includes 1,800 texts and call minutes a month, any mix, plus 200 minutes of the AI answering calls.</b> Need more? $10 per extra 250 texts or minutes, and $10 per extra 50 AI minutes. We email you when you reach 80%.</div>
                 <ul>
                   <li>Everything in Light, plus:</li>
-                  <li>When nobody picks up, the AI assistant answers the call</li>
-                  <li>Answers questions, books appointments and texts a confirmation</li>
+                  <li><b>The AI answers every call nobody picks up, all month:</b> 200 minutes, about 100 calls (Light: 30)</li>
+                  <li><b>Extra AI minutes for less, with no limit to manage:</b> $10 per 50 (Light: $10 per 40, up to a cap)</li>
+                  <li>On every call it answers questions, books, moves and cancels, and texts a confirmation</li>
                   <li>Knows returning clients and what they usually book</li>
                   <li>Takes messages, or asks you to call back</li>
-                  <li>Talks with callers in English or Spanish</li>
-                  <li>Every call it takes, recorded, with what was said, in your app</li>
-                  <li>On a bad line, it offers to finish by text</li>
+                  <li>Talks in English or Spanish, and offers to finish by text on a bad line</li>
+                  <li>Every call recorded, with what was said, in your app</li>
                   <li>You choose when it answers: always, or only when you're closed</li>
-                  <li>More texts, and review requests: 20 a day (change it any time)</li>
+                  <li><b>500 more texts and minutes than Light,</b> and review requests: 20 a day (change it any time)</li>
                 </ul>
                 <a className="h-btn h-btn-ghost" href={START_PRO_URL} data-umami-event="cta_get_started" data-umami-event-where="pricing_pro">Start with Pro</a>
               </div>
