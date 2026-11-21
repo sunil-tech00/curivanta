@@ -73,7 +73,7 @@ export function BlogIndex() {
     <Shell where="blog">
       <section className="h-hero h-blog-hero">
         <div className="h-wrap">
-          <div style={{ maxWidth: '760px' }}>
+          <div style={{ maxWidth: '740px' }}>
             <div className="h-kicker">Blog</div>
             <h1>Notes from the front desk.</h1>
             <p className="h-sub">Plain advice for salon owners and solo stylists on missed calls, bookings, reviews and the AI tools that help, from someone who runs salons.</p>

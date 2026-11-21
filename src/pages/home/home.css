@@ -475,6 +475,7 @@
 .cvh .h-prose ol { list-style:decimal; }
 .cvh .h-prose li::marker { color:var(--accent); }
 .cvh .h-blog-hero { padding-block:56px 36px; }
+.cvh .h-blog-hero .h-sub { max-width:none; }
 .cvh .h-blog-list { padding-bottom:64px; }
 .cvh .h-prose li + li { margin-top:.4em; }
 .cvh .h-prose a { text-decoration:underline; text-underline-offset:3px; }
