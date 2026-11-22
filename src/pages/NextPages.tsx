@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { Bubbles, I, ListCard, NxFoot, NxNav, START_URL, useSamplePage, type Line } from './next/Chrome';
 import NotFound from './NotFound';
-import { DeskRow } from './next/FrontDesk';
+import { Anywhere } from './next/FrontDesk';
 import './next/next.css';
 
 // Sample product and "who it's for" pages (2026-11-21), one template: hero with a product card, feature
@@ -125,13 +125,13 @@ export const PAGES: Record<string, PageDef> = {
     title: 'The salon owner app: calls, bookings and reviews on one screen | Curivanta',
     h1: 'Know how your salon did, any time.',
     lede: 'Calls, bookings and reviews on one screen, on your phone or computer. What needs you is at the top, and a short email lands every morning.',
-    art: { img: '/shots/app-home.webp', frame: 'browser', alt: 'Curivanta Home with a sample salon' },
+    art: { head: 'Today at Glow Studio', tiles: [['21', 'calls'], ['7', 'missed, all texted back'], ['6', 'booked · $540'], ['2', 'new Google reviews']] },
     rows: [
       { h: 'Home: today, this week or this month', p: 'Every number compared with the same stretch before, a chart that follows the dates you pick, and each stylist\'s ratings and reviews.',
         points: ['"Needs you" first: conversations waiting and low ratings', '"Since you started": what Curivanta has done for you so far'],
         art: { head: 'Needs you', list: [['amber', 'Kim B. asked for a call back', '12m'], ['amber', 'Refund question from Lena', '38m'], ['red', 'Rated 3 with a note', '1h']] } },
       { h: 'One page per client', p: 'Every call, text, visit and review for each client, in order. Play a voicemail or a call recording, read the transcript, and reply from the same page.',
-        art: { img: '/shots/app-client.webp', frame: 'phone', alt: 'A client page in the Curivanta app' } },
+        art: { head: 'Sarah L. · 9 visits', list: [['blue', 'Texted: "Anything Saturday?"', '8:47 PM'], ['green', 'Booked Sat 10:00, root touch-up', '8:49 PM'], ['amber', 'Rated Jess 5 ★', 'Oct 4'], ['gray', 'Missed call, texted back', 'Sep 12']] } },
       { h: 'One notification, not five', p: 'Only what needs you, on your phone: hand-offs, voicemails, new reviews and bookings. Quiet from 9 PM to 8 AM. Plus a morning email with yesterday\'s numbers.',
         points: ['Team logins: managers run the day, front desk handles clients', 'Billing and plan settings stay with you', 'One login for several salons'],
         art: { head: 'Morning email · 8:00 AM', tiles: [['14', 'calls, ▲ 3'], ['5', 'booked, ▲ 2'], ['4', 'reviews'], ['4.9 ★', 'average rating']] } },
@@ -142,7 +142,7 @@ export const PAGES: Record<string, PageDef> = {
       ['Can my front desk use it?', 'Yes, on Light and Pro. Front-desk logins see clients, messages, calls and reviews, but not usage, billing or settings. Replies show who sent them.'],
     ],
     next: [['/new/reviews', 'Reviews'], ['/new/phone', 'Phone']],
-    extra: <section className="nx-wrap nx-anywhere"><div className="nx-anywhere-in"><DeskRow /></div></section>,
+    extra: <Anywhere />,
   },
 
   salons: {
@@ -220,6 +220,8 @@ export const ProductPage = ({ page }: { page: PageDef }) => {
           </div>
         </section>
 
+        {page.extra}
+
         <section className="nx-sec">
           <div className="nx-wrap">
             {page.rows.map((r, i) => (
@@ -234,8 +236,6 @@ export const ProductPage = ({ page }: { page: PageDef }) => {
             ))}
           </div>
         </section>
-
-        {page.extra}
 
         <section className="nx-wrap">
           <div className="nx-facts">
