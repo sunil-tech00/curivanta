@@ -505,3 +505,18 @@
   .nx .nx-handset img { border-radius:23px; }
   .nx .nx-shotnotes { grid-template-columns:1fr; gap:18px; margin-top:32px; }
 }
+
+/* ===== use it anywhere (Weave-style panel) ===== */
+.nx .nx-anywhere { margin-top:24px; margin-bottom:24px; }
+.nx .nx-anywhere-in { background:linear-gradient(180deg,#e3f1ef,#eef6f5); border-radius:36px; padding:72px 56px 64px; }
+.dark .nx .nx-anywhere-in { background:linear-gradient(180deg,#10282a,#0f1f25); }
+.nx .nx-anywhere .nx-head h2 { font-size:clamp(34px,4.4vw,54px); font-weight:800; letter-spacing:-.035em; }
+.nx .nx-devices { display:grid; grid-template-columns:repeat(3,1fr); gap:40px; max-width:1060px; margin:96px auto 0; }
+.nx .nx-dev-ic { display:block; color:var(--ink); margin-bottom:16px; }
+.nx .nx-dev-ic svg { width:56px; height:56px; }
+.nx .nx-devices h3 { font-size:22px; margin-bottom:10px; }
+.nx .nx-devices p { color:var(--ink2); font-size:16.5px; }
+@media (max-width:860px) {
+  .nx .nx-anywhere-in { padding:44px 18px 40px; border-radius:26px; }
+  .nx .nx-devices { grid-template-columns:1fr; gap:30px; margin-top:40px; }
+}

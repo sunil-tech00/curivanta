@@ -23,6 +23,9 @@ export const I = {
   scissors: <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3" fill="none" stroke="currentColor" strokeWidth="2" /><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M8.5 7.5L20 18M8.5 16.5L20 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>,
   tag: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4a1 1 0 011-1h8l9 9-9 9z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><circle cx="8" cy="8" r="1.6" fill="currentColor" /></svg>,
   bolt: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="currentColor" /></svg>,
+  monitor: <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="7" width="40" height="27" rx="3" fill="none" stroke="currentColor" strokeWidth="2.5" /><path d="M4 28h40M19 34l-2 7h14l-2-7M14 41h20" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" /></svg>,
+  mobile: <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="13" y="3" width="22" height="42" rx="5" fill="none" stroke="currentColor" strokeWidth="2.5" /><path d="M20 8h8M21 39h6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" /></svg>,
+  desk: <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="16" cy="13" r="5" fill="none" stroke="currentColor" strokeWidth="2.5" /><circle cx="33" cy="13" r="5" fill="none" stroke="currentColor" strokeWidth="2.5" /><path d="M7 29c1.5-5 5-7.5 9-7.5s7.5 2.5 9 7.5M24 29c1.5-5 5-7.5 9-7.5s7.5 2.5 9 7.5M3 33h42M8 33v11M40 33v11" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" /></svg>,
   arrow: <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>,
 };
 
