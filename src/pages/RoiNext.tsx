@@ -100,6 +100,7 @@ const RoiNext = () => {
             <summary>How we worked it out</summary>
             <p>{v.calls} missed calls a week × {v.book}% who wanted to book × 4.33 weeks = <b>{Math.round(r.lostBookings)} lost bookings a month</b>. Times your {money(v.ticket)} average ticket = <b>{money(r.lost)}</b>.</p>
             <p>Winning back {v.back}% of those by text = {r.wonBookings.toFixed(1)} bookings × {money(v.ticket)} = <b>{money(r.won)} a month</b>.{v.visits > 1 && <> Over a year, with {v.visits} visits from each client: {money(r.won)} × 12 × {v.visits} = <b>{money(r.wonYear)}</b>.</>}</p>
+            <p>Visits a year: a new client who comes back is worth more than one visit. Leave it at 1 to count only the first booking; raise it to how often a regular comes in (every 6 weeks is about 8 a year).</p>
             <p>A plan pays for itself when the bookings it wins back cover its price: plan price ÷ average ticket, rounded up. We don't add your rebooking regulars, tips or retail, so the real number is usually higher.</p>
           </details>
         </section>

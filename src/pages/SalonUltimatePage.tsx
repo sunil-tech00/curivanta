@@ -1,4 +1,5 @@
 import IntegrationPage, { type Integration } from './IntegrationPage';
+import { useIsNew } from './next/Chrome';
 
 // curivanta.com/salonultimate. Facts from curivanta-app: app/su_invites.py (receptionist invite accepted
 // automatically), app/online_booking.py (BookedBy openings, franchise store matching), app/booking.py, app/visits.py.
@@ -35,5 +36,14 @@ const SALONULTIMATE: Integration = {
   other: { to: '/square', label: 'Square' },
 };
 
-const SalonUltimatePage = () => <IntegrationPage page={SALONULTIMATE} />;
+// The /new preview's wording (2026-11-22); the live page keeps its wording until the switch-over.
+const fix = (s: string) => s.replace('texts back every missed call', 'texts back the calls you miss').replace('and every caller gets a text', 'and callers get a text');
+const SALONULTIMATE_NEW: Integration = {
+  ...SALONULTIMATE,
+  sub: fix(SALONULTIMATE.sub),
+  faq: SALONULTIMATE.faq.map(f => ({ ...f, a: fix(f.a) })),
+  other: { to: '/new/square', label: 'Square' },
+};
+
+const SalonUltimatePage = () => <IntegrationPage page={useIsNew() ? SALONULTIMATE_NEW : SALONULTIMATE} />;
 export default SalonUltimatePage;

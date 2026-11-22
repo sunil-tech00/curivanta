@@ -1,4 +1,5 @@
 import IntegrationPage, { type Integration } from './IntegrationPage';
+import { useIsNew } from './next/Chrome';
 
 // curivanta.com/square. Facts from curivanta-app: app/providers/square.py (buyer-level booking, works on Square's free
 // Appointments plan, follows the salon's online booking settings), app/visits.py (checkouts), app/reviews.py.
@@ -35,5 +36,15 @@ const SQUARE: Integration = {
   other: { to: '/salonultimate', label: 'SalonUltimate' },
 };
 
-const SquarePage = () => <IntegrationPage page={SQUARE} />;
+// The /new preview's wording (2026-11-22): no "every", and a detail of its own (free plan, sign-in connect). The live
+// page keeps its wording until the switch-over.
+const fix = (s: string) => s.replace('texts back every missed call', 'texts back the calls you miss').replace('and every caller gets a text', 'and callers get a text');
+const SQUARE_NEW: Integration = {
+  ...SQUARE,
+  sub: fix(SQUARE.sub).replace('Every Square checkout', "It works on Square's free Appointments plan, and you connect it by signing in to Square: no password to share. Every Square checkout"),
+  faq: SQUARE.faq.map(f => ({ ...f, a: fix(f.a) })),
+  other: { to: '/new/salonultimate', label: 'SalonUltimate' },
+};
+
+const SquarePage = () => <IntegrationPage page={useIsNew() ? SQUARE_NEW : SQUARE} />;
 export default SquarePage;

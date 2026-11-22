@@ -84,6 +84,7 @@ const JOURNEY: { step: string; title: string; text: string; card: Line[] }[] = [
   { step: 'Review request', title: 'One short text asks for a review', text: 'Every request includes your Google link, happy client or not. You set how many go out each day.', card: [{ who: 'us', t: 'Hope your visit with Maya was a hit! A quick Google review would mean the world to us.' }] },
   { step: 'Rating', title: 'She rates Maya, or tells you what went wrong', text: 'Clients can reply 1 to 5. Anything below 4, or a note, comes straight to you so you can make it right.', card: [{ who: 'them', t: '5! She was amazing' }] },
   { step: 'Google reply', title: 'Her Google review gets a thank-you', text: 'A reply is drafted in your salon\'s voice. Approve it with one tap, and it posts on Google.', card: [{ who: 'ok', t: 'New 5-star review · reply ready to approve' }] },
+  { step: 'Next visit', title: 'She texts again, and Curivanta knows her', text: 'Her name, her usual stylist and what she booked last time are already there, so booking again takes one reply.', card: [{ who: 'them', t: 'Can I get in next week?' }, { who: 'us', t: 'Hi Dana! Another cut and color with Maya? She has Thursday at 4.' }] },
 ];
 
 const FAQ = [
@@ -116,7 +117,7 @@ const HomeNext = () => {
       <main id="top">
         <section className="nx-hero">
           <div className="nx-wrap nx-hero-in">
-            <h1>Never miss another booking.</h1>
+            <h1>Your front desk, even when everyone's with a client.</h1>
             <p className="nx-beats">Missed calls texted back. Clients remembered. More 5-star reviews.</p>
             <p className="nx-lede">
               Curivanta is the front desk for salons. Its AI receptionist answers the calls you can't get to in a natural,
@@ -161,7 +162,7 @@ const HomeNext = () => {
               <div><b><Ph>23</Ph></b><span>new Google reviews</span></div>
               <div><b>4.3 → 4.5</b><span>Google rating in the first month</span></div>
             </div>
-            <p className="nx-works">Works with <Link to="/salonultimate">SalonUltimate</Link> · <Link to="/square">Square</Link> · Google · any online booking link</p>
+            <p className="nx-works">Works with <Link to="/new/salonultimate">SalonUltimate</Link> · <Link to="/new/square">Square</Link> · Google · any online booking link</p>
           </div>
         </section>
 
@@ -188,7 +189,7 @@ const HomeNext = () => {
           <div className="nx-wrap">
             <div className="nx-head">
               <h2>Follow a client through Curivanta</h2>
-              <p>From the call you missed to the 5-star review. Pick a step.</p>
+              <p>From the call you missed to her next booking. Pick a step.</p>
             </div>
             <div className="nx-steps" role="tablist">
               {JOURNEY.map((x, i) => (
@@ -211,9 +212,41 @@ const HomeNext = () => {
           </div>
         </section>
 
+        <section className="nx-sec nx-soft">
+          <div className="nx-wrap nx-easy">
+            <div>
+              <h2>Set up in about 15 minutes. No tech skills needed.</h2>
+              <p className="nx-lede">Paste one link to your salon online. Curivanta reads it and fills in the rest, so you're not typing in your menu.</p>
+              <ul className="nx-checks">
+                <li>{I.check}Your services, prices, hours and stylists come from your website or booking software</li>
+                <li>{I.check}SalonUltimate: add one email as a receptionist. Square: sign in and tap Allow</li>
+                <li>{I.check}The only things you type are your legal business name and EIN</li>
+                <li>{I.check}We register your number with the phone carriers for you</li>
+                <li>{I.check}Stop any time and pick up where you left off, then change anything later in the app</li>
+              </ul>
+            </div>
+            <div className="nx-easy-art" aria-hidden="true">
+              <div className="nx-card nx-easy-step">
+                <p className="nx-easy-n">Step 1 of 5</p>
+                <h3>Paste a link to your salon online</h3>
+                <p className="nx-easy-s">Your website, or your Square, Vagaro or Google page.</p>
+                <div className="nx-easy-in"><span>glowstudio.com</span><b>Continue</b></div>
+              </div>
+              <div className="nx-card nx-easy-found">
+                <p className="nx-easy-n">Found on your page</p>
+                <ul>
+                  <li>{I.check}<span>6 services, with prices</span></li>
+                  <li>{I.check}<span>4 stylists</span></li>
+                  <li>{I.check}<span>Hours and address</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="nx-sec">
           <div className="nx-wrap">
-            <div className="nx-head"><h2>Live in days, not weeks</h2><p>About 15 minutes of your time. We handle the carrier paperwork.</p></div>
+            <div className="nx-head"><h2>Live in days, not weeks</h2><p>From sign-up to texting clients, usually within a week.</p></div>
             <ol className="nx-timeline">
               <li><small>Today · 15 minutes</small><h3>Sign up and paste one link</h3><p>Your website or booking page. We fill in your services, hours and stylists, and connect your booking software.</p></li>
               <li><small>Same day</small><h3>Your number works for calls</h3><p>Answer in the app, voicemails arrive as text. Salons forward the calls they miss.</p></li>
@@ -240,7 +273,7 @@ const HomeNext = () => {
             <div className="nx-prices">
               <div className="nx-price"><h3>Starter</h3><p className="nx-for">For solo stylists</p><div className="nx-amt">$49<small>/month</small></div><p>Your own business number, text-back, booking by text and review requests.</p><a className="nx-btn nx-btn-ghost" href={START_URL + '?plan=starter'}>Start with Starter</a></div>
               <div className="nx-price main"><span className="nx-tag">Most salons</span><h3>Light</h3><p className="nx-for">For salons with a team</p><div className="nx-amt">$99<small>/month</small></div><p>Keep your salon number. Team logins, ratings by stylist, and 30 minutes a month of calls answered for you.</p><a className="nx-btn" href={START_URL}>Start with Light</a></div>
-              <div className="nx-price"><h3>Pro</h3><p className="nx-for">Every call answered</p><div className="nx-amt">$149<small>/month</small></div><p>Everything in Light, and calls nobody picks up are answered all month.</p><a className="nx-btn nx-btn-ghost" href={START_URL + '?plan=pro'}>Start with Pro</a></div>
+              <div className="nx-price"><h3>Pro</h3><p className="nx-for">Calls answered for you</p><div className="nx-amt">$149<small>/month</small></div><p>Everything in Light, and calls nobody picks up are answered all month.</p><a className="nx-btn nx-btn-ghost" href={START_URL + '?plan=pro'}>Start with Pro</a></div>
             </div>
             <p className="nx-center"><Link to="/new/pricing">Compare plans in detail →</Link> &nbsp;·&nbsp; <Link to="/new/roi">Will it pay for itself? →</Link></p>
           </div>

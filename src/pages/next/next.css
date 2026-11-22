@@ -60,7 +60,7 @@
 .nx .nx-hero { position:relative; padding:80px 0 0; overflow:hidden;
   background:radial-gradient(60% 55% at 15% 20%,var(--glow1),transparent 70%),radial-gradient(55% 50% at 85% 15%,var(--glow2),transparent 70%),radial-gradient(60% 50% at 50% 100%,var(--glow3),transparent 70%),var(--bg); }
 .nx .nx-hero-in { text-align:center; max-width:860px; }
-.nx .nx-hero h1 { font-size:clamp(40px,6vw,68px); font-weight:800; letter-spacing:-.035em; }
+.nx .nx-hero h1 { font-size:clamp(40px,6vw,68px); font-weight:800; letter-spacing:-.035em; text-wrap:balance; }
 .nx .nx-lede { font-size:clamp(18px,2vw,21px); color:var(--ink2); margin:22px auto 32px; max-width:36em; }
 .nx .nx-ctas { display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
 .nx .nx-fine { margin-top:18px; color:var(--ink3); font-size:14.5px; }
@@ -130,7 +130,7 @@
 .nx .nx-sec { padding:100px 0; }
 .nx .nx-sec.nx-tight { padding-top:0; }
 .nx .nx-head { text-align:center; max-width:760px; margin:0 auto 40px; }
-.nx .nx-head h2, .nx .nx-split h2, .nx .nx-results h2 { font-size:clamp(30px,3.6vw,44px); }
+.nx .nx-head h2, .nx .nx-split h2, .nx .nx-results h2, .nx .nx-easy h2 { font-size:clamp(30px,3.6vw,44px); }
 .nx .nx-head p, .nx .nx-sub { color:var(--ink2); font-size:19px; margin-top:14px; }
 
 .nx .nx-tabs { display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
@@ -287,7 +287,7 @@
 @media (max-width:520px) { .nx .nx-grid { grid-template-columns:1fr; } }
 
 /* client journey */
-.nx .nx-steps { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:6px; margin-bottom:20px; }
+.nx .nx-steps { display:grid; grid-template-columns:repeat(8,1fr); gap:6px; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:6px; margin-bottom:20px; }
 .nx .nx-steps button { font:inherit; font-size:14px; font-weight:600; color:var(--ink2); background:transparent; border:0; border-radius:13px; padding:10px 8px; cursor:pointer; text-align:left; line-height:1.25; }
 .nx .nx-steps button small { display:block; font-size:11.5px; color:var(--ink3); font-weight:600; margin-bottom:2px; }
 .nx .nx-steps button.done small { color:var(--green); }
@@ -590,3 +590,21 @@
 .nx .nx-doc p, .nx .nx-doc li { font-size:16.5px; }
 .nx .nx-doc a { text-decoration:underline; text-underline-offset:3px; }
 .nx .cvh.nx-type th, .nx .cvh.nx-type .h-post-meta, .nx .cvh.nx-type .h-crumb { text-transform:none; letter-spacing:0; font-family:inherit; }
+
+/* Setup made easy (homepage): the real first setup step, drawn, next to what the owner does. */
+.nx .nx-easy { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+.nx .nx-easy h2 { margin:0 0 12px; }
+.nx .nx-easy .nx-lede { margin:0 0 20px; text-align:left; font-size:18px; color:var(--ink2); max-width:none; }
+.nx .nx-easy-art { display:grid; gap:14px; max-width:440px; justify-self:center; width:100%; }
+.nx .nx-easy-step { padding:22px; }
+.nx .nx-easy-n { margin:0 0 6px; font-size:13px; font-weight:600; color:var(--ink3); }
+.nx .nx-easy-step h3 { margin:0 0 4px; font-size:18px; }
+.nx .nx-easy-s { margin:0 0 14px; color:var(--ink2); font-size:14px; }
+.nx .nx-easy-in { display:flex; gap:8px; align-items:center; }
+.nx .nx-easy-in span { flex:1; border:1.5px solid var(--accent); border-radius:12px; padding:11px 13px; color:var(--ink); font-size:15px; }
+.nx .nx-easy-in b { background:var(--accent); color:var(--btn-ink); border-radius:999px; padding:11px 18px; font-size:15px; }
+.nx .nx-easy-found { padding:18px 22px; margin-left:32px; }
+.nx .nx-easy-found ul { list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+.nx .nx-easy-found li { display:flex; gap:10px; align-items:center; font-size:15px; color:var(--ink); }
+.nx .nx-easy-found svg { width:18px; height:18px; color:var(--green); flex:none; }
+@media (max-width:860px) { .nx .nx-easy { grid-template-columns:1fr; gap:32px; } .nx .nx-easy-found { margin-left:16px; } }
