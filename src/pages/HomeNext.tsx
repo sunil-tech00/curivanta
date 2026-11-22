@@ -165,27 +165,6 @@ const HomeNext = () => {
           </div>
         </section>
 
-        <section className="nx-wrap nx-anywhere">
-          <div className="nx-anywhere-in">
-            <div className="nx-head">
-              <h2>Use Curivanta anywhere.</h2>
-              <p>On the front desk computer, on your phone between clients, or on the couch at night. Shown here with a sample salon.</p>
-            </div>
-            <div className="nx-shotstage">
-              <div className="nx-browser">
-                <div className="nx-browser-bar"><i /><i /><i /><span>app.curivanta.com</span></div>
-                <img src="/shots/app-home.webp" alt="Curivanta Home on a computer: this week's calls, missed calls texted back, bookings, review requests and what needs you" width={1800} height={1250} loading="lazy" />
-              </div>
-              <div className="nx-handset"><img src="/shots/app-client.webp" alt="Curivanta on a phone: a client's page with the text conversation where she booked" width={720} height={1555} loading="lazy" /></div>
-            </div>
-            <div className="nx-devices">
-              <div><span className="nx-dev-ic">{I.monitor}</span><h3>On your computer</h3><p>Open app.curivanta.com in any web browser. Big screens get more room: everything side by side, the menu on the left. Call clients right from the computer.</p></div>
-              <div><span className="nx-dev-ic">{I.mobile}</span><h3>On your phone</h3><p>The Android app rings for calls even when it's closed, and sends one notification when someone needs you. On iPhone, add it to your Home Screen. The iPhone app is on its way.</p></div>
-              <div><span className="nx-dev-ic">{I.desk}</span><h3>At the front desk</h3><p>Everyone gets their own login. Calls ring whoever has the Phone screen open, and replies show who sent them.</p></div>
-            </div>
-          </div>
-        </section>
-
         <section className="nx-sec" id="product">
           <div className="nx-wrap">
             <div className="nx-head">
