@@ -76,19 +76,19 @@ const PRODUCTS = [
   { icon: I.reply, t: 'Google review replies', to: '/new/reviews', d: 'A reply drafted for every new review, you approve.' },
   { icon: I.phone, t: 'Phone', to: '/new/phone', d: 'Call from the app with your number. Hold and transfer.' },
   { icon: I.headset, t: 'Calls answered', to: '/new/phone', d: 'On Pro, calls nobody picks up get answered and booked.', pro: true },
-  { icon: I.user, t: 'Client pages', to: '/new/owner-app', d: 'Every call, text, visit and review, per client.' },
+  { icon: I.user, t: 'Every client, remembered', to: '/new/owner-app#client-page', d: 'Every call, text, visit and review, per client.' },
   { icon: I.chart, t: 'Home and morning email', to: '/new/owner-app', d: 'How the salon did, and what needs you.' },
 ];
 
-const JOURNEY: { step: string; title: string; text: string; card: Line[] }[] = [
+const JOURNEY: { step: string; title: string; text: string; card: Line[]; link?: [string, string] }[] = [
   { step: 'Missed call', title: "You're with a client and the phone rings", text: 'Callers hear your greeting, in your words or your own voice. On Pro, the call can be answered for you instead.', card: [{ who: 'note', t: 'Missed call from Dana · 2:14 PM' }] },
   { step: 'Text back', title: 'Dana gets a text within a minute', text: "Most people would rather text than leave a voicemail. If she did leave one, it's in your app as text.", card: [{ who: 'us', t: "Hi, it's Glow Studio. Sorry we missed your call! How can we help?" }] },
-  { step: 'Booked', title: 'She books by text, into your real calendar', text: 'Only times that are really open. SalonUltimate and Square bookings go straight in; anything else gets your booking link.', card: [{ who: 'them', t: 'Saturday at 10?' }, { who: 'ok', t: 'Booked Sat 10:00 with Maya' }] },
+  { step: 'Booked', title: 'She books by text into your calendar', text: 'Only times that are really open. SalonUltimate and Square bookings go straight in; anything else gets your booking link.', card: [{ who: 'them', t: 'Saturday at 10?' }, { who: 'ok', t: 'Booked Sat 10:00 with Maya' }] },
   { step: 'Visit', title: 'She comes in and checks out as usual', text: 'Nothing changes at the desk. The checkout adds to her client page: visits, usual stylist, what she books.', card: [{ who: 'note', t: 'Checkout · cut and color with Maya · $140' }] },
   { step: 'Review request', title: 'One short text asks for a review', text: 'Every request includes your Google link, happy client or not. You set how many go out each day.', card: [{ who: 'us', t: 'Hope your visit with Maya was a hit! A quick Google review would mean the world to us.' }] },
-  { step: 'Rating', title: 'She rates Maya, or tells you what went wrong', text: 'Clients can reply 1 to 5. Anything below 4, or a note, comes straight to you so you can make it right.', card: [{ who: 'them', t: '5! She was amazing' }] },
+  { step: 'Rating', title: 'She rates her visit with Maya', text: 'Clients can reply 1 to 5. Anything below 4, or a note, comes straight to you so you can make it right.', card: [{ who: 'them', t: '5! She was amazing' }] },
   { step: 'Google reply', title: 'Her Google review gets a thank-you', text: 'A reply is drafted in your salon\'s voice. Approve it with one tap, and it posts on Google.', card: [{ who: 'ok', t: 'New 5-star review · reply ready to approve' }] },
-  { step: 'Next visit', title: 'She texts again, and Curivanta knows her', text: 'Her name, her usual stylist and what she booked last time are already there, so booking again takes one reply.', card: [{ who: 'them', t: 'Can I get in next week?' }, { who: 'us', t: 'Hi Dana! Another cut and color with Maya? She has Thursday at 4.' }] },
+  { step: 'Next visit', title: 'Curivanta remembers her', text: 'Her name, her usual stylist and what she booked last time are already there, so booking again takes one reply.', link: ['/new/owner-app#client-page', "See a client's page"], card: [{ who: 'them', t: 'Can I get in next week?' }, { who: 'us', t: 'Hi Dana! Another cut and color with Maya? She has Thursday at 4.' }] },
 ];
 
 const FAQ = [
@@ -121,7 +121,7 @@ const HomeNext = () => {
       <main id="top">
         <section className="nx-hero">
           <div className="nx-wrap nx-hero-in">
-            <h1>Your front desk, even when everyone's with a client.</h1>
+            <h1>Your front desk when everyone's with a client.</h1>
             <p className="nx-beats">Missed calls texted back. Clients remembered. More 5-star reviews.</p>
             <p className="nx-lede">
               Curivanta is the front desk for salons. Its AI receptionist answers the calls you can't get to in a natural,
@@ -177,7 +177,7 @@ const HomeNext = () => {
         <section className="nx-sec" id="product">
           <div className="nx-wrap">
             <div className="nx-head">
-              <h2>Everything your front desk does, in one app</h2>
+              <h2>Your whole front desk in one app</h2>
               <p>On your phone and your computer. Pick what you need and switch the rest off.</p>
             </div>
             <div className="nx-grid">
@@ -210,6 +210,7 @@ const HomeNext = () => {
               <div>
                 <h3>{j.title}</h3>
                 <p>{j.text}</p>
+                {j.link && <p className="nx-jlink"><Link to={j.link[0]}>{j.link[1]} →</Link></p>}
                 <div className="nx-jnav">
                   <button disabled={step === 0} onClick={() => setStep(step - 1)}>← Back</button>
                   <button disabled={step === JOURNEY.length - 1} onClick={() => setStep(step + 1)}>Next step →</button>
@@ -223,8 +224,8 @@ const HomeNext = () => {
         <section className="nx-sec nx-soft">
           <div className="nx-wrap nx-easy">
             <div>
-              <h2>Set up in about 15 minutes. No tech skills needed.</h2>
-              <p className="nx-lede">Paste your website or booking page link. Curivanta reads it and fills in the rest, so you don't have to type in your menu.</p>
+              <h2>Set up in about 15 minutes</h2>
+              <p className="nx-lede">No tech skills needed. Paste your website or booking page link. Curivanta reads it and fills in the rest, so you don't have to type in your menu.</p>
               <ul className="nx-checks">
                 <li>{I.check}Your services, prices, hours and stylists come from your website or booking software</li>
                 <li>{I.check}SalonUltimate: add one email as a receptionist. Square: sign in and tap Allow</li>
@@ -254,7 +255,7 @@ const HomeNext = () => {
 
         <section className="nx-sec">
           <div className="nx-wrap">
-            <div className="nx-head"><h2>Live in days, not weeks</h2><p>From sign-up to texting clients, usually within a week.</p></div>
+            <div className="nx-head"><h2>Live within a week</h2><p>From sign-up to texting clients, usually within a week.</p></div>
             <ol className="nx-timeline">
               <li><small>Today · 15 minutes</small><h3>Sign up and paste one link</h3><p>Your website or booking page. We fill in your services, hours and stylists, and connect your booking software.</p></li>
               <li><small>Same day</small><h3>Your number works for calls</h3><p>Answer in the app, voicemails arrive as text. Salons forward the calls they miss.</p></li>
@@ -282,7 +283,7 @@ const HomeNext = () => {
 
         <section className="nx-sec" id="pricing">
           <div className="nx-wrap">
-            <div className="nx-head"><h2>Simple plans. Prices right here.</h2><p>Per location, month to month. $49 to get started, credited to your first month.</p></div>
+            <div className="nx-head"><h2>Simple plans with clear prices</h2><p>Per location, month to month. $49 to get started, credited to your first month.</p></div>
             <div className="nx-prices">
               <div className="nx-price"><h3>Starter</h3><p className="nx-for">For solo stylists</p><div className="nx-amt">$49<small>/month</small></div><p>Your own business number, text-back, booking by text and review requests.</p><a className="nx-btn nx-btn-ghost" href={START_URL + '?plan=starter'}>Start with Starter</a></div>
               <div className="nx-price main"><span className="nx-tag">Most salons</span><h3>Light</h3><p className="nx-for">For salons with a team</p><div className="nx-amt">$99<small>/month</small></div><p>Keep your salon number. Team logins, ratings by stylist, and 30 minutes a month of calls answered for you.</p><a className="nx-btn" href={START_URL}>Start with Light</a></div>

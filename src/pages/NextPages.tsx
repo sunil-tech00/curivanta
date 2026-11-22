@@ -2,14 +2,15 @@ import { useParams, Link } from 'react-router-dom';
 import { CallCard, Bubbles, I, ListCard, NxFoot, NxNav, START_URL, useSamplePage, type Line, type Said } from './next/Chrome';
 import NotFound from './NotFound';
 import { Anywhere } from './next/FrontDesk';
+import ClientCard from './next/ClientCard';
 import './next/next.css';
 
 // Sample product and "who it's for" pages (2026-11-21), one template: hero with a product card, feature
 // rows that alternate sides, a strip of smaller facts, questions, and the closing ask. Served at
 // /new/<slug>, noindex. Facts follow curivanta-app (CLAUDE.md) and the current homepage FAQ.
 
-type Art = { call: Said[]; head: string; sub: string; done?: string; ended?: string } | { img: string; frame: 'browser' | 'phone'; alt: string } | { chat: Line[]; head?: string } | { list: [string, string, string][]; head: string } | { tiles: [string, string][]; head: string };
-type Row = { h: string; p: string; points?: string[]; art: Art };
+type Art = { client: true } | { call: Said[]; head: string; sub: string; done?: string; ended?: string } | { img: string; frame: 'browser' | 'phone'; alt: string } | { chat: Line[]; head?: string } | { list: [string, string, string][]; head: string } | { tiles: [string, string][]; head: string };
+type Row = { h: string; p: string; points?: string[]; note?: string; id?: string; art: Art };
 export type PageDef = {
   title: string; h1: string; lede: string; plan?: string; art: Art;
   rows: Row[]; facts: [JSX.Element, string, string][]; faq: [string, string][];
@@ -18,6 +19,7 @@ export type PageDef = {
 };
 
 const ArtCard = ({ art }: { art: Art }) => {
+  if ('client' in art) return <ClientCard />;
   if ('call' in art) return <CallCard head={art.head} sub={art.sub} said={art.call} done={art.done} ended={art.ended} />;
   if ('img' in art) return art.frame === 'browser'
     ? <div className="nx-browser"><div className="nx-browser-bar"><i /><i /><i /><span>app.curivanta.com</span></div><img src={art.img} alt={art.alt} /></div>
@@ -134,8 +136,10 @@ export const PAGES: Record<string, PageDef> = {
       { h: 'Home: today, this week or this month', p: 'Every number compared with the same stretch before, a chart that follows the dates you pick, and each stylist\'s ratings and reviews.',
         points: ['"Needs you" first: conversations waiting and low ratings', '"Since you started": what Curivanta has done for you so far'],
         art: { head: 'Needs you', list: [['amber', 'Kim B. asked for a call back', '12m'], ['amber', 'Refund question from Lena', '38m'], ['red', 'Rated 3 with a note', '1h']] } },
-      { h: 'One page per client', p: 'Every call, text, visit and review for each client, in order. Play a voicemail or a call recording, read the transcript, and reply from the same page.',
-        art: { head: 'Sarah L. · 9 visits', list: [['blue', 'Texted: "Anything Saturday?"', '8:47 PM'], ['green', 'Booked Sat 10:00, root touch-up', '8:49 PM'], ['amber', 'Rated Jess 5 ★', 'Oct 4'], ['gray', 'Missed call, texted back', 'Sep 12']] } },
+      { h: 'Every client, remembered', id: 'client-page', p: 'Most salons keep these in separate places: texts on one phone, reviews in Google, bookings in the calendar. Curivanta puts each client\'s whole story on one page, so you and the AI both know who you\'re talking to.',
+        points: ['One timeline: calls, voicemails, texts, visits, review requests and Google reviews, in order', 'The basics at a glance: visits, usual stylist, next visit', 'Google reviews matched to the client, with your reply', 'Reply or call from the same page. Your salon number shows, not your cell'],
+        note: 'This is also why the AI can say "another root touch-up with Jess, like last time?" It reads the same history you do.',
+        art: { client: true } },
       { h: 'One notification, not five', p: 'Only what needs you, on your phone: hand-offs, voicemails, new reviews and bookings. Quiet from 9 PM to 8 AM. Plus a morning email with yesterday\'s numbers.',
         points: ['Team logins: managers run the day, front desk handles clients', 'Billing and plan settings stay with you', 'One login for several salons'],
         art: { head: 'Morning email · 8:00 AM', tiles: [['14', 'calls, ▲ 3'], ['5', 'booked, ▲ 2'], ['4', 'reviews'], ['4.9 ★', 'average rating']] } },
@@ -229,11 +233,12 @@ export const ProductPage = ({ page }: { page: PageDef }) => {
         <section className="nx-sec">
           <div className="nx-wrap">
             {page.rows.map((r, i) => (
-              <div className={'nx-frow' + (i % 2 ? ' flip' : '')} key={r.h}>
+              <div className={'nx-frow' + (i % 2 ? ' flip' : '')} key={r.h} id={r.id}>
                 <div>
                   <h2>{r.h}</h2>
                   <p>{r.p}</p>
                   {r.points && <ul className="nx-checks">{r.points.map(p => <li key={p}>{I.check}{p}</li>)}</ul>}
+                  {r.note && <p className="nx-frow-note">{r.note}</p>}
                 </div>
                 <div className="nx-frow-art"><ArtCard art={r.art} /></div>
               </div>

@@ -44,7 +44,11 @@ export const useSamplePage = (title: string) => {
 // Terms, kept the previous page's scroll). A link to a #section still goes to that section.
 const useTopOnNewPage = () => {
   const { pathname, hash } = useLocation();
-  useEffect(() => { if (!hash) window.scrollTo(0, 0); }, [pathname, hash]);
+  useEffect(() => {
+    if (!hash) { window.scrollTo(0, 0); return; }
+    const t = setTimeout(() => document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView(), 60);
+    return () => clearTimeout(t);
+  }, [pathname, hash]);
 };
 
 export const NxNav = () => { useTopOnNewPage(); return (
