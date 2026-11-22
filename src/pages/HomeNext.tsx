@@ -132,7 +132,7 @@ const HomeNext = () => {
               <a className="nx-btn" href={START_URL}>Get started</a>
               <Link className="nx-btn nx-btn-ghost" to="/new/roi">See what missed calls cost you</Link>
             </div>
-            <p className="nx-hear">Hear it answer a call: <a href="#demo-line">call our demo salon</a></p>
+            <p className="nx-hear">Hear it answer a call: <a href="tel:+19495231889">call our demo salon at (949) 523-1889</a></p>
             <p className="nx-fine">From $49/month · AI call answering on Light and Pro · Set up in about 15 minutes · No contract</p>
           </div>
 
@@ -275,7 +275,7 @@ const HomeNext = () => {
             <div className="nx-try" id="demo-line">
               <p className="nx-try-k">Hear it for yourself</p>
               <p className="nx-try-h">Call our demo salon</p>
-              <p className="nx-try-n"><Ph>(xxx) xxx-xxxx</Ph></p>
+              <p className="nx-try-n"><a href="tel:+19495231889">(949) 523-1889</a></p>
               <p className="nx-try-s">The AI answers in its natural voice. Ask about prices or hours, or book a pretend appointment. It's our demo salon, so nothing is really booked.</p>
             </div>
           </div>

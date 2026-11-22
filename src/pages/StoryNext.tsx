@@ -1,4 +1,4 @@
-import { NxFoot, NxNav, Ph, START_URL, useSamplePage } from './next/Chrome';
+import { NxFoot, NxNav, START_URL, useSamplePage } from './next/Chrome';
 import './next/next.css';
 
 // Sample "Our story" page (/new/story, 2026-11-21). The founder isn't named or pictured on the site (2026-11-22); the quote and
@@ -28,7 +28,7 @@ const StoryNext = () => {
             <div className="nx-try light" id="demo-line">
               <p className="nx-try-k">Hear it for yourself</p>
               <p className="nx-try-h">Call our demo salon</p>
-              <p className="nx-try-n"><Ph>(xxx) xxx-xxxx</Ph></p>
+              <p className="nx-try-n"><a href="tel:+19495231889">(949) 523-1889</a></p>
               <p className="nx-try-s">The AI answers in its natural voice. Ask about prices or hours, or book a pretend appointment. It's our demo salon, so nothing is really booked.</p>
             </div>
           </div>
