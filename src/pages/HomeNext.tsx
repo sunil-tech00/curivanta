@@ -160,13 +160,15 @@ const HomeNext = () => {
 
         <section className="nx-statband">
           <div className="nx-wrap">
-            {/* Real totals from the two pilot salons, Nov 14-22, 2026 (prod query, demo salon left out). */}
-            <p className="nx-statband-h">In our two pilot salons, the first 8 days live</p>
+            {/* Real totals from the two pilot salons, Nov 14-22, 2026 (their first week) (prod query, demo salon left out). */}
+            <div className="nx-statpanel">
+            <p className="nx-statband-h">In our two pilot salons, the first week live</p>
             <div className="nx-statcards">
               <div><b>17</b><span>missed calls texted back</span></div>
               <div><b>23</b><span>calls answered by the AI</span></div>
               <div><b>11</b><span>new Google reviews, all 5 stars</span></div>
-              <div><b>4.4 → 4.5</b><span>Google rating in 8 days</span></div>
+              <div><b>4.4 → 4.5</b><span>Google rating in one week</span></div>
+            </div>
             </div>
             <p className="nx-works">Works with <Link to="/new/salonultimate">SalonUltimate</Link> · <Link to="/new/square">Square</Link> · Google · any online booking link</p>
           </div>

@@ -261,14 +261,17 @@
 
 /* numbers right under the hero */
 .nx .nx-statband { padding:8px 0 56px; }
-.nx .nx-statband-h { text-align:center; color:var(--ink3); font-size:14px; font-weight:600; margin-bottom:16px; }
-.nx .nx-statcards { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-.nx .nx-statcards > div { border:1px solid var(--line); border-radius:18px; padding:22px; background:var(--card); }
-.nx .nx-statcards b { display:block; font-size:clamp(30px,3.4vw,42px); font-weight:800; letter-spacing:-.03em; }
-.nx .nx-statcards div > span { color:var(--ink2); font-size:15px; }
-.nx p.nx-works { text-align:center; margin-top:26px; color:var(--ink3); font-size:15px; border:0; }
+/* Pilot numbers (2026-11-22): one navy panel, numbers centered, thin dividers between them. */
+.nx .nx-statpanel { background:linear-gradient(120deg,#0c2350,#123a7a 55%,#1460d4); color:#fff; border-radius:28px; padding:34px 28px 38px; box-shadow:0 30px 60px -30px rgba(12,35,80,.55); }
+.nx .nx-statband-h { text-align:center; color:#b9cdf2; font-size:15px; font-weight:600; margin:0 0 22px; }
+.nx .nx-statcards { display:grid; grid-template-columns:repeat(4,1fr); }
+.nx .nx-statcards > div { text-align:center; padding:6px 18px; }
+.nx .nx-statcards > div + div { border-left:1px solid rgba(255,255,255,.16); }
+.nx .nx-statcards b { display:block; white-space:nowrap; font-size:clamp(32px,3.6vw,50px); font-weight:800; letter-spacing:-.035em; line-height:1.05; margin-bottom:8px; color:#fff; }
+.nx .nx-statcards div > span { color:#c9d8f3; font-size:15px; }
+.nx p.nx-works { text-align:center; margin-top:26px; color:var(--ink3); font-size:15px; border:0; background:none; }
 .nx p.nx-works a { color:var(--ink2); font-weight:700; }
-@media (max-width:760px) { .nx .nx-statcards { grid-template-columns:1fr 1fr; } }
+@media (max-width:760px) { .nx .nx-statcards { grid-template-columns:1fr 1fr; row-gap:24px; } .nx .nx-statcards > div:nth-child(3) { border-left:0; } }
 
 /* product cards */
 .nx .nx-grid { display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); border-radius:22px; overflow:hidden; background:var(--line); gap:1px; }
