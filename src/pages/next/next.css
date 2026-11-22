@@ -453,7 +453,6 @@
 .nx .nx-ib.salon { background:#e9e9eb; color:#000; align-self:flex-start; }
 .nx .nx-ib.me { background:#34c759; color:#fff; align-self:flex-end; }
 .nx .nx-ib + .nx-ib.me, .nx .nx-ib + .nx-ib.salon { margin-top:6px; }
-.nx .nx-ibody .nx-ib:nth-of-type(2) { animation-delay:.35s; } .nx .nx-ibody .nx-ib:nth-of-type(3) { animation-delay:.7s; } .nx .nx-ibody .nx-ib:nth-of-type(4) { animation-delay:1.05s; }
 .nx .nx-iinput { display:flex; align-items:center; gap:8px; padding:8px 12px 30px; flex:none; }
 .nx .nx-iplus { width:30px; height:30px; border-radius:50%; background:#e9e9eb; color:#8a8a8e; display:grid; place-items:center; font-size:22px; line-height:1; }
 .nx .nx-ifield { flex:1; border:1px solid #d1d1d6; border-radius:18px; padding:6px 12px; color:#b0b0b5; font-size:15px; }

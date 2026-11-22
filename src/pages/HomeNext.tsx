@@ -35,6 +35,10 @@ const DEMO: { key: string; tab: string; icon: JSX.Element; kind: 'sms' | 'call';
 
 
 
+// Each bubble appears in order, STEP seconds apart; the result note after the last one (2026-11-22: the
+// "Today 2:15 PM" line counted as a bubble in the old CSS delays, so Booking's last text showed first).
+const STEP = 0.7;
+
 const IPhone = ({ d }: { d: typeof DEMO[number] }) => (
   <div className={'nx-iphone ' + d.kind}>
     <div className="nx-iscr">
@@ -43,12 +47,12 @@ const IPhone = ({ d }: { d: typeof DEMO[number] }) => (
         <div className="nx-ihead"><span className="nx-iback">‹</span><span className="nx-iav">G</span><small>Glow Studio ›</small></div>
         <div className="nx-ibody" key={d.key}>
           <p className="nx-iwhen"><b>Text Message</b><br />{d.when}</p>
-          {d.msgs.map((m, i) => <p key={i} className={'nx-ib ' + m.from}>{m.t}</p>)}
+          {d.msgs.map((m, i) => <p key={i} className={'nx-ib ' + m.from} style={{ animationDelay: `${i * STEP}s` }}>{m.t}</p>)}
         </div>
         <div className="nx-iinput"><span className="nx-iplus">+</span><span className="nx-ifield">Text Message</span></div>
       </>) : (<>
         <div className="nx-icall-top"><small>Glow Studio</small><b>{d.when}</b></div>
-        <div className="nx-ibody call" key={d.key}>{d.msgs.map((m, i) => <p key={i} className={'nx-ib ' + m.from}>{m.t}</p>)}</div>
+        <div className="nx-ibody call" key={d.key}>{d.msgs.map((m, i) => <p key={i} className={'nx-ib ' + m.from} style={{ animationDelay: `${i * STEP}s` }}>{m.t}</p>)}</div>
         <div className="nx-ikeys">{['speaker', 'FaceTime', 'mute', 'more', 'end', 'keypad'].map(k => <span key={k} className={k === 'end' ? 'end' : ''}>{k === 'end' ? <i>{I.phone}</i> : <i />}<small>{k === 'end' ? 'End' : k}</small></span>)}</div>
       </>)}
       <i className="nx-ihome" />
@@ -143,7 +147,7 @@ const HomeNext = () => {
               <div className="nx-demo-stage">
                 <div className="nx-iwrap" aria-live="polite">
                   <IPhone d={d} />
-                  <div className="nx-done" key={d.key}>{I.check}{d.done}</div>
+                  <div className="nx-done" key={d.key} style={{ animationDelay: `${d.msgs.length * STEP}s` }}>{I.check}{d.done}</div>
                 </div>
                 <div className="nx-feed" aria-label="Sample of what Curivanta did today">
                   <div className="nx-feed-h"><b>Today at Glow Studio</b><span className="nx-live"><i />Live</span></div>
