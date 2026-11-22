@@ -4,6 +4,8 @@ import { ThemeToggle } from '../components/ThemeToggle';
 import { POSTS, bySlug, longDate } from '../blog/posts';
 import { Markdown } from '../blog/Markdown';
 import NotFound from './NotFound';
+import { NxFinal, NxFoot, NxNav, useIsNew } from './next/Chrome';
+import './next/next.css';
 import './home/home.css';
 
 // curivanta.com/blog and /blog/<slug>. Articles are Markdown files in src/blog/posts (see src/blog/posts.ts).
@@ -12,6 +14,9 @@ const START_URL = 'https://app.curivanta.com/start';
 const SIGNIN_URL = 'https://app.curivanta.com/login';
 
 function Shell({ children, where }: { children: ReactNode; where: string }) {
+  if (useIsNew()) return (
+    <div className="nx"><NxNav /><div className="cvh nx-type"><main id="top">{children}</main></div><NxFoot /></div>
+  );
   return (
     <div className="cvh">
       <header className="h-nav">
@@ -51,6 +56,7 @@ function Shell({ children, where }: { children: ReactNode; where: string }) {
 }
 
 function Final({ where }: { where: string }) {
+  if (useIsNew()) return <NxFinal />;
   return (
     <section className="h-block flush">
       <div className="h-wrap">
@@ -68,6 +74,7 @@ function Final({ where }: { where: string }) {
 }
 
 export function BlogIndex() {
+  const base = useIsNew() ? '/new' : '';
   useEffect(() => { document.title = 'Blog: running a salon front desk | Curivanta'; }, []);
   return (
     <Shell where="blog">
@@ -85,7 +92,7 @@ export function BlogIndex() {
           {POSTS.length ? (
             <div className="h-posts">
               {POSTS.map(p => (
-                <Link className="h-post-card" to={`/blog/${p.slug}`} key={p.slug} data-umami-event="blog_open" data-umami-event-post={p.slug}>
+                <Link className="h-post-card" to={`${base}/blog/${p.slug}`} key={p.slug} data-umami-event="blog_open" data-umami-event-post={p.slug}>
                   <span className="h-post-meta">{longDate(p.date)} · {p.minutes} min read</span>
                   <h2>{p.title}</h2>
                   <p>{p.description}</p>
@@ -103,6 +110,7 @@ export function BlogIndex() {
 
 export function BlogPost() {
   const { slug = '' } = useParams();
+  const base = useIsNew() ? '/new' : '';
   const post = bySlug(slug);
   useEffect(() => { if (post) document.title = `${post.title} | Curivanta`; }, [post]);
   if (!post) return <NotFound />;
@@ -111,7 +119,7 @@ export function BlogPost() {
     <Shell where={`blog_${post.slug}`}>
       <article className="h-article">
         <div className="h-wrap">
-          <p className="h-crumb"><Link to="/blog">‹ Blog</Link></p>
+          <p className="h-crumb"><Link to={`${base}/blog`}>‹ Blog</Link></p>
           <h1>{post.title}</h1>
           <p className="h-post-meta">{post.author} · {longDate(post.date)} · {post.minutes} min read</p>
           <div className="h-prose"><Markdown source={post.body} /></div>
@@ -123,7 +131,7 @@ export function BlogPost() {
             <div className="h-head"><div className="h-kicker">Keep reading</div></div>
             <div className="h-posts">
               {more.map(p => (
-                <Link className="h-post-card" to={`/blog/${p.slug}`} key={p.slug}>
+                <Link className="h-post-card" to={`${base}/blog/${p.slug}`} key={p.slug}>
                   <span className="h-post-meta">{longDate(p.date)} · {p.minutes} min read</span>
                   <h2>{p.title}</h2>
                   <p>{p.description}</p>

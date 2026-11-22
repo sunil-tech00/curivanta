@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { SiteFooter } from '../components/SiteFooter';
+import { NxShell, useIsNew } from './next/Chrome';
+import './next/next.css';
 
 // How to ask for a Curivanta account (and its data) to be deleted. Google Play's Data safety form links here
 // (the Android app, com.curivanta.app). Keep in step with the privacy policy's "How long we keep information".
@@ -13,23 +15,8 @@ const list = { paddingLeft: '20px', display: 'flex', flexDirection: 'column' as 
 
 const DeleteAccount = () => {
   useEffect(() => { document.title = 'Delete your account | Curivanta'; }, []);
-  return (
-    <div className="curivanta-theme">
-      <header className="nav">
-        <div className="nav-inner">
-          <div className="brand">
-            <Link to="/">
-              <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '32px', width: 'auto' }} />
-              <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
-            </Link>
-          </div>
-          <nav className="links">
-            <Link className="navlink" to="/privacy">Privacy</Link>
-            <ThemeToggle />
-          </nav>
-        </div>
-      </header>
-
+  const isNew = useIsNew();
+  const body = (
       <section style={{ paddingTop: '160px', paddingBottom: '100px', minHeight: '80vh' }}>
         <div className="wrap" style={{ maxWidth: '800px' }}>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '32px' }}>Delete your Curivanta account</h1>
@@ -73,6 +60,26 @@ const DeleteAccount = () => {
           </div>
         </div>
       </section>
+  );
+  if (isNew) return <NxShell><div className="nx-doc">{body}</div></NxShell>;
+  return (
+    <div className="curivanta-theme">
+      <header className="nav">
+        <div className="nav-inner">
+          <div className="brand">
+            <Link to="/">
+              <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '32px', width: 'auto' }} />
+              <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
+            </Link>
+          </div>
+          <nav className="links">
+            <Link className="navlink" to="/privacy">Privacy</Link>
+            <ThemeToggle />
+          </nav>
+        </div>
+      </header>
+
+      {body}
 
       <SiteFooter />
     </div>

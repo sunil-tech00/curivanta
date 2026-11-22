@@ -43,6 +43,13 @@ const App = () => (
           <Route path="/new/roi" element={<RoiNext />} />
           <Route path="/new/pricing" element={<PricingNext />} />
           <Route path="/new/story" element={<StoryNext />} />
+          <Route path="/new/blog" element={<BlogIndex />} />
+          <Route path="/new/blog/:slug" element={<BlogPost />} />
+          <Route path="/new/terms" element={<TermsOfService />} />
+          <Route path="/new/privacy" element={<PrivacyPolicy />} />
+          <Route path="/new/delete-account" element={<DeleteAccount />} />
+          <Route path="/new/salonultimate" element={<SalonUltimatePage />} />
+          <Route path="/new/square" element={<SquarePage />} />
           <Route path="/new/:slug" element={<NextPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

@@ -573,3 +573,20 @@
 }
 .nx .nx-anywhere-in > .nx-deskrow:first-child { margin-top:0; }
 .nx .nx-anywhere + .nx-wrap .nx-facts { margin-top:72px; }
+
+/* ===== shared pages (blog, integrations) in the new look: Inter only, no small capital labels ===== */
+.nx .cvh.nx-type { --display:'Inter',system-ui,-apple-system,sans-serif; --mono:'Inter',system-ui,-apple-system,sans-serif; background:transparent; font-family:'Inter',system-ui,sans-serif; }
+.nx .cvh.nx-type h1, .nx .cvh.nx-type h2, .nx .cvh.nx-type h3, .nx .cvh.nx-type h4 { font-family:'Inter',system-ui,sans-serif; font-weight:700; letter-spacing:-.025em; }
+.nx .cvh.nx-type h1 { font-weight:800; letter-spacing:-.035em; }
+.nx .cvh.nx-type .h-kicker { font-family:'Inter',system-ui,sans-serif; text-transform:none; letter-spacing:0; font-size:15px; font-weight:600; }
+.nx .cvh.nx-type .h-hero { background:none; }
+
+/* legal pages in the new look */
+.nx .nx-doc { --bone:var(--ink); --bone-dim:var(--ink2); --brass:var(--accent); }
+.nx .nx-doc > section { padding:64px 0 96px !important; min-height:0 !important; }
+.nx .nx-doc .wrap { margin:0 auto; padding:0 20px; }
+.nx .nx-doc h1 { font-size:clamp(34px,4.4vw,48px) !important; font-weight:800; letter-spacing:-.035em; }
+.nx .nx-doc h3 { font-size:20px; letter-spacing:-.015em; }
+.nx .nx-doc p, .nx .nx-doc li { font-size:16.5px; }
+.nx .nx-doc a { text-decoration:underline; text-underline-offset:3px; }
+.nx .cvh.nx-type th, .nx .cvh.nx-type .h-post-meta, .nx .cvh.nx-type .h-crumb { text-transform:none; letter-spacing:0; font-family:inherit; }

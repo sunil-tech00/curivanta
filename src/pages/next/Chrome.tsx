@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ThemeToggle } from '../../components/ThemeToggle';
 
 // Shared pieces of the sample pages (/new, /new/roi): nav, footer, icons, placeholder marker.
@@ -52,7 +52,7 @@ export const NxNav = () => (
         <Link to="/new/salons">Who it's for</Link>
         <Link to="/new/pricing">Pricing</Link>
         <Link to="/new/roi">ROI calculator</Link>
-        <Link to="/blog">Blog</Link>
+        <Link to="/new/blog">Blog</Link>
       </nav>
       <div className="nx-nav-cta">
         <ThemeToggle />
@@ -69,8 +69,8 @@ export const NxFoot = () => (
       <div className="nx-foot-brand"><img src="/brand/logo-light.png" alt="Curivanta" className="nx-logo-light" /><img src="/brand/logo-dark.png" alt="" className="nx-logo-dark" /><p>The front desk for salons.</p><a href="mailto:hello@curivanta.com">hello@curivanta.com</a></div>
       <div><h4>Product</h4><Link to="/new/missed-calls">Missed calls and texts</Link><Link to="/new/reviews">Reviews</Link><Link to="/new/phone">Phone</Link><Link to="/new/owner-app">Owner app</Link><Link to="/new/pricing">Pricing</Link></div>
       <div><h4>Who it's for</h4><Link to="/new/salons">Salons with a team</Link><Link to="/new/solo">Solo stylists</Link><Link to="/new/locations">Several locations</Link></div>
-      <div><h4>Resources</h4><Link to="/new/roi">ROI calculator</Link><Link to="/blog">Blog</Link><Link to="/salonultimate">SalonUltimate</Link><Link to="/square">Square</Link></div>
-      <div><h4>Company</h4><Link to="/new/story">Our story</Link><a href={SIGNIN_URL}>Sign in</a><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link></div>
+      <div><h4>Resources</h4><Link to="/new/roi">ROI calculator</Link><Link to="/new/blog">Blog</Link><Link to="/new/salonultimate">SalonUltimate</Link><Link to="/new/square">Square</Link></div>
+      <div><h4>Company</h4><Link to="/new/story">Our story</Link><a href={SIGNIN_URL}>Sign in</a><Link to="/new/privacy">Privacy</Link><Link to="/new/terms">Terms</Link></div>
     </div>
     <div className="nx-wrap nx-copy">© 2026 Curivanta</div>
   </footer>
@@ -90,4 +90,21 @@ export const ListCard = ({ head, rows }: { head: string; rows: [string, string, 
     <div className="nx-feed-h"><b>{head}</b></div>
     <ul>{rows.map(([c, t, w]) => <li key={t}><span className={'nx-tl ' + c} />{t}<time>{w}</time></li>)}</ul>
   </div>
+);
+
+// Pages shared with the live site (blog, terms, privacy, integrations) show the new look under /new/...
+export const useIsNew = () => useLocation().pathname.startsWith('/new');
+
+export const NxShell = ({ children }: { children: React.ReactNode }) => (
+  <div className="nx"><NxNav /><main>{children}</main><NxFoot /></div>
+);
+
+export const NxFinal = () => (
+  <section className="nx-final">
+    <div className="nx-wrap nx-final-in">
+      <h2>Stop losing bookings to missed calls.</h2>
+      <p>Set up in about 15 minutes. Your monthly plan starts only when texting goes live.</p>
+      <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><Link className="nx-btn nx-btn-ghost" to="/new">See everything Curivanta does</Link></div>
+    </div>
+  </section>
 );

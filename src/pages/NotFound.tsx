@@ -1,5 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { NxShell } from "./next/Chrome";
+import "./next/next.css";
 
 const NotFound = () => {
   const location = useLocation();
@@ -19,6 +21,10 @@ const NotFound = () => {
       location.pathname
     );
   }, [location.pathname]);
+
+  if (location.pathname.startsWith("/new")) return (
+    <NxShell><section className="nx-sec"><div className="nx-wrap nx-head"><h2>Page not found</h2><p>That page doesn't exist. <a href="/new">Go to the homepage</a></p></div></section></NxShell>
+  );
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted">

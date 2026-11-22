@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { SiteFooter } from '../components/SiteFooter';
+import { NxShell, useIsNew } from './next/Chrome';
+import './next/next.css';
 
 // Terms for the Curivanta app (Starter, Light and Pro plans).
 // Keep plan facts in step with curivanta-app (app/plans.py, app/config.py).
@@ -14,23 +16,8 @@ const mail = <a href="mailto:hello@curivanta.com" style={{ color: 'var(--brass)'
 
 const TermsOfService = () => {
   useEffect(() => { document.title = 'Terms of Service | Curivanta'; }, []);
-  return (
-    <div className="curivanta-theme">
-      <header className="nav">
-        <div className="nav-inner">
-          <div className="brand">
-            <Link to="/">
-              <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '32px', width: 'auto' }} />
-              <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
-            </Link>
-          </div>
-          <nav className="links">
-            <Link className="navlink" to="/privacy">Privacy</Link>
-            <ThemeToggle />
-          </nav>
-        </div>
-      </header>
-
+  const isNew = useIsNew();
+  const body = (
       <section style={{ paddingTop: '160px', paddingBottom: '100px', minHeight: '80vh' }}>
         <div className="wrap" style={{ maxWidth: '800px' }}>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: '32px' }}>Terms of Service</h1>
@@ -87,6 +74,26 @@ const TermsOfService = () => {
           </div>
         </div>
       </section>
+  );
+  if (isNew) return <NxShell><div className="nx-doc">{body}</div></NxShell>;
+  return (
+    <div className="curivanta-theme">
+      <header className="nav">
+        <div className="nav-inner">
+          <div className="brand">
+            <Link to="/">
+              <img src="/brand/logo-dark.png" alt="Curivanta" className="dark-logo" style={{ height: '32px', width: 'auto' }} />
+              <img src="/brand/logo-light.png" alt="Curivanta" className="light-logo" style={{ height: '32px', width: 'auto' }} />
+            </Link>
+          </div>
+          <nav className="links">
+            <Link className="navlink" to="/privacy">Privacy</Link>
+            <ThemeToggle />
+          </nav>
+        </div>
+      </header>
+
+      {body}
 
       <SiteFooter />
     </div>

@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { NxFinal, NxFoot, NxNav, useIsNew } from './next/Chrome';
+import './next/next.css';
 import { ThemeToggle } from '../components/ThemeToggle';
 import './home/home.css';
 
@@ -27,27 +29,8 @@ export type Integration = {
 
 const IntegrationPage = ({ page }: { page: Integration }) => {
   useEffect(() => { document.title = page.title; }, [page.title]);
-  return (
-    <div className="cvh">
-      <header className="h-nav">
-        <div className="h-wrap h-nav-in">
-          <Link className="h-brand" to="/" aria-label="Curivanta home">
-            <img src="/brand/logo-light.png" alt="Curivanta" className="h-logo-onlight" />
-            <img src="/brand/logo-dark.png" alt="" className="h-logo-ondark" />
-          </Link>
-          <nav className="h-links" aria-label="Page">
-            <Link to="/#product">Product</Link>
-            <Link to="/#pricing">Pricing</Link>
-            <a href="#faq">Questions</a>
-          </nav>
-          <div className="h-nav-cta">
-            <ThemeToggle />
-            <a className="h-signin" href={SIGNIN_URL}>Sign in</a>
-            <a className="h-btn h-btn-primary h-btn-sm" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where={`${page.key}_nav`}>Get started</a>
-          </div>
-        </div>
-      </header>
-
+  const isNew = useIsNew();
+  const main = (
       <main id="top">
         <section className="h-hero">
           <div className="h-wrap">
@@ -58,7 +41,7 @@ const IntegrationPage = ({ page }: { page: Integration }) => {
               <ul className="h-does">{page.does.map(d => <li key={d}>{d}</li>)}</ul>
               <div className="h-ctas">
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where={`${page.key}_hero`}>Get started</a>
-                <Link className="h-btn h-btn-ghost" to="/#pricing">See plans and prices</Link>
+                <Link className="h-btn h-btn-ghost" to={isNew ? "/new/pricing" : "/#pricing"}>See plans and prices</Link>
               </div>
               <div className="h-notes">
                 <span>From $49/mo, starts when texting goes live</span>
@@ -102,6 +85,7 @@ const IntegrationPage = ({ page }: { page: Integration }) => {
           </div>
         </section>
 
+        {isNew ? <NxFinal /> : (
         <section className="h-block flush">
           <div className="h-wrap">
             <div className="h-final">
@@ -114,7 +98,32 @@ const IntegrationPage = ({ page }: { page: Integration }) => {
             </div>
           </div>
         </section>
+        )}
       </main>
+  );
+  if (isNew) return <div className="nx"><NxNav /><div className="cvh nx-type">{main}</div><NxFoot /></div>;
+  return (
+    <div className="cvh">
+      <header className="h-nav">
+        <div className="h-wrap h-nav-in">
+          <Link className="h-brand" to="/" aria-label="Curivanta home">
+            <img src="/brand/logo-light.png" alt="Curivanta" className="h-logo-onlight" />
+            <img src="/brand/logo-dark.png" alt="" className="h-logo-ondark" />
+          </Link>
+          <nav className="h-links" aria-label="Page">
+            <Link to="/#product">Product</Link>
+            <Link to="/#pricing">Pricing</Link>
+            <a href="#faq">Questions</a>
+          </nav>
+          <div className="h-nav-cta">
+            <ThemeToggle />
+            <a className="h-signin" href={SIGNIN_URL}>Sign in</a>
+            <a className="h-btn h-btn-primary h-btn-sm" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where={`${page.key}_nav`}>Get started</a>
+          </div>
+        </div>
+      </header>
+
+      {main}
 
       <footer className="h-foot">
         <div className="h-wrap h-foot-in">
