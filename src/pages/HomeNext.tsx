@@ -275,7 +275,7 @@ const HomeNext = () => {
               <p className="nx-try-k">Hear it for yourself</p>
               <p className="nx-try-h">Call our demo salon</p>
               <p className="nx-try-n"><Ph>(xxx) xxx-xxxx</Ph></p>
-              <p className="nx-try-s">The AI answers in its natural voice. Ask about a haircut, or try to book. Hang up instead, and you'll get a text back.</p>
+              <p className="nx-try-s">The AI answers in its natural voice. Ask about prices, or try to book. Hang up instead, and you'll get a text back.</p>
             </div>
           </div>
         </section>

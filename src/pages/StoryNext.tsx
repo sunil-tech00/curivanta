@@ -23,13 +23,13 @@ const StoryNext = () => {
           <div className="nx-wrap nx-story">
             <div>
               <h1>Built by a salon owner, for salon owners.</h1>
-              <p className="nx-lede">Curivanta started at our own front desk, with a phone that rang while everyone had scissors in their hands.</p>
+              <p className="nx-lede">Curivanta started at our own front desk, with a phone that kept ringing while everyone was busy with a client.</p>
             </div>
             <div className="nx-try light" id="demo-line">
               <p className="nx-try-k">Hear it for yourself</p>
               <p className="nx-try-h">Call our demo salon</p>
               <p className="nx-try-n"><Ph>(xxx) xxx-xxxx</Ph></p>
-              <p className="nx-try-s">The AI answers in its natural voice. Ask about a haircut, or try to book. Hang up instead, and you'll get a text back.</p>
+              <p className="nx-try-s">The AI answers in its natural voice. Ask about prices, or try to book. Hang up instead, and you'll get a text back.</p>
             </div>
           </div>
         </section>

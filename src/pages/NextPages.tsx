@@ -151,7 +151,7 @@ export const PAGES: Record<string, PageDef> = {
 
   salons: {
     title: 'Curivanta for salons with a team | Curivanta',
-    h1: 'For salons where everyone has scissors in their hands.',
+    h1: 'For salons where everyone is busy with a client.',
     lede: 'Keep your salon number. Curivanta catches the calls your team can\'t get to, books them into SalonUltimate or Square, and asks clients for reviews.',
     plan: 'Light $99/month · Pro $149/month',
     art: { head: 'Today at Glow Studio', list: [['red', 'Missed: (949) 555-0142 · texted back', '2m'], ['green', 'Booked Dana, Sat 10:00 with Maya', '4m'], ['amber', 'Review request sent to Priya', '12m'], ['green', 'New 5-star Google review', '25m']] },
