@@ -224,7 +224,7 @@ const HomeNext = () => {
           <div className="nx-wrap nx-easy">
             <div>
               <h2>Set up in about 15 minutes. No tech skills needed.</h2>
-              <p className="nx-lede">Paste one link to your salon online. Curivanta reads it and fills in the rest, so you're not typing in your menu.</p>
+              <p className="nx-lede">Paste your website or booking page link. Curivanta reads it and fills in the rest, so you don't have to type in your menu.</p>
               <ul className="nx-checks">
                 <li>{I.check}Your services, prices, hours and stylists come from your website or booking software</li>
                 <li>{I.check}SalonUltimate: add one email as a receptionist. Square: sign in and tap Allow</li>
@@ -236,8 +236,8 @@ const HomeNext = () => {
             <div className="nx-easy-art" aria-hidden="true">
               <div className="nx-card nx-easy-step">
                 <p className="nx-easy-n">Step 1 of 5</p>
-                <h3>Paste a link to your salon online</h3>
-                <p className="nx-easy-s">Your website, or your Square, Vagaro or Google page.</p>
+                <h3>Paste your website or booking page link</h3>
+                <p className="nx-easy-s">Your own website, or your Booksy, Square, Vagaro or Google page.</p>
                 <div className="nx-easy-in"><span>glowstudio.com</span><b>Continue</b></div>
               </div>
               <div className="nx-card nx-easy-found">
