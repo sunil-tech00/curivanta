@@ -128,6 +128,7 @@ const HomeNext = () => {
               <a className="nx-btn" href={START_URL}>Get started</a>
               <Link className="nx-btn nx-btn-ghost" to="/new/roi">See what missed calls cost you</Link>
             </div>
+            <p className="nx-hear">Hear it answer a call: <a href="#demo-line">call our demo salon</a></p>
             <p className="nx-fine">From $49/month · AI call answering on Light and Pro · Set up in about 15 minutes · No contract</p>
           </div>
 
@@ -155,12 +156,13 @@ const HomeNext = () => {
 
         <section className="nx-statband">
           <div className="nx-wrap">
-            <p className="nx-statband-h">At our own salon, last month</p>
+            {/* Real totals from the two pilot salons, Nov 14-22, 2026 (prod query, demo salon left out). */}
+            <p className="nx-statband-h">In our two pilot salons, the first 8 days live</p>
             <div className="nx-statcards">
-              <div><b><Ph>46</Ph></b><span>missed calls texted back</span></div>
-              <div><b><Ph>19</Ph></b><span>appointments booked by text</span></div>
-              <div><b><Ph>23</Ph></b><span>new Google reviews</span></div>
-              <div><b>4.3 → 4.5</b><span>Google rating in the first month</span></div>
+              <div><b>17</b><span>missed calls texted back</span></div>
+              <div><b>23</b><span>calls answered by the AI</span></div>
+              <div><b>11</b><span>new Google reviews, all 5 stars</span></div>
+              <div><b>4.4 → 4.5</b><span>Google rating in 8 days</span></div>
             </div>
             <p className="nx-works">Works with <Link to="/new/salonultimate">SalonUltimate</Link> · <Link to="/new/square">Square</Link> · Google · any online booking link</p>
           </div>
@@ -263,7 +265,12 @@ const HomeNext = () => {
               <p className="nx-who"><b>Salon owner</b> · Founder, Curivanta</p>
               <a className="nx-btn nx-btn-light" href={START_URL}>Get started</a>
             </div>
-            <div className="nx-founder-photo"><Ph>Owner photo</Ph></div>
+            <div className="nx-try" id="demo-line">
+              <p className="nx-try-k">Hear it for yourself</p>
+              <p className="nx-try-h">Call our demo salon</p>
+              <p className="nx-try-n"><Ph>(xxx) xxx-xxxx</Ph></p>
+              <p className="nx-try-s">The AI answers in its natural voice. Ask about a haircut, or try to book. Hang up instead, and you'll get a text back.</p>
+            </div>
           </div>
         </section>
 
@@ -273,8 +280,14 @@ const HomeNext = () => {
             <div className="nx-prices">
               <div className="nx-price"><h3>Starter</h3><p className="nx-for">For solo stylists</p><div className="nx-amt">$49<small>/month</small></div><p>Your own business number, text-back, booking by text and review requests.</p><a className="nx-btn nx-btn-ghost" href={START_URL + '?plan=starter'}>Start with Starter</a></div>
               <div className="nx-price main"><span className="nx-tag">Most salons</span><h3>Light</h3><p className="nx-for">For salons with a team</p><div className="nx-amt">$99<small>/month</small></div><p>Keep your salon number. Team logins, ratings by stylist, and 30 minutes a month of calls answered for you.</p><a className="nx-btn" href={START_URL}>Start with Light</a></div>
-              <div className="nx-price"><h3>Pro</h3><p className="nx-for">Calls answered for you</p><div className="nx-amt">$149<small>/month</small></div><p>Everything in Light, and calls nobody picks up are answered all month.</p><a className="nx-btn nx-btn-ghost" href={START_URL + '?plan=pro'}>Start with Pro</a></div>
+              <div className="nx-price"><h3>Pro</h3><p className="nx-for">Calls answered for you</p><div className="nx-amt">$149<small>/month</small></div><p>Everything in Light, and calls nobody picks up answered for you: 200 minutes a month.</p><a className="nx-btn nx-btn-ghost" href={START_URL + '?plan=pro'}>Start with Pro</a></div>
             </div>
+            <ul className="nx-nosurprise">
+              <li>{I.check}Prices on the page, no sales call</li>
+              <li>{I.check}No contract. Cancel from the app</li>
+              <li>{I.check}Nothing monthly until your texting is live</li>
+              <li>{I.check}A real person answers at hello@curivanta.com</li>
+            </ul>
             <p className="nx-center"><Link to="/new/pricing">Compare plans in detail →</Link> &nbsp;·&nbsp; <Link to="/new/roi">Will it pay for itself? →</Link></p>
           </div>
         </section>

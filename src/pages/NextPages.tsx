@@ -66,7 +66,7 @@ export const PAGES: Record<string, PageDef> = {
   reviews: {
     title: 'Google review requests and replies for salons | Curivanta',
     h1: 'More 5-star Google reviews, without asking at the counter.',
-    lede: 'After a visit, clients get one short text with your Google review link. They can rate their stylist, and anything less than great comes to you first.',
+    lede: 'After a visit, clients get one short text asking for a review. Every review request includes your Google link. Anything less than great also comes to you privately, so you can make it right.',
     art: { head: 'Dana · after her visit', chat: [
       { who: 'us', t: 'Hi Dana, hope your visit with Maya at Glow Studio was a hit! A quick Google review would mean the world to us: g.page/r/glow Or reply 1-5 to rate Maya.' },
       { who: 'them', t: '5! She was amazing' },

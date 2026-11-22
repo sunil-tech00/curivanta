@@ -1,7 +1,7 @@
 import { NxFoot, NxNav, Ph, START_URL, useSamplePage } from './next/Chrome';
 import './next/next.css';
 
-// Sample "Our story" page (/new/story, 2026-11-21). The founder isn't named on the site; the quote and
+// Sample "Our story" page (/new/story, 2026-11-21). The founder isn't named or pictured on the site (2026-11-22); the quote and
 // story are drafts for the owner to rewrite in his own words.
 
 const PROMISES: [string, string][] = [
@@ -25,7 +25,12 @@ const StoryNext = () => {
               <h1>Built by a salon owner, for salon owners.</h1>
               <p className="nx-lede">Curivanta started at our own front desk, with a phone that rang while everyone had scissors in their hands.</p>
             </div>
-            <div className="nx-founder-photo light"><Ph>Owner photo</Ph></div>
+            <div className="nx-try light" id="demo-line">
+              <p className="nx-try-k">Hear it for yourself</p>
+              <p className="nx-try-h">Call our demo salon</p>
+              <p className="nx-try-n"><Ph>(xxx) xxx-xxxx</Ph></p>
+              <p className="nx-try-s">The AI answers in its natural voice. Ask about a haircut, or try to book. Hang up instead, and you'll get a text back.</p>
+            </div>
           </div>
         </section>
 
@@ -33,7 +38,7 @@ const StoryNext = () => {
           <div className="nx-wrap nx-prose">
             <p>I own salons, and I can't stand behind every front desk. On busy days the phone rang while every stylist was with a client, and those callers didn't leave a voicemail. They booked somewhere else.</p>
             <p>The tools I tried were built for every kind of business at once: menus inside menus, prices hidden behind a demo, and nothing that knew what a stylist or a root touch-up was.</p>
-            <p>So I built the front desk I wanted. It texts back the calls we miss, books clients into our real calendar, and asks clients for reviews. It runs in my own salons every day, and our Google rating went from 4.3 to 4.5 in the first month.</p>
+            <p>So I built the front desk I wanted. It texts back the calls we miss, books clients into our real calendar, and asks clients for reviews. It runs in my own salons every day, and our Google rating went from 4.4 to 4.5 in the first 8 days.</p>
             <p>Now it's ready for yours.</p>
             <p className="nx-who dark"><b>Salon owner</b> · Founder, Curivanta</p>
           </div>
