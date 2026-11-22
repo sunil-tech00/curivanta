@@ -271,7 +271,17 @@
 .nx .nx-statcards div > span { color:#c9d8f3; font-size:15px; }
 .nx p.nx-works { text-align:center; margin-top:26px; color:var(--ink3); font-size:15px; border:0; background:none; }
 .nx p.nx-works a { color:var(--ink2); font-weight:700; }
-@media (max-width:760px) { .nx .nx-statcards { grid-template-columns:1fr 1fr; row-gap:24px; } .nx .nx-statcards > div:nth-child(3) { border-left:0; } }
+/* Phones: two equal columns (minmax(0,1fr): the wide "4.4 -> 4.5" can't squeeze the other column), a line between the rows. */
+@media (max-width:760px) {
+  .nx .nx-statpanel { padding:26px 14px 28px; border-radius:22px; }
+  .nx .nx-statband-h { font-size:14px; margin-bottom:18px; padding:0 8px; }
+  .nx .nx-statcards { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .nx .nx-statcards > div { padding:14px 8px; }
+  .nx .nx-statcards > div:nth-child(3) { border-left:0; }
+  .nx .nx-statcards > div:nth-child(n+3) { border-top:1px solid rgba(255,255,255,.16); }
+  .nx .nx-statcards b { font-size:clamp(26px,8.4vw,38px); margin-bottom:6px; }
+  .nx .nx-statcards div > span { display:block; font-size:13.5px; line-height:1.35; }
+}
 
 /* product cards */
 .nx .nx-grid { display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); border-radius:22px; overflow:hidden; background:var(--line); gap:1px; }
