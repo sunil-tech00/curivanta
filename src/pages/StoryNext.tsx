@@ -38,7 +38,7 @@ const StoryNext = () => {
           <div className="nx-wrap nx-prose">
             <p>I own salons, and I can't stand behind every front desk. On busy days the phone rang while every stylist was with a client, and those callers didn't leave a voicemail. They booked somewhere else.</p>
             <p>The tools I tried were built for every kind of business at once: menus inside menus, prices hidden behind a demo, and nothing that knew what a stylist or a root touch-up was.</p>
-            <p>So I built the front desk I wanted. It texts back the calls we miss, books clients into our real calendar, and asks clients for reviews. It runs in my own salons every day, and our Google rating went from 4.4 to 4.5 in the first 8 days.</p>
+            <p>So I built the front desk I wanted. It texts back the calls we miss, books clients into our real calendar, and asks clients for reviews. It runs in my own salons every day, and our Google rating went from 4.4 to 4.5 in the first week.</p>
             <p>Now it's ready for yours.</p>
             <p className="nx-who dark"><b>Salon owner</b> · Founder, Curivanta</p>
           </div>

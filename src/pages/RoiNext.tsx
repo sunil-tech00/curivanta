@@ -107,7 +107,7 @@ const RoiNext = () => {
 
         <section className="nx-sec">
           <div className="nx-wrap">
-            <div className="nx-head"><h2>Or compare it with hiring someone for the desk</h2><p>A receptionist is great when they're there. Curivanta covers every hour they aren't.</p></div>
+            <div className="nx-head"><h2>Or compare it with hiring someone for the desk</h2><p>A receptionist is great when they're there. Curivanta picks up the calls they can't, day or night.</p></div>
             <div className="nx-desk">
               <div className="nx-calc-in">
                 <Slider id="hours" label="Front desk hours a week" value={v.hours} min={10} max={60} step={5} fmt={n => String(n)} onChange={set('hours')} />
@@ -115,7 +115,7 @@ const RoiNext = () => {
               </div>
               <div className="nx-desk-out">
                 <div><small>A front desk hire</small><b>{money(Math.round(r.desk / 10) * 10)}</b><span>a month, for {v.hours} hours a week</span></div>
-                <div className="main"><small>Curivanta Pro</small><b>$149</b><span>a month, every hour of every day</span></div>
+                <div className="main"><small>Curivanta Pro</small><b>$149</b><span>a month, day or night, with 200 minutes of calls answered</span></div>
               </div>
             </div>
           </div>
