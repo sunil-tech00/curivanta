@@ -112,7 +112,7 @@ export const PAGES: Record<string, PageDef> = {
       { h: 'You choose when it answers', p: 'Always, or only when you\'re closed. Every call it took is in your app: play the recording or read what was said. Callers can ask for a person or leave a voicemail any time.',
         art: { head: 'Calls and texts settings', tiles: [['Always', 'or only when closed'], ['200 min', 'a month on Pro'], ['30 min', 'a month on Light'], ['$10', 'per 50 more on Pro']] } },
     ],
-    facts: [[I.phone, 'Your number', 'Calls show your salon number'], [I.headset, 'Answered', 'On Pro, all month'], [I.chat, 'Recorded', 'With a transcript in the app'], [I.user, 'Hold and transfer', 'On every plan']],
+    facts: [[I.phone, 'Your number', 'Calls show your salon number'], [I.headset, 'Answered', 'On Pro, 200 minutes a month'], [I.chat, 'Recorded', 'With a transcript in the app'], [I.user, 'Hold and transfer', 'On every plan']],
     faq: [
       ['Does an AI answer my phone?', 'On Pro, yes, when nobody picks up. It says it\'s the salon\'s automated assistant and that the call is recorded and transcribed. On Starter and Light, callers hear your greeting, can leave a voicemail, and get a text right away. Light includes 30 minutes a month to try the assistant.'],
       ['How many calls does Pro cover?', '200 minutes a month, around 100 typical booking calls. Extra minutes are $10 per 50, and we let you know at 80%.'],
@@ -158,8 +158,8 @@ export const PAGES: Record<string, PageDef> = {
         points: ['Ratings and reviews by stylist', 'Call from the app with your salon number, hold and transfer'],
         art: { head: 'By stylist · this month', tiles: [['4.9 ★', 'Maya'], ['4.9 ★', 'Jordan'], ['4.7 ★', 'Aisha'], ['46', 'booked by Curivanta']] } },
     ],
-    facts: [[I.phone, 'Your number', 'Forward missed calls'], [I.user, 'Team logins', 'Roles for managers and front desk'], [I.cal, 'Books in', 'SalonUltimate and Square'], [I.headset, 'Pro', 'Every call answered']],
-    faq: [['Light or Pro?', 'Light covers texting, booking and reviews, with 30 minutes a month of calls answered for you. Pro answers calls nobody picks up, all month.']],
+    facts: [[I.phone, 'Your number', 'Forward missed calls'], [I.user, 'Team logins', 'Roles for managers and front desk'], [I.cal, 'Books in', 'SalonUltimate and Square'], [I.headset, 'Pro', 'Calls answered for you, 200 minutes a month']],
+    faq: [['Light or Pro?', 'Light covers texting, booking and reviews, with 30 minutes a month of calls answered for you. Pro includes 200 minutes a month of calls answered for you, about 100 calls, then $10 per 50 more minutes.']],
     next: [['/new/pricing', 'Pricing'], ['/new/locations', 'Several locations']],
   },
 
