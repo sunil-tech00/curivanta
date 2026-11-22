@@ -3,7 +3,11 @@
 // over it as usual.
 import { renderToString } from "react-dom/server";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/HomePreview";
+import HomeNext from "./pages/HomeNext";
+import RoiNext from "./pages/RoiNext";
+import PricingNext from "./pages/PricingNext";
+import StoryNext from "./pages/StoryNext";
+import NextPage, { PAGES as PRODUCT } from "./pages/NextPages";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import DeleteAccount from "./pages/DeleteAccount";
@@ -12,14 +16,16 @@ import SalonUltimatePage from "./pages/SalonUltimatePage";
 import { BlogIndex, BlogPost } from "./pages/Blog";
 import { ALL } from "./blog/posts";
 
-const PAGES: Record<string, () => JSX.Element> = { "/": Home, "/privacy": PrivacyPolicy, "/terms": TermsOfService,
-  "/delete-account": DeleteAccount,  "/square": SquarePage, "/salonultimate": SalonUltimatePage, "/blog": BlogIndex };
+const PAGES: Record<string, () => JSX.Element> = { "/": HomeNext, "/roi": RoiNext, "/pricing": PricingNext,
+  "/story": StoryNext, "/privacy": PrivacyPolicy, "/terms": TermsOfService, "/delete-account": DeleteAccount,
+  "/square": SquarePage, "/salonultimate": SalonUltimatePage, "/blog": BlogIndex };
 for (const p of ALL) PAGES[`/blog/${p.slug}`] = BlogPost;
+for (const slug of Object.keys(PRODUCT)) PAGES[`/${slug}`] = NextPage;     // /missed-calls, /reviews, ... (2026-11-22)
 
 export function render(route: string): string {
   const Page = PAGES[route];
   return renderToString(<MemoryRouter initialEntries={[route]}><Routes>
-    <Route path={route.startsWith("/blog/") ? "/blog/:slug" : route} element={<Page />} />
+    <Route path={route.startsWith("/blog/") ? "/blog/:slug" : PAGES[route] === NextPage ? "/:slug" : route} element={<Page />} />
   </Routes></MemoryRouter>);
 }
 

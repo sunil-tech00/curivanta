@@ -74,7 +74,7 @@ function Final({ where }: { where: string }) {
 }
 
 export function BlogIndex() {
-  const base = useIsNew() ? '/new' : '';
+  const base = '';
   useEffect(() => { document.title = 'Blog: running a salon front desk | Curivanta'; }, []);
   return (
     <Shell where="blog">
@@ -110,7 +110,7 @@ export function BlogIndex() {
 
 export function BlogPost() {
   const { slug = '' } = useParams();
-  const base = useIsNew() ? '/new' : '';
+  const base = '';
   const post = bySlug(slug);
   useEffect(() => { if (post) document.title = `${post.title} | Curivanta`; }, [post]);
   if (!post) return <NotFound />;

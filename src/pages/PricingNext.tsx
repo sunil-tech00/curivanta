@@ -68,7 +68,7 @@ const PricingNext = () => {
               </div>
             ))}
           </div>
-          <p className="nx-center"><Link to="/new/roi">Not sure? See what missed calls cost your salon →</Link></p>
+          <p className="nx-center"><Link to="/roi">Not sure? See what missed calls cost your salon →</Link></p>
         </section>
 
         <section className="nx-sec">

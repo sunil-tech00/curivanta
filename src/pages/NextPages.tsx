@@ -63,7 +63,7 @@ export const PAGES: Record<string, PageDef> = {
       ['What if I reply to a client myself?', 'Once you reply, Curivanta stays out of that conversation for the rest of the day.'],
       ['Why does texting take a few days to go live?', 'US phone carriers approve every business that texts customers. We prepare and submit the paperwork for you, and your monthly plan starts only when they approve.'],
     ],
-    next: [['/new/reviews', 'Reviews'], ['/new/phone', 'Phone']],
+    next: [['/reviews', 'Reviews'], ['/phone', 'Phone']],
   },
 
   reviews: {
@@ -91,7 +91,7 @@ export const PAGES: Record<string, PageDef> = {
       ['Will clients get asked more than once?', 'No more than once in 90 days, whatever they book.'],
       ['Can I change the text?', 'Yes. Edit the wording any time, or ask for a new draft. The first text a client gets from you ends with "Reply STOP to opt out"; later ones leave it off.'],
     ],
-    next: [['/new/missed-calls', 'Missed calls and texts'], ['/new/owner-app', 'Owner app']],
+    next: [['/missed-calls', 'Missed calls and texts'], ['/owner-app', 'Owner app']],
   },
 
   phone: {
@@ -124,7 +124,7 @@ export const PAGES: Record<string, PageDef> = {
       ['How many calls does Pro cover?', '200 minutes a month, around 100 typical booking calls. Extra minutes are $10 per 50, and we let you know at 80%.'],
       ['Can I move my existing number to Curivanta?', 'Not yet. For now, salons keep their number and forward the calls they miss to Curivanta.'],
     ],
-    next: [['/new/missed-calls', 'Missed calls and texts'], ['/new/owner-app', 'Owner app']],
+    next: [['/missed-calls', 'Missed calls and texts'], ['/owner-app', 'Owner app']],
   },
 
   'owner-app': {
@@ -149,7 +149,7 @@ export const PAGES: Record<string, PageDef> = {
       ['Is there a phone app?', 'Yes, on Android. On iPhone, add Curivanta to your Home Screen from Safari to get notifications; the iPhone app is on its way.'],
       ['Can my front desk use it?', 'Yes, on Light and Pro. Front-desk logins see clients, messages, calls and reviews, but not usage, billing or settings. Replies show who sent them.'],
     ],
-    next: [['/new/reviews', 'Reviews'], ['/new/phone', 'Phone']],
+    next: [['/reviews', 'Reviews'], ['/phone', 'Phone']],
     extra: <Anywhere />,
   },
 
@@ -168,7 +168,7 @@ export const PAGES: Record<string, PageDef> = {
     ],
     facts: [[I.phone, 'Caller ID', 'Your salon name shows when you call'], [I.user, 'Team logins', 'Roles for managers and front desk'], [I.cal, 'Books in', 'SalonUltimate and Square'], [I.headset, 'Pro', 'Calls answered for you, 200 minutes a month']],
     faq: [['Light or Pro?', 'Light covers texting, booking and reviews, with 30 minutes a month of calls answered for you. Pro includes 200 minutes a month of calls answered for you, about 100 calls, then $10 per 50 more minutes.']],
-    next: [['/new/pricing', 'Pricing'], ['/new/locations', 'Several locations']],
+    next: [['/pricing', 'Pricing'], ['/locations', 'Several locations']],
   },
 
   solo: {
@@ -186,7 +186,7 @@ export const PAGES: Record<string, PageDef> = {
     ],
     facts: [[I.phone, 'Business number', 'Rings your cell in your hours'], [I.missed, 'Text-back', 'For missed calls'], [I.cal, 'Booking', 'By text, into your calendar'], [I.tag, 'No EIN needed', 'Register as a sole proprietor']],
     faq: [['Do I need an EIN?', 'No. Solo stylists can register as a sole proprietor: you reply YES to one text from the carriers.'], ['Can I move up later?', 'Yes. Move to Light or Pro any time from Billing.']],
-    next: [['/new/pricing', 'Pricing'], ['/new/missed-calls', 'Missed calls and texts']],
+    next: [['/pricing', 'Pricing'], ['/missed-calls', 'Missed calls and texts']],
   },
 
   locations: {
@@ -203,7 +203,7 @@ export const PAGES: Record<string, PageDef> = {
     ],
     facts: [[I.user, 'One login', 'Switch salons in the app'], [I.phone, 'Own number', 'Per location'], [I.chart, 'Own numbers', 'Home per salon'], [I.cal, 'Franchise ready', 'Store matching']],
     faq: [['How is it billed?', 'Per location: each salon has its own plan, so a busy location can be on Pro and a quiet one on Light.']],
-    next: [['/new/pricing', 'Pricing'], ['/new/salons', 'Salons with a team']],
+    next: [['/pricing', 'Pricing'], ['/salons', 'Salons with a team']],
   },
 };
 
@@ -221,7 +221,7 @@ export const ProductPage = ({ page }: { page: PageDef }) => {
               <p className="nx-lede">{page.lede}</p>
               <div className="nx-ctas left">
                 <a className="nx-btn" href={START_URL}>Get started</a>
-                <Link className="nx-btn nx-btn-ghost" to="/new/pricing">See pricing</Link>
+                <Link className="nx-btn nx-btn-ghost" to="/pricing">See pricing</Link>
               </div>
             </div>
             <div className="nx-phero-art"><ArtCard art={page.art} /></div>
@@ -264,7 +264,7 @@ export const ProductPage = ({ page }: { page: PageDef }) => {
           <div className="nx-wrap nx-final-in">
             <h2>Stop losing bookings to missed calls.</h2>
             <p>Set up in about 15 minutes. Your monthly plan starts only when texting goes live.</p>
-            <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><Link className="nx-btn nx-btn-ghost" to="/new/roi">Try the ROI calculator</Link></div>
+            <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><Link className="nx-btn nx-btn-ghost" to="/roi">Try the ROI calculator</Link></div>
           </div>
         </section>
       </main>

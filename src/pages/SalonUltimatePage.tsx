@@ -42,7 +42,7 @@ const SALONULTIMATE_NEW: Integration = {
   ...SALONULTIMATE,
   sub: fix(SALONULTIMATE.sub),
   faq: SALONULTIMATE.faq.map(f => ({ ...f, a: fix(f.a) })),
-  other: { to: '/new/square', label: 'Square' },
+  other: { to: '/square', label: 'Square' },
 };
 
 const SalonUltimatePage = () => <IntegrationPage page={useIsNew() ? SALONULTIMATE_NEW : SALONULTIMATE} />;

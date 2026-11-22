@@ -31,12 +31,8 @@ export const I = {
 
 export const useSamplePage = (title: string) => {
   useEffect(() => {
-    const m = document.createElement('meta');
-    m.name = 'robots'; m.content = 'noindex';
-    document.head.appendChild(m);
-    document.title = title;
+    document.title = title;      // live pages since 2026-11-22: no noindex any more
     window.scrollTo(0, 0);
-    return () => { m.remove(); };
   }, [title]);
 };
 
@@ -54,16 +50,16 @@ const useTopOnNewPage = () => {
 export const NxNav = () => { useTopOnNewPage(); return (
   <header className="nx-nav">
     <div className="nx-wrap nx-nav-in">
-      <Link className="nx-brand" to="/new" aria-label="Curivanta">
+      <Link className="nx-brand" to="/" aria-label="Curivanta">
         <img src="/brand/logo-light.png" alt="Curivanta" className="nx-logo-light" />
         <img src="/brand/logo-dark.png" alt="" className="nx-logo-dark" />
       </Link>
       <nav className="nx-links" aria-label="Site">
-        <Link to="/new#product">Product</Link>
-        <Link to="/new/salons">Who it's for</Link>
-        <Link to="/new/pricing">Pricing</Link>
-        <Link to="/new/roi">ROI calculator</Link>
-        <Link to="/new/blog">Blog</Link>
+        <Link to="/#product">Product</Link>
+        <Link to="/salons">Who it's for</Link>
+        <Link to="/pricing">Pricing</Link>
+        <Link to="/roi">ROI calculator</Link>
+        <Link to="/blog">Blog</Link>
       </nav>
       <div className="nx-nav-cta">
         <ThemeToggle />
@@ -78,10 +74,10 @@ export const NxFoot = () => (
   <footer className="nx-foot">
     <div className="nx-wrap nx-foot-grid">
       <div className="nx-foot-brand"><img src="/brand/logo-light.png" alt="Curivanta" className="nx-logo-light" /><img src="/brand/logo-dark.png" alt="" className="nx-logo-dark" /><p>The front desk for salons.</p><a href="mailto:hello@curivanta.com">hello@curivanta.com</a></div>
-      <div><h4>Product</h4><Link to="/new/missed-calls">Missed calls and texts</Link><Link to="/new/reviews">Reviews</Link><Link to="/new/phone">Phone</Link><Link to="/new/owner-app">Owner app</Link><Link to="/new/pricing">Pricing</Link></div>
-      <div><h4>Who it's for</h4><Link to="/new/salons">Salons with a team</Link><Link to="/new/solo">Solo stylists</Link><Link to="/new/locations">Several locations</Link></div>
-      <div><h4>Resources</h4><Link to="/new/roi">ROI calculator</Link><Link to="/new/blog">Blog</Link><Link to="/new/salonultimate">SalonUltimate</Link><Link to="/new/square">Square</Link></div>
-      <div><h4>Company</h4><Link to="/new/story">Our story</Link><a href={SIGNIN_URL}>Sign in</a><Link to="/new/privacy">Privacy</Link><Link to="/new/terms">Terms</Link></div>
+      <div><h4>Product</h4><Link to="/missed-calls">Missed calls and texts</Link><Link to="/reviews">Reviews</Link><Link to="/phone">Phone</Link><Link to="/owner-app">Owner app</Link><Link to="/pricing">Pricing</Link></div>
+      <div><h4>Who it's for</h4><Link to="/salons">Salons with a team</Link><Link to="/solo">Solo stylists</Link><Link to="/locations">Several locations</Link></div>
+      <div><h4>Resources</h4><Link to="/roi">ROI calculator</Link><Link to="/blog">Blog</Link><Link to="/salonultimate">SalonUltimate</Link><Link to="/square">Square</Link></div>
+      <div><h4>Company</h4><Link to="/story">Our story</Link><a href={SIGNIN_URL}>Sign in</a><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link></div>
     </div>
     <div className="nx-wrap nx-copy">© 2026 Curivanta</div>
   </footer>
@@ -104,7 +100,8 @@ export const ListCard = ({ head, rows }: { head: string; rows: [string, string, 
 );
 
 // Pages shared with the live site (blog, terms, privacy, integrations) show the new look under /new/...
-export const useIsNew = () => useLocation().pathname.startsWith('/new');
+// Since the switch-over (2026-11-22) every page has the new look; kept so shared pages read the same.
+export const useIsNew = () => true;
 
 export const NxShell = ({ children }: { children: React.ReactNode }) => (
   <div className="nx"><NxNav /><main>{children}</main><NxFoot /></div>
@@ -115,7 +112,7 @@ export const NxFinal = () => (
     <div className="nx-wrap nx-final-in">
       <h2>Stop losing bookings to missed calls.</h2>
       <p>Set up in about 15 minutes. Your monthly plan starts only when texting goes live.</p>
-      <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><Link className="nx-btn nx-btn-ghost" to="/new">See everything Curivanta does</Link></div>
+      <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><Link className="nx-btn nx-btn-ghost" to="/">See everything Curivanta does</Link></div>
     </div>
   </section>
 );

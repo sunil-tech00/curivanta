@@ -43,7 +43,7 @@ const SQUARE_NEW: Integration = {
   ...SQUARE,
   sub: fix(SQUARE.sub).replace('Every Square checkout', "It works on Square's free Appointments plan, and you connect it by signing in to Square: no password to share. Every Square checkout"),
   faq: SQUARE.faq.map(f => ({ ...f, a: fix(f.a) })),
-  other: { to: '/new/salonultimate', label: 'SalonUltimate' },
+  other: { to: '/salonultimate', label: 'SalonUltimate' },
 };
 
 const SquarePage = () => <IntegrationPage page={useIsNew() ? SQUARE_NEW : SQUARE} />;

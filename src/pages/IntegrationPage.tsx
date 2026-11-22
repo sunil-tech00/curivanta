@@ -41,7 +41,7 @@ const IntegrationPage = ({ page }: { page: Integration }) => {
               <ul className="h-does">{page.does.map(d => <li key={d}>{d}</li>)}</ul>
               <div className="h-ctas">
                 <a className="h-btn h-btn-primary" href={START_URL} data-umami-event="cta_get_started" data-umami-event-where={`${page.key}_hero`}>Get started</a>
-                <Link className="h-btn h-btn-ghost" to={isNew ? "/new/pricing" : "/#pricing"}>See plans and prices</Link>
+                <Link className="h-btn h-btn-ghost" to={isNew ? "/pricing" : "/#pricing"}>See plans and prices</Link>
               </div>
               <div className="h-notes">
                 <span>From $49/mo, starts when texting goes live</span>

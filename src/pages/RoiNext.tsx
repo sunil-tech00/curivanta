@@ -125,7 +125,7 @@ const RoiNext = () => {
           <div className="nx-wrap nx-final-in">
             <h2>Catch the next missed call.</h2>
             <p>Set up in about 15 minutes. Your monthly plan starts only when texting goes live.</p>
-            <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><Link className="nx-btn nx-btn-ghost" to="/new#pricing">See plans {I.arrow}</Link></div>
+            <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><Link className="nx-btn nx-btn-ghost" to="/#pricing">See plans {I.arrow}</Link></div>
           </div>
         </section>
       </main>

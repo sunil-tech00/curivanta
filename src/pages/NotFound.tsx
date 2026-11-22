@@ -22,8 +22,8 @@ const NotFound = () => {
     );
   }, [location.pathname]);
 
-  if (location.pathname.startsWith("/new")) return (
-    <NxShell><section className="nx-sec"><div className="nx-wrap nx-head"><h2>Page not found</h2><p>That page doesn't exist. <a href="/new">Go to the homepage</a></p></div></section></NxShell>
+  if (location.pathname.startsWith("/")) return (
+    <NxShell><section className="nx-sec"><div className="nx-wrap nx-head"><h2>Page not found</h2><p>That page doesn't exist. <a href="/">Go to the homepage</a></p></div></section></NxShell>
   );
 
   return (

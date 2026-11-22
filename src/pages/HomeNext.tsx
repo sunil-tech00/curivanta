@@ -70,14 +70,14 @@ const FEED = [
 ];
 
 const PRODUCTS = [
-  { icon: I.missed, t: 'Missed-call text-back', to: '/new/missed-calls', d: 'Callers you miss get a text within a minute.' },
-  { icon: I.chat, t: 'Texting and booking', to: '/new/missed-calls', d: 'Answers questions and books open times by text.' },
-  { icon: I.star, t: 'Review requests', to: '/new/reviews', d: 'One short text after a visit, with your Google link.' },
-  { icon: I.reply, t: 'Google review replies', to: '/new/reviews', d: 'A reply drafted for every new review, you approve.' },
-  { icon: I.phone, t: 'Phone', to: '/new/phone', d: 'Call from the app with your number. Hold and transfer.' },
-  { icon: I.headset, t: 'Calls answered', to: '/new/phone', d: 'On Pro, calls nobody picks up get answered and booked.', pro: true },
-  { icon: I.user, t: 'Every client remembered', to: '/new/owner-app#client-page', d: 'Every call, text, visit and review, per client.' },
-  { icon: I.chart, t: 'Home and morning email', to: '/new/owner-app', d: 'How the salon did, and what needs you.' },
+  { icon: I.missed, t: 'Missed-call text-back', to: '/missed-calls', d: 'Callers you miss get a text within a minute.' },
+  { icon: I.chat, t: 'Texting and booking', to: '/missed-calls', d: 'Answers questions and books open times by text.' },
+  { icon: I.star, t: 'Review requests', to: '/reviews', d: 'One short text after a visit, with your Google link.' },
+  { icon: I.reply, t: 'Google review replies', to: '/reviews', d: 'A reply drafted for every new review, you approve.' },
+  { icon: I.phone, t: 'Phone', to: '/phone', d: 'Call from the app with your number. Hold and transfer.' },
+  { icon: I.headset, t: 'Calls answered', to: '/phone', d: 'On Pro, calls nobody picks up get answered and booked.', pro: true },
+  { icon: I.user, t: 'Every client remembered', to: '/owner-app#client-page', d: 'Every call, text, visit and review, per client.' },
+  { icon: I.chart, t: 'Home and morning email', to: '/owner-app', d: 'How the salon did, and what needs you.' },
 ];
 
 const JOURNEY: { step: string; title: string; text: string; card: Line[]; link?: [string, string] }[] = [
@@ -88,7 +88,7 @@ const JOURNEY: { step: string; title: string; text: string; card: Line[]; link?:
   { step: 'Review request', title: 'One short text asks for a review', text: 'Every request includes your Google link, happy client or not. You set how many go out each day.', card: [{ who: 'us', t: 'Hope your visit with Maya was a hit! A quick Google review would mean the world to us.' }] },
   { step: 'Rating', title: 'She rates her visit with Maya', text: 'Clients can reply 1 to 5. Anything below 4, or a note, comes straight to you so you can make it right.', card: [{ who: 'them', t: '5! She was amazing' }] },
   { step: 'Google reply', title: 'Her Google review gets a thank-you', text: 'A reply is drafted in your salon\'s voice. Approve it with one tap, and it posts on Google.', card: [{ who: 'ok', t: 'New 5-star review · reply ready to approve' }] },
-  { step: 'Next visit', title: 'Curivanta remembers her', text: 'Her name, her usual stylist and what she booked last time are already there, so booking again takes one reply.', link: ['/new/owner-app#client-page', "See a client's page"], card: [{ who: 'them', t: 'Can I get in next week?' }, { who: 'us', t: 'Hi Dana! Another cut and color with Maya? She has Thursday at 4.' }] },
+  { step: 'Next visit', title: 'Curivanta remembers her', text: 'Her name, her usual stylist and what she booked last time are already there, so booking again takes one reply.', link: ['/owner-app#client-page', "See a client's page"], card: [{ who: 'them', t: 'Can I get in next week?' }, { who: 'us', t: 'Hi Dana! Another cut and color with Maya? She has Thursday at 4.' }] },
 ];
 
 const FAQ = [
@@ -100,7 +100,7 @@ const FAQ = [
 ];
 
 const HomeNext = () => {
-  useSamplePage('Curivanta | Turn missed calls into booked appointments');
+  useSamplePage("Curivanta | Your front desk when everyone's with a client");
   const { hash } = useLocation();
   useEffect(() => { if (hash) document.getElementById(hash.slice(1))?.scrollIntoView(); }, [hash]);
 
@@ -130,7 +130,7 @@ const HomeNext = () => {
             </p>
             <div className="nx-ctas">
               <a className="nx-btn" href={START_URL}>Get started</a>
-              <Link className="nx-btn nx-btn-ghost" to="/new/roi">See what missed calls cost you</Link>
+              <Link className="nx-btn nx-btn-ghost" to="/roi">See what missed calls cost you</Link>
             </div>
             <p className="nx-hear">Hear it answer a call: <a href="tel:+19495231889">call our demo salon at (949) 523-1889</a></p>
             <p className="nx-fine">From $49/month · AI call answering on Light and Pro · Set up in about 15 minutes · No contract</p>
@@ -170,7 +170,7 @@ const HomeNext = () => {
               <div><b>4.4 → 4.5</b><span>Google rating in one week</span></div>
             </div>
             </div>
-            <p className="nx-works">Works with <Link to="/new/salonultimate">SalonUltimate</Link> · <Link to="/new/square">Square</Link> · Google · any online booking link</p>
+            <p className="nx-works">Works with <Link to="/salonultimate">SalonUltimate</Link> · <Link to="/square">Square</Link> · Google · any online booking link</p>
           </div>
         </section>
 
@@ -295,7 +295,7 @@ const HomeNext = () => {
               <li>{I.check}Nothing monthly until your texting is live</li>
               <li>{I.check}A real person answers at hello@curivanta.com</li>
             </ul>
-            <p className="nx-center"><Link to="/new/pricing">Compare plans in detail →</Link> &nbsp;·&nbsp; <Link to="/new/roi">Will it pay for itself? →</Link></p>
+            <p className="nx-center"><Link to="/pricing">Compare plans in detail →</Link> &nbsp;·&nbsp; <Link to="/roi">Will it pay for itself? →</Link></p>
           </div>
         </section>
 
@@ -310,7 +310,7 @@ const HomeNext = () => {
           <div className="nx-wrap nx-final-in">
             <h2>Stop losing bookings to missed calls.</h2>
             <p>Set up in about 15 minutes. Your monthly plan starts only when texting goes live.</p>
-            <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><Link className="nx-btn nx-btn-ghost" to="/new/roi">Try the ROI calculator</Link></div>
+            <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><Link className="nx-btn nx-btn-ghost" to="/roi">Try the ROI calculator</Link></div>
           </div>
         </section>
       </main>

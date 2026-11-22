@@ -1,13 +1,13 @@
 # Curivanta
 
-> Curivanta is an AI front desk for hair salons and solo stylists in the US. It texts back every missed call, answers clients' texts 24/7 and books appointments straight into SalonUltimate or Square, sends Google review requests after checkout, and on the Pro plan answers the phone with an AI assistant. Built by a salon owner and run every day in the founder's own salons. Plans from $49/month.
+> Curivanta is an AI front desk for salons and solo stylists in the US. Its AI receptionist answers the calls the salon can't get to in a natural voice and books them into the calendar; it texts back missed calls, answers clients' texts and books appointments straight into SalonUltimate or Square, and sends Google review requests after checkout. Built by a salon owner and run every day in the founder's own salons. Plans from $49/month. Hear it: call the demo salon, Glow Studio, at (949) 523-1889.
 
 ## What it does
 
 - Missed-call text-back: callers get a text from the salon within about a minute. Salons keep their number and forward missed calls; solo stylists get a business number that rings their cell.
 - AI texting (powered by Claude): answers questions about services, prices, hours and policies, recognizes returning clients, and books real open times. If the salon switches it on, clients can move or cancel their own appointment (never within 24 hours). The owner can save a reply so the AI answers that question next time. English and Spanish.
 - Booking: books directly into SalonUltimate (live openings from its BookedBy online booking) and into Square Appointments (works on Square's free Appointments plan; follows the salon's online booking settings). Other booking software: the AI sends the salon's own online booking link.
-- Google review requests: a text after the visit that names the client's stylist and carries the salon's own Google review link (clients can also reply 1 to 5), to every client (no review gating), at most once in 90 days; ratings by stylist; AI-drafted replies to Google reviews.
+- Google review requests: a text after the visit that names the client's stylist and carries the salon's own Google review link (clients can also reply 1 to 5); every request includes the Google link (no review gating), at most once in 90 days; ratings by stylist; AI-drafted replies to Google reviews.
 - AI phone answering (Pro): answers calls nobody picks up, says it is the salon's automated assistant and that the call is recorded, answers questions, books, and texts a confirmation. On a bad line it offers to finish by text. Owners can play each call's recording and read what was said.
 - Phone: call and take calls from the app with the salon's number showing; hold and transfer. Forwarded calls go straight to the greeting and text-back. Voicemails as text and audio.
 - Owner app (phone first): every client's calls, texts, visits and reviews in one place; team sign-ins with roles; phone alerts; a morning summary email; Help inside the app with a real person behind it. Android and iPhone apps coming soon.
@@ -27,10 +27,14 @@
 
 ## Pages
 
-- [Home](https://curivanta.com/): product, pricing and FAQ
-- [Curivanta for Square](https://curivanta.com/square): booking into Square Appointments, Square FAQ
-- [Curivanta for SalonUltimate](https://curivanta.com/salonultimate): booking into SalonUltimate, SalonUltimate FAQ
-- [Blog](https://curivanta.com/blog): advice for salon owners: [How many clients does your salon lose to missed calls?](https://curivanta.com/blog/missed-calls-salon) and [How to get more Google reviews for your salon](https://curivanta.com/blog/salon-google-reviews)
+- [Home](https://curivanta.com/): what Curivanta does, a live demo, pilot results, pricing and FAQ
+- [Pricing](https://curivanta.com/pricing): plans compared, billing questions
+- [ROI calculator](https://curivanta.com/roi): what missed calls cost a salon and when a plan pays for itself
+- [Missed calls](https://curivanta.com/missed-calls), [Reviews](https://curivanta.com/reviews), [Phone](https://curivanta.com/phone), [Owner app](https://curivanta.com/owner-app): each feature in detail
+- [Salons with a team](https://curivanta.com/salons), [Solo stylists](https://curivanta.com/solo), [Several locations](https://curivanta.com/locations)
+- [Curivanta for Square](https://curivanta.com/square) and [Curivanta for SalonUltimate](https://curivanta.com/salonultimate): booking-system details and FAQ
+- [Blog](https://curivanta.com/blog): [How many clients does your salon lose to missed calls?](https://curivanta.com/blog/missed-calls-salon) and [How to get more Google reviews for your salon](https://curivanta.com/blog/salon-google-reviews)
+- [Our story](https://curivanta.com/story)
 - [Get started](https://app.curivanta.com/start)
 - [Privacy](https://curivanta.com/privacy) and [Terms](https://curivanta.com/terms)
 
