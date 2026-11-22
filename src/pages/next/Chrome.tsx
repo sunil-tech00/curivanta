@@ -21,6 +21,8 @@ export const I = {
   user: <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>,
   headset: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v-2a8 8 0 0116 0v2M4 14h3v6H5a1 1 0 01-1-1zM20 14h-3v6h2a1 1 0 001-1z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>,
   scissors: <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3" fill="none" stroke="currentColor" strokeWidth="2" /><circle cx="6" cy="18" r="3" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M8.5 7.5L20 18M8.5 16.5L20 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>,
+  tag: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4a1 1 0 011-1h8l9 9-9 9z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><circle cx="8" cy="8" r="1.6" fill="currentColor" /></svg>,
+  bolt: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="currentColor" /></svg>,
   arrow: <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>,
 };
 
@@ -44,8 +46,8 @@ export const NxNav = () => (
       </Link>
       <nav className="nx-links" aria-label="Site">
         <Link to="/new#product">Product</Link>
-        <Link to="/new#journey">How it works</Link>
-        <Link to="/new#pricing">Pricing</Link>
+        <Link to="/new/salons">Who it's for</Link>
+        <Link to="/new/pricing">Pricing</Link>
         <Link to="/new/roi">ROI calculator</Link>
         <Link to="/blog">Blog</Link>
       </nav>
@@ -62,11 +64,27 @@ export const NxFoot = () => (
   <footer className="nx-foot">
     <div className="nx-wrap nx-foot-grid">
       <div className="nx-foot-brand"><img src="/brand/logo-light.png" alt="Curivanta" className="nx-logo-light" /><img src="/brand/logo-dark.png" alt="" className="nx-logo-dark" /><p>The front desk for salons.</p><a href="mailto:hello@curivanta.com">hello@curivanta.com</a></div>
-      <div><h4>Product</h4><Link to="/new#product">Missed calls and texts</Link><Link to="/new#product">Reviews</Link><Link to="/new#product">Phone</Link><Link to="/new#product">Owner app</Link><Link to="/new#pricing">Pricing</Link></div>
-      <div><h4>Who it's for</h4><Link to="/new#pricing">Salons with a team</Link><Link to="/new#pricing">Solo stylists</Link><Link to="/new#pricing">Several locations</Link></div>
+      <div><h4>Product</h4><Link to="/new/missed-calls">Missed calls and texts</Link><Link to="/new/reviews">Reviews</Link><Link to="/new/phone">Phone</Link><Link to="/new/owner-app">Owner app</Link><Link to="/new/pricing">Pricing</Link></div>
+      <div><h4>Who it's for</h4><Link to="/new/salons">Salons with a team</Link><Link to="/new/solo">Solo stylists</Link><Link to="/new/locations">Several locations</Link></div>
       <div><h4>Resources</h4><Link to="/new/roi">ROI calculator</Link><Link to="/blog">Blog</Link><Link to="/salonultimate">SalonUltimate</Link><Link to="/square">Square</Link></div>
-      <div><h4>Company</h4><Link to="/new#story">Our story</Link><a href={SIGNIN_URL}>Sign in</a><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link></div>
+      <div><h4>Company</h4><Link to="/new/story">Our story</Link><a href={SIGNIN_URL}>Sign in</a><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link></div>
     </div>
     <div className="nx-wrap nx-copy">© 2026 Curivanta</div>
   </footer>
+);
+
+// Chat bubbles, notes and "done" lines, used by the demo cards.
+export type Line = { who: 'us' | 'them' | 'note' | 'ok'; t: string };
+export const Bubbles = ({ lines }: { lines: Line[] }) => (
+  <>{lines.map((l, i) => l.who === 'ok' ? <div key={i} className="nx-booked">{I.check}{l.t}</div>
+    : l.who === 'note' ? <div key={i} className="nx-note">{l.t}</div>
+    : <p key={i} className={'nx-b ' + l.who}>{l.t}</p>)}</>
+);
+
+// A card with a header and timeline rows: [dot color, text, time].
+export const ListCard = ({ head, rows }: { head: string; rows: [string, string, string][] }) => (
+  <div className="nx-card nx-listcard">
+    <div className="nx-feed-h"><b>{head}</b></div>
+    <ul>{rows.map(([c, t, w]) => <li key={t}><span className={'nx-tl ' + c} />{t}<time>{w}</time></li>)}</ul>
+  </div>
 );

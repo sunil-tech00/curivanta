@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { I, NxFoot, NxNav, Ph, START_URL, useSamplePage } from './next/Chrome';
+import { Bubbles, I, NxFoot, NxNav, Ph, START_URL, useSamplePage, type Line } from './next/Chrome';
 import './next/next.css';
 
 // Sample homepage (2026-11-21, branch homepage-human), take 3: Weave's simple structure plus LendAPI's best
@@ -8,7 +8,6 @@ import './next/next.css';
 // product cards (each will open its own page), a step-by-step client journey, dated setup, an FAQ before
 // the final ask. Served at /new, noindex. <Ph> marks placeholders.
 
-type Line = { who: 'us' | 'them' | 'note' | 'ok'; t: string };
 const DEMO: { key: string; tab: string; icon: JSX.Element; head: string; lines: Line[] }[] = [
   { key: 'textback', tab: 'Text-back', icon: I.missed, head: 'Missed call · 2:14 PM', lines: [
     { who: 'note', t: 'Missed call from (949) 555-0142' },
@@ -45,14 +44,14 @@ const FEED = [
 ];
 
 const PRODUCTS = [
-  { icon: I.missed, t: 'Missed-call text-back', d: 'Every caller you miss gets a text within a minute.' },
-  { icon: I.chat, t: 'Texting and booking', d: 'Answers questions and books open times by text.' },
-  { icon: I.star, t: 'Review requests', d: 'One short text after each visit with your Google link.' },
-  { icon: I.reply, t: 'Google review replies', d: 'A reply drafted for every new review, you approve.' },
-  { icon: I.phone, t: 'Phone', d: 'Call from the app with your number. Hold and transfer.' },
-  { icon: I.headset, t: 'Calls answered', d: 'On Pro, calls nobody picks up get answered and booked.', pro: true },
-  { icon: I.user, t: 'Client pages', d: 'Every call, text, visit and review, per client.' },
-  { icon: I.chart, t: 'Home and morning email', d: 'How the salon did, and what needs you.' },
+  { icon: I.missed, t: 'Missed-call text-back', to: '/new/missed-calls', d: 'Every caller you miss gets a text within a minute.' },
+  { icon: I.chat, t: 'Texting and booking', to: '/new/missed-calls', d: 'Answers questions and books open times by text.' },
+  { icon: I.star, t: 'Review requests', to: '/new/reviews', d: 'One short text after each visit with your Google link.' },
+  { icon: I.reply, t: 'Google review replies', to: '/new/reviews', d: 'A reply drafted for every new review, you approve.' },
+  { icon: I.phone, t: 'Phone', to: '/new/phone', d: 'Call from the app with your number. Hold and transfer.' },
+  { icon: I.headset, t: 'Calls answered', to: '/new/phone', d: 'On Pro, calls nobody picks up get answered and booked.', pro: true },
+  { icon: I.user, t: 'Client pages', to: '/new/owner-app', d: 'Every call, text, visit and review, per client.' },
+  { icon: I.chart, t: 'Home and morning email', to: '/new/owner-app', d: 'How the salon did, and what needs you.' },
 ];
 
 const JOURNEY: { step: string; title: string; text: string; card: Line[] }[] = [
@@ -72,12 +71,6 @@ const FAQ = [
   ['Is there a contract?', 'No. Plans are month to month. Your monthly plan starts only when texting goes live, and if you cancel it ends at the end of the month you paid for.'],
   ['What if a client asks something it can\'t handle?', 'Complaints, unusual requests and anything unclear come to you with the whole conversation, as a notification on your phone.'],
 ];
-
-const Bubbles = ({ lines }: { lines: Line[] }) => (
-  <>{lines.map((l, i) => l.who === 'ok' ? <div key={i} className="nx-booked">{I.check}{l.t}</div>
-    : l.who === 'note' ? <div key={i} className="nx-note">{l.t}</div>
-    : <p key={i} className={'nx-b ' + l.who}>{l.t}</p>)}</>
-);
 
 const HomeNext = () => {
   useSamplePage('Curivanta | Turn missed calls into booked appointments');
@@ -156,12 +149,12 @@ const HomeNext = () => {
             </div>
             <div className="nx-grid">
               {PRODUCTS.map(p => (
-                <a className="nx-tile" href="#product" key={p.t}>
+                <Link className="nx-tile" to={p.to} key={p.t}>
                   <span className="nx-ic">{p.icon}</span>
                   <h3>{p.t}{p.pro && <em className="nx-pro">Pro</em>}</h3>
                   <p>{p.d}</p>
                   <span className="nx-more">Learn more {I.arrow}</span>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -225,7 +218,7 @@ const HomeNext = () => {
               <div className="nx-price main"><span className="nx-tag">Most salons</span><h3>Light</h3><p className="nx-for">For salons with a team</p><div className="nx-amt">$99<small>/month</small></div><p>Keep your salon number. Team logins, ratings by stylist, and 30 minutes a month of calls answered for you.</p><a className="nx-btn" href={START_URL}>Start with Light</a></div>
               <div className="nx-price"><h3>Pro</h3><p className="nx-for">Every call answered</p><div className="nx-amt">$149<small>/month</small></div><p>Everything in Light, and calls nobody picks up are answered all month.</p><a className="nx-btn nx-btn-ghost" href={START_URL + '?plan=pro'}>Start with Pro</a></div>
             </div>
-            <p className="nx-center"><a href="#pricing">Compare plans in detail →</a> &nbsp;·&nbsp; <Link to="/new/roi">Will it pay for itself? →</Link></p>
+            <p className="nx-center"><Link to="/new/pricing">Compare plans in detail →</Link> &nbsp;·&nbsp; <Link to="/new/roi">Will it pay for itself? →</Link></p>
           </div>
         </section>
 

@@ -7,6 +7,9 @@ import { ThemeProvider } from "next-themes";
 import Home from "./pages/HomePreview";
 import HomeNext from "./pages/HomeNext";
 import RoiNext from "./pages/RoiNext";
+import PricingNext from "./pages/PricingNext";
+import StoryNext from "./pages/StoryNext";
+import NextPage from "./pages/NextPages";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -38,6 +41,9 @@ const App = () => (
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/new" element={<HomeNext />} />
           <Route path="/new/roi" element={<RoiNext />} />
+          <Route path="/new/pricing" element={<PricingNext />} />
+          <Route path="/new/story" element={<StoryNext />} />
+          <Route path="/new/:slug" element={<NextPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
