@@ -158,7 +158,7 @@ export const PAGES: Record<string, PageDef> = {
         points: ['Ratings and reviews by stylist', 'Call from the app with your salon number, hold and transfer'],
         art: { head: 'By stylist · this month', tiles: [['4.9 ★', 'Maya'], ['4.9 ★', 'Jordan'], ['4.7 ★', 'Aisha'], ['46', 'booked by Curivanta']] } },
     ],
-    facts: [[I.phone, 'Your number', 'Forward missed calls'], [I.user, 'Team logins', 'Roles for managers and front desk'], [I.cal, 'Books in', 'SalonUltimate and Square'], [I.headset, 'Pro', 'Calls answered for you, 200 minutes a month']],
+    facts: [[I.phone, 'Caller ID', 'Your salon name shows when you call'], [I.user, 'Team logins', 'Roles for managers and front desk'], [I.cal, 'Books in', 'SalonUltimate and Square'], [I.headset, 'Pro', 'Calls answered for you, 200 minutes a month']],
     faq: [['Light or Pro?', 'Light covers texting, booking and reviews, with 30 minutes a month of calls answered for you. Pro includes 200 minutes a month of calls answered for you, about 100 calls, then $10 per 50 more minutes.']],
     next: [['/new/pricing', 'Pricing'], ['/new/locations', 'Several locations']],
   },
