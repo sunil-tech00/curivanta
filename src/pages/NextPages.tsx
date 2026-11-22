@@ -7,7 +7,7 @@ import './next/next.css';
 // rows that alternate sides, a strip of smaller facts, questions, and the closing ask. Served at
 // /new/<slug>, noindex. Facts follow curivanta-app (CLAUDE.md) and the current homepage FAQ.
 
-type Art = { chat: Line[]; head?: string } | { list: [string, string, string][]; head: string } | { tiles: [string, string][]; head: string };
+type Art = { img: string; frame: 'browser' | 'phone'; alt: string } | { chat: Line[]; head?: string } | { list: [string, string, string][]; head: string } | { tiles: [string, string][]; head: string };
 type Row = { h: string; p: string; points?: string[]; art: Art };
 export type PageDef = {
   title: string; h1: string; lede: string; plan?: string; art: Art;
@@ -16,6 +16,9 @@ export type PageDef = {
 };
 
 const ArtCard = ({ art }: { art: Art }) => {
+  if ('img' in art) return art.frame === 'browser'
+    ? <div className="nx-browser"><div className="nx-browser-bar"><i /><i /><i /><span>app.curivanta.com</span></div><img src={art.img} alt={art.alt} /></div>
+    : <div className="nx-handset solo"><img src={art.img} alt={art.alt} /></div>;
   if ('chat' in art) return <div className="nx-card nx-chatcard">{art.head && <div className="nx-card-h">{art.head}</div>}<Bubbles lines={art.chat} /></div>;
   if ('list' in art) return <ListCard head={art.head} rows={art.list} />;
   return (
@@ -120,13 +123,13 @@ export const PAGES: Record<string, PageDef> = {
     title: 'The salon owner app: calls, bookings and reviews on one screen | Curivanta',
     h1: 'Know how your salon did, any time.',
     lede: 'Calls, bookings and reviews on one screen, on your phone or computer. What needs you is at the top, and a short email lands every morning.',
-    art: { head: 'Today at Glow Studio', tiles: [['21', 'calls'], ['7', 'missed, all texted back'], ['6', 'booked · $540'], ['2', 'new Google reviews']] },
+    art: { img: '/shots/app-home.webp', frame: 'browser', alt: 'Curivanta Home with a sample salon' },
     rows: [
       { h: 'Home: today, this week or this month', p: 'Every number compared with the same stretch before, a chart that follows the dates you pick, and each stylist\'s ratings and reviews.',
         points: ['"Needs you" first: conversations waiting and low ratings', '"Since you started": what Curivanta has done for you so far'],
         art: { head: 'Needs you', list: [['amber', 'Kim B. asked for a call back', '12m'], ['amber', 'Refund question from Lena', '38m'], ['red', 'Rated 3 with a note', '1h']] } },
       { h: 'One page per client', p: 'Every call, text, visit and review for each client, in order. Play a voicemail or a call recording, read the transcript, and reply from the same page.',
-        art: { head: 'Sarah L. · 9 visits', list: [['blue', 'Texted: "Anything Saturday?"', '8:47 PM'], ['green', 'Booked Sat 10:00, root touch-up', '8:49 PM'], ['amber', 'Rated Jess 5 ★', 'Oct 4'], ['gray', 'Missed call, texted back', 'Sep 12']] } },
+        art: { img: '/shots/app-client.webp', frame: 'phone', alt: 'A client page in the Curivanta app' } },
       { h: 'One notification, not five', p: 'Only what needs you, on your phone: hand-offs, voicemails, new reviews and bookings. Quiet from 9 PM to 8 AM. Plus a morning email with yesterday\'s numbers.',
         points: ['Team logins: managers run the day, front desk handles clients', 'Billing and plan settings stay with you', 'One login for several salons'],
         art: { head: 'Morning email · 8:00 AM', tiles: [['14', 'calls, ▲ 3'], ['5', 'booked, ▲ 2'], ['4', 'reviews'], ['4.9 ★', 'average rating']] } },

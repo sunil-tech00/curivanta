@@ -8,31 +8,51 @@ import './next/next.css';
 // product cards (each will open its own page), a step-by-step client journey, dated setup, an FAQ before
 // the final ask. Served at /new, noindex. <Ph> marks placeholders.
 
-const DEMO: { key: string; tab: string; icon: JSX.Element; head: string; lines: Line[] }[] = [
-  { key: 'textback', tab: 'Text-back', icon: I.missed, head: 'Missed call · 2:14 PM', lines: [
-    { who: 'note', t: 'Missed call from (949) 555-0142' },
-    { who: 'us', t: "Hi, it's Glow Studio. Sorry we missed your call! How can we help? You can book right here." },
-    { who: 'them', t: 'Do you have anything Saturday for a cut and color?' },
+// The hero phone is the client's iPhone: the salon's texts are gray on the left, the client's are green (SMS) on
+// the right. The Calls tab is the iPhone call screen with what's being said. "done" shows beside the phone.
+type Msg = { from: 'salon' | 'me'; t: string };
+const DEMO: { key: string; tab: string; icon: JSX.Element; kind: 'sms' | 'call'; when: string; msgs: Msg[]; done: string }[] = [
+  { key: 'textback', tab: 'Text-back', icon: I.missed, kind: 'sms', when: 'Today 2:14 PM', done: 'Missed call texted back in 38 seconds', msgs: [
+    { from: 'salon', t: "Hi, it's Glow Studio. Sorry we missed your call! How can we help? You can book right here." },
+    { from: 'me', t: 'Hi! Anything Saturday for a cut and color?' },
   ] },
-  { key: 'booking', tab: 'Booking', icon: I.cal, head: 'Dana · text', lines: [
-    { who: 'them', t: 'Do you have anything Saturday for a cut and color?' },
-    { who: 'us', t: 'Maya has 10:00 or 1:30 on Saturday. Which works?' },
-    { who: 'them', t: '10 please!' },
-    { who: 'us', t: "You're booked: Sat 10:00 AM, cut and color with Maya. See you then!" },
-    { who: 'ok', t: 'Booked in your calendar' },
+  { key: 'booking', tab: 'Booking', icon: I.cal, kind: 'sms', when: 'Today 2:15 PM', done: 'Booked in your calendar', msgs: [
+    { from: 'me', t: 'Hi! Anything Saturday for a cut and color?' },
+    { from: 'salon', t: 'Maya has 10:00 or 1:30 on Saturday. Which works?' },
+    { from: 'me', t: '10 please!' },
+    { from: 'salon', t: "You're booked: Sat 10:00 AM, cut and color with Maya. See you then!" },
   ] },
-  { key: 'reviews', tab: 'Reviews', icon: I.star, head: 'Dana · after her visit', lines: [
-    { who: 'us', t: 'Hi Dana, hope your visit with Maya at Glow Studio was a hit! A quick Google review would mean the world to us: g.page/r/glow Or reply 1-5 to rate Maya.' },
-    { who: 'them', t: '5! She was amazing' },
-    { who: 'ok', t: 'New 5-star Google review' },
+  { key: 'reviews', tab: 'Reviews', icon: I.star, kind: 'sms', when: 'Sat 12:20 PM', done: 'New 5-star Google review', msgs: [
+    { from: 'salon', t: 'Hi Dana, hope your visit with Maya at Glow Studio was a hit! A quick Google review would mean the world to us: g.page/r/glow Or reply 1-5 to rate Maya.' },
+    { from: 'me', t: '5! She was amazing' },
   ] },
-  { key: 'calls', tab: 'Calls (Pro)', icon: I.headset, head: 'Call · 7:42 PM, after hours', lines: [
-    { who: 'us', t: "Hi, thanks for calling Glow Studio. I'm the salon's automated assistant, and this call is recorded and transcribed. How can I help?" },
-    { who: 'them', t: 'Can Maya do a trim Saturday morning?' },
-    { who: 'us', t: 'She has ten or eleven thirty. Which works?' },
-    { who: 'ok', t: 'Booked Sat 10:00 · confirmation texted' },
+  { key: 'calls', tab: 'Calls (Pro)', icon: I.headset, kind: 'call', when: '0:48', done: 'Booked Sat 10:00 · confirmation texted', msgs: [
+    { from: 'salon', t: "Hi, thanks for calling Glow Studio. I'm the salon's automated assistant, and this call is recorded and transcribed. How can I help?" },
+    { from: 'me', t: 'Can Maya do a trim Saturday morning?' },
+    { from: 'salon', t: 'She has ten or eleven thirty. Which works?' },
   ] },
 ];
+
+const IPhone = ({ d }: { d: typeof DEMO[number] }) => (
+  <div className={'nx-iphone ' + d.kind}>
+    <div className="nx-iscr">
+      <div className="nx-istatus"><b>9:41</b><i className="nx-island" /><span className="nx-ibars"><i /><i /><i /><i /></span><span className="nx-ibatt" /></div>
+      {d.kind === 'sms' ? (<>
+        <div className="nx-ihead"><span className="nx-iback">‹</span><span className="nx-iav">G</span><small>Glow Studio ›</small></div>
+        <div className="nx-ibody" key={d.key}>
+          <p className="nx-iwhen"><b>Text Message</b><br />{d.when}</p>
+          {d.msgs.map((m, i) => <p key={i} className={'nx-ib ' + m.from}>{m.t}</p>)}
+        </div>
+        <div className="nx-iinput"><span className="nx-iplus">+</span><span className="nx-ifield">Text Message</span></div>
+      </>) : (<>
+        <div className="nx-icall-top"><small>Glow Studio</small><b>{d.when}</b></div>
+        <div className="nx-ibody call" key={d.key}>{d.msgs.map((m, i) => <p key={i} className={'nx-ib ' + m.from}>{m.t}</p>)}</div>
+        <div className="nx-ikeys">{['speaker', 'FaceTime', 'mute', 'more', 'end', 'keypad'].map(k => <span key={k} className={k === 'end' ? 'end' : ''}>{k === 'end' ? <i>{I.phone}</i> : <i />}<small>{k === 'end' ? 'End' : k}</small></span>)}</div>
+      </>)}
+      <i className="nx-ihome" />
+    </div>
+  </div>
+);
 
 const FEED = [
   ['blue', 'Texted back (949) 555-0142', '2m'],
@@ -94,10 +114,11 @@ const HomeNext = () => {
       <main id="top">
         <section className="nx-hero">
           <div className="nx-wrap nx-hero-in">
-            <h1>Turn missed calls into booked appointments.</h1>
+            <h1>Never miss another booking.</h1>
+            <p className="nx-beats">Every missed call texted back. Every client remembered. More 5-star reviews.</p>
             <p className="nx-lede">
-              Curivanta texts back every caller, books them into your calendar and asks happy clients for a Google
-              review. Built for salons, by a salon owner.
+              Curivanta is the front desk for salons. It texts back the calls you miss, books clients into your calendar
+              and asks every client for a Google review. Built by a salon owner.
             </p>
             <div className="nx-ctas">
               <a className="nx-btn" href={START_URL}>Get started</a>
@@ -115,9 +136,9 @@ const HomeNext = () => {
                 ))}
               </div>
               <div className="nx-demo-stage">
-                <div className="nx-phone" aria-live="polite">
-                  <div className="nx-phone-top"><span className="nx-av sm">G</span><div><b>Glow Studio</b><small>{d.head}</small></div></div>
-                  <div className="nx-phone-body" key={d.key}><Bubbles lines={d.lines} /></div>
+                <div className="nx-iwrap" aria-live="polite">
+                  <IPhone d={d} />
+                  <div className="nx-done" key={d.key}>{I.check}{d.done}</div>
                 </div>
                 <div className="nx-feed" aria-label="Sample of what Curivanta did today">
                   <div className="nx-feed-h"><b>Today at Glow Studio</b><span className="nx-live"><i />Live</span></div>
@@ -138,6 +159,27 @@ const HomeNext = () => {
               <div><b>4.3 → 4.5</b><span>Google rating in the first month</span></div>
             </div>
             <p className="nx-works">Works with <Link to="/salonultimate">SalonUltimate</Link> · <Link to="/square">Square</Link> · Google · any online booking link</p>
+          </div>
+        </section>
+
+        <section className="nx-sec nx-shots">
+          <div className="nx-wrap">
+            <div className="nx-head">
+              <h2>Your whole salon at a glance</h2>
+              <p>The real Curivanta app, on your computer and your phone. Shown here with a sample salon.</p>
+            </div>
+            <div className="nx-shotstage">
+              <div className="nx-browser">
+                <div className="nx-browser-bar"><i /><i /><i /><span>app.curivanta.com</span></div>
+                <img src="/shots/app-home.webp" alt="Curivanta Home: this week's calls, missed calls texted back, bookings, review requests and what needs you" width={1800} height={1250} loading="lazy" />
+              </div>
+              <div className="nx-handset"><img src="/shots/app-client.webp" alt="A client's page in the Curivanta app: the text conversation where she booked" width={720} height={1555} loading="lazy" /></div>
+            </div>
+            <div className="nx-shotnotes">
+              <div><b>Needs you, first</b><span>Call backs, questions and low ratings at the top, so nothing slips.</span></div>
+              <div><b>Every call and booking</b><span>Today, this week or this month, compared with before.</span></div>
+              <div><b>Every client, one page</b><span>Calls, texts, visits and reviews. Reply right from there.</span></div>
+            </div>
           </div>
         </section>
 

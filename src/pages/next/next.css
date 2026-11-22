@@ -428,3 +428,80 @@
 .nx .nx-promises p { color:var(--ink2); font-size:15.5px; }
 @media (max-width:860px) { .nx .nx-story { grid-template-columns:1fr; gap:24px; } .nx .nx-promises { grid-template-columns:1fr; } }
 .nx .nx-tl.red { background:var(--red); }
+
+/* ===== realistic iPhone (hero) ===== */
+.nx .nx-iwrap { position:relative; justify-self:center; }
+.nx .nx-iphone { width:310px; height:640px; border-radius:54px; padding:11px; background:linear-gradient(145deg,#3a3d44,#16171b 40%,#2b2d33); box-shadow:0 0 0 2px #5b5e66 inset, var(--shadow), 0 40px 80px -40px rgba(10,20,50,.5); }
+.nx .nx-iscr { position:relative; height:100%; border-radius:44px; overflow:hidden; background:#fff; color:#000; display:flex; flex-direction:column;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',system-ui,sans-serif; text-align:left; }
+.nx .nx-istatus { position:relative; display:flex; align-items:center; height:50px; padding:4px 26px 0 30px; font-size:15px; flex:none; }
+.nx .nx-istatus b { font-weight:600; }
+.nx .nx-island { position:absolute; left:50%; top:11px; transform:translateX(-50%); width:96px; height:28px; border-radius:20px; background:#000; }
+.nx .nx-ibars { margin-left:auto; display:flex; align-items:flex-end; gap:2px; height:11px; }
+.nx .nx-ibars i { width:3px; background:currentColor; border-radius:1px; }
+.nx .nx-ibars i:nth-child(1) { height:4px; } .nx .nx-ibars i:nth-child(2) { height:6px; } .nx .nx-ibars i:nth-child(3) { height:8px; } .nx .nx-ibars i:nth-child(4) { height:11px; }
+.nx .nx-ibatt { width:24px; height:12px; margin-left:7px; border:1.5px solid rgba(0,0,0,.45); border-radius:4px; position:relative; }
+.nx .nx-ibatt::after { content:""; position:absolute; inset:1.5px 4px 1.5px 1.5px; background:#000; border-radius:1.5px; }
+.nx .nx-ihead { position:relative; display:flex; flex-direction:column; align-items:center; gap:3px; padding:4px 0 8px; background:#f6f6f6; border-bottom:.5px solid #d6d6d8; flex:none; }
+.nx .nx-iback { position:absolute; left:14px; top:6px; font-size:34px; line-height:1; color:#0a7aff; font-weight:300; }
+.nx .nx-iav { width:44px; height:44px; border-radius:50%; background:linear-gradient(#a7acb9,#858a96); color:#fff; display:grid; place-items:center; font-weight:600; font-size:19px; }
+.nx .nx-ihead small { font-size:11.5px; color:#000; }
+.nx .nx-ibody { flex:1; padding:10px 12px; display:flex; flex-direction:column; gap:4px; overflow:hidden; font-size:15px; line-height:1.3; }
+.nx .nx-iwhen { text-align:center; font-size:11px; color:#8a8a8e; margin:2px 0 8px !important; line-height:1.35; }
+.nx .nx-iwhen b { font-weight:600; }
+.nx .nx-ib { max-width:78%; padding:7px 12px; border-radius:18px; animation:nx-in .35s ease both; }
+.nx .nx-ib.salon { background:#e9e9eb; color:#000; align-self:flex-start; }
+.nx .nx-ib.me { background:#34c759; color:#fff; align-self:flex-end; }
+.nx .nx-ib + .nx-ib.me, .nx .nx-ib + .nx-ib.salon { margin-top:6px; }
+.nx .nx-ibody .nx-ib:nth-of-type(2) { animation-delay:.35s; } .nx .nx-ibody .nx-ib:nth-of-type(3) { animation-delay:.7s; } .nx .nx-ibody .nx-ib:nth-of-type(4) { animation-delay:1.05s; }
+.nx .nx-iinput { display:flex; align-items:center; gap:8px; padding:8px 12px 30px; flex:none; }
+.nx .nx-iplus { width:30px; height:30px; border-radius:50%; background:#e9e9eb; color:#8a8a8e; display:grid; place-items:center; font-size:22px; line-height:1; }
+.nx .nx-ifield { flex:1; border:1px solid #d1d1d6; border-radius:18px; padding:6px 12px; color:#b0b0b5; font-size:15px; }
+.nx .nx-ihome { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:120px; height:5px; border-radius:3px; background:#000; }
+/* call screen */
+.nx .nx-iphone.call .nx-iscr { background:linear-gradient(180deg,#4b5468,#262b38 55%,#1b1f29); color:#fff; }
+.nx .nx-iphone.call .nx-ibatt { border-color:rgba(255,255,255,.6); } .nx .nx-iphone.call .nx-ibatt::after { background:#fff; }
+.nx .nx-iphone.call .nx-ihome { background:#fff; }
+.nx .nx-icall-top { text-align:center; padding:18px 0 10px; flex:none; }
+.nx .nx-icall-top small { display:block; font-size:27px; font-weight:400; letter-spacing:-.01em; }
+.nx .nx-icall-top b { font-weight:400; font-size:15px; color:rgba(255,255,255,.7); }
+.nx .nx-ibody.call { font-size:13.5px; padding:6px 14px; }
+.nx .nx-ibody.call .nx-ib.salon { background:rgba(255,255,255,.16); color:#fff; }
+.nx .nx-ibody.call .nx-ib.me { background:rgba(255,255,255,.92); color:#111; }
+.nx .nx-ikeys { display:grid; grid-template-columns:repeat(3,1fr); gap:14px 0; padding:6px 22px 34px; flex:none; }
+.nx .nx-ikeys span { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.nx .nx-ikeys span > i { width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,.16); display:grid; place-items:center; }
+.nx .nx-ikeys span.end > i { background:#ff3b30; }
+.nx .nx-ikeys span.end svg { width:24px; height:24px; color:#fff; transform:rotate(135deg); }
+.nx .nx-ikeys small { font-size:11px; color:rgba(255,255,255,.85); text-transform:capitalize; }
+/* the result, beside the phone */
+.nx .nx-done { position:absolute; right:-70px; bottom:110px; display:flex; align-items:center; gap:8px; background:var(--card); color:var(--ink); border:1px solid var(--line); border-radius:14px; padding:10px 14px; font-size:14px; font-weight:600; box-shadow:var(--shadow); white-space:nowrap; animation:nx-in .4s ease 1.2s both; }
+.nx .nx-done svg { width:20px; height:20px; padding:3px; border-radius:50%; background:var(--green); color:#fff; }
+.nx .nx-demo-stage { grid-template-columns:auto 300px; gap:96px; }
+@media (max-width:760px) {
+  .nx .nx-demo-stage { grid-template-columns:1fr; gap:24px; }
+  .nx .nx-iphone { width:290px; height:600px; }
+  .nx .nx-done { left:0; right:0; margin:0 auto; width:max-content; bottom:-18px; }
+}
+
+/* ===== real app screens ===== */
+.nx .nx-shotstage { position:relative; max-width:1060px; margin:0 auto; padding-right:120px; }
+.nx .nx-browser { border:1px solid var(--line); border-radius:16px; overflow:hidden; background:var(--card); box-shadow:var(--shadow); }
+.nx .nx-browser-bar { display:flex; align-items:center; gap:6px; height:36px; padding:0 14px; background:var(--soft); border-bottom:1px solid var(--line); }
+.nx .nx-browser-bar i { width:10px; height:10px; border-radius:50%; background:var(--line); }
+.nx .nx-browser-bar span { margin:0 auto; font-size:12px; color:var(--ink3); background:var(--card); border-radius:8px; padding:3px 40px; }
+.nx .nx-browser img { display:block; width:100%; height:auto; }
+.nx .nx-handset { position:absolute; right:0; bottom:-40px; width:250px; border-radius:38px; padding:8px; background:#16171b; box-shadow:var(--shadow), 0 30px 60px -30px rgba(10,20,50,.5); }
+.nx .nx-handset img { display:block; width:100%; border-radius:31px; }
+.nx .nx-handset.solo { position:static; width:260px; margin:0 auto; }
+.nx .nx-shotnotes { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; max-width:1060px; margin:88px auto 0; }
+.nx .nx-shotnotes b { display:block; font-size:17px; margin-bottom:4px; }
+.nx .nx-shotnotes span { color:var(--ink2); font-size:15.5px; }
+.nx .nx-phero-art .nx-browser { max-width:none; }
+.nx .nx-beats { font-size:clamp(18px,2vw,22px); font-weight:600; color:var(--accent); margin-top:18px !important; }
+@media (max-width:860px) {
+  .nx .nx-shotstage { padding-right:0; }
+  .nx .nx-handset { position:relative; right:auto; bottom:auto; margin:-80px 12px 0 auto; width:170px; border-radius:28px; padding:6px; }
+  .nx .nx-handset img { border-radius:23px; }
+  .nx .nx-shotnotes { grid-template-columns:1fr; gap:18px; margin-top:32px; }
+}
