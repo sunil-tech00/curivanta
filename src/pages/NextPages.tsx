@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { Bubbles, I, ListCard, NxFoot, NxNav, START_URL, useSamplePage, type Line } from './next/Chrome';
+import { CallCard, Bubbles, I, ListCard, NxFoot, NxNav, START_URL, useSamplePage, type Line, type Said } from './next/Chrome';
 import NotFound from './NotFound';
 import { Anywhere } from './next/FrontDesk';
 import './next/next.css';
@@ -8,7 +8,7 @@ import './next/next.css';
 // rows that alternate sides, a strip of smaller facts, questions, and the closing ask. Served at
 // /new/<slug>, noindex. Facts follow curivanta-app (CLAUDE.md) and the current homepage FAQ.
 
-type Art = { img: string; frame: 'browser' | 'phone'; alt: string } | { chat: Line[]; head?: string } | { list: [string, string, string][]; head: string } | { tiles: [string, string][]; head: string };
+type Art = { call: Said[]; head: string; sub: string; done?: string; ended?: string } | { img: string; frame: 'browser' | 'phone'; alt: string } | { chat: Line[]; head?: string } | { list: [string, string, string][]; head: string } | { tiles: [string, string][]; head: string };
 type Row = { h: string; p: string; points?: string[]; art: Art };
 export type PageDef = {
   title: string; h1: string; lede: string; plan?: string; art: Art;
@@ -18,6 +18,7 @@ export type PageDef = {
 };
 
 const ArtCard = ({ art }: { art: Art }) => {
+  if ('call' in art) return <CallCard head={art.head} sub={art.sub} said={art.call} done={art.done} ended={art.ended} />;
   if ('img' in art) return art.frame === 'browser'
     ? <div className="nx-browser"><div className="nx-browser-bar"><i /><i /><i /><span>app.curivanta.com</span></div><img src={art.img} alt={art.alt} /></div>
     : <div className="nx-handset solo"><img src={art.img} alt={art.alt} /></div>;
@@ -96,11 +97,11 @@ export const PAGES: Record<string, PageDef> = {
     h1: 'Answer from anywhere. Never send a caller to voicemail again.',
     lede: 'Call clients from the app with your salon\'s number, put calls on hold or transfer them, and on Pro, have calls nobody picks up answered and booked for you.',
     plan: 'Calls answered for you: Pro, or 30 minutes a month on Light',
-    art: { head: 'Call · 7:42 PM, after hours', chat: [
-      { who: 'us', t: "Hi, thanks for calling Glow Studio. I'm the salon's automated assistant, and this call is recorded and transcribed. How can I help?" },
-      { who: 'them', t: 'Can Maya do a trim Saturday morning?' },
-      { who: 'us', t: 'She has ten or eleven thirty. Which works?' },
-      { who: 'ok', t: 'Booked Sat 10:00 · confirmation texted' },
+    art: { head: 'Glow Studio', sub: 'On a call · 7:42 PM, after hours', done: 'Booked Sat 10:00 · confirmation texted', call: [
+      { who: 'ai', t: "Hi, thanks for calling Glow Studio. I'm the salon's automated assistant, and this call is recorded and transcribed. How can I help?" },
+      { who: 'caller', t: 'Can Maya do a trim Saturday morning?' },
+      { who: 'ai', t: 'She has ten or eleven thirty. Which works?' },
+      { who: 'caller', t: 'Ten, please.' },
     ] },
     rows: [
       { h: 'Your salon line, in the app', p: 'Call clients from your phone or computer and they see your salon\'s number. Incoming calls ring whoever has the Phone screen open. On Android, calls can ring the app even when it\'s closed.',
@@ -108,7 +109,10 @@ export const PAGES: Record<string, PageDef> = {
         art: { head: 'Phone', list: [['green', 'Dana · outgoing, 3 min', '4:10 PM'], ['amber', 'On hold for Jess', '3:58 PM'], ['blue', 'Transferred to the back desk', '3:20 PM'], ['red', 'Missed · texted back', '2:14 PM']] } },
       { h: 'Calls nobody picks up, answered', p: 'On Pro, the assistant answers when nobody can. It says up front that it\'s automated and the call is recorded, answers questions from your menu, and books real open times.',
         points: ['Knows returning clients and their usual', 'Takes a message, or asks you to call back', 'Switches to Spanish when the caller does', 'On a bad line, offers to finish by text'],
-        art: { head: 'Call summary', chat: [{ who: 'note', t: 'Answered by the assistant · 2 min' }, { who: 'them', t: 'Booked a trim with Maya, Sat 10:00. Asked about parking.' }, { who: 'ok', t: 'Recording and transcript in the app' }] } },
+        art: { head: 'Call with Dana', sub: 'Answered by the AI receptionist · 2 min', ended: '2:04', done: 'Booked a trim with Maya, Sat 10:00', call: [
+          { who: 'caller', t: 'Is there parking near you?' },
+          { who: 'ai', t: 'Yes, there is free parking right behind the salon.' },
+        ] } },
       { h: 'You choose when it answers', p: 'Always, or only when you\'re closed. Every call it took is in your app: play the recording or read what was said. Callers can ask for a person or leave a voicemail any time.',
         art: { head: 'Calls and texts settings', tiles: [['Always', 'or only when closed'], ['200 min', 'a month on Pro'], ['30 min', 'a month on Light'], ['$10', 'per 50 more on Pro']] } },
     ],

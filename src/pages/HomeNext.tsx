@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Bubbles, I, NxFoot, NxNav, Ph, START_URL, useSamplePage, type Line } from './next/Chrome';
+import { Bubbles, I, NxFoot, SaidLine, Wave, NxNav, Ph, START_URL, useSamplePage, type Line } from './next/Chrome';
 import './next/next.css';
 
 // Sample homepage (2026-11-21, branch homepage-human), take 3: Weave's simple structure plus LendAPI's best
@@ -51,8 +51,8 @@ const IPhone = ({ d }: { d: typeof DEMO[number] }) => (
         </div>
         <div className="nx-iinput"><span className="nx-iplus">+</span><span className="nx-ifield">Text Message</span></div>
       </>) : (<>
-        <div className="nx-icall-top"><small>Glow Studio</small><b>{d.when}</b></div>
-        <div className="nx-ibody call" key={d.key}>{d.msgs.map((m, i) => <p key={i} className={'nx-ib ' + m.from} style={{ animationDelay: `${i * STEP}s` }}>{m.t}</p>)}</div>
+        <div className="nx-icall-top"><small>Glow Studio</small><b>{d.when}</b><Wave /></div>
+        <div className="nx-ibody call" key={d.key}>{d.msgs.map((m, i) => <SaidLine key={i} s={{ who: m.from === 'salon' ? 'ai' : 'caller', t: m.t }} delay={i * STEP} />)}</div>
         <div className="nx-ikeys">{['speaker', 'FaceTime', 'mute', 'more', 'end', 'keypad'].map(k => <span key={k} className={k === 'end' ? 'end' : ''}>{k === 'end' ? <i>{I.phone}</i> : <i />}<small>{k === 'end' ? 'End' : k}</small></span>)}</div>
       </>)}
       <i className="nx-ihome" />

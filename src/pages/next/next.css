@@ -640,3 +640,33 @@
 
 /* Headings break into even lines (no 'one app' alone on the last line). */
 .nx h2 { text-wrap:balance; }
+
+/* Calls look like calls (2026-11-22): spoken lines with who is talking, a sound wave, a dark call screen. */
+.nx .nx-wave { display:inline-flex; align-items:center; gap:2px; height:16px; }
+.nx .nx-wave i { width:3px; height:100%; border-radius:2px; background:#5fd3a2; animation:nx-wave 1s ease-in-out infinite; }
+.nx .nx-wave i:nth-child(2) { animation-delay:-.8s; } .nx .nx-wave i:nth-child(3) { animation-delay:-.6s; }
+.nx .nx-wave i:nth-child(4) { animation-delay:-.4s; } .nx .nx-wave i:nth-child(5) { animation-delay:-.2s; }
+@keyframes nx-wave { 0%,100% { transform:scaleY(.3); } 50% { transform:scaleY(1); } }
+@media (prefers-reduced-motion:reduce) { .nx .nx-wave i { animation:none; transform:scaleY(.6); } }
+.nx .nx-said { animation:nx-in .35s ease both; padding-left:10px; border-left:2px solid rgba(255,255,255,.25); }
+.nx .nx-said.ai { border-left-color:#6ba6ff; }
+.nx .nx-said + .nx-said { margin-top:12px; }
+.nx .nx-said-who { display:block; font-size:11.5px; font-weight:700; color:rgba(255,255,255,.6); margin-bottom:2px; }
+.nx .nx-said.ai .nx-said-who { color:#9cc2ff; }
+.nx .nx-said p { margin:0; color:#fff; line-height:1.45; }
+.nx .nx-icall-top .nx-wave { display:flex; justify-content:center; margin:8px auto 0; }
+.nx .nx-ibody.call .nx-said p { font-size:13px; }
+.nx .nx-callcard { background:linear-gradient(160deg,#0c2350,#13306a); color:#fff; border-radius:22px; padding:20px; box-shadow:var(--shadow); text-align:left; font-size:14.5px; }
+.nx .nx-call-top { display:flex; align-items:center; gap:12px; padding-bottom:14px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,.12); }
+.nx .nx-call-top div { flex:1; min-width:0; }
+.nx .nx-call-top b { display:block; font-size:16px; }
+.nx .nx-call-top small { color:rgba(255,255,255,.65); font-size:12.5px; }
+.nx .nx-call-ic { width:38px; height:38px; border-radius:50%; background:#14915e; display:grid; place-items:center; flex:none; }
+.nx .nx-call-ic svg { width:18px; height:18px; color:#fff; }
+.nx .nx-call-rec { display:flex; align-items:center; gap:10px; background:rgba(255,255,255,.08); border-radius:12px; padding:8px 12px; margin-bottom:14px; }
+.nx .nx-call-play { width:28px; height:28px; border-radius:50%; background:#fff; color:#0c2350; display:grid; place-items:center; font-size:11px; flex:none; }
+.nx .nx-call-bars { flex:1; display:flex; align-items:center; gap:2px; height:26px; }
+.nx .nx-call-bars i { flex:1; background:rgba(255,255,255,.45); border-radius:2px; }
+.nx .nx-call-rec small { color:rgba(255,255,255,.7); font-size:12px; }
+.nx .nx-call-done { display:flex; align-items:center; gap:8px; margin-top:16px; padding:9px 12px; border-radius:10px; background:rgba(95,211,162,.16); color:#7ee2b6; font-weight:600; font-size:13.5px; }
+.nx .nx-call-done svg { width:16px; height:16px; flex:none; }

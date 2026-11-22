@@ -108,3 +108,26 @@ export const NxFinal = () => (
     </div>
   </section>
 );
+
+// Phone calls look like calls, not texts (2026-11-22): who is speaking, their words in quotes, a sound wave.
+export type Said = { who: 'ai' | 'caller'; t: string };
+export const Wave = () => <span className="nx-wave" aria-hidden="true"><i /><i /><i /><i /><i /></span>;
+export const SaidLine = ({ s, delay }: { s: Said; delay?: number }) => (
+  <div className={'nx-said ' + s.who} style={delay !== undefined ? { animationDelay: `${delay}s` } : undefined}>
+    <span className="nx-said-who">{s.who === 'ai' ? 'AI receptionist' : 'Caller'}</span>
+    <p>"{s.t}"</p>
+  </div>
+);
+// A call in progress (live wave), or one that ended (a recording to play).
+export const CallCard = ({ head, sub, said, done, ended }: { head: string; sub: string; said: Said[]; done?: string; ended?: string }) => (
+  <div className="nx-callcard">
+    <div className="nx-call-top">
+      <span className="nx-call-ic">{I.phone}</span>
+      <div><b>{head}</b><small>{sub}</small></div>
+      {!ended && <Wave />}
+    </div>
+    {ended && <div className="nx-call-rec"><span className="nx-call-play">▶</span><span className="nx-call-bars" aria-hidden="true">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ height: `${30 + ((i * 37) % 70)}%` }} />)}</span><small>{ended}</small></div>}
+    <div className="nx-call-lines">{said.map((x, i) => <SaidLine key={i} s={x} delay={i * 0.6} />)}</div>
+    {done && <div className="nx-call-done">{I.check}{done}</div>}
+  </div>
+);
