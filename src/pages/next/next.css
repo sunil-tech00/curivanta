@@ -562,3 +562,12 @@
   .nx .nx-mwin { width:38%; }
   .nx .nx-book-col i { font-size:6.5px; padding:2px; }
 }
+
+/* hero demo sits on the page background: no grid, no frame */
+.nx .nx-demo, .dark .nx .nx-demo { background:none; border:0; box-shadow:none; padding:0; border-radius:0; }
+@media (max-width:760px) {
+  .nx .nx-ibody.call { font-size:12.5px; gap:2px; }
+  .nx .nx-ikeys { gap:10px 0; padding-bottom:28px; }
+  .nx .nx-ikeys span > i { width:44px; height:44px; }
+  .nx .nx-icall-top { padding:12px 0 6px; }
+}
