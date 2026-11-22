@@ -121,6 +121,14 @@
   ],
   "headers": [
     {
+      "source": "/new",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    },
+    {
+      "source": "/new/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+    },
+    {
       "source": "/solar",
       "headers": [
         {
