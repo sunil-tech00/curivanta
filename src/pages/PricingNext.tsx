@@ -50,7 +50,7 @@ const PricingNext = () => {
       <main>
         <section className="nx-hero nx-hero-sm">
           <div className="nx-wrap nx-hero-in">
-            <h1>Simple plans. Prices right here.</h1>
+            <h1>Simple plans with clear prices.</h1>
             <p className="nx-lede nx-lede-wide">Per location, month to month. $49 to get started, credited to your first month.<br />Your monthly plan starts only when texting goes live.</p>
           </div>
         </section>
@@ -92,7 +92,7 @@ const PricingNext = () => {
 
         <section className="nx-final">
           <div className="nx-wrap nx-final-in">
-            <h2>Start with the plan that fits. Change any time.</h2>
+            <h2>Pick a plan and change it any time.</h2>
             <p>Set up in about 15 minutes. Your monthly plan starts only when texting goes live.</p>
             <div className="nx-ctas"><a className="nx-btn" href={START_URL}>Get started</a><a className="nx-btn nx-btn-ghost" href="mailto:hello@curivanta.com">Email us</a></div>
           </div>

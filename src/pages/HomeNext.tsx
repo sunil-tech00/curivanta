@@ -76,7 +76,7 @@ const PRODUCTS = [
   { icon: I.reply, t: 'Google review replies', to: '/new/reviews', d: 'A reply drafted for every new review, you approve.' },
   { icon: I.phone, t: 'Phone', to: '/new/phone', d: 'Call from the app with your number. Hold and transfer.' },
   { icon: I.headset, t: 'Calls answered', to: '/new/phone', d: 'On Pro, calls nobody picks up get answered and booked.', pro: true },
-  { icon: I.user, t: 'Every client, remembered', to: '/new/owner-app#client-page', d: 'Every call, text, visit and review, per client.' },
+  { icon: I.user, t: 'Every client remembered', to: '/new/owner-app#client-page', d: 'Every call, text, visit and review, per client.' },
   { icon: I.chart, t: 'Home and morning email', to: '/new/owner-app', d: 'How the salon did, and what needs you.' },
 ];
 
@@ -255,7 +255,7 @@ const HomeNext = () => {
 
         <section className="nx-sec">
           <div className="nx-wrap">
-            <div className="nx-head"><h2>Live within a week</h2><p>From sign-up to texting clients, usually within a week.</p></div>
+            <div className="nx-head"><h2>Live within days</h2><p>From sign-up to texting clients, usually within a few days.</p></div>
             <ol className="nx-timeline">
               <li><small>Today · 15 minutes</small><h3>Sign up and paste one link</h3><p>Your website or booking page. We fill in your services, hours and stylists, and connect your booking software.</p></li>
               <li><small>Same day</small><h3>Your number works for calls</h3><p>Answer in the app, voicemails arrive as text. Salons forward the calls they miss.</p></li>

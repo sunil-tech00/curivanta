@@ -35,7 +35,7 @@ const ArtCard = ({ art }: { art: Art }) => {
 export const PAGES: Record<string, PageDef> = {
   'missed-calls': {
     title: 'Missed-call text-back and booking by text for salons | Curivanta',
-    h1: 'Missed calls get a text back. Then it books them.',
+    h1: 'Turn missed calls into bookings.',
     lede: 'When nobody can pick up, the caller gets a text from your salon within a minute. Curivanta answers their questions and books them into your calendar, day or night.',
     art: { head: 'Missed call · 2:14 PM', chat: [
       { who: 'note', t: 'Missed call from (949) 555-0142' },
@@ -52,7 +52,7 @@ export const PAGES: Record<string, PageDef> = {
       { h: 'Answers questions from your own menu', p: 'Curivanta learns your services, prices and policies from your website, and your hours, holidays included, from your Google profile. Teach it once: save one of your replies with a tap and it answers that question next time.',
         points: ['Prices, parking, walk-ins, what to bring', 'Answers in Spanish when clients text in Spanish', 'Complaints and anything unclear come to you, with the whole conversation'],
         art: { head: 'Client · text', chat: [{ who: 'them', t: 'How much is a balayage? And do you have parking?' }, { who: 'us', t: 'Balayage starts at $180 with Maya or Jess. There\'s free parking behind the building. Want me to find you a time?' }] } },
-      { h: 'Books real open times, into your calendar', p: 'Only times that are really free. On SalonUltimate or Square, bookings go straight into your appointment book. On anything else, it sends your own online booking link.',
+      { h: 'Books real open times in your calendar', p: 'Only times that are really free. On SalonUltimate or Square, bookings go straight into your appointment book. On anything else, it sends your own online booking link.',
         points: ['Knows returning clients and what they usually book', 'Clients can move or cancel by text, if you switch it on (never within 24 hours)', 'You get a notification for every booking'],
         art: { head: 'Sarah · text', chat: [{ who: 'them', t: 'Anything Saturday?' }, { who: 'us', t: 'Hi Sarah! Another root touch-up with Jess, like last time? She has 10:00 or 1:30.' }, { who: 'them', t: '10' }, { who: 'ok', t: 'Booked in SalonUltimate' }] } },
     ],
@@ -68,7 +68,7 @@ export const PAGES: Record<string, PageDef> = {
 
   reviews: {
     title: 'Google review requests and replies for salons | Curivanta',
-    h1: 'More 5-star Google reviews, without asking at the counter.',
+    h1: 'Get more 5-star Google reviews.',
     lede: 'After a visit, clients get one short text asking for a review. Every review request includes your Google link. Anything less than great also comes to you privately, so you can make it right.',
     art: { head: 'Dana · after her visit', chat: [
       { who: 'us', t: 'Hi Dana, hope your visit with Maya at Glow Studio was a hit! A quick Google review would mean the world to us: g.page/r/glow Or reply 1-5 to rate Maya.' },
@@ -96,7 +96,7 @@ export const PAGES: Record<string, PageDef> = {
 
   phone: {
     title: 'A phone system for salons: calls in the app, answered when you can\'t | Curivanta',
-    h1: 'Answer from anywhere. Never send a caller to voicemail again.',
+    h1: 'Answer your salon calls from anywhere.',
     lede: 'Call clients from the app with your salon\'s number, put calls on hold or transfer them, and on Pro, have calls nobody picks up answered and booked for you.',
     plan: 'Calls answered for you: Pro, or 30 minutes a month on Light',
     art: { head: 'Glow Studio', sub: 'On a call · 7:42 PM, after hours', done: 'Booked Sat 10:00 · confirmation texted', call: [
@@ -106,10 +106,10 @@ export const PAGES: Record<string, PageDef> = {
       { who: 'caller', t: 'Ten, please.' },
     ] },
     rows: [
-      { h: 'Your salon line, in the app', p: 'Call clients from your phone or computer and they see your salon\'s number. Incoming calls ring whoever has the Phone screen open. On Android, calls can ring the app even when it\'s closed.',
+      { h: 'Your salon line in the app', p: 'Call clients from your phone or computer and they see your salon\'s number. Incoming calls ring whoever has the Phone screen open. On Android, calls can ring the app even when it\'s closed.',
         points: ['Hold, and pick up from another phone', 'Transfer to a team member or a cell', 'Your salon name on caller ID'],
         art: { head: 'Phone', list: [['green', 'Dana · outgoing, 3 min', '4:10 PM'], ['amber', 'On hold for Jess', '3:58 PM'], ['blue', 'Transferred to the back desk', '3:20 PM'], ['red', 'Missed · texted back', '2:14 PM']] } },
-      { h: 'Calls nobody picks up, answered', p: 'On Pro, the assistant answers when nobody can. It says up front that it\'s automated and the call is recorded, answers questions from your menu, and books real open times.',
+      { h: 'Calls answered when nobody can pick up', p: 'On Pro, the assistant answers when nobody can. It says up front that it\'s automated and the call is recorded, answers questions from your menu, and books real open times.',
         points: ['Knows returning clients and their usual', 'Takes a message, or asks you to call back', 'Switches to Spanish when the caller does', 'On a bad line, offers to finish by text'],
         art: { head: 'Call with Dana', sub: 'Answered by the AI receptionist · 2 min', ended: '2:04', done: 'Booked a trim with Maya, Sat 10:00', call: [
           { who: 'caller', t: 'Is there parking near you?' },
@@ -129,18 +129,18 @@ export const PAGES: Record<string, PageDef> = {
 
   'owner-app': {
     title: 'The salon owner app: calls, bookings and reviews on one screen | Curivanta',
-    h1: 'Know how your salon did, any time.',
+    h1: 'See how your salon is doing.',
     lede: 'Calls, bookings and reviews on one screen, on your phone or computer. What needs you is at the top, and a short email lands every morning.',
     art: { head: 'Today at Glow Studio', tiles: [['21', 'calls'], ['7', 'missed, 6 texted back'], ['6', 'booked · $540'], ['2', 'new Google reviews']] },
     rows: [
-      { h: 'Home: today, this week or this month', p: 'Every number compared with the same stretch before, a chart that follows the dates you pick, and each stylist\'s ratings and reviews.',
+      { h: 'Your numbers for any day, week or month', p: 'Every number compared with the same stretch before, a chart that follows the dates you pick, and each stylist\'s ratings and reviews.',
         points: ['"Needs you" first: conversations waiting and low ratings', '"Since you started": what Curivanta has done for you so far'],
         art: { head: 'Needs you', list: [['amber', 'Kim B. asked for a call back', '12m'], ['amber', 'Refund question from Lena', '38m'], ['red', 'Rated 3 with a note', '1h']] } },
-      { h: 'Every client, remembered', id: 'client-page', p: 'Most salons keep these in separate places: texts on one phone, reviews in Google, bookings in the calendar. Curivanta puts each client\'s whole story on one page, so you and the AI both know who you\'re talking to.',
+      { h: 'Every client remembered', id: 'client-page', p: 'Most salons keep these in separate places: texts on one phone, reviews in Google, bookings in the calendar. Curivanta puts each client\'s whole story on one page, so you and the AI both know who you\'re talking to.',
         points: ['One timeline: calls, voicemails, texts, visits, review requests and Google reviews, in order', 'The basics at a glance: visits, usual stylist, next visit', 'Google reviews matched to the client, with your reply', 'Reply or call from the same page. Your salon number shows, not your cell'],
         note: 'This is also why the AI can say "another root touch-up with Jess, like last time?" It reads the same history you do.',
         art: { client: true } },
-      { h: 'One notification, not five', p: 'Only what needs you, on your phone: hand-offs, voicemails, new reviews and bookings. Quiet from 9 PM to 8 AM. Plus a morning email with yesterday\'s numbers.',
+      { h: 'Only the notifications that matter', p: 'Only what needs you, on your phone: hand-offs, voicemails, new reviews and bookings. Quiet from 9 PM to 8 AM. Plus a morning email with yesterday\'s numbers.',
         points: ['Team logins: managers run the day, front desk handles clients', 'Billing and plan settings stay with you', 'One login for several salons'],
         art: { head: 'Morning email · 8:00 AM', tiles: [['14', 'calls, ▲ 3'], ['5', 'booked, ▲ 2'], ['4', 'reviews'], ['4.9 ★', 'average rating']] } },
     ],
@@ -162,7 +162,7 @@ export const PAGES: Record<string, PageDef> = {
     rows: [
       { h: 'Keep your number', p: 'You forward the calls you miss to Curivanta, and can undo it any time. Your clients keep calling the number they know.',
         art: { head: 'Missed call', chat: [{ who: 'note', t: 'Forwarded from your salon line' }, { who: 'us', t: "Hi, it's Glow Studio. Sorry we missed your call! How can we help?" }] } },
-      { h: 'The whole team, one app', p: 'Managers run the salon day to day, the front desk handles clients, and billing stays with you. Replies show who sent them.',
+      { h: 'The whole team in one app', p: 'Managers run the salon day to day, the front desk handles clients, and billing stays with you. Replies show who sent them.',
         points: ['Ratings and reviews by stylist', 'Call from the app with your salon number, hold and transfer'],
         art: { head: 'By stylist · this month', tiles: [['4.9 ★', 'Maya'], ['4.9 ★', 'Jordan'], ['4.7 ★', 'Aisha'], ['46', 'booked by Curivanta']] } },
     ],
@@ -181,7 +181,7 @@ export const PAGES: Record<string, PageDef> = {
       { h: 'Your cell stays yours', p: 'Calls to your business number ring your cell during your hours (press 1 to answer) and the app. After hours, callers get your greeting and voicemail, and your phone stays quiet.',
         points: ['Text and call clients from the app with your business number', 'Work lives in one app, not mixed in with family texts'],
         art: { head: 'Your hours', tiles: [['9-6', 'calls ring your cell'], ['After', 'greeting and voicemail'], ['1 min', 'text back'], ['$49', 'a month']] } },
-      { h: 'Books while you\'re mid-cut', p: 'Clients text questions and book real open times. On SalonUltimate or Square it books straight in; otherwise it sends your booking link.',
+      { h: 'Books clients while you work', p: 'Clients text questions and book real open times. On SalonUltimate or Square it books straight in; otherwise it sends your booking link.',
         art: { head: 'Client · text', chat: [{ who: 'them', t: 'Do you do curly cuts?' }, { who: 'us', t: 'Yes! Curly cuts are $85. I have Thursday at 2:00 or Friday at 11:00.' }] } },
     ],
     facts: [[I.phone, 'Business number', 'Rings your cell in your hours'], [I.missed, 'Text-back', 'For missed calls'], [I.cal, 'Booking', 'By text, into your calendar'], [I.tag, 'No EIN needed', 'Register as a sole proprietor']],
@@ -191,12 +191,12 @@ export const PAGES: Record<string, PageDef> = {
 
   locations: {
     title: 'Curivanta for salons with several locations | Curivanta',
-    h1: 'Several salons, one login.',
+    h1: 'All your salons in one login.',
     lede: 'Each location gets its own number, setup and plan. You switch between them in one app, and notifications tell you which salon they\'re for.',
     plan: 'Priced per location',
     art: { head: 'Your salons', list: [['green', 'Downtown · 6 booked today', 'Live'], ['green', 'Northside · 4 booked today', 'Live'], ['amber', 'Westlake · texting goes live soon', 'Setup']] },
     rows: [
-      { h: 'Every location on its own, under one login', p: 'Each salon keeps its own number, services, stylists, openings and reviews. Switch salons from the app, and get every location\'s notifications on one phone, titled with the salon\'s name.',
+      { h: 'Each location kept separate', p: 'Each salon keeps its own number, services, stylists, openings and reviews. Switch salons from the app, and get every location\'s notifications on one phone, titled with the salon\'s name.',
         art: { head: 'Notifications', list: [['blue', 'Downtown: Kim asked for a call back', '2m'], ['green', 'Northside: New 5-star Google review', '9m'], ['blue', 'Downtown: Booked Dana, Sat 10:00', '14m']] } },
       { h: 'Franchise sites work too', p: 'On a SalonUltimate franchise site with many stores, Curivanta finds each location by store number and address, so bookings and checkouts are always that location\'s.',
         art: { head: 'SalonUltimate', tiles: [['Store 3', 'matched by number'], ['ZIP', 'and phone'], ['Own', 'openings'], ['Own', 'checkouts']] } },

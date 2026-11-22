@@ -22,7 +22,7 @@ const StoryNext = () => {
         <section className="nx-hero nx-hero-sm">
           <div className="nx-wrap nx-story">
             <div>
-              <h1>Built by a salon owner, for salon owners.</h1>
+              <h1>Built by a salon owner.</h1>
               <p className="nx-lede">Curivanta started at our own front desk, with a phone that kept ringing while everyone was busy with a client.</p>
             </div>
             <div className="nx-try light" id="demo-line">
