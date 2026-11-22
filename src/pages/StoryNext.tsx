@@ -25,7 +25,7 @@ const StoryNext = () => {
               <h1>Built by a salon owner.</h1>
               <p className="nx-lede">Curivanta started at our own front desk, with a phone that kept ringing while everyone was busy with a client.</p>
             </div>
-            <div className="nx-try light" id="demo-line">
+            <div className="nx-try nx-try-light" id="demo-line">
               <p className="nx-try-k">Hear it for yourself</p>
               <p className="nx-try-h">Call our demo salon</p>
               <p className="nx-try-n"><a href="tel:+19495231889">(949) 523-1889</a></p>
@@ -40,7 +40,7 @@ const StoryNext = () => {
             <p>The tools I tried were built for every kind of business at once: menus inside menus, prices hidden behind a demo, and nothing that knew what a stylist or a root touch-up was.</p>
             <p>So I built the front desk I wanted. It texts back the calls we miss, books clients into our real calendar, and asks clients for reviews. It runs in my own salons every day, and our Google rating went from 4.4 to 4.5 in the first week.</p>
             <p>Now it's ready for yours.</p>
-            <p className="nx-who dark"><b>Salon owner</b> · Founder, Curivanta</p>
+            <p className="nx-who nx-who-plain"><b>Salon owner</b> · Founder, Curivanta</p>
           </div>
         </section>
 
