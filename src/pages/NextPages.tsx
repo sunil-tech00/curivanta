@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { Bubbles, I, ListCard, NxFoot, NxNav, START_URL, useSamplePage, type Line } from './next/Chrome';
 import NotFound from './NotFound';
+import { DeskRow } from './next/FrontDesk';
 import './next/next.css';
 
 // Sample product and "who it's for" pages (2026-11-21), one template: hero with a product card, feature
@@ -13,6 +14,7 @@ export type PageDef = {
   title: string; h1: string; lede: string; plan?: string; art: Art;
   rows: Row[]; facts: [JSX.Element, string, string][]; faq: [string, string][];
   next: [string, string][];
+  extra?: JSX.Element;
 };
 
 const ArtCard = ({ art }: { art: Art }) => {
@@ -140,6 +142,7 @@ export const PAGES: Record<string, PageDef> = {
       ['Can my front desk use it?', 'Yes, on Light and Pro. Front-desk logins see clients, messages, calls and reviews, but not usage, billing or settings. Replies show who sent them.'],
     ],
     next: [['/new/reviews', 'Reviews'], ['/new/phone', 'Phone']],
+    extra: <section className="nx-wrap nx-anywhere"><div className="nx-anywhere-in"><DeskRow /></div></section>,
   },
 
   salons: {
@@ -231,6 +234,8 @@ export const ProductPage = ({ page }: { page: PageDef }) => {
             ))}
           </div>
         </section>
+
+        {page.extra}
 
         <section className="nx-wrap">
           <div className="nx-facts">

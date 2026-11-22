@@ -571,3 +571,5 @@
   .nx .nx-ikeys span > i { width:44px; height:44px; }
   .nx .nx-icall-top { padding:12px 0 6px; }
 }
+.nx .nx-anywhere-in > .nx-deskrow:first-child { margin-top:0; }
+.nx .nx-anywhere + .nx-wrap .nx-facts { margin-top:72px; }
