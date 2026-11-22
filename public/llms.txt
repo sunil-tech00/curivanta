@@ -10,7 +10,7 @@
 - Google review requests: a text after the visit that names the client's stylist and carries the salon's own Google review link (clients can also reply 1 to 5); every request includes the Google link (no review gating), at most once in 90 days; ratings by stylist; AI-drafted replies to Google reviews.
 - AI phone answering (Pro): answers calls nobody picks up, says it is the salon's automated assistant and that the call is recorded, answers questions, books, and texts a confirmation. On a bad line it offers to finish by text. Owners can play each call's recording and read what was said.
 - Phone: call and take calls from the app with the salon's number showing; hold and transfer. Forwarded calls go straight to the greeting and text-back. Voicemails as text and audio.
-- Owner app (phone first): every client's calls, texts, visits and reviews in one place; team sign-ins with roles; phone alerts; a morning summary email; Help inside the app with a real person behind it. Android and iPhone apps coming soon.
+- Owner app (phone first): every client's calls, texts, visits and reviews in one place; team sign-ins with roles; phone alerts; a morning summary email; Help inside the app with a real person behind it. Android app on Google Play (https://play.google.com/store/apps/details?id=com.curivanta.app); iPhone app coming soon.
 
 ## Works with
 
