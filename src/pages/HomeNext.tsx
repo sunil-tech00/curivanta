@@ -152,14 +152,15 @@ const HomeNext = () => {
             <h1>Never miss another booking.</h1>
             <p className="nx-beats">Every missed call texted back. Every client remembered. More 5-star reviews.</p>
             <p className="nx-lede">
-              Curivanta is the front desk for salons. It texts back the calls you miss, books clients into your calendar
-              and asks every client for a Google review. Built by a salon owner.
+              Curivanta is the front desk for salons. Its AI receptionist answers the calls you can't get to in a natural,
+              friendly voice and books them into your calendar. It texts back every missed call and asks every client for
+              a Google review. Built by a salon owner.
             </p>
             <div className="nx-ctas">
               <a className="nx-btn" href={START_URL}>Get started</a>
               <Link className="nx-btn nx-btn-ghost" to="/new/roi">See what missed calls cost you</Link>
             </div>
-            <p className="nx-fine">From $49/month · Set up in about 15 minutes · No contract</p>
+            <p className="nx-fine">From $49/month · AI call answering on Light and Pro · Set up in about 15 minutes · No contract</p>
           </div>
 
           <div className="nx-wrap">
