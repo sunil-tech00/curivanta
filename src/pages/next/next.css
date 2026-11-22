@@ -275,9 +275,9 @@
 
 /* product cards */
 .nx .nx-grid { display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); border-radius:22px; overflow:hidden; background:var(--line); gap:1px; }
-.nx .nx-tile { display:flex; flex-direction:column; background:var(--card); padding:26px 24px; color:var(--ink); transition:background .15s; }
+.nx .nx-tile { display:flex; flex-direction:column; align-items:center; text-align:center; background:var(--card); padding:26px 24px; color:var(--ink); transition:background .15s; }
 .nx .nx-tile:hover { background:var(--soft); }
-.nx .nx-tile h3 { font-size:17.5px; margin:16px 0 6px; letter-spacing:-.015em; display:flex; align-items:center; gap:8px; }
+.nx .nx-tile h3 { font-size:17.5px; margin:16px 0 6px; letter-spacing:-.015em; display:flex; align-items:center; justify-content:center; gap:8px; }
 .nx .nx-tile p { color:var(--ink2); font-size:15px; flex:1; }
 .nx .nx-more { display:inline-flex; align-items:center; gap:4px; margin-top:14px; color:var(--accent); font-weight:600; font-size:14px; }
 .nx .nx-more svg { width:16px; height:16px; transition:transform .15s; }
@@ -627,3 +627,6 @@
 .nx .nx-nosurprise { list-style:none; padding:0; margin:28px auto 8px; display:flex; flex-wrap:wrap; justify-content:center; gap:10px 28px; font-size:15px; color:var(--ink2); }
 .nx .nx-nosurprise li { display:flex; gap:8px; align-items:center; }
 .nx .nx-nosurprise svg { width:18px; height:18px; color:var(--green); flex:none; }
+
+/* Headings break into even lines (no 'one app' alone on the last line). */
+.nx h2 { text-wrap:balance; }
