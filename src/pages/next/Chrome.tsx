@@ -40,7 +40,14 @@ export const useSamplePage = (title: string) => {
   }, [title]);
 };
 
-export const NxNav = () => (
+// Every /new page opens at the top (2026-11-22: the shared pages, like the blog, SalonUltimate, Square, Privacy and
+// Terms, kept the previous page's scroll). A link to a #section still goes to that section.
+const useTopOnNewPage = () => {
+  const { pathname, hash } = useLocation();
+  useEffect(() => { if (!hash) window.scrollTo(0, 0); }, [pathname, hash]);
+};
+
+export const NxNav = () => { useTopOnNewPage(); return (
   <header className="nx-nav">
     <div className="nx-wrap nx-nav-in">
       <Link className="nx-brand" to="/new" aria-label="Curivanta">
@@ -61,7 +68,7 @@ export const NxNav = () => (
       </div>
     </div>
   </header>
-);
+); };
 
 export const NxFoot = () => (
   <footer className="nx-foot">
