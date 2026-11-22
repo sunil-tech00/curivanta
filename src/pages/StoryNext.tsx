@@ -6,7 +6,7 @@ import './next/next.css';
 
 const PROMISES: [string, string][] = [
   ['Prices on the page', 'No demo to find out what it costs. Three plans, month to month.'],
-  ['No review gating', 'Every client gets your Google link, as Google\'s rules require.'],
+  ['No review gating', 'Every review request includes your Google link, happy client or not, as Google\'s rules require.'],
   ['Texts that play by the rules', 'Registered with the phone carriers. STOP always works.'],
   ['Your data stays yours', 'Each salon\'s data is kept separate, and logins to your booking and Google accounts are encrypted.'],
   ['A person answers', 'Email hello@curivanta.com and the people who built it reply.'],
@@ -33,7 +33,7 @@ const StoryNext = () => {
           <div className="nx-wrap nx-prose">
             <p>I own salons, and I can't stand behind every front desk. On busy days the phone rang while every stylist was with a client, and those callers didn't leave a voicemail. They booked somewhere else.</p>
             <p>The tools I tried were built for every kind of business at once: menus inside menus, prices hidden behind a demo, and nothing that knew what a stylist or a root touch-up was.</p>
-            <p>So I built the front desk I wanted. It texts back every call we miss, books clients into our real calendar, and asks every client for a review. It runs in my own salons every day, and our Google rating went from 4.3 to 4.5 in the first month.</p>
+            <p>So I built the front desk I wanted. It texts back the calls we miss, books clients into our real calendar, and asks clients for reviews. It runs in my own salons every day, and our Google rating went from 4.3 to 4.5 in the first month.</p>
             <p>Now it's ready for yours.</p>
             <p className="nx-who dark"><b>Salon owner</b> · Founder, Curivanta</p>
           </div>

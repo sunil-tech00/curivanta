@@ -14,7 +14,7 @@ const PLANS = [
     items: ['Everything in Starter, and you keep your salon number: missed calls forward to Curivanta', 'Books straight into SalonUltimate or Square, and can let clients move or cancel', 'Review requests: 10 a day', 'Team logins for managers and front desk; billing stays with you', 'Your salon name on caller ID', 'Ratings and reviews by stylist', 'One login for several salons', '30 minutes a month of calls answered for you, then more only up to a limit you choose'] },
   { key: 'pro', name: 'Pro', for: 'For salons that want every call answered', price: 149, cta: 'Start with Pro', url: START_URL + '?plan=pro',
     allow: '1,800 texts and call minutes a month, any mix, plus 200 minutes of calls answered for you.',
-    items: ['Everything in Light, plus:', 'Every call nobody picks up answered, all month: about 100 calls', 'Answers questions, books, moves and cancels, and texts a confirmation', 'Knows returning clients and what they usually book', 'Takes messages, or asks you to call back', 'English or Spanish, and offers to finish by text on a bad line', 'Every call recorded, with a transcript in your app', 'You choose when it answers: always, or only when closed', 'Review requests: 20 a day'] },
+    items: ['Everything in Light, plus:', 'Calls nobody picks up answered, all month: about 100 calls', 'Answers questions, books, moves and cancels, and texts a confirmation', 'Knows returning clients and what they usually book', 'Takes messages, or asks you to call back', 'English or Spanish, and offers to finish by text on a bad line', 'Every call recorded, with a transcript in your app', 'You choose when it answers: always, or only when closed', 'Review requests: 20 a day'] },
 ];
 
 const ROWS: [string, string, string, string][] = [

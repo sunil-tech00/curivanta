@@ -32,7 +32,7 @@ const ArtCard = ({ art }: { art: Art }) => {
 export const PAGES: Record<string, PageDef> = {
   'missed-calls': {
     title: 'Missed-call text-back and booking by text for salons | Curivanta',
-    h1: 'Every missed call gets a text back. Then it books them.',
+    h1: 'Missed calls get a text back. Then it books them.',
     lede: 'When nobody can pick up, the caller gets a text from your salon within a minute. Curivanta answers their questions and books them into your calendar, day or night.',
     art: { head: 'Missed call · 2:14 PM', chat: [
       { who: 'note', t: 'Missed call from (949) 555-0142' },
@@ -43,7 +43,7 @@ export const PAGES: Record<string, PageDef> = {
       { who: 'ok', t: 'Booked Sat 10:00 with Maya' },
     ] },
     rows: [
-      { h: 'A text within a minute, for every missed call', p: 'Most people would rather text than leave a voicemail. Callers hear your greeting first, and get a text from your salon number right after.',
+      { h: 'A text within a minute of a missed call', p: 'Most people would rather text than leave a voicemail. Callers hear your greeting first, and get a text from your salon number right after.',
         points: ['Your greeting in your own words, or your own recording', 'Voicemails arrive as text you can read, and audio you can play', 'Every call is logged on the client\'s page'],
         art: { head: 'Calls today', list: [['red', 'Missed: (949) 555-0142 · texted back', '2:14 PM'], ['blue', 'Voicemail from Rosa, as text', '1:02 PM'], ['green', 'Answered in the app by Jess', '12:40 PM'], ['red', 'Missed: Dana · texted back', '11:15 AM']] } },
       { h: 'Answers questions from your own menu', p: 'Curivanta learns your services, prices and policies from your website, and your hours, holidays included, from your Google profile. Teach it once: save one of your replies with a tap and it answers that question next time.',
@@ -53,7 +53,7 @@ export const PAGES: Record<string, PageDef> = {
         points: ['Knows returning clients and what they usually book', 'Clients can move or cancel by text, if you switch it on (never within 24 hours)', 'You get a notification for every booking'],
         art: { head: 'Sarah · text', chat: [{ who: 'them', t: 'Anything Saturday?' }, { who: 'us', t: 'Hi Sarah! Another root touch-up with Jess, like last time? She has 10:00 or 1:30.' }, { who: 'them', t: '10' }, { who: 'ok', t: 'Booked in SalonUltimate' }] } },
     ],
-    facts: [[I.missed, 'Within a minute', 'Every missed call, day or night'], [I.cal, 'Straight in', 'SalonUltimate and Square bookings'], [I.chat, 'English and Spanish', 'Answers in the client\'s language'], [I.user, 'Hands off to you', 'Anything it can\'t handle']],
+    facts: [[I.missed, 'Within a minute', 'Missed calls, day or night'], [I.cal, 'Straight in', 'SalonUltimate and Square bookings'], [I.chat, 'English and Spanish', 'Answers in the client\'s language'], [I.user, 'Hands off to you', 'Anything it can\'t handle']],
     faq: [
       ['Do I need a new booking system?', 'No. On SalonUltimate or Square, bookings go straight into your calendar. On any other system, Curivanta sends your online booking link when a client wants to book.'],
       ['Can I keep my phone number?', 'Yes. Salons forward the calls they miss to Curivanta, and you can undo that any time. Solo stylists get a new business number that rings their cell.'],
@@ -66,23 +66,23 @@ export const PAGES: Record<string, PageDef> = {
   reviews: {
     title: 'Google review requests and replies for salons | Curivanta',
     h1: 'More 5-star Google reviews, without asking at the counter.',
-    lede: 'After each visit, clients get one short text with your Google review link. They can rate their stylist, and anything less than great comes to you first.',
+    lede: 'After a visit, clients get one short text with your Google review link. They can rate their stylist, and anything less than great comes to you first.',
     art: { head: 'Dana · after her visit', chat: [
       { who: 'us', t: 'Hi Dana, hope your visit with Maya at Glow Studio was a hit! A quick Google review would mean the world to us: g.page/r/glow Or reply 1-5 to rate Maya.' },
       { who: 'them', t: '5! She was amazing' },
       { who: 'ok', t: 'New 5-star Google review' },
     ] },
     rows: [
-      { h: 'One short text after every checkout', p: 'Curivanta reads your SalonUltimate or Square checkouts and texts each client about an hour later. You choose how many go out a day, and clients are picked at random across the day.',
+      { h: 'One short text after checkout', p: 'Curivanta reads your SalonUltimate or Square checkouts and texts clients about an hour later. You choose how many go out a day, and clients are picked at random across the day.',
         points: ['Texts go out only between 9 AM and 8 PM', 'Nobody is asked more than once in 90 days', 'Your wording, or ours'],
         art: { head: 'Review requests today', list: [['green', 'Priya · replied 5', '3:40 PM'], ['amber', 'Mark · sent', '2:15 PM'], ['green', 'Dana · left a Google review', '1:05 PM'], ['red', 'Lena · rated 3, with a note', '11:30 AM']] } },
-      { h: 'Everyone gets your Google link', p: 'No review gating: every client gets the link, as Google\'s rules require. Clients can also reply 1 to 5. A low rating or a note comes straight to you, so you can make it right.',
+      { h: 'Every request includes your Google link', p: 'No review gating: happy client or not, the request has your Google link, as Google\'s rules require. Clients can also reply 1 to 5. A low rating or a note comes straight to you, so you can make it right.',
         points: ['Ratings by stylist, so you see who clients love', 'A notification when someone needs a call back'],
         art: { head: 'By stylist · this month', tiles: [['4.9 ★', 'Maya, 21 ratings'], ['4.9 ★', 'Jordan, 15 ratings'], ['4.7 ★', 'Aisha, 12 ratings'], ['23', 'new Google reviews']] } },
       { h: 'A reply ready for every new Google review', p: 'Connect your Google Business Profile and new reviews show up in your app with a reply drafted in your salon\'s voice. Approve it with one tap and it posts on Google.',
         art: { head: 'New Google review', chat: [{ who: 'them', t: '★★★★★ "Booked by text in two minutes. Maya is the best!"' }, { who: 'us', t: 'Thank you, Dana! Maya loved having you. See you next time!' }, { who: 'ok', t: 'Reply ready to approve' }] } },
     ],
-    facts: [[I.star, 'No gating', 'Every client gets the link'], [I.chart, 'By stylist', 'Ratings and reviews per stylist'], [I.reply, 'One tap', 'Approve a drafted Google reply'], [I.cal, 'You set the pace', 'How many requests a day']],
+    facts: [[I.star, 'No gating', 'Every request has your Google link'], [I.chart, 'By stylist', 'Ratings and reviews per stylist'], [I.reply, 'One tap', 'Approve a drafted Google reply'], [I.cal, 'You set the pace', 'How many requests a day']],
     faq: [
       ['Which booking systems does it read checkouts from?', 'SalonUltimate and Square. Each checkout is saved to the client\'s page and can start a review request.'],
       ['Will clients get asked more than once?', 'No more than once in 90 days, whatever they book.'],
@@ -94,7 +94,7 @@ export const PAGES: Record<string, PageDef> = {
   phone: {
     title: 'A phone system for salons: calls in the app, answered when you can\'t | Curivanta',
     h1: 'Answer from anywhere. Never send a caller to voicemail again.',
-    lede: 'Call clients from the app with your salon\'s number, put calls on hold or transfer them, and on Pro, have every call nobody picks up answered and booked for you.',
+    lede: 'Call clients from the app with your salon\'s number, put calls on hold or transfer them, and on Pro, have calls nobody picks up answered and booked for you.',
     plan: 'Calls answered for you: Pro, or 30 minutes a month on Light',
     art: { head: 'Call · 7:42 PM, after hours', chat: [
       { who: 'us', t: "Hi, thanks for calling Glow Studio. I'm the salon's automated assistant, and this call is recorded and transcribed. How can I help?" },
@@ -125,7 +125,7 @@ export const PAGES: Record<string, PageDef> = {
     title: 'The salon owner app: calls, bookings and reviews on one screen | Curivanta',
     h1: 'Know how your salon did, any time.',
     lede: 'Calls, bookings and reviews on one screen, on your phone or computer. What needs you is at the top, and a short email lands every morning.',
-    art: { head: 'Today at Glow Studio', tiles: [['21', 'calls'], ['7', 'missed, all texted back'], ['6', 'booked · $540'], ['2', 'new Google reviews']] },
+    art: { head: 'Today at Glow Studio', tiles: [['21', 'calls'], ['7', 'missed, 6 texted back'], ['6', 'booked · $540'], ['2', 'new Google reviews']] },
     rows: [
       { h: 'Home: today, this week or this month', p: 'Every number compared with the same stretch before, a chart that follows the dates you pick, and each stylist\'s ratings and reviews.',
         points: ['"Needs you" first: conversations waiting and low ratings', '"Since you started": what Curivanta has done for you so far'],
@@ -148,7 +148,7 @@ export const PAGES: Record<string, PageDef> = {
   salons: {
     title: 'Curivanta for salons with a team | Curivanta',
     h1: 'For salons where everyone has scissors in their hands.',
-    lede: 'Keep your salon number. Curivanta catches the calls your team can\'t get to, books them into SalonUltimate or Square, and asks every client for a review.',
+    lede: 'Keep your salon number. Curivanta catches the calls your team can\'t get to, books them into SalonUltimate or Square, and asks clients for reviews.',
     plan: 'Light $99/month · Pro $149/month',
     art: { head: 'Today at Glow Studio', list: [['red', 'Missed: (949) 555-0142 · texted back', '2m'], ['green', 'Booked Dana, Sat 10:00 with Maya', '4m'], ['amber', 'Review request sent to Priya', '12m'], ['green', 'New 5-star Google review', '25m']] },
     rows: [
@@ -159,7 +159,7 @@ export const PAGES: Record<string, PageDef> = {
         art: { head: 'By stylist · this month', tiles: [['4.9 ★', 'Maya'], ['4.9 ★', 'Jordan'], ['4.7 ★', 'Aisha'], ['46', 'booked by Curivanta']] } },
     ],
     facts: [[I.phone, 'Your number', 'Forward missed calls'], [I.user, 'Team logins', 'Roles for managers and front desk'], [I.cal, 'Books in', 'SalonUltimate and Square'], [I.headset, 'Pro', 'Every call answered']],
-    faq: [['Light or Pro?', 'Light covers texting, booking and reviews, with 30 minutes a month of calls answered for you. Pro answers every call nobody picks up, all month.']],
+    faq: [['Light or Pro?', 'Light covers texting, booking and reviews, with 30 minutes a month of calls answered for you. Pro answers calls nobody picks up, all month.']],
     next: [['/new/pricing', 'Pricing'], ['/new/locations', 'Several locations']],
   },
 
@@ -176,7 +176,7 @@ export const PAGES: Record<string, PageDef> = {
       { h: 'Books while you\'re mid-cut', p: 'Clients text questions and book real open times. On SalonUltimate or Square it books straight in; otherwise it sends your booking link.',
         art: { head: 'Client · text', chat: [{ who: 'them', t: 'Do you do curly cuts?' }, { who: 'us', t: 'Yes! Curly cuts are $85. I have Thursday at 2:00 or Friday at 11:00.' }] } },
     ],
-    facts: [[I.phone, 'Business number', 'Rings your cell in your hours'], [I.missed, 'Text-back', 'Every missed call'], [I.cal, 'Booking', 'By text, into your calendar'], [I.tag, 'No EIN needed', 'Register as a sole proprietor']],
+    facts: [[I.phone, 'Business number', 'Rings your cell in your hours'], [I.missed, 'Text-back', 'For missed calls'], [I.cal, 'Booking', 'By text, into your calendar'], [I.tag, 'No EIN needed', 'Register as a sole proprietor']],
     faq: [['Do I need an EIN?', 'No. Solo stylists can register as a sole proprietor: you reply YES to one text from the carriers.'], ['Can I move up later?', 'Yes. Move to Light or Pro any time from Billing.']],
     next: [['/new/pricing', 'Pricing'], ['/new/missed-calls', 'Missed calls and texts']],
   },

@@ -66,9 +66,9 @@ const FEED = [
 ];
 
 const PRODUCTS = [
-  { icon: I.missed, t: 'Missed-call text-back', to: '/new/missed-calls', d: 'Every caller you miss gets a text within a minute.' },
+  { icon: I.missed, t: 'Missed-call text-back', to: '/new/missed-calls', d: 'Callers you miss get a text within a minute.' },
   { icon: I.chat, t: 'Texting and booking', to: '/new/missed-calls', d: 'Answers questions and books open times by text.' },
-  { icon: I.star, t: 'Review requests', to: '/new/reviews', d: 'One short text after each visit with your Google link.' },
+  { icon: I.star, t: 'Review requests', to: '/new/reviews', d: 'One short text after a visit, with your Google link.' },
   { icon: I.reply, t: 'Google review replies', to: '/new/reviews', d: 'A reply drafted for every new review, you approve.' },
   { icon: I.phone, t: 'Phone', to: '/new/phone', d: 'Call from the app with your number. Hold and transfer.' },
   { icon: I.headset, t: 'Calls answered', to: '/new/phone', d: 'On Pro, calls nobody picks up get answered and booked.', pro: true },
@@ -81,7 +81,7 @@ const JOURNEY: { step: string; title: string; text: string; card: Line[] }[] = [
   { step: 'Text back', title: 'Dana gets a text within a minute', text: "Most people would rather text than leave a voicemail. If she did leave one, it's in your app as text.", card: [{ who: 'us', t: "Hi, it's Glow Studio. Sorry we missed your call! How can we help?" }] },
   { step: 'Booked', title: 'She books by text, into your real calendar', text: 'Only times that are really open. SalonUltimate and Square bookings go straight in; anything else gets your booking link.', card: [{ who: 'them', t: 'Saturday at 10?' }, { who: 'ok', t: 'Booked Sat 10:00 with Maya' }] },
   { step: 'Visit', title: 'She comes in and checks out as usual', text: 'Nothing changes at the desk. The checkout adds to her client page: visits, usual stylist, what she books.', card: [{ who: 'note', t: 'Checkout · cut and color with Maya · $140' }] },
-  { step: 'Review request', title: 'One short text asks for a review', text: 'Every client gets your Google link, happy or not. You set how many go out each day.', card: [{ who: 'us', t: 'Hope your visit with Maya was a hit! A quick Google review would mean the world to us.' }] },
+  { step: 'Review request', title: 'One short text asks for a review', text: 'Every request includes your Google link, happy client or not. You set how many go out each day.', card: [{ who: 'us', t: 'Hope your visit with Maya was a hit! A quick Google review would mean the world to us.' }] },
   { step: 'Rating', title: 'She rates Maya, or tells you what went wrong', text: 'Clients can reply 1 to 5. Anything below 4, or a note, comes straight to you so you can make it right.', card: [{ who: 'them', t: '5! She was amazing' }] },
   { step: 'Google reply', title: 'Her Google review gets a thank-you', text: 'A reply is drafted in your salon\'s voice. Approve it with one tap, and it posts on Google.', card: [{ who: 'ok', t: 'New 5-star review · reply ready to approve' }] },
 ];
@@ -117,11 +117,11 @@ const HomeNext = () => {
         <section className="nx-hero">
           <div className="nx-wrap nx-hero-in">
             <h1>Never miss another booking.</h1>
-            <p className="nx-beats">Every missed call texted back. Every client remembered. More 5-star reviews.</p>
+            <p className="nx-beats">Missed calls texted back. Clients remembered. More 5-star reviews.</p>
             <p className="nx-lede">
               Curivanta is the front desk for salons. Its AI receptionist answers the calls you can't get to in a natural,
-              friendly voice and books them into your calendar. It texts back every missed call and asks every client for
-              a Google review. Built by a salon owner.
+              friendly voice and books them into your calendar. It texts back missed calls and asks clients for
+              Google reviews. Built by a salon owner.
             </p>
             <div className="nx-ctas">
               <a className="nx-btn" href={START_URL}>Get started</a>
