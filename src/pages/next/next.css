@@ -670,3 +670,7 @@
 .nx .nx-call-rec small { color:rgba(255,255,255,.7); font-size:12px; }
 .nx .nx-call-done { display:flex; align-items:center; gap:8px; margin-top:16px; padding:9px 12px; border-radius:10px; background:rgba(95,211,162,.16); color:#7ee2b6; font-weight:600; font-size:13.5px; }
 .nx .nx-call-done svg { width:16px; height:16px; flex:none; }
+
+/* Pricing intro: each sentence on its own line on computers. */
+.nx .nx-lede.nx-lede-wide { max-width:860px; }
+@media (max-width:760px) { .nx .nx-lede-wide br { display:none; } }
