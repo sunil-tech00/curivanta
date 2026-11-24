@@ -119,6 +119,14 @@ if (listed.length) {
   console.log(`page-meta: sitemap + ${listed.length} blog article(s)`);
 }
 
+// Render (render.yaml) serves each page's folder only for addresses it lists: every page and blog article needs its
+// rewrite there, or Render answers 404. A catch-all /blog/:slug would answer made-up articles with an empty page.
+{
+  const yaml = fs.readFileSync("render.yaml", "utf8");
+  const missing = PAGES.map(p => p.route).filter(r => !yaml.includes(`source: ${r}\n`));
+  if (missing.length) throw new Error(`page-meta: add a rewrite to render.yaml for ${missing.join(", ")}`);
+}
+
 // The "page not found" page: Render serves dist/404.html, with status 404, for any address that isn't a real page,
 // so made-up addresses aren't indexed as copies of the homepage. The app shows its NotFound page there.
 {

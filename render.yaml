@@ -61,8 +61,14 @@ services:
         source: /blog
         destination: /blog/index.html
       - type: rewrite
-        source: /blog/:slug
-        destination: /blog/:slug/index.html
+        source: /blog/missed-calls-salon
+        destination: /blog/missed-calls-salon/index.html
+      - type: rewrite
+        source: /blog/salon-google-reviews
+        destination: /blog/salon-google-reviews/index.html
+      - type: rewrite
+        source: /blog/salon-last-minute-cancellations
+        destination: /blog/salon-last-minute-cancellations/index.html
       - type: rewrite
         source: /roi
         destination: /roi/index.html
