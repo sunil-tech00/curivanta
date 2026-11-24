@@ -1,6 +1,12 @@
 # Moving curivanta.com from Vercel to Render
 
-Status: steps 1-2 prepared 2026-11-24 on branch move-to-render (render.yaml, archive/, 404 page, scripts/compare-hosts.mjs). Owner: Sunil decides the DNS switch.
+Status: steps 1-3 done 2026-11-24 on branch move-to-render (render.yaml, archive/, 404 page, scripts/compare-hosts.mjs);
+the Render copy at https://curivanta-site.onrender.com matches every page and redirect. Next: Sunil looks it over, then
+the DNS switch (step 4). Owner: Sunil decides the DNS switch.
+
+Render note: a Blueprint sync adds and changes redirect/rewrite rules but doesn't delete ones removed from render.yaml
+(the old `/blog/:slug` rule had to be deleted by hand in the site's Redirects/Rewrites). A new blog article needs its own
+rewrite in render.yaml; the build fails without it.
 
 ## Why
 - Vercel's free (Hobby) plan is for non-commercial use only; Curivanta is a business. Pro would be $20/month.
