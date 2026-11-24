@@ -119,6 +119,15 @@ if (listed.length) {
   console.log(`page-meta: sitemap + ${listed.length} blog article(s)`);
 }
 
+// The "page not found" page: Render serves dist/404.html, with status 404, for any address that isn't a real page,
+// so made-up addresses aren't indexed as copies of the homepage. The app shows its NotFound page there.
+{
+  let html = base.replace(/<title>[^<]*<\/title>/, "<title>Page not found | Curivanta</title>");
+  html = html.replace("</head>", '    <meta name="robots" content="noindex" />\n  </head>');
+  fs.writeFileSync(path.join(DIST, "404.html"), html);
+  console.log("page-meta: wrote dist/404.html");
+}
+
 // The homepage's canonical link. Unknown URLs are served this same file (then show the 404 page,
 // which adds noindex), so pointing them at / is harmless.
 {

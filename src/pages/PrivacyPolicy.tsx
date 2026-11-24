@@ -6,7 +6,7 @@ import { NxShell, useIsNew } from './next/Chrome';
 import './next/next.css';
 
 // Covers the Curivanta app (app.curivanta.com) for salons and solo stylists, the texts and calls
-// we handle for them, and this website. The solar quote review has its own page (public/solar/privacy). Keep in step with the app
+// we handle for them, and this website. The old solar quote review (archived in archive/solar) had its own privacy page. Keep in step with the app
 // (curivanta-app/docs/curivanta-features.md) and with the SMS wording carriers require.
 const UPDATED = 'November 15, 2026';
 
