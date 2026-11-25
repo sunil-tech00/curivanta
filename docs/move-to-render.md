@@ -1,8 +1,7 @@
 # Moving curivanta.com from Vercel to Render
 
-Status: steps 1-3 done 2026-11-24 on branch move-to-render (render.yaml, archive/, 404 page, scripts/compare-hosts.mjs);
-the Render copy at https://curivanta-site.onrender.com matches every page and redirect. Next: Sunil looks it over, then
-the DNS switch (step 4). Owner: Sunil decides the DNS switch.
+Status: done 2026-11-24. curivanta.com and www point to Render (A @ 216.24.57.1, CNAME www curivanta-site.onrender.com);
+all 39 compared addresses match; the site deploys from main. Left: delete the Vercel project around 2026-12-01.
 
 Render note: a Blueprint sync adds and changes redirect/rewrite rules but doesn't delete ones removed from render.yaml
 (the old `/blog/:slug` rule had to be deleted by hand in the site's Redirects/Rewrites). A new blog article needs its own
