@@ -15,16 +15,6 @@
       "permanent": true
     },
     {
-      "source": "/book",
-      "destination": "https://link.curivanta.com/widget/bookings/solar-consulting-calendar",
-      "permanent": false
-    },
-    {
-      "source": "/widget/:path*",
-      "destination": "https://link.curivanta.com/widget/:path*",
-      "permanent": false
-    },
-    {
       "source": "/home-preview",
       "destination": "/",
       "permanent": false
@@ -63,37 +53,19 @@
       "source": "/new/:path*",
       "destination": "/:path*",
       "permanent": true
+    },
+    {
+      "source": "/solar",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/solar/:path*",
+      "destination": "/",
+      "permanent": false
     }
   ],
   "rewrites": [
-    {
-      "source": "/solar",
-      "destination": "/solar/index.html"
-    },
-    {
-      "source": "/solar/privacy",
-      "destination": "/solar/privacy/index.html"
-    },
-    {
-      "source": "/solar/review",
-      "destination": "/solar/review/index.html"
-    },
-    {
-      "source": "/solar/report/:id",
-      "destination": "/solar/review/index.html"
-    },
-    {
-      "source": "/solar/full-review/thanks",
-      "destination": "/solar/full-review/thanks/index.html"
-    },
-    {
-      "source": "/solar/guides",
-      "destination": "/solar/guides/index.html"
-    },
-    {
-      "source": "/solar/guides/:slug",
-      "destination": "/solar/guides/:slug/index.html"
-    },
     {
       "source": "/privacy",
       "destination": "/privacy/index.html"
@@ -163,61 +135,8 @@
       "destination": "/delete-account/index.html"
     },
     {
-      "source": "/((?!solar/|api/).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
-    }
-  ],
-  "crons": [
-    {
-      "path": "/api/cron/cleanup",
-      "schedule": "17 9 * * *"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/solar",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex"
-        }
-      ]
-    },
-    {
-      "source": "/solar/:path*",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex"
-        }
-      ]
-    },
-    {
-      "source": "/solar/report/:id",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
-    },
-    {
-      "source": "/solar/full-review/thanks",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        }
-      ]
-    },
-    {
-      "source": "/api/:path*",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex"
-        }
-      ]
     }
   ]
 }

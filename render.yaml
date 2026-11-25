@@ -1,0 +1,104 @@
+# curivanta.com on Render (moved from Vercel, docs/move-to-render.md). A static site, separate from the app
+# (curivanta-app). www.curivanta.com is sent to curivanta.com by Render once both domains are added.
+# Real pages are folders with index.html; anything else gets dist/404.html with status 404.
+services:
+  - type: web
+    name: curivanta-site
+    runtime: static
+    branch: main
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: false
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+    routes:
+      # Old addresses
+      - type: redirect
+        source: /home-preview
+        destination: /
+      - type: redirect
+        source: /hair-salon-bot
+        destination: /
+      - type: redirect
+        source: /reviewautomation
+        destination: /
+      - type: redirect
+        source: /website-development
+        destination: /
+      - type: redirect
+        source: /hair-salon-bot/welcome
+        destination: /
+      - type: redirect
+        source: /reviewautomation/welcome
+        destination: /
+      - type: redirect
+        source: /new
+        destination: /
+      - type: redirect
+        source: /new/*
+        destination: /*
+      - type: redirect
+        source: /solar
+        destination: /
+      - type: redirect
+        source: /solar/*
+        destination: /
+      # Each page is a folder: /pricing serves /pricing/index.html (no slash added)
+      - type: rewrite
+        source: /privacy
+        destination: /privacy/index.html
+      - type: rewrite
+        source: /terms
+        destination: /terms/index.html
+      - type: rewrite
+        source: /square
+        destination: /square/index.html
+      - type: rewrite
+        source: /salonultimate
+        destination: /salonultimate/index.html
+      - type: rewrite
+        source: /blog
+        destination: /blog/index.html
+      - type: rewrite
+        source: /blog/missed-calls-salon
+        destination: /blog/missed-calls-salon/index.html
+      - type: rewrite
+        source: /blog/salon-google-reviews
+        destination: /blog/salon-google-reviews/index.html
+      - type: rewrite
+        source: /blog/salon-last-minute-cancellations
+        destination: /blog/salon-last-minute-cancellations/index.html
+      - type: rewrite
+        source: /roi
+        destination: /roi/index.html
+      - type: rewrite
+        source: /pricing
+        destination: /pricing/index.html
+      - type: rewrite
+        source: /story
+        destination: /story/index.html
+      - type: rewrite
+        source: /missed-calls
+        destination: /missed-calls/index.html
+      - type: rewrite
+        source: /reviews
+        destination: /reviews/index.html
+      - type: rewrite
+        source: /phone
+        destination: /phone/index.html
+      - type: rewrite
+        source: /owner-app
+        destination: /owner-app/index.html
+      - type: rewrite
+        source: /salons
+        destination: /salons/index.html
+      - type: rewrite
+        source: /solo
+        destination: /solo/index.html
+      - type: rewrite
+        source: /locations
+        destination: /locations/index.html
+      - type: rewrite
+        source: /delete-account
+        destination: /delete-account/index.html
