@@ -33,7 +33,7 @@
 - [Missed calls](https://curivanta.com/missed-calls), [Reviews](https://curivanta.com/reviews), [Phone](https://curivanta.com/phone), [Owner app](https://curivanta.com/owner-app): each feature in detail
 - [Salons with a team](https://curivanta.com/salons), [Solo stylists](https://curivanta.com/solo), [Several locations](https://curivanta.com/locations)
 - [Curivanta for Square](https://curivanta.com/square) and [Curivanta for SalonUltimate](https://curivanta.com/salonultimate): booking-system details and FAQ
-- [Blog](https://curivanta.com/blog): [How many clients does your salon lose to missed calls?](https://curivanta.com/blog/missed-calls-salon) and [How to get more Google reviews for your salon](https://curivanta.com/blog/salon-google-reviews)
+- [Blog](https://curivanta.com/blog): [How many clients does your salon lose to missed calls?](https://curivanta.com/blog/missed-calls-salon), [How to get more Google reviews for your salon](https://curivanta.com/blog/salon-google-reviews) and [How to fill last-minute cancellations at your salon](https://curivanta.com/blog/salon-last-minute-cancellations)
 - [Our story](https://curivanta.com/story)
 - [Get started](https://app.curivanta.com/start)
 - [Privacy](https://curivanta.com/privacy) and [Terms](https://curivanta.com/terms)

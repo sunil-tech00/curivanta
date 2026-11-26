@@ -1,8 +1,7 @@
 ---
 title: How to Fill Last-Minute Cancellations at Your Salon
 description: An empty chair is money that never comes back. How salons fill last-minute cancellations with a real waitlist, fast texts and easy rescheduling.
-date: 2026-11-28
-draft: true
+date: 2026-11-26
 ---
 It is Saturday, 10 AM. Your colorist's client just cancelled, and the chair sits empty until noon. The stylist is ready, the color is mixed, the lights are on, and nobody is paying for any of it. By the time you find someone to take the slot, the morning is gone.
 

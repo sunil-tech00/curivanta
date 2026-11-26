@@ -74,7 +74,7 @@ You already paid for those calls. The client found your number, dialed it, and c
 
 Count your missed calls for one week. Multiply by your average cut. That number is what a text-back is worth to your salon, every single month.
 
-Once those callers are booked, the next step is getting them to tell others. Read [how to get more Google reviews for your salon](/blog/salon-google-reviews).
+Once those callers are booked, the next step is getting them to tell others. Read [how to get more Google reviews for your salon](/blog/salon-google-reviews), and [how to fill last-minute cancellations](/blog/salon-last-minute-cancellations) when a booked client drops out.
 
 ---
 

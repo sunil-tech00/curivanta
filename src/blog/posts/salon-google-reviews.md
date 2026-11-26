@@ -47,7 +47,7 @@ Getting more reviews is not a begging problem. It is a timing problem and a nami
 
 Do that after every visit, and the reviews build themselves, one real visit at a time.
 
-Reviews start with clients who came in. If your phone rings out, read [how many clients your salon loses to missed calls](/blog/missed-calls-salon).
+Reviews start with clients who came in. If your phone rings out, read [how many clients your salon loses to missed calls](/blog/missed-calls-salon). And when a booked client cancels at the last minute, here is [how to fill the empty chair](/blog/salon-last-minute-cancellations).
 
 ---
 
