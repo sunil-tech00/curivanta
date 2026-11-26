@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { CallCard, Bubbles, I, ListCard, NxFoot, NxNav, START_URL, useSamplePage, type Line, type Said } from './next/Chrome';
+import { CallCard, Bubbles, I, ListCard, NxFoot, NxNav, PLAY_URL, START_URL, useSamplePage, type Line, type Said } from './next/Chrome';
 import NotFound from './NotFound';
 import { Anywhere } from './next/FrontDesk';
 import ClientCard from './next/ClientCard';
@@ -13,7 +13,7 @@ type Art = { client: true } | { call: Said[]; head: string; sub: string; done?: 
 type Row = { h: string; p: string; points?: string[]; note?: string; id?: string; art: Art };
 export type PageDef = {
   title: string; h1: string; lede: string; plan?: string; art: Art;
-  rows: Row[]; facts: [JSX.Element, string, string][]; faq: [string, string][];
+  rows: Row[]; facts: [JSX.Element, string, string][]; faq: [string, React.ReactNode][];
   next: [string, string][];
   extra?: JSX.Element;
 };
@@ -146,7 +146,7 @@ export const PAGES: Record<string, PageDef> = {
     ],
     facts: [[I.chart, 'Home', 'Numbers vs before, by stylist'], [I.user, 'Clients', 'Every call, text, visit, review'], [I.phone, 'Phone and computer', 'Same app everywhere'], [I.bolt, 'Morning email', 'Yesterday at a glance']],
     faq: [
-      ['Is there a phone app?', 'Yes, on Android: search for Curivanta on Google Play. On iPhone, add Curivanta to your Home Screen from Safari to get notifications; the iPhone app is on its way.'],
+      ['Is there a phone app?', <>Yes, on Android: <a href={PLAY_URL} target="_blank" rel="noopener" data-umami-event="play_faq">get Curivanta on Google Play</a>. On iPhone, add Curivanta to your Home Screen from Safari to get notifications; the iPhone app is on its way.</>],
       ['Can my front desk use it?', 'Yes, on Light and Pro. Front-desk logins see clients, messages, calls and reviews, but not usage, billing or settings. Replies show who sent them.'],
     ],
     next: [['/reviews', 'Reviews'], ['/phone', 'Phone']],

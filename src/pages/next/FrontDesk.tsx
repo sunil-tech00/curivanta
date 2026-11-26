@@ -1,4 +1,4 @@
-import { I } from './Chrome';
+import { I, PlayBadge } from './Chrome';
 
 // The salon's front desk computer: the booking software on the left, Curivanta in a narrow window on the right,
 // with an incoming call. Used on the Owner app page (moved off the homepage 2026-11-21).
@@ -66,7 +66,7 @@ export const Anywhere = () => (
       </div>
       <div className="nx-devices">
         <div><span className="nx-dev-ic">{I.monitor}</span><h3>On your computer</h3><p>Open app.curivanta.com in any web browser. Big screens get more room: everything side by side, the menu on the left. Call clients right from the computer.</p></div>
-        <div><span className="nx-dev-ic">{I.mobile}</span><h3>On your phone</h3><p>The Android app rings for calls even when it's closed, and sends one notification when someone needs you. <a href="https://play.google.com/store/apps/details?id=com.curivanta.app" target="_blank" rel="noopener">Get it on Google Play</a>. On iPhone, add it to your Home Screen. The iPhone app is on its way.</p></div>
+        <div><span className="nx-dev-ic">{I.mobile}</span><h3>On your phone</h3><p>The Android app rings for calls even when it's closed, and sends one notification when someone needs you. On iPhone, add it to your Home Screen. The iPhone app is on its way.</p><PlayBadge /></div>
         <div><span className="nx-dev-ic">{I.desk}</span><h3>At the front desk</h3><p>Everyone gets their own login. Calls ring whoever has the Phone screen open, and replies show who sent them.</p></div>
       </div>
       <DeskRow />
