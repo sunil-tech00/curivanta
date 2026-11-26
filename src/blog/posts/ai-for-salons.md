@@ -1,7 +1,7 @@
 ---
 title: "4 Ways Salons and Stylists Can Use AI This Week"
 description: No tech skills needed. Four practical ways salon owners, stylists and beauticians can use AI to save time, keep the book full and win more reviews.
-date: 2026-12-12
+date: 2026-11-28
 draft: true
 ---
 AI sounds like something for tech companies. It is not. The most useful AI for a salon is boring in the best way: it does the small, repetitive jobs that eat your evenings, so you can spend your time on clients.
@@ -14,7 +14,7 @@ The phone rings when you are mid-foil, mid-fade or mid-fill. You cannot answer, 
 
 This is where AI earns its keep. An AI receptionist answers the calls nobody can pick up, talks with the caller, and books the appointment into your calendar. If it cannot book, the caller at least gets a text right away ("Sorry we missed you! Want to book? Just reply here"), so the conversation keeps going instead of ending in voicemail.
 
-**What to look for:** it should book into your real openings, know your stylists and services by name, and hand anything tricky (a complaint, a color correction, an allergy question) to you. We wrote a full checklist in [what an AI receptionist for salons should do](/blog/ai-receptionist-salon).
+**What to look for:** it should book into your real openings, know your stylists and services by name, and hand anything tricky (a complaint, a color correction, an allergy question) to you.
 
 **Try it this week:** count your missed calls for one Saturday. Most phones show them. That number is what AI answering is worth to you.
 

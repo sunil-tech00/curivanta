@@ -1,7 +1,7 @@
 ---
 title: "AI Receptionist for Salons: What It Should Do Before You Buy One"
 description: AI receptionists are everywhere now, but most are built for dentists and plumbers. What a salon's AI receptionist should actually do, and what to ask first.
-date: 2026-12-05
+date: 2026-11-30
 draft: true
 ---
 The phone rings at 11 AM on a Saturday. Every stylist has a client in the chair, the front desk is checking someone out, and the caller hears it ring and ring. Half of those callers never call back. They book somewhere else.
