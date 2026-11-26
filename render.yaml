@@ -73,6 +73,9 @@ services:
         source: /blog/ai-receptionist-salon
         destination: /blog/ai-receptionist-salon/index.html
       - type: rewrite
+        source: /blog/ai-for-salons
+        destination: /blog/ai-for-salons/index.html
+      - type: rewrite
         source: /roi
         destination: /roi/index.html
       - type: rewrite
