@@ -70,6 +70,9 @@ services:
         source: /blog/salon-last-minute-cancellations
         destination: /blog/salon-last-minute-cancellations/index.html
       - type: rewrite
+        source: /blog/ai-receptionist-salon
+        destination: /blog/ai-receptionist-salon/index.html
+      - type: rewrite
         source: /roi
         destination: /roi/index.html
       - type: rewrite

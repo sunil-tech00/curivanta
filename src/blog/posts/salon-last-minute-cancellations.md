@@ -62,4 +62,4 @@ The calls you miss are gaps too. Read [how many clients your salon loses to miss
 
 ---
 
-*Curivanta answers your clients by text and books them into your real openings, so a client who says yes is booked in minutes. Clients can move or cancel by text too, and callers you miss get a text back while you are with a client. Plans start at $49 a month, and the $49 setup counts toward your first month. [See plans and pricing](/#pricing).*
+*Curivanta answers your clients by text and books them into your real openings, so a client who says yes is booked in minutes. Clients can move or cancel by text or on a call, even the same day if you allow it, and callers you miss get a text back while you are with a client. Plans start at $49 a month, and the $49 setup counts toward your first month. [See plans and pricing](/#pricing).*
