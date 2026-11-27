@@ -717,3 +717,22 @@
 /* The light demo card (Our story): its heading and number in the page's ink (they inherited white). */
 .nx .nx-try.nx-try-light .nx-try-h, .nx .nx-try.nx-try-light .nx-try-n, .nx .nx-try.nx-try-light .nx-try-n a { color:var(--ink); }
 .nx .nx-try.nx-try-light .nx-try-n a { border-bottom-color:var(--accent); }
+
+/* "See it work in 45 seconds" (homepage video, 2026-11-26). The video is dark navy in both themes. */
+.nx .nx-watch-sec { padding-top:40px; }
+.nx .nx-watch { position:relative; max-width:1100px; margin:0 auto; aspect-ratio:16/9; border-radius:22px; overflow:hidden;
+  background:#071631; box-shadow:var(--shadow); }
+.nx .nx-watch.tall { aspect-ratio:4/5; max-width:520px; }
+.nx .nx-watch video { display:block; width:100%; height:100%; object-fit:cover; cursor:pointer; }
+.nx .nx-watch-btn { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:84px; height:84px; border-radius:50%;
+  border:0; cursor:pointer; background:rgba(255,255,255,.95); color:#0c2350; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 12px 40px rgba(0,0,0,.35); transition:all .25s ease; }
+.nx .nx-watch-btn svg { width:34px; height:34px; fill:currentColor; margin-left:4px; }
+.nx .nx-watch-btn.small { left:auto; top:auto; right:16px; bottom:16px; transform:none; width:44px; height:44px;
+  background:rgba(7,22,49,.55); color:#fff; opacity:.75; box-shadow:none; }
+.nx .nx-watch-btn.small svg { width:18px; height:18px; margin-left:0; }
+.nx .nx-watch-btn:hover, .nx .nx-watch-btn:focus-visible { opacity:1; }
+.nx .nx-watch-btn:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+@media (max-width:860px) { .nx .nx-watch { border-radius:14px; } .nx .nx-watch-btn { width:64px; height:64px; }
+  .nx .nx-watch-btn svg { width:26px; height:26px; } .nx .nx-watch-btn.small { right:10px; bottom:10px; width:38px; height:38px; } }
+@media (prefers-reduced-motion:reduce) { .nx .nx-watch-btn { transition:none; } }

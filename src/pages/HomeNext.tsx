@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Bubbles, I, NxFoot, SaidLine, Wave, NxNav, Ph, START_URL, useSamplePage, type Line } from './next/Chrome';
 import './next/next.css';
@@ -162,7 +162,6 @@ const HomeNext = () => {
           <div className="nx-wrap">
             {/* Real totals from the two pilot salons, Nov 14-22, 2026 (their first week) (prod query, demo salon left out). */}
             <div className="nx-statpanel">
-            <p className="nx-statband-h">In our two pilot salons, the first week live</p>
             <div className="nx-statcards">
               <div><b>17</b><span>missed calls texted back</span></div>
               <div><b>23</b><span>calls answered by the AI</span></div>
@@ -171,6 +170,16 @@ const HomeNext = () => {
             </div>
             </div>
             <p className="nx-works">Works with <Link to="/salonultimate">SalonUltimate</Link> · <Link to="/square">Square</Link> · Google · any online booking link</p>
+          </div>
+        </section>
+
+        <section className="nx-sec nx-watch-sec" id="watch">
+          <div className="nx-wrap">
+            <div className="nx-head">
+              <h2>See it work in 45 seconds</h2>
+              <p>A missed call texted back, a booking by text, a call the AI answers, a new review, and your day in the app.</p>
+            </div>
+            <WatchVideo />
           </div>
         </section>
 
@@ -320,3 +329,67 @@ const HomeNext = () => {
 };
 
 export default HomeNext;
+
+// The 45-second walkthrough (made with Remotion in video/, 2026-11-26). Nothing downloads until it's near the
+// screen; it plays muted while in view and pauses when scrolled away. With reduced motion it waits for a tap.
+const cvTrack = (name: string, data?: Record<string, string | number | boolean>) =>
+  (window as Window & { cvTrack?: (n: string, d?: Record<string, string | number | boolean>) => void }).cvTrack?.(name, data);
+
+function WatchVideo() {
+  const box = useRef<HTMLDivElement>(null);
+  const vid = useRef<HTMLVideoElement>(null);
+  const [src, setSrc] = useState(false);          // the file is only requested once the video is close
+  const [playing, setPlaying] = useState(false);
+  const [paused, setPaused] = useState(false);    // the visitor paused it: don't restart on scroll
+  const sent = useRef({ play: false, full: false });
+  // Phones get the 4:5 cut (bigger phone and captions, 1.7 MB); wider screens the 16:9 one (3.8 MB).
+  const [narrow] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 700px)').matches);
+  const file = narrow ? '/video/curivanta-45s-phone' : '/video/curivanta-45s';
+
+  useEffect(() => {
+    const el = box.current;
+    if (!el || !('IntersectionObserver' in window)) { setSrc(true); return; }
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const near = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSrc(true); near.disconnect(); } }, { rootMargin: '600px 0px' });
+    const seen = new IntersectionObserver(([e]) => {
+      const v = vid.current;
+      if (!v) return;
+      if (e.isIntersecting && !calm && !paused) v.play().catch(() => {});
+      else if (!e.isIntersecting) v.pause();
+    }, { threshold: 0.5 });
+    near.observe(el); seen.observe(el);
+    return () => { near.disconnect(); seen.disconnect(); };
+  }, [paused, src]);
+
+  const toggle = () => {
+    const v = vid.current;
+    if (!v) return;
+    if (v.paused) { setPaused(false); setSrc(true); v.play().catch(() => {}); } else { setPaused(true); v.pause(); }
+  };
+  const onPlay = () => {
+    setPlaying(true);
+    if (!sent.current.play) { sent.current.play = true; cvTrack('video_play', { video: narrow ? 'home-45s-phone' : 'home-45s' }); }
+  };
+  const onTime = () => {
+    const v = vid.current;
+    if (v && !sent.current.full && v.duration && v.currentTime > v.duration - 1.5) {
+      sent.current.full = true; cvTrack('video_watched', { video: narrow ? 'home-45s-phone' : 'home-45s' });
+    }
+  };
+
+  return (
+    <div className={'nx-watch' + (narrow ? ' tall' : '')} ref={box}>
+      <video ref={vid} muted playsInline loop preload="none" poster={`${file}-poster.jpg`}
+        onPlay={onPlay} onPause={() => setPlaying(false)} onTimeUpdate={onTime} onClick={toggle}
+        aria-label="A 45-second walkthrough of Curivanta at a sample salon. Captions on screen; no sound.">
+        {src && <source src={`${file}.mp4`} type="video/mp4" />}
+      </video>
+      <button type="button" className={'nx-watch-btn' + (playing ? ' small' : '')} onClick={toggle}
+        aria-label={playing ? 'Pause the video' : 'Play the video'}>
+        {playing
+          ? <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg>
+          : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" /></svg>}
+      </button>
+    </div>
+  );
+}
