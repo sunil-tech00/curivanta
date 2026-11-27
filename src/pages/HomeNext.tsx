@@ -162,6 +162,7 @@ const HomeNext = () => {
           <div className="nx-wrap">
             {/* Real totals from the two pilot salons, Nov 14-22, 2026 (their first week) (prod query, demo salon left out). */}
             <div className="nx-statpanel">
+            <p className="nx-statband-h">The first week live at two salons</p>
             <div className="nx-statcards">
               <div><b>17</b><span>missed calls texted back</span></div>
               <div><b>23</b><span>calls answered by the AI</span></div>
