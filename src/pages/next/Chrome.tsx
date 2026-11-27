@@ -75,6 +75,7 @@ export const NxNav = () => { useTopOnNewPage(); return (
 export const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.curivanta.app';
 // Curivanta's YouTube channel (2026-11-26) and the full walkthrough on it.
 export const YT_CHANNEL = 'https://www.youtube.com/@Curivantaapp';
+export const FB_PAGE = 'https://www.facebook.com/curivantaapp';
 export const YT_WALKTHROUGH = 'https://www.youtube.com/watch?v=cckLD6s0kkI';
 
 export const PlayBadge = () => (
@@ -89,7 +90,7 @@ export const NxFoot = () => (
       <div className="nx-foot-brand"><img src="/brand/logo-light.png" alt="Curivanta" className="nx-logo-light" /><img src="/brand/logo-dark.png" alt="" className="nx-logo-dark" /><p>The front desk for salons.</p><a href="mailto:hello@curivanta.com">hello@curivanta.com</a><PlayBadge /></div>
       <div><h4>Product</h4><Link to="/missed-calls">Missed calls and texts</Link><Link to="/reviews">Reviews</Link><Link to="/phone">Phone</Link><Link to="/owner-app">Owner app</Link><Link to="/pricing">Pricing</Link></div>
       <div><h4>Who it's for</h4><Link to="/salons">Salons with a team</Link><Link to="/solo">Solo stylists</Link><Link to="/locations">Several locations</Link></div>
-      <div><h4>Resources</h4><Link to="/roi">ROI calculator</Link><Link to="/blog">Blog</Link><Link to="/salonultimate">SalonUltimate</Link><Link to="/square">Square</Link><a href={YT_CHANNEL} target="_blank" rel="noopener" data-umami-event="youtube_footer">YouTube</a></div>
+      <div><h4>Resources</h4><Link to="/roi">ROI calculator</Link><Link to="/blog">Blog</Link><Link to="/salonultimate">SalonUltimate</Link><Link to="/square">Square</Link><a href={YT_CHANNEL} target="_blank" rel="noopener" data-umami-event="youtube_footer">YouTube</a><a href={FB_PAGE} target="_blank" rel="noopener" data-umami-event="facebook_footer">Facebook</a></div>
       <div><h4>Company</h4><Link to="/story">Our story</Link><a href={SIGNIN_URL}>Sign in</a><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link></div>
     </div>
     <div className="nx-wrap nx-copy">© 2026 Curivanta. Google Play and the Google Play logo are trademarks of Google LLC.</div>
