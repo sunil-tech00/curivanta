@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Bubbles, I, NxFoot, SaidLine, Wave, NxNav, Ph, START_URL, useSamplePage, type Line } from './next/Chrome';
+import { Bubbles, I, NxFoot, SaidLine, Wave, NxNav, Ph, START_URL, useSamplePage, type Line, YT_WALKTHROUGH } from './next/Chrome';
 import './next/next.css';
 
 // Sample homepage (2026-11-21, branch homepage-human), take 3: Weave's simple structure plus LendAPI's best
@@ -181,6 +181,10 @@ const HomeNext = () => {
               <p>A missed call texted back, a booking by text, a call the AI answers, a new review, and your day in the app.</p>
             </div>
             <WatchVideo />
+            <p className="nx-watch-more">
+              <a href={YT_WALKTHROUGH} target="_blank" rel="noopener" data-umami-event="youtube_walkthrough">
+                Watch the full walkthrough on YouTube (1:24)</a>
+            </p>
           </div>
         </section>
 

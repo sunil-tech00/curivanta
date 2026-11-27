@@ -731,6 +731,8 @@
 .nx .nx-watch-btn.small { left:auto; top:auto; right:16px; bottom:16px; transform:none; width:44px; height:44px;
   background:rgba(7,22,49,.55); color:#fff; opacity:.75; box-shadow:none; }
 .nx .nx-watch-btn.small svg { width:18px; height:18px; margin-left:0; }
+.nx .nx-watch-more { text-align:center; margin-top:18px; font-size:17px; }
+.nx .nx-watch-more a { color:var(--accent); font-weight:600; }
 .nx .nx-watch-btn:hover, .nx .nx-watch-btn:focus-visible { opacity:1; }
 .nx .nx-watch-btn:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
 @media (max-width:860px) { .nx .nx-watch { border-radius:14px; } .nx .nx-watch-btn { width:64px; height:64px; }
