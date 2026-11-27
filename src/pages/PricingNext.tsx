@@ -38,7 +38,8 @@ const FAQ: [string, string][] = [
   ['When does my monthly plan start?', 'When texting goes live, usually a few days after you sign up, once the phone carriers approve your number. The $49 setup paid at sign-up is credited to your first month.'],
   ['What counts as a text or a call minute?', 'Texts are the messages Curivanta sends for you: replies, text-backs, confirmations and review requests. Call minutes are the time calls spend on your Curivanta number. Calls you pick up on your own salon phone don\'t count. Texts and minutes share one allowance, and unused ones don\'t carry over.'],
   ['What if I go over?', 'Extra texts or call minutes are $10 per 250, added to your next bill. We email you at 80%, so it\'s never a surprise.'],
-  ['Can I change plans?', 'Move up any time from Billing in the app; the difference is prorated. To move down, email us.'],
+  ['Can I use just one feature, like review requests only?', 'Yes. Pick a plan, usually Starter, and switch off what you don\'t need in the app: text-back, texting replies, calls ringing. For review requests only, connect SalonUltimate or Square so a text goes out after each checkout. You can switch anything back on later.'],
+  ['Can I change plans?', 'Move up any time from Billing in the app; the difference is prorated. Moving down is there too, and starts on your next billing date.'],
   ['How do I cancel?', 'From Billing in the app. It ends at the end of the month you\'ve paid for. No contract.'],
 ];
 
