@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Bubbles, I, NxFoot, SaidLine, Wave, NxNav, Ph, START_URL, useSamplePage, type Line, YT_WALKTHROUGH } from './next/Chrome';
+import { Bubbles, I, NxFoot, SaidLine, Wave, NxNav, Ph, START_URL, TRY_URL, useSamplePage, type Line, YT_WALKTHROUGH } from './next/Chrome';
 import './next/next.css';
 
 // Sample homepage (2026-11-21, branch homepage-human), take 3: Weave's simple structure plus LendAPI's best
@@ -130,9 +130,9 @@ const HomeNext = () => {
             </p>
             <div className="nx-ctas">
               <a className="nx-btn" href={START_URL}>Get started</a>
-              <Link className="nx-btn nx-btn-ghost" to="/roi">See what missed calls cost you</Link>
+              <a className="nx-btn nx-btn-ghost" href={TRY_URL} data-umami-event="try_preview" data-umami-event-where="home_hero">Hear it answer as your salon</a>
             </div>
-            <p className="nx-hear">Hear it answer a call: <a href="tel:+19495231889">call our demo salon at (949) 523-1889</a></p>
+            <p className="nx-hear">Or call our demo salon now: <a href="tel:+19495231889">(949) 523-1889</a></p>
             <p className="nx-fine">From $49/month · AI call answering on Light and Pro · Set up in about 15 minutes · No contract</p>
           </div>
 
@@ -291,6 +291,8 @@ const HomeNext = () => {
               <p className="nx-try-h">Call our demo salon</p>
               <p className="nx-try-n"><a href="tel:+19495231889">(949) 523-1889</a></p>
               <p className="nx-try-s">The AI answers in its natural voice. Ask about prices or hours, or book a pretend appointment. It's our demo salon, so nothing is really booked.</p>
+              <p className="nx-try-or"><b>Or hear it as your own salon.</b> Paste your website, call, and see the text your client would get and what you would see.</p>
+              <a className="nx-btn nx-btn-light nx-btn-sm" href={TRY_URL} data-umami-event="try_preview" data-umami-event-where="home_demo_card">Hear it as your salon</a>
             </div>
           </div>
         </section>
@@ -303,6 +305,7 @@ const HomeNext = () => {
               <div className="nx-price main"><span className="nx-tag">Most salons</span><h3>Light</h3><p className="nx-for">For salons with a team</p><div className="nx-amt">$99<small>/month</small></div><p>Keep your salon number. Team logins, ratings by stylist, and 30 minutes a month of calls answered for you.</p><a className="nx-btn" href={START_URL}>Start with Light</a></div>
               <div className="nx-price"><h3>Pro</h3><p className="nx-for">Calls answered for you</p><div className="nx-amt">$149<small>/month</small></div><p>Everything in Light, and calls nobody picks up answered for you: 200 minutes a month.</p><a className="nx-btn nx-btn-ghost" href={START_URL + '?plan=pro'}>Start with Pro</a></div>
             </div>
+            <p className="nx-price-try">Not sure yet? <a href={TRY_URL} data-umami-event="try_preview" data-umami-event-where="home_pricing">Hear it answer as your salon first</a>: paste your website and call.</p>
             <ul className="nx-nosurprise">
               <li>{I.check}Prices on the page, no sales call</li>
               <li>{I.check}No contract. Cancel from the app</li>

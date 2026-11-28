@@ -5,6 +5,8 @@ import { ThemeToggle } from '../../components/ThemeToggle';
 // Shared pieces of the sample pages (/new, /new/roi): nav, footer, icons, placeholder marker.
 
 export const START_URL = 'https://app.curivanta.com/start';
+// "Hear it answer as your salon" (2026-11-27): paste your link, call, see what your client and you would get.
+export const TRY_URL = 'https://app.curivanta.com/try';
 export const SIGNIN_URL = 'https://app.curivanta.com/login';
 
 export const Ph = ({ children }: { children: React.ReactNode }) => <span className="ph" title="Placeholder">{children}</span>;

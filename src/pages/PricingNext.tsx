@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { I, NxFoot, NxNav, START_URL, useSamplePage } from './next/Chrome';
+import { I, NxFoot, NxNav, START_URL, TRY_URL, useSamplePage } from './next/Chrome';
 import './next/next.css';
 
 // Sample pricing page (/new/pricing, 2026-11-21). Plan details as on the live homepage (Nov 21 plans:
@@ -69,7 +69,8 @@ const PricingNext = () => {
               </div>
             ))}
           </div>
-          <p className="nx-center"><Link to="/roi">Not sure? See what missed calls cost your salon →</Link></p>
+          <p className="nx-price-try">Not sure yet? <a href={TRY_URL} data-umami-event="try_preview" data-umami-event-where="pricing">Hear it answer as your salon first</a>: paste your website and call.</p>
+          <p className="nx-center"><Link to="/roi">Or see what missed calls cost your salon →</Link></p>
         </section>
 
         <section className="nx-sec">

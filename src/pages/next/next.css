@@ -635,6 +635,9 @@
 .nx .nx-try-h { font-size:22px; font-weight:800; letter-spacing:-.02em; margin-top:4px !important; }
 .nx .nx-try-n { font-size:24px; font-weight:700; margin:10px 0 !important; }
 .nx .nx-try-s { font-size:14.5px; line-height:1.5; opacity:.9; }
+.nx .nx-try-or { font-size:14.5px; line-height:1.5; margin:18px 0 14px !important; padding-top:16px; border-top:1px solid rgba(255,255,255,.25); }
+.nx .nx-price-try { text-align:center; margin:22px 0 0; font-size:16px; color:var(--ink2); }
+.nx .nx-price-try a { font-weight:600; }
 .nx .nx-try.nx-try-light { background:var(--card); border-color:var(--line); color:var(--ink); box-shadow:var(--shadow); }
 .nx .nx-try.nx-try-light .nx-try-k, .nx .nx-try.nx-try-light .nx-try-s { color:var(--ink2); opacity:1; }
 @media (max-width:820px) { .nx .nx-try { justify-self:start; } }
